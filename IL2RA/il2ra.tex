@@ -436,38 +436,39 @@ The Pearson correlation squared is $r^2=0.458$ for manual and $r^2=0.769$ for \t
 }
 \end{figure}
 
-\begin{table}[h]
-\centering
-\begin{tabular}{lrrr}
-\rowcolor{Gray}
-\snp{rs12722495} & effect & 95\%CI          & p-value\\
-manual           & 0.172  & [-0.052;0.396]  & 0.1312672\\
-beads.auto       & 0.312  & [0.079;0.546]   & \textcolor{red}{0.00905709}\\
-\rowcolor{Gray}
-\snp{rs2104286}  & effect & 95\%CI          & p-value\\
-manual           & -0.481 & [-0.666;-0.296] & \textcolor{red}{7.9E-07}\\
-beads.auto       & -0.528 & [-0.721;-0.335] & \textcolor{red}{2.2E-07}\\
-\rowcolor{Gray}
-\snp{rs11594656} & effect & 95\%CI          & p-value\\
-manual           & -0.058 & [-0.227;0.111]  & 0.4987954\\
-beads.auto       & -0.077 & [-0.255;0.101]  & 0.3947316\\
-\rowcolor{Gray}
-Age              & effect & 95\%CI          & p-value\\
-manual           & 0.037  & [0.024;0.049]   & \textcolor{red}{2E-08}\\
-beads.auto       & 0.037  & [0.024;0.05]    & \textcolor{red}{7E-08}\\
-\rowcolor{Gray}
-Sex              & effect & 95\%CI          & p-value\\
-manual           & -0.217 & [-0.444;0.01]   & 0.06048679\\
-beads.auto       & -0.253 & [-0.49;-0.016]  & \textcolor{red}{0.03687386}\\
-\end{tabular}
-\caption{
-\label{table:naive-cd25pos-association}
-\textbf{Genotype, age and sex effect sizes on percentage of \protein{CD25}+ cells.}
-Effect of \snp{rs12722495}, \snp{rs2104286}, \snp{rs11594656}, age and sex,
-on the percentage of \protein{CD25}+ naive cells.
-}
-\end{table}
-
+% Assoc test before update of phenotype (using 95 percentile of bead population)
+%\begin{table}[h]
+%\centering
+%\begin{tabular}{lrrr}
+%\rowcolor{Gray}
+%\snp{rs12722495} & effect & 95\%CI          & p-value\\
+%manual           & 0.172  & [-0.052;0.396]  & 0.1312672\\
+%beads.auto       & 0.312  & [0.079;0.546]   & \textcolor{red}{0.00905709}\\
+%\rowcolor{Gray}
+%\snp{rs2104286}  & effect & 95\%CI          & p-value\\
+%manual           & -0.481 & [-0.666;-0.296] & \textcolor{red}{7.9E-07}\\
+%beads.auto       & -0.528 & [-0.721;-0.335] & \textcolor{red}{2.2E-07}\\
+%\rowcolor{Gray}
+%\snp{rs11594656} & effect & 95\%CI          & p-value\\
+%manual           & -0.058 & [-0.227;0.111]  & 0.4987954\\
+%beads.auto       & -0.077 & [-0.255;0.101]  & 0.3947316\\
+%\rowcolor{Gray}
+%Age              & effect & 95\%CI          & p-value\\
+%manual           & 0.037  & [0.024;0.049]   & \textcolor{red}{2E-08}\\
+%beads.auto       & 0.037  & [0.024;0.05]    & \textcolor{red}{7E-08}\\
+%\rowcolor{Gray}
+%Sex              & effect & 95\%CI          & p-value\\
+%manual           & -0.217 & [-0.444;0.01]   & 0.06048679\\
+%beads.auto       & -0.253 & [-0.49;-0.016]  & \textcolor{red}{0.03687386}\\
+%\end{tabular}
+%\caption{
+%\label{table:naive-cd25pos-association}
+%\textbf{Genotype, age and sex effect sizes on percentage of \protein{CD25}+ cells.}
+%Effect of \snp{rs12722495}, \snp{rs2104286}, \snp{rs11594656}, age and sex,
+%on the percentage of \protein{CD25}+ naive cells.
+%}
+%\end{table}
+%
 
 \begin{table}[h]
 \centering
