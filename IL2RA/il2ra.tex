@@ -682,48 +682,6 @@ association is detected with the manually gated cell phenotype for \snp{rs127224
 whereas with the automatic gating, association is not always found.
 
 
-
-%% memory cell percentage 
-\begin{figure}[h]
-    \begin{subfigure}[b]{.5\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{IL2RA/figures/Agreement/mm-manual-agreement.pdf}
-        %\caption{ Agreement of Gaussian mixture model method (mm) with manual for MEF and for memory percentage.}
-       \caption{ }
-        \label{figure:mm-manual-agreement}
-    \end{subfigure}
-    ~
-    \begin{subfigure}[b]{.5\textwidth}
-       \includegraphics[width=\textwidth]{IL2RA/figures/Agreement/sp-mm-manual-agreement.pdf}
-       %\caption{ Agreement of semi-parametric mixture model method (sp.mm) with manual for MEF and for memory percentage.}
-       \caption{ }
-        \label{figure:sp-mm-manual-agreement}
-    \end{subfigure}
-    \mycaption{figure:memory-percentage-agreement}
-    {Agreement of percentage of memory cell obtained from \texttt{mm} and \texttt{sp.mm} with manual.}
-    {
-    The agreement with manual is better for the more flexible semiparametric \texttt{sp.mm} approach (b) than for \texttt{mm} (a),
-    though sample from individual d still remains an outlier.
-    Red points represent the $20$ samples where the cell phenotypes differ the most with manual 
-    whereas the green points represent the $20$ samples with the closest agreement.
-    %Some of the red points for \texttt{mm} (\Cref{figure:mm-manual-agreement}) are presented in Appendix~\Cref{outliers}.
-    }
-\end{figure} 
-
-\begin{figure}[h]
- \centering
- \includegraphics[scale=.6]{IL2RA/figures/Agreement/learned-mm-manual-agreement.pdf}
- %\caption{ Agreement of average daily gate positions of Gaussian mixture model method (learned.mm) with manual for MEF and for memory percentage.}
- \mycaption{figure:learned-mm-manual-agreement}
- {Agreement of percentage of memory cell obtained from \texttt{learned.mm} with manual.}
- {
- By taking the average of the gate positions on the day (\texttt{learned.mm}), we are able to gate sample d so that it is no longer an outlier
- as in \Cref{figure:memory-percentage-agreement}.
- Red points represent the $20$ samples where the cell phenotypes differ the most with manual 
- whereas the green points represent the $20$ samples with the closest agreement.
-  }
-\end{figure} 
-
 \begin{figure}[h]
 \begin{subfigure}[h]{.5\textwidth}
    \includegraphics[width=\textwidth]{IL2RA/figures/repeatability-memory.pdf}
