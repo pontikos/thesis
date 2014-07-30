@@ -97,7 +97,6 @@ Pacific Blue & CD45RA\\
 \end{table}
 
 
-
 The cell phenotypes studied by \citet{Dendrou:2009dv}, were obtained using manual gating with the FlowJo software\footnote{\url{www.flowjo.com}}.
 Manual gating follows the current state of understanding of immune cell lineages (\Cref{figure:manual-gating-strategy}).
 Lymphocytes are distinguishable from more granular and larger cell types based on forward and side scatter.
@@ -151,12 +150,12 @@ Samples analysed after July tend to have a lower CD25 MFI than those analysed be
 \end{figure} 
 
 In the first section of this chapter, I will show how to gate the bead data automatically.
-Next I will move on to the much harder task of the automatic gating of some of the cell phenotypes studied by \citet{Dendrou:2009dv}.
+Next I will move on to the harder task of the automatic gating of some of the cell phenotypes studied by \citet{Dendrou:2009dv}.
 % Calli's results
 % cell phenotypes
 Two of these cell phenotypes, percent of CD25 positive naive cells and CD25 MFI of memory cells, were found to be associated with SNPs in the IL2RA.
 Percent of CD25 positive naive cells and percent of memory cells, were found to be associated with age and marginally associated with sex.
-The repeatability was also tested thanks to the repeated individuals.
+The repeatability was also tested thanks to the 15 repeated individuals.
 Repeatability is important because better repeatability improves our power.
 These results as reported by \citet{Dendrou:2009dv} are summarised in \Cref{table:calli-results}.  
 In this chapter I will assess, whether I can replicate or improve on these results, with special attention given to repeatability,
@@ -403,7 +402,7 @@ The automatic threshold selection method (\texttt{beads.auto}) is therefore defi
 
 \begin{figure}[h]
 \centering
-  \includegraphics[width=.5\textwidth]{IL2RA/figures/Agreement/naive-cd25pos-beads-manual-agreement.pdf}
+\includegraphics[width=.5\textwidth]{IL2RA/figures/naive-cd25pos-beads-manual-agreement.pdf}
 \mycaption{figure:threshold-manual-agreement}
 { Agreement with manual of percentage of \protein{CD25}+ naive cell phenotype. }
 {
@@ -420,7 +419,10 @@ As we only have one bead set per day, we have a single fixed CD25 gate for all s
 %The concept of repeatability is explained in Appendix~\Cref{repeatability}.
 The \texttt{beads.auto} method for setting \protein{CD25} thresholds  shows improved repeatability of the percentage of \protein{CD25}+ naive T cell phenotype
 than manual (\Cref{figure:repeatability-cd25pos-naive}).  
-This improvement in repeatability translates into stronger association of the cell phenotype with genotype and sex (\Cref{table:naive-cd25pos-association}).
+
+Since the dataset contains 15 repeated individuals, I applied linear mixed effects model with random intercept to allow for per individual effect.
+Each covariate, genotype, age and sex, was applied in a separate linear regression
+(\Cref{table:naive-cd25pos-association}).
 
 
 \begin{figure}[h]
@@ -525,47 +527,123 @@ The EM algorithm is then run until convergence to estimate the parameters, mean,
 Semiparametric symmetric distributions are kernel density estimates centered around a location parameter.
 The bandwidth parameter of the kernel density estimate is fixed to $0.1$ but could also have been estimated heuristically from the data.
 
-Once the two component mixture has been fitted 
-we can emulate the manual gating by defining a threshold
-%or simply use the mixture weights.
+Once the two component mixture has been fitted, I will, in a first instance, attempt to emulate manual gating by defining a threshold.
+%later, I will consider using the mixture weights.  
+I will consider two approaches of selecting a threshold, \texttt{pct.thresh} and \texttt{post.thresh}, both which are illustrated in \Cref{figure:cd45ra-threshold-example}.
 
-One approach of selecting the threshold is to use the posterior probability.
-This approach takes into account the relative weight of both components.
+The aim of the first method, \texttt{pct.thresh}, is to closely replicate the manual CD45RA- gating procedure, as explained to me by \contributor{Linda Wicker}.
+In this approach, only the shape of the first component of the mixture model influences the position of CD45RA- memory gate.
+In order to delineate the memory population, we first identify the first peak of the bimodal CD45RA distribution,
+which when a two-component mixture has been fit, should correspond to the peak of the first component.
+Then, following the CD45RA density curve from the peak towards the left-hand-side,
+we record the CD45RA value after which the density curve drops below a certain given threshold.
+This CD45RA value is then mirrored to the right-hand-side of the peak in order to define the CD45RA- threshold.
+This technique is in fact equivalent to selecting a fixed percentile threshold
+for the first component to gate consistenty across all samples.
+%an manual approach to consistently drawing a CD45RA memory gate across all samples 
+%is closer to manual gating is to only consider the shape of the memory cell population
+%to draw the threshold. Here, a percentile of the first component can be used as cut-off.
+
+The second method, \texttt{post.thresh}, considers the ratio of both components in order to decide where to draw a threshold.
+Formally, \texttt{post.thresh} selects a threshold on the posterior probability of belonging to the first component, the memory population, across all samples.
+At a given point, the posterior probability of belonging to the first component is defined at that point, as the ratio of the density of the first component,
+over that of the total density.
 %The posterior probability can be interpreted as the confidence with which an event can be assigned to a component.
-It is in fact the ratio of the density of one component over that of the total density.
-In fact for a two component mixture model $f_1$ and $f_2$, and a posterior threshold of $p$ then a point $x$ is assigned
+Concretely, given a two component mixture model $f_1$ and $f_2$, and a posterior threshold of $p$, a point $x$ is assigned
 to component 1 provided that:
-
 \[
   f_1(x) \geq f_2(x) \dfrac{p}{1-p}
 \]
+For example, if the posterior probability threshold was $p=95\%$, then for $x$ to be assigned to the first component, $f_1$ would need to be $19$ times larger than $f_2$.
 
-If for example the posterior probability threshold were set to $95\%$ then $f_1$ would need to be $19$ times larger than $f_2$ for $x$
-to belong to the first component.
-When the posterior probability is less than the threshold for the cells for both components,
-then these are not assigned to a component.
-With regards to manual gating, this corresponds to the group of cells which fall in between the range defined by
-the two CD45RA gates.
-According to the manual gater, these are considered to belong be neither truly naive nor memory,
-but instead to be in a transitional state (\Cref{figure:manual-gating-strategy}d).
-However in the case of poorly fitting or very noisy samples, the posterior probability may never be reached.
+Given these two thresholding approaches, I wish to select a threshold for each, which most closely matches the manual gating.
+To this purpose, I use the method described in the previous section, to find the threshold which minimises the mean square difference with the manual gate position.
+Applying this method, I find that the optimal threshold is the $88^{th}$ percentile for \texttt{pct.thresh},
+and $89\%$ for \texttt{post.thresh} (\Cref{figure:cd45ra-gate-agreement}).
+Also I notice that in \texttt{post.thresh}, in certain samples,  the posterior probability does reach thresholds beyond $89$ (\Cref{figure:cd45ra-posterior-threshold-fail}).
+This can be due to poor model fit or extreme mixing of naive and cell population.
 
-Another approach, which is closer to manual gating is to only consider the shape of the memory cell population
-to draw the threshold. Here, a percentile of the first component can be used as cut-off.
 
-To choose a threshold which best matches the manual gating,
-we can use the method described in the previous section of picking the percentile at which the auto and manual gate position are the closest.
+\begin{figure}[h]
+\centering
+  \includegraphics[width=\textwidth]{IL2RA/figures/cd45ra-gate-agreement.pdf}
+\mycaption{figure:cd45ra-gate-agreement}
+{ Agreement of automatic gate position with manual. }
+{
+On the x axis, the CD25 percentiles of the blank bead population from 40 to 99.
+On the y axis, the mean squared difference between the position of the manual gate and that of the bead-derived gate.
+The $86^{th}$ percentile yields the best agreement with the manual gate positions in terms of mean squared difference.
+The automatic threshold selection method  is therefore defined as the APC $86^{th}$ percentile of the blank beads population.
+}
+\end{figure}
 
-Using both approaches, the agreement with manual of the memory CD25 MFI is good
-(\Cref{figure:cd25mfi-memory-auto-manual-agreement})
-since this cell phenotype is not very sensitive to the position of the \protein{CD45RA} gate
+\begin{figure}[h]
+\centering
+  \includegraphics[width=.5\textwidth]{IL2RA/figures/cd45ra-threshold-example.pdf}
+\mycaption{figure:cd45ra-threshold-example}
+{ Example on individual d of the two approaches of selecting a threshold. }
+{
+}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+  \includegraphics[width=.5\textwidth]{IL2RA/figures/cd45ra-posterior-threshold-fail.pdf}
+\mycaption{figure:cd45ra-posterior-threshold-fail}
+{Samples for which the 99 posterior is not reached}
+{
+  In black the manual gate.  In red the \texttt{post.thresh} gate drawn at $89$.
+  The posterior probability does not reach 99 percent in these six samples.
+  In a) this is because of poor model fit.
+  In the others a), b), c) and d), this is due to the mixing of the two distributions.
+  In b) the green distribution, component 2, is much wider which causes the density to be higher giving
+  rise to this non-uniform decreasing posterior function.
+}
+\end{figure}
+
+
+Using both approaches, the agreement with manual of the memory CD25 MFI is good (\Cref{figure:cd25mfi-memory-auto-manual-agreement}).
+This is to be expected as this cell phenotype is not very sensitive to the position of the \protein{CD45RA} gate
 (\Cref{figure:cd45raneg-memory-cd25mfi}).  
-This translates to similar repeatability to that obtained with manual gating (\Cref{table:repeatability-memory-cell-MEF-phenotype}) and similar effect sizes
-(\Cref{table:memory-cell-mef-effect}).
+
+
+%%
+\begin{figure}[h]
+  \includegraphics[width=\textwidth]{IL2RA/figures/cd45raneg-memory-gate-phenotype-sensitivity.pdf}
+\mycaption{figure:cd45raneg-memory-cd25mfi}
+{ Memory CD25 MFI is not sensitive to position of CD45RA gate whereas percent memory is. }
+{
+  The distribution of memory CD25 MFI is not affected the position of the CD45RA gate.
+  On the other hand, the percent memory phenotype is.
+}
+\end{figure}
+
+
+Hence, for this cell phenotype, this translates to similar repeatability to that obtained with manual gating (\Cref{table:repeatability-memory-cell-MEF-phenotype}) and similar effect sizes (\Cref{table:memory-cell-mef-effect}).
+
+%% memory cell CD25 MEF
+\begin{table} [h]
+\centering
+\begin{tabular} {|lc|}
+\cline{1-2}
+Method & $r^2$ \\
+\cline{1-2}
+manual     & 0.998 \\
+mm         & 0.997 \\
+sp.mm      & 0.998 \\
+learned.mm & 0.998 \\
+\cline{1-2}
+\end{tabular}
+\caption{  
+  \label{table:repeatability-memory-cell-MEF-phenotype}
+  \textbf{Repeatability of the CD25 MEF memory cell phenotype.}
+  $r^2$ is the Pearson correlation squared.
+}
+\end{table}
 
 On the other hand, the repeatability of the percentage of memory cell phenotype is very sensitive to the gating method.
 We can see that both automatic mixture model approaches (\texttt{mm} and \texttt{sp.mm}) yield worse repeatability than manual (\Cref{figure:repeatability-memory}).
-As is the case for the sample from individual d on day one (\Cref{figure:mm-memory}c),
+As is the case for the sample from individual d on day one (\Cref{figure:mm-memory}),
 the repeatability is compromised when the mixture of distributions approach fails to find a suitable gate because of poor model fit.
 If the posterior is used as a cut-off then this could be because the posterior is never reached.
 %As the same individual shows a very different profile on day two, I believe that, in this case, the noise is due to technical variation on that day rather
@@ -589,75 +667,17 @@ As we can see from the association tests of genotype, age and sex with percentag
 association is detected with the manually gated cell phenotype for \snp{rs12722495}, age and sex effects,
 whereas with the automatic gating, association is not always found.
 
-\clearpage
-
-%% memory cell CD25 MEF
-\begin{table} [h]
-\centering
-\begin{tabular} {|lc|}
-\cline{1-2}
-Method & $r^2$ \\
-\cline{1-2}
-manual     & 0.998 \\
-mm         & 0.997 \\
-sp.mm      & 0.998 \\
-learned.mm & 0.998 \\
-\cline{1-2}
-\end{tabular}
-\caption{  
-  \label{table:repeatability-memory-cell-MEF-phenotype}
-  \textbf{Repeatability of the CD25 MEF memory cell phenotype.}
-  $r^2$ is the Pearson correlation squared.
-}
-\end{table}
-\begin{table}[h]\footnotesize
-\centering
-\begin{tabular}{lrrr}
-\rowcolor{Gray}
-\snp{rs12722495} & effect  & 95\%CI            & p-value\\
-manual     & 169.604 & [113.392;225.816] & \textcolor{red}{1.402171E-08}\\
-mm         & 167.422 & [109.84;225.005]  & \textcolor{red}{4.185172E-08}\\
-sp.mm      & 163.481 & [106.792;220.17]  & \textcolor{red}{5.274774E-08}\\
-learned.mm & 166.335 & [109.324;223.346] & \textcolor{red}{3.792051E-08}\\
-\rowcolor{Gray}
-\snp{rs2104286} & effect  & 95\%CI            & p-value\\
-manual     & -24.507 & [-71;21.987]      & 0.2996305\\
-mm         & -23.494 & [-71.122;24.134]  & 0.331603\\
-sp.mm      & -24.596 & [-71.486;22.293]  & 0.3019448\\
-learned.mm & -24.226 & [-71.382;22.929]  & 0.3119814\\
-\rowcolor{Gray}
-\snp{rs11594656} & effect  & 95\%CI            & p-value\\
-manual     & 5.832   & [-36.612;48.276]  & 0.786572\\
-mm         & 3.996   & [-39.927;47.919]  & 0.8576929\\
-sp.mm      & 6.422   & [-36.82;49.664]   & 0.7697717\\
-learned.mm & 6.216   & [-37.271;49.703]  & 0.7781819\\
-\rowcolor{Gray}
-Age         & effect & 95\%CI         & p-value\\
-manual     & -1.641 & [-4.735;1.453] & 0.2966789\\
-mm         & -1.403 & [-4.573;1.767] & 0.3836938\\
-sp.mm      & -1.442 & [-4.563;1.679] & 0.3629259\\
-learned.mm & -1.577 & [-4.715;1.562] & 0.3227908\\
-\rowcolor{Gray}
-Sex        & effect  & 95\%CI           & p-value\\
-manual     & -25.857 & [-82.84;31.126]  & 0.3717028\\
-mm         & -20.922 & [-79.391;37.547] & 0.4809634\\
-sp.mm      & -21.794 & [-79.356;35.768] & 0.4558872\\
-learned.mm & -23.264 & [-81.153;34.624] & 0.4287351\\
-\end{tabular}
-\caption{
-\label{table:memory-cell-mef-effect}
-\textbf{Memory CD25 MEF effect sizes.}
-Effect of \snp{rs12722495}, \snp{rs2104286}, \snp{rs11594656}, sex and age on memory CD25 MEF.
-}
-\end{table}
-
-%%
 \begin{figure}[h]
-  \includegraphics[width=\textwidth]{IL2RA/figures/cd45raneg-memory-cd25mfi.pdf}
-\mycaption{figure:cd45raneg-memory-cd25mfi}
-{ Memory CD25 MFI is not sensitive to position of CD45RA gate. }
-{ The distribution of memory CD25 MFI is not affected the position of the CD45RA gate. }
-\end{figure}
+ \centering
+ \includegraphics[scale=.6]{IL2RA/figures/memory-auto-manual-agreement.pdf}
+ %\caption{ Agreement of average daily gate positions of Gaussian mixture model method (learned.mm) with manual for MEF and for memory percentage.}
+ \mycaption{figure:memory-auto-manual-agreement}
+ {Agreement of memory CD25 MFI (a and b) and percentage of memory cells (c and d), obtained from \texttt{pct.thresh} and \texttt{post.thresh} with manual.}
+ {
+   The agreement of memory CD25 MFI is very close to manual.
+ }
+\end{figure} 
+
 
 
 %% memory cell percentage 
@@ -728,6 +748,50 @@ The \texttt{learned.mm} approach improves on repeatability by more sensible gati
 }
 \end{figure}
 
+
+\begin{table}[h]\footnotesize
+\centering
+\begin{tabular}{lrrr}
+\rowcolor{Gray}
+\snp{rs12722495} & effect  & 95\%CI            & p-value\\
+manual     & 169.604 & [113.392;225.816] & \textcolor{red}{1.402171E-08}\\
+mm         & 167.422 & [109.84;225.005]  & \textcolor{red}{4.185172E-08}\\
+sp.mm      & 163.481 & [106.792;220.17]  & \textcolor{red}{5.274774E-08}\\
+learned.mm & 166.335 & [109.324;223.346] & \textcolor{red}{3.792051E-08}\\
+\rowcolor{Gray}
+\snp{rs2104286} & effect  & 95\%CI            & p-value\\
+manual     & -24.507 & [-71;21.987]      & 0.2996305\\
+mm         & -23.494 & [-71.122;24.134]  & 0.331603\\
+sp.mm      & -24.596 & [-71.486;22.293]  & 0.3019448\\
+learned.mm & -24.226 & [-71.382;22.929]  & 0.3119814\\
+\rowcolor{Gray}
+\snp{rs11594656} & effect  & 95\%CI            & p-value\\
+manual     & 5.832   & [-36.612;48.276]  & 0.786572\\
+mm         & 3.996   & [-39.927;47.919]  & 0.8576929\\
+sp.mm      & 6.422   & [-36.82;49.664]   & 0.7697717\\
+learned.mm & 6.216   & [-37.271;49.703]  & 0.7781819\\
+\rowcolor{Gray}
+Age         & effect & 95\%CI         & p-value\\
+manual     & -1.641 & [-4.735;1.453] & 0.2966789\\
+mm         & -1.403 & [-4.573;1.767] & 0.3836938\\
+sp.mm      & -1.442 & [-4.563;1.679] & 0.3629259\\
+learned.mm & -1.577 & [-4.715;1.562] & 0.3227908\\
+\rowcolor{Gray}
+Sex        & effect  & 95\%CI           & p-value\\
+manual     & -25.857 & [-82.84;31.126]  & 0.3717028\\
+mm         & -20.922 & [-79.391;37.547] & 0.4809634\\
+sp.mm      & -21.794 & [-79.356;35.768] & 0.4558872\\
+learned.mm & -23.264 & [-81.153;34.624] & 0.4287351\\
+\end{tabular}
+\caption{
+\label{table:memory-cell-mef-effect}
+\textbf{Memory CD25 MEF effect sizes.}
+Effect of \snp{rs12722495}, \snp{rs2104286}, \snp{rs11594656}, sex and age on memory CD25 MEF.
+}
+\end{table}
+
+
+
 \begin{table}[h]\footnotesize
 \centering
 \begin{tabular}{lrrr}
@@ -768,8 +832,6 @@ Sex         & effect & 95\%CI         & p-value\\
 Effect of \snp{rs12722495}, \snp{rs2104286}, \snp{rs11594656}, sex and age on memory cell percentage.
 }
 \end{table}
-
-
 
 
 
