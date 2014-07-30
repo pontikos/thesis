@@ -544,24 +544,24 @@ for the first component to gate consistenty across all samples.
 %is closer to manual gating is to only consider the shape of the memory cell population
 %to draw the threshold. Here, a percentile of the first component can be used as cut-off.
 
-The second method, \texttt{post.thresh}, considers the ratio of both components in order to decide where to draw a threshold.
+The second method, \texttt{post.thresh}, considers the density ratio of both components in order to decide where to draw a threshold.
 Formally, \texttt{post.thresh} selects a threshold on the posterior probability of belonging to the first component, the memory population, across all samples.
-At a given point, the posterior probability of belonging to the first component is defined at that point, as the ratio of the density of the first component,
+At a given point, the posterior probability of belonging to the first component is defined as the ratio of the density of the first component,
 over that of the total density.
 %The posterior probability can be interpreted as the confidence with which an event can be assigned to a component.
-Concretely, given a two component mixture model $f_1$ and $f_2$, and a posterior threshold of $p$, a point $x$ is assigned
-to component 1 provided that:
+Concretely, given a two component mixture model where, $f_1$ is the density of the first component and $f_2$ the density of the second, and a posterior threshold of $p$,
+then a point $x$ is assigned to component 1 provided that:
 \[
   f_1(x) \geq f_2(x) \dfrac{p}{1-p}
 \]
-For example, if the posterior probability threshold was $p=95\%$, then for $x$ to be assigned to the first component, $f_1$ would need to be $19$ times larger than $f_2$.
+For example, if the posterior probability threshold was $p=95\%$, then for $x$ to be assigned to the first component, $f_1(x)$ would need to be $19$ times larger than $f_2(x)$.
 
-Given these two thresholding approaches, I wish to select a threshold for each, which most closely matches the manual gating.
-To this purpose, I use the method described in the previous section, to find the threshold which minimises the mean square difference with the manual gate position.
+Given these two thresholding approaches, I wish to select a threshold for \texttt{pct.thresh} and for \texttt{post.thresh}, which most closely matches the manual gating.
+To this purpose, I use the method described in the previous section (\Cref{figure:cd25pos-gate-agreement}), to find the threshold which minimises the mean square difference with the manual gate position.
 Applying this method, I find that the optimal threshold is the $88^{th}$ percentile for \texttt{pct.thresh},
 and $89\%$ for \texttt{post.thresh} (\Cref{figure:cd45ra-gate-agreement}).
-Also I notice that in \texttt{post.thresh}, in certain samples,  the posterior probability does reach thresholds beyond $89$ (\Cref{figure:cd45ra-posterior-threshold-fail}).
-This can be due to poor model fit or extreme mixing of naive and cell population.
+Also I notice that for the \texttt{post.thresh}, in certain samples,  the posterior probability does reach thresholds beyond $89$ (\Cref{figure:cd45ra-posterior-threshold-fail}).
+This can be due to poor model fit (\Cref{figure:cd45ra-posterior-threshold-fail}a) or too much overlap between the memory and naive cell population.
 
 
 \begin{figure}[h]
@@ -583,12 +583,18 @@ The automatic threshold selection method  is therefore defined as the APC $86^{t
 \mycaption{figure:cd45ra-threshold-example}
 { Example on individual d of the two approaches of selecting a threshold. }
 {
+  Individual d was chosen to illustrate, \texttt{pct.thresh} and \texttt{post.thresh}, because on one day (a and b) to the next (c and d), 
+  the CD45RA distribution takes on a very different shape.
+  In (a) and (c), the \texttt{pct.thresh} method, places the gate at the 88th percentile of the first component.
+  In (b) and (d), the \texttt{post.thresh} method, places the gate where the posterior of the first component reachers 89 percent.
+  This poses a problem in (d) because the overlap of the components is such that the posterior is only reached close to zero
+  which yields a much smaller gate and consequently a lower percent of memory cells (\Cref{figure:memory-auto-manual-agreement}d).
 }
 \end{figure}
 
 \begin{figure}[h]
 \centering
-  \includegraphics[width=.5\textwidth]{IL2RA/figures/cd45ra-posterior-threshold-fail.pdf}
+  \includegraphics[scale=.6]{IL2RA/figures/cd45ra-posterior-threshold-fail.pdf}
 \mycaption{figure:cd45ra-posterior-threshold-fail}
 {Samples for which the 99 posterior is not reached}
 {
@@ -602,10 +608,22 @@ The automatic threshold selection method  is therefore defined as the APC $86^{t
 \end{figure}
 
 
-Using both approaches, the agreement with manual of the memory CD25 MFI is good (\Cref{figure:cd25mfi-memory-auto-manual-agreement}).
+Using both approaches, the agreement with manual of the memory CD25 MFI is good (\Cref{figure:memory-auto-manual-agreement}).
 This is to be expected as this cell phenotype is not very sensitive to the position of the \protein{CD45RA} gate
 (\Cref{figure:cd45raneg-memory-cd25mfi}).  
+Hence, for this cell phenotype, this translates to similar repeatability to that obtained with manual gating (\Cref{table:repeatability-memory-cell-MEF-phenotype}) and similar effect sizes (\Cref{table:memory-cell-mef-effect}).
+On the other hand, the repeatability of the percentage of memory cell phenotype is very sensitive to the gating method.
 
+\begin{figure}[h]
+ \centering
+ \includegraphics[scale=.6]{IL2RA/figures/memory-auto-manual-agreement.pdf}
+ %\caption{ Agreement of average daily gate positions of Gaussian mixture model method (learned.mm) with manual for MEF and for memory percentage.}
+ \mycaption{figure:memory-auto-manual-agreement}
+ {Agreement of memory CD25 MFI (a and b) and percentage of memory cells (c and d), obtained from \texttt{pct.thresh} and \texttt{post.thresh} with manual.}
+ {
+   The agreement of memory CD25 MFI is very close to manual (a and b) while the automatic methods tend to yield smaller memory cell percentages (c and d).
+ }
+\end{figure} 
 
 %%
 \begin{figure}[h]
@@ -618,8 +636,6 @@ This is to be expected as this cell phenotype is not very sensitive to the posit
 }
 \end{figure}
 
-
-Hence, for this cell phenotype, this translates to similar repeatability to that obtained with manual gating (\Cref{table:repeatability-memory-cell-MEF-phenotype}) and similar effect sizes (\Cref{table:memory-cell-mef-effect}).
 
 %% memory cell CD25 MEF
 \begin{table} [h]
@@ -641,7 +657,6 @@ learned.mm & 0.998 \\
 }
 \end{table}
 
-On the other hand, the repeatability of the percentage of memory cell phenotype is very sensitive to the gating method.
 We can see that both automatic mixture model approaches (\texttt{mm} and \texttt{sp.mm}) yield worse repeatability than manual (\Cref{figure:repeatability-memory}).
 As is the case for the sample from individual d on day one (\Cref{figure:mm-memory}),
 the repeatability is compromised when the mixture of distributions approach fails to find a suitable gate because of poor model fit.
@@ -662,21 +677,9 @@ Since the gate position is less sensitive to outlier samples, \texttt{learned.mm
 \texttt{mm}.
 Nonetheless, manual still achieves higher repeatability (\Cref{table:repeatability-results}) as
 the gater has prior knowledge of cell population frequencies when dealing with outliers.
-
 As we can see from the association tests of genotype, age and sex with percentage of memory cells \Cref{table:memory-cell-pct-effect},
 association is detected with the manually gated cell phenotype for \snp{rs12722495}, age and sex effects,
 whereas with the automatic gating, association is not always found.
-
-\begin{figure}[h]
- \centering
- \includegraphics[scale=.6]{IL2RA/figures/memory-auto-manual-agreement.pdf}
- %\caption{ Agreement of average daily gate positions of Gaussian mixture model method (learned.mm) with manual for MEF and for memory percentage.}
- \mycaption{figure:memory-auto-manual-agreement}
- {Agreement of memory CD25 MFI (a and b) and percentage of memory cells (c and d), obtained from \texttt{pct.thresh} and \texttt{post.thresh} with manual.}
- {
-   The agreement of memory CD25 MFI is very close to manual.
- }
-\end{figure} 
 
 
 
