@@ -49,29 +49,64 @@ The distribution by age ($20$ to $50$ years old) and sex is split evenly across 
 The running time of the whole experiment was seven months over which samples were analysed on $51$ days,
 between one and six samples per day (\Cref{figure:IL2RA-sample-time}).  
 
+%
+%\begin{table}[h]
+%\centering
+%\begin{tabular}{lllllll}
+  %\hline
+          %& individual      & pch      & visit 1           & visit 2           & difference (days) \\
+  %\hline
+  %1      & CB00058M      & a      & 2008-03-04      & 2008-09-16      & 196 \\
+  %2      & CB00427N      & b      & 2008-02-20      & 2008-10-02      & 225 \\
+  %3      & CB00435X      & c      & 2008-02-28      & 2008-10-02      & 217 \\
+  %4      & CB00459Y      & d      & 2008-03-26      & 2008-10-09      & 197 \\
+  %5      & CB00470K      & e      & 2008-04-10      & 2008-09-18      & 161 \\
+  %6      & CB00474P      & f      & 2008-04-16      & 2008-09-16      & 153 \\
+  %7      & CB00475Q      & g      & 2008-05-08      & 2008-09-18      & 133 \\
+  %8      & CB00496N      & h      & 2008-05-12      & 2008-09-22      & 133 \\
+  %\st{9} & \st{CB00503W} & \st{i} & \st{2008-05-06} & \st{2008-09-18} & \st{135} \\
+  %10     & CB00555C      & j      & 2008-05-22      & 2008-09-16      & 117 \\
+  %11     & CB00563L      & k      & 2008-05-29      & 2008-09-18      & 112 \\
+  %12     & CB00566P      & l      & 2008-05-29      & 2008-09-18      & 112 \\
+  %13     & CB00568R      & m      & 2008-05-29      & 2008-09-22      & 116 \\
+  %14     & CB00588N      & n      & 2008-06-12      & 2008-10-09      & 119 \\
+  %15     & CB00591R      & o      & 2008-06-16      & 2008-09-22      & 98 \\
+  %16     & CB00646B      & p      & 2008-07-15      & 2008-10-02      & 79  \\
+  %\hline
+%\end{tabular}
+%\mycaption{table:IL2RA-recalled-individuals}
+%{Recalled indiviuals.}
+%{
+%Sixteen individuals recalled between 79 and 226 days later.
+%pch is the plotting character used to refer to these individuals in plots later in this chapter.
+%Unfortunately some of the FCS files for individual i were not found, so had to be excluded.
+%Hence the repeatability, could only be assessed in 15 individuals.
+%}
+%\end{table}
+%
 
 \begin{table}[h]
 \centering
 \begin{tabular}{lllllll}
   \hline
-           & individual      & pch      & visit 1           & visit 2           & difference (days) \\
+         &  pch      & visit 1           & visit 2           & difference (days) \\
   \hline
-  1      & CB00058M      & a      & 2008-03-04      & 2008-09-16      & 196 \\
-  2      & CB00427N      & b      & 2008-02-20      & 2008-10-02      & 225 \\
-  3      & CB00435X      & c      & 2008-02-28      & 2008-10-02      & 217 \\
-  4      & CB00459Y      & d      & 2008-03-26      & 2008-10-09      & 197 \\
-  5      & CB00470K      & e      & 2008-04-10      & 2008-09-18      & 161 \\
-  6      & CB00474P      & f      & 2008-04-16      & 2008-09-16      & 153 \\
-  7      & CB00475Q      & g      & 2008-05-08      & 2008-09-18      & 133 \\
-  8      & CB00496N      & h      & 2008-05-12      & 2008-09-22      & 133 \\
-  \st{9} & \st{CB00503W} & \st{i} & \st{2008-05-06} & \st{2008-09-18} & \st{135} \\
-  10     & CB00555C      & j      & 2008-05-22      & 2008-09-16      & 117 \\
-  11     & CB00563L      & k      & 2008-05-29      & 2008-09-18      & 112 \\
-  12     & CB00566P      & l      & 2008-05-29      & 2008-09-18      & 112 \\
-  13     & CB00568R      & m      & 2008-05-29      & 2008-09-22      & 116 \\
-  14     & CB00588N      & n      & 2008-06-12      & 2008-10-09      & 119 \\
-  15     & CB00591R      & o      & 2008-06-16      & 2008-09-22      & 98 \\
-  16     & CB00646B      & p      & 2008-07-15      & 2008-10-02      & 79  \\
+  1      &  a      & 2008-03-04      & 2008-09-16      & 196 \\
+  2      &  b      & 2008-02-20      & 2008-10-02      & 225 \\
+  3      &  c      & 2008-02-28      & 2008-10-02      & 217 \\
+  4      &  d      & 2008-03-26      & 2008-10-09      & 197 \\
+  5      &  e      & 2008-04-10      & 2008-09-18      & 161 \\
+  6      &  f      & 2008-04-16      & 2008-09-16      & 153 \\
+  7      &  g      & 2008-05-08      & 2008-09-18      & 133 \\
+  8      &  h      & 2008-05-12      & 2008-09-22      & 133 \\
+  \st{9} &  \st{i} & \st{2008-05-06} & \st{2008-09-18} & \st{135} \\
+  10     &  j      & 2008-05-22      & 2008-09-16      & 117 \\
+  11     &  k      & 2008-05-29      & 2008-09-18      & 112 \\
+  12     &  l      & 2008-05-29      & 2008-09-18      & 112 \\
+  13     &  m      & 2008-05-29      & 2008-09-22      & 116 \\
+  14     &  n      & 2008-06-12      & 2008-10-09      & 119 \\
+  15     &  o      & 2008-06-16      & 2008-09-22      & 98 \\
+  16     &  p      & 2008-07-15      & 2008-10-02      & 79  \\
   \hline
 \end{tabular}
 \mycaption{table:IL2RA-recalled-individuals}
@@ -83,6 +118,8 @@ Unfortunately some of the FCS files for individual i were not found, so had to b
 Hence the repeatability, could only be assessed in 15 individuals.
 }
 \end{table}
+
+
 
 
 \begin{figure}[h]
