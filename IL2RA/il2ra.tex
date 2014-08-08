@@ -38,7 +38,7 @@ Alexa-700    & CD4\\
 Pacific Blue & CD45RA\\
 \end{tabular}
 \mycaption{table:IL2RA-panel}
-{ The fluorochrome-antibody panels with six markers used in the ILRA dataset.  }
+{ The fluorochrome-antibody panels with six markers used in the IL2RA dataset.  }
 { }
 \end{table}
 
@@ -87,32 +87,32 @@ between one and six samples per day (\Cref{figure:IL2RA-sample-time}).
 
 \begin{table}[h]
 \centering
-\begin{tabular}{lllllll}
+\begin{tabular}{lll}
   \hline
-         &  pch      & visit 1           & visit 2           & difference (days) \\
+         &  pch           & difference (days) \\
   \hline
-  1      &  a      & 2008-03-04      & 2008-09-16      & 196 \\
-  2      &  b      & 2008-02-20      & 2008-10-02      & 225 \\
-  3      &  c      & 2008-02-28      & 2008-10-02      & 217 \\
-  4      &  d      & 2008-03-26      & 2008-10-09      & 197 \\
-  5      &  e      & 2008-04-10      & 2008-09-18      & 161 \\
-  6      &  f      & 2008-04-16      & 2008-09-16      & 153 \\
-  7      &  g      & 2008-05-08      & 2008-09-18      & 133 \\
-  8      &  h      & 2008-05-12      & 2008-09-22      & 133 \\
-  \st{9} &  \st{i} & \st{2008-05-06} & \st{2008-09-18} & \st{135} \\
-  10     &  j      & 2008-05-22      & 2008-09-16      & 117 \\
-  11     &  k      & 2008-05-29      & 2008-09-18      & 112 \\
-  12     &  l      & 2008-05-29      & 2008-09-18      & 112 \\
-  13     &  m      & 2008-05-29      & 2008-09-22      & 116 \\
-  14     &  n      & 2008-06-12      & 2008-10-09      & 119 \\
-  15     &  o      & 2008-06-16      & 2008-09-22      & 98 \\
-  16     &  p      & 2008-07-15      & 2008-10-02      & 79  \\
+  1      &  a       & 196 \\
+  2      &  b       & 225 \\
+  3      &  c       & 217 \\
+  4      &  d       & 197 \\
+  5      &  e       & 161 \\
+  6      &  f       & 153 \\
+  7      &  g       & 133 \\
+  8      &  h       & 133 \\
+  \st{9} &  \st{i}  & \st{135} \\
+  10     &  j       & 117 \\
+  11     &  k       & 112 \\
+  12     &  l       & 112 \\
+  13     &  m       & 116 \\
+  14     &  n       & 119 \\
+  15     &  o       & 98 \\
+  16     &  p       & 79  \\
   \hline
 \end{tabular}
 \mycaption{table:IL2RA-recalled-individuals}
-{Recalled indiviuals.}
+{Number of days till second visit for recalled individuals.}
 {
-Sixteen individuals recalled between 79 and 226 days later.
+Sixteen individuals recalled between 79 and 225 days later.
 pch is the plotting character used to refer to these individuals in plots later in this chapter.
 Unfortunately some of the FCS files for individual i were not found, so had to be excluded.
 Hence the repeatability, could only be assessed in 15 individuals.
@@ -139,7 +139,7 @@ The cell phenotypes studied by \citet{Dendrou:2009dv}, were obtained using manua
 Manual gating follows the current state of knowledge of immune cell lineages (\Cref{figure:manual-gating-strategy}).
 Lymphocytes are distinguishable from more granular and larger cell types based on forward and side scatter.
 Within the lymphocytes, the subset expressing \protein{CD4} are defined as T lymphocytes.
-The CD4+ T lymphocyte subset can be further divided into regulatory and non-regulatory cells (\Cref{figure:manual-gating-strategy}c).
+The \protein{CD4}\positive T lymphocyte subset can be further divided into regulatory and non-regulatory cells (\Cref{figure:manual-gating-strategy}c).
 Regulatory cells represent a lower frequency subset which are higher in \protein{CD25} and lower in \protein{CD127}.
 Regulatory T cells can be defined more precisely by the intracellular \protein{FOXP3} transcription factor.
 Non regulatory T cells represent the bigger proportion of T lymphocytes.
@@ -148,7 +148,7 @@ The non regulatory T cells can be further divided into naive and memory subsets 
 Upon antigen presentation, naive cells are activated and differentiate into effector cells, some of which further differentiate into memory cells
 while the remainder die.
 Thus cells are in a transitional state between naive and memory.  
-As part of the transition process from naive to memory, the \protein{CD45RA} is lost so that consequently naive cells are higher in CD45RA than memory cells.
+As part of the transition process from naive to memory, the \protein{CD45RA} is lost so that consequently naive cells are higher in \protein{CD45RA} than memory cells.
 A further secondary distinguishable property is that memory cells tend to be higher in \protein{CD25} expression than naive cells.
 Since \protein{CD25} expression on the naive cells is low, \citet{Dendrou:2009dv} define a threshold above which naive cells are deemed positive on CD25.
 Their threshold is defined in terms of an isotype control, a sample not stained for \protein{CD25}, to measure the background.
@@ -165,8 +165,8 @@ In the first section of this chapter, I will show how to gate the bead data auto
 Next I will move on to the harder task of the automatic gating of some of the cell phenotypes studied by \citet{Dendrou:2009dv}.
 % Calli's results
 % cell phenotypes
-Two of these cell phenotypes, percent of CD25+ naive cells and CD25 MFI of memory cells, were found to be associated with SNPs in the \gene{IL2RA}.
-Percent of CD25+ naive cells and percent of memory cells, were found to be associated with age and marginally associated with sex.
+Two of these cell phenotypes, percent of \protein{CD25}\positive naive cells and CD25 MFI of memory cells, were found to be associated with SNPs in the \gene{IL2RA}.
+Percent of \protein{CD25}\positive naive cells and percent of memory cells, were found to be associated with age and marginally associated with sex.
 The repeatability was also tested thanks to the 15 recalled individuals.
 Repeatability is important because better repeatability improves the power to detect an effect.
 These repeatability and association results, as reported by \citet{Dendrou:2009dv}, are summarised in \Cref{table:calli-results}.  
@@ -178,7 +178,7 @@ with a computational method:
 %But in order to facilitate initial comparison with manual gating, in this chapter,
 %I will only automate the two last univariate gating steps (\Cref{figure:manual-gating-strategy}d):
 \begin{itemise}
-\item Univariate gating on \protein{CD25} to threshold naive cells into positive and negative subsets, in order to obtain the percentage of CD25+ naive cells.
+\item Univariate gating on \protein{CD25} to threshold naive cells into positive and negative subsets, in order to obtain the percentage of CD25\positive naive cells.
 \item Univariate gating on \protein{CD45RA} to threshold non-regulatory T cells into naive and memory cells, in order to obtain the percentage of memory cells and
 the CD25 MFI of memory cells.
 \end{itemise}
@@ -190,7 +190,7 @@ the CD25 MFI of memory cells.
 \mycaption{figure:manual-gating-strategy} 
 {Manual gating of IL2RA dataset.}
 {
-Manual gating strategy to extract memory T cells and CD25+ naive T cells (green boxes).
+Manual gating strategy to extract memory T cells and CD25\positive naive T cells (green boxes).
 Note that the CD45RA gates exclude cells which are considered to be neither memory nor naive.
 Our automated gating replaces the final stage of the manual gating on CD25 and CD45RA.
 }
@@ -356,12 +356,12 @@ These types of plots are generated automatically by the \Rpackage{flowBeads}.
 
 
 %%% CD25POS
-\section{Univariate Gating on CD25: defining a CD25+ threshold on naive cells}
+\section{Univariate gating on CD25: defining a \protein{CD25}\positive threshold on naive cells}
 
-%The population of non regulatory CD4+ T cells is not clearly bimodal on CD25 like CD45RA.
+%The population of non regulatory CD4\positive T cells is not clearly bimodal on CD25 like CD45RA.
 The approach adopted by the manual method is to define a threshold above which cells are considered positive for CD25.
 According to \citet{Dendrou:2009dv} and my email correspondence with \contributor{Calliope Dendrou},
-the CD25+ threshold is set manually using an ad-hoc process based on an isotype control, bead data and ultimately a judgement call
+the CD25\positive threshold is set manually using an ad-hoc process based on an isotype control, bead data and ultimately a judgement call
 by the manual gater.
 An isotype control is a sample stained with the same fluorochrome (APC) but conjugated to a
 non-specific sticky antibody not designed to target the marker we are interested in quantifying.
@@ -378,18 +378,18 @@ the gates needing to be shifted down to account for this (\Cref{figure:memory-CD
 \centering
 \includegraphics[width=.5\textwidth] {IL2RA/figures/cd25pos-gates.pdf}
 \mycaption{figure:cd25pos-gates}
-{Position of the \protein{CD25}+ gate over duration of experiment.}
+{Position of the \protein{CD25}\positive gate over duration of experiment.}
 {
-The black horizontal dashes are the positions of the manual CD25+ gates for all 196 samples over the time course of the experiment (51 days).
+The black horizontal dashes are the positions of the manual CD25\positive gates for all 196 samples over the time course of the experiment (51 days).
 The vertical black lines represent the days and so define the range of the manual gate positions on a given day.
-The blue line represents our automatic CD25+ gate which corresponds to the $86^{th}$ percentile of the blank bead population.
+The blue line represents our automatic CD25\positive gate which corresponds to the $86^{th}$ percentile of the blank bead population.
 }
 \end{figure}
 
 
 %As we can see from \Cref{figure:mef}, the Memory T Cell MFI range is in between the MFI of the blank beads and dimmest bead population.
 %Our automatic approach relies 
-%Thus we define a threshold to distinguish CD25+ from CD25 negative cells using the automatically gated bead data on the day which the sample was ran.
+%Thus we define a threshold to distinguish CD25\positive from CD25 negative cells using the automatically gated bead data on the day which the sample was ran.
 Drawbacks of the manual approach are its lack of consistency and its reliance on isotype controls.
 The gating criterion is subject to human judgement and so may not be consistent across samples.
 Isotype controls are costly since part of the sample and fluorochromes is consumed for control purposes, consequently they are not always analysed.
@@ -421,19 +421,19 @@ The automatic threshold selection method (\texttt{beads.thresh}) is therefore de
 \centering
 \includegraphics[width=.5\textwidth]{IL2RA/figures/naive-cd25pos-beads-manual-agreement.pdf}
 \mycaption{figure:threshold-manual-agreement}
-{ Agreement with manual of percentage of \protein{CD25}+ naive cell phenotype. }
+{ Agreement with manual of percentage of \protein{CD25}\positive naive cell phenotype. }
 {
-  Except for individual d, the agreement of \texttt{beads.thresh} with manual for percentage of CD25+ naive cells
+  Except for individual d, the agreement of \texttt{beads.thresh} with manual for percentage of CD25\positive naive cells
   is very good.  $r^2$ is the Pearson correlation squared.
 }
 \end{figure}
 
-Hence the CD25+ threshold defined by my approach, \texttt{beads.thresh}, is set as the $86^{th}$ percentile of the automatically gated blank bead population on that day.
+Hence the CD25\positive threshold defined by my approach, \texttt{beads.thresh}, is set as the $86^{th}$ percentile of the automatically gated blank bead population on that day.
 As we only have one bead set per day, we have a single fixed CD25 gate for all samples on that day (\Cref{figure:memory-CD25MFI-time-effect}).
 
 %In order to assess the dependency of the repeatability on the gates we chose the percentage phenotypes rather than the MEF.
 %The concept of repeatability is explained in Appendix~\Cref{repeatability}.
-The \texttt{beads.thresh} method for setting \protein{CD25} thresholds  shows improved repeatability of the percentage of \protein{CD25}+ naive T cell phenotype
+The \texttt{beads.thresh} method for setting \protein{CD25} thresholds  shows improved repeatability of the percentage of \protein{CD25}\positive naive T cell phenotype
 than manual (\Cref{figure:repeatability-cd25pos-naive}).  
 
 
@@ -441,9 +441,9 @@ than manual (\Cref{figure:repeatability-cd25pos-naive}).
 \centering
 \includegraphics[width=.5\textwidth]{IL2RA/figures/repeatability-cd25pos-naive.pdf}
 \mycaption{figure:repeatability-cd25pos-naive}
-{Repeatability of percentage of naive \protein{CD25}+.}
+{ Repeatability of percentage of naive \protein{CD25}\positive. }
 {
-Repeatability of the percentage of naive cells which are CD25+ from day one to day two.
+Repeatability of the percentage of naive cells which are CD25\positive from day one to day two.
 The overall repeatability of this cell phenotype was better with \texttt{beads.thresh} (red)
 than the manual (black).
 Letters are used to identify indidividuals, see \Cref{table:IL2RA-recalled-individuals}.
@@ -454,12 +454,12 @@ The Pearson correlation squared is $r^2=0.458$ for manual and $r^2=0.769$ for \t
 \clearpage
 
 %%% CD45RA
-\section{Univariate Gating on CD45RA: fitting two-component mixtures on non-regulatory T cells}
+\section{Univariate gating on CD45RA: fitting two-component mixtures on non-regulatory T cells}
 
-Non regulatory CD4+ T cells appear bimodal on CD45RA because this marker is lost upon activation of naive cells (CD45RA+) to memory cells (CD45RA-).
+Non regulatory CD4\positive T cells appear bimodal on CD45RA because this marker is lost upon activation of naive cells (CD45RA\positive to memory cells (CD45RA-).
 In this section, we will model the CD45RA distribution by fitting a two component mixture model.
 Although we model both populations, we will only gate the memory (CD45RA-) cell population, which corresponds to the first component,
-since the naive (CD45RA+) cell population, the second component, is not a terminal gate as
+since the naive (CD45RA\positive cell population, the second component, is not a terminal gate as
 it is further divided into CD25 negative (see previous section) and positive subsets.
 
 
@@ -669,11 +669,11 @@ by applying a linear mixed effects model with random intercept to allow for per 
 To that purpose I used the \Rfunction{lme} from the \Rpackage{nlme}.
 Each covariate, genotype, age and sex, was tested separately, with an additive recessive model assumed for the SNP effect.
 
-Overall, the association test with the percent CD25+ naive cells phenotype yields similar effect sizes to manual (\Cref{table:naive-cd25pos-association}).
+Overall, the association test with the percent CD25\positive naive cells phenotype yields similar effect sizes to manual (\Cref{table:naive-cd25pos-association}).
 A significant age and \snp{rs2104286} effect are reported using both manual and \texttt{beads.thresh} gating.
 However, the significance of the \snp{rs2104286} effect found with \texttt{beads.thresh}, is an order of magnitude less ($10^{-4}$) than with manual ($10^{-5}$).
-On the other hand, \texttt{beads.thresh} adds some evidence to the suggested association by \citet{Dendrou:2009dv} of a sex effect on percentage of CD25+ naive cells,
-whereby males have a lower percentage of naive CD25+ than females, although the effect remains marginal.
+On the other hand, \texttt{beads.thresh} adds some evidence to the suggested association by \citet{Dendrou:2009dv} of a sex effect on percentage of CD25\positive naive cells,
+whereby males have a lower percentage of naive CD25\positive than females, although the effect remains marginal.
 
 Regarding the percentage memory cell phenotype,
 an age effect is also detected using automatic methods, \texttt{post.thresh} and \texttt{pct.thresh}, however the signifcance of the association 
@@ -719,10 +719,10 @@ manual           & -4.216  & [-7.856;-0.575]  & \textcolor{red}{0.023475}\\
 beads.thresh       & -4.327  & [-7.936;-0.718]   & \textcolor{red}{0.019046}\\
 \end{tabular}
 \mycaption{table:naive-cd25pos-association}
-{Genotype, age and sex effect sizes on percentage of \protein{CD25}+ cells.}
+{Genotype, age and sex effect sizes on percentage of \protein{CD25}\positive cells.}
 {
 Effect of \snp{rs12722495}, \snp{rs2104286}, \snp{rs11594656}, age and sex,
-on the percentage of \protein{CD25}+ naive cells.
+on the percentage of \protein{CD25}\positive naive cells.
 }
 \end{table}
 
@@ -836,20 +836,20 @@ Effect of \snp{rs12722495}, \snp{rs2104286}, \snp{rs11594656}, sex and age on me
 \begin{table}[h]\footnotesize
 \begin{tabularx} {\linewidth} {|XlcXXX|}
 \cline{1-6}
-\mbox{CD4+ T Cell} Subset  & Phenotype  & Repeatability ($r^2$) & Genetic Effect                                                            & Age Effect                                & Sex Effect\\
+\mbox{CD4\positive T Cell} Subset  & Phenotype  & Repeatability ($r^2$) & Genetic Effect                                                            & Age Effect                                & Sex Effect\\
 \cline{1-6}
-CD25+ Naive                & Percentage & $0.669$               & \mbox{$\downarrow$ \snp{rs2104286}} \mbox{$\text{P}=4.25 \times 10^{-6}$} & $\uparrow$ \mbox{$P=2.22 \times 10^{-9}$} & \mbox{M < F} \mbox{$P=0.005$}\\
+CD25\positive Naive                & Percentage & $0.669$               & \mbox{$\downarrow$ \snp{rs2104286}} \mbox{$\text{P}=4.25 \times 10^{-6}$} & $\uparrow$ \mbox{$P=2.22 \times 10^{-9}$} & \mbox{M < F} \mbox{$P=0.005$}\\
 \cline{1-6}
 Memory                     & CD25 MEF   & $0.997$               & \mbox{$\uparrow$ \snp{rs12722495}} \mbox{$\text{P}=1.16 \times 10^{-10}$} & None                                      & None \\
 \cline{2-6}
                            & Percentage & $0.862$               & None                                                                      & $\uparrow$ \mbox{$P=8.97 \times 10^{-5}$} & None \\
-%CD4+ FOXP3+ T Cells
+%CD4\positive FOXP3\positive T Cells
 %CD25 MEF
 %Percentage
 \cline{1-6}
 \end{tabularx}
 \mycaption{table:calli-results}
-{Repeatability and effect sizes of percentage of naive \protein{CD25}+, \protein{CD25} MEF and percentage of memory cell phenotypes.}
+{Repeatability and effect sizes of percentage of naive \protein{CD25}\positive \protein{CD25} MEF and percentage of memory cell phenotypes.}
 {
 Subset of results from \citet{Dendrou:2009dv} for cell populations under re-analysis in this chapter.
 $r^2$ is the Pearson correlation squared.
@@ -881,13 +881,13 @@ Automatic gating of bead data is fast and automates other related tasks such as 
 Gating of biological data is more difficult as we have little prior knowledge of the sample we are analysing.
 So far, I have developed two automatic univariate gating strategies:
 \begin{itemise}
-\item a bead defined threshold method on \protein{CD25} to identify CD25+ naive cells
+\item a bead defined threshold method on \protein{CD25} to identify CD25\positive naive cells
 \item a two component mixture model on \protein{CD45RA} to identify memory cells (CD45RA-)
 \end{itemise}
 
 My \protein{CD25} univariate gating method (\texttt{beads.thresh}) relies on defining a threshold based on automatically gated bead data.
 The value of the threshold is selected as the percentile of the blank bead population which mimimises the mean squared difference with manual gate positions.
-The percentage of naive \protein{CD25}+ cells phenotype identified with my approach showed better repeatability than manual (\Cref{figure:repeatability-cd25pos-naive}).
+The percentage of naive \protein{CD25}\positive cells phenotype identified with my approach showed better repeatability than manual (\Cref{figure:repeatability-cd25pos-naive}).
 My approach defines one threshold for all samples gated on the same day,
 %which seems appropriate given the blank bead population yields the detection threshold of the instrument on that day.
 whereas the manual approach, relies on isotype controls and allows for different thresholds per day.
@@ -971,7 +971,7 @@ This should encourage the wider use of automatic analysis methods for flow data 
 %One reason why the manual gates on that day are more appropriate is because a human uses prior knowledge obtained from other samples of where the gates should lie.
 %A first attempt at learning from other samples (\texttt{day.thresh}) is to compute the mean of the position of the CD45RA gates defined by the \texttt{pct.thresh}
 %method across all samples from the same day excluding the outlying sample from individual d on day one.
-%Similar to the threshold method for \protein{CD25}+ covered in the previous section, we now have a fixed gate for all samples analysed on the same day.
+%Similar to the threshold method for \protein{CD25}\positive covered in the previous section, we now have a fixed gate for all samples analysed on the same day.
 %The \texttt{day.thresh} agreement with manual is improved over x but not as good as y
 %%but this time requires estimation of gate position by mm followed by averaging their position.
 %%When attempting to gate more noisy samples, a manual gater will maybe use other samples as a reference.
