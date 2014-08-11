@@ -3,81 +3,24 @@
 
 \section{Background}
 
-\Glspl{GWAS} have found at least two \glspl{SNP} that associate with T1D in the chr10p15 region containing the \gene{IL2RA} gene \citep{Lowe:2007ij},
-which codes for \protein{CD25}, the high affinity binding alpha chain of the trimeric \protein{IL-2} cytokine receptor.  
+\Glspl{GWAS} have found at least two \glspl{SNP} that associate with T1D in the chr10p15 region containing the \gene{IL2RA} gene \citep{Lowe:2007ij}.
+\gene{IL2RA} codes for \protein{CD25}, the high affinity binding alpha chain of the trimeric \protein{IL-2} cytokine receptor.  
 \protein{CD25} is found at varying quantities on the surface of numerous T lymphocyte subsets such as naive, memory and
 regulatory cells.
 \protein{CD25} is also upregulated upon activation in lymphocytes and monocytes, 
-and is known to play a key role in immunoregulation and immune responsiveness \citep{Brusko:2009bn,Boyman:2012cy}.
+and is known to play a key role in immunoregulation and immune responsiveness \citep{Brusko:2009bn,Boyman:2012cy}.  
+SNPs in the \gene{IL2RA} region have also been associated with other immune mediated diseases including multiple sclerosis \citep{Beecham:2013hh} and rheumatoid arthritis \citep{Stahl:2010dy}.
 
-SNPs in this region have also been associated with other immune mediated diseases including multiple sclerosis \citep{Beecham:2013hh} and rheumatoid arthritis \citep{Stahl:2010dy}.
-
-To better study the downstream implications of three SNPs, \snp{rs12722495}, \snp{rs2104286} and \snp{rs11594656},
+To better study the downstream implications of three of these SNPs, namely \snp{rs12722495}, \snp{rs2104286} and \snp{rs11594656},
 on \protein{CD25} expressing T lymphocyte subsets, Dendrou et al
 %\citet{Dendrou:2009dv}
 analysed blood samples obtained from healthy donors from the CambridgeBioresource\footnote{\url{www.cambridgebioresource.org.uk}},
 selected by genotype at these SNPs, and matched by sex and age.
-After lysis of the red blood cells, the samples were stained with the antibody panel specified in \Cref{table:IL2RA-panel}.
-
-\begin{table}[h]
-\centering
-\begin{tabular}{lc}
-\rowcolor{Gray}
-Fluorochrome  & Antibody target\\
-Alexa-488    & CD127\\
-PE-Cy7       & HLADR\\
-APC          & CD25\\
-PE           & CD101\\
-Alexa-700    & CD4\\
-Pacific Blue & CD45RA\\
-\end{tabular}
-\mycaption{table:IL2RA-panel}
-{ The fluorochrome-antibody panels with six markers used in the IL2RA dataset.  }
-{ }
-\end{table}
-
 The experiment consisted of a total of $180$ individuals, fifteen of which were recalled for a second sample (\Cref{table:IL2RA-recalled-individuals}).
 %A total of 224 FCS files.
 %and split into to seven genotype groups.
 The distribution by age ($20$ to $50$ years old) and sex is split evenly across genotype groups (\Cref{table:subjects}).
-The running time of the whole experiment was seven months over which samples were analysed on $51$ days,
-between one and six samples per day (\Cref{figure:IL2RA-sample-time}).  
 
-%
-%\begin{table}[h]
-%\centering
-%\begin{tabular}{lllllll}
-  %\hline
-          %& individual      & pch      & visit 1           & visit 2           & difference (days) \\
-  %\hline
-  %1      & CB00058M      & a      & 2008-03-04      & 2008-09-16      & 196 \\
-  %2      & CB00427N      & b      & 2008-02-20      & 2008-10-02      & 225 \\
-  %3      & CB00435X      & c      & 2008-02-28      & 2008-10-02      & 217 \\
-  %4      & CB00459Y      & d      & 2008-03-26      & 2008-10-09      & 197 \\
-  %5      & CB00470K      & e      & 2008-04-10      & 2008-09-18      & 161 \\
-  %6      & CB00474P      & f      & 2008-04-16      & 2008-09-16      & 153 \\
-  %7      & CB00475Q      & g      & 2008-05-08      & 2008-09-18      & 133 \\
-  %8      & CB00496N      & h      & 2008-05-12      & 2008-09-22      & 133 \\
-  %\st{9} & \st{CB00503W} & \st{i} & \st{2008-05-06} & \st{2008-09-18} & \st{135} \\
-  %10     & CB00555C      & j      & 2008-05-22      & 2008-09-16      & 117 \\
-  %11     & CB00563L      & k      & 2008-05-29      & 2008-09-18      & 112 \\
-  %12     & CB00566P      & l      & 2008-05-29      & 2008-09-18      & 112 \\
-  %13     & CB00568R      & m      & 2008-05-29      & 2008-09-22      & 116 \\
-  %14     & CB00588N      & n      & 2008-06-12      & 2008-10-09      & 119 \\
-  %15     & CB00591R      & o      & 2008-06-16      & 2008-09-22      & 98 \\
-  %16     & CB00646B      & p      & 2008-07-15      & 2008-10-02      & 79  \\
-  %\hline
-%\end{tabular}
-%\mycaption{table:IL2RA-recalled-individuals}
-%{Recalled indiviuals.}
-%{
-%Sixteen individuals recalled between 79 and 226 days later.
-%pch is the plotting character used to refer to these individuals in plots later in this chapter.
-%Unfortunately some of the FCS files for individual i were not found, so had to be excluded.
-%Hence the repeatability, could only be assessed in 15 individuals.
-%}
-%\end{table}
-%
 
 \begin{table}[h]
 \centering
@@ -93,7 +36,7 @@ between one and six samples per day (\Cref{figure:IL2RA-sample-time}).
   6      &  f       & 153 \\
   7      &  g       & 133 \\
   8      &  h       & 133 \\
-  9     &  i       & 117 \\
+  9      &  i       & 117 \\
   10     &  j       & 112 \\
   11     &  k       & 112 \\
   12     &  l       & 116 \\
@@ -134,6 +77,29 @@ GG & GG & TT & 9 & 12 & 38.4\\
 \end{table}
 
 
+After lysis of the red blood cells, the samples were stained with the antibody panel specified in \Cref{table:IL2RA-panel}.  
+The running time of the whole experiment was seven months over which samples were analysed on $51$ days,
+between one and six samples per day (\Cref{figure:IL2RA-sample-time}).  
+
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lc}
+\rowcolor{Gray}
+Fluorochrome  & Antibody target\\
+Alexa-488    & CD127\\
+PE-Cy7       & HLADR\\
+APC          & CD25\\
+PE           & CD101\\
+Alexa-700    & CD4\\
+Pacific Blue & CD45RA\\
+\end{tabular}
+\mycaption{table:IL2RA-panel}
+{ The fluorochrome-antibody panels with six markers used in the IL2RA dataset.  }
+{ }
+\end{table}
+
+
 \begin{figure}[h]
 \centering
 \includegraphics[scale=.5] {flowdatasets/figures/il2ra-samples-time.pdf}
@@ -148,74 +114,75 @@ with between one and six samples analysed each day.
 
 
 The cell phenotypes studied by \citet{Dendrou:2009dv}, were obtained using manual gating with the FlowJo software\footnote{\url{www.flowjo.com}}.
-Manual gating follows the current state of knowledge of immune cell lineages (\Cref{figure:manual-gating-strategy}).
-Lymphocytes are distinguishable from more granular and larger cell types based on forward and side scatter.
-The lymphocytes include, B cells and T cells, and the latter population includes cells expressing \protein{CD8} or \protein{CD4}.
-Within the lymphocytes, the subset expressing \protein{CD4} are defined as T lymphocytes.
-The \protein{CD4}\positive T lymphocyte subset can be further divided into regulatory and non-regulatory cells (\Cref{figure:manual-gating-strategy}c).
-Regulatory cells represent a low-frequency subset which has the highest CD25 expression compared to other cells at rest, and which
-expresses no or only a very low level of \protein{CD127}.  
-%higher in \protein{CD25} and lower in \protein{CD127}.
-Regulatory T cells can be defined more precisely by the intracellular \protein{FOXP3} transcription factor, which is constitutively expressed
-only in regulatory T cells.
-Non-regulatory T cells represent a larger proportion of T lymphocytes.
-They express more \protein{CD127} and less \protein{CD25} than regulatory T cells.
-Non-regulatory T cells can be further divided into naive and memory subsets (\Cref{figure:manual-gating-strategy}d).  
-Upon antigen presentation, naive cells are activated and differentiate into effector cells, some of which further differentiate into memory cells
-while the remainder die.
-%Thus cells are in a transitional state between naive and memory.  
-As part of the transition process from naive to memory, the cell surface protein \protein{CD45RA} is lost so that consequently naive cells have higher \protein{CD45RA} expression than memory cells.
-A further difference between these subsets is that memory cells tend to have a higher CD25 expression than naive cells.
-%A further secondary distinguishable property is that memory cells tend to be higher in \protein{CD25} expression than naive cells.
-Since \protein{CD25} expression on the naive cells is low, with only a subset of the cells expressing substantial levels of the molecule,
-\citet{Dendrou:2009dv} define a threshold above which naive cells are deemed positive for CD25.
-Their threshold is defined in terms of an isotype control, a sample not stained for \protein{CD25}, to measure the background.
+Manual gating follows the current state of knowledge of immune cell lineages and the gating strategy followed by \citet{Dendrou:2009dv} is described
+in \Cref{figure:manual-gating-strategy}.
+
+Part of the variation in the cell phenotypes identified with gating might be linked to covariates such genotype, age an sex.
+However part of the variation is linked to instrument variation and Dendrou et al had to correct  for this with beads.
 
 
-The threshold for positivity was defined using an isotype control sample which was stained not with anti-CD25 antibody but with an antibody
-with no defined target which was conjugated to the same fluorochrome, APC (\Cref{table:IL2RA-panel}), thereby enabling the background level of any unspecific
-staining to be observed.
+%Their threshold is defined in terms of an isotype control, a sample not stained for \protein{CD25}, to measure the background.  
+The threshold for positivity was defined using an isotype control, a sample not stained with an anti-CD25 antibody but instead with an antibody
+with no defined target, conjugated to the same fluorochrome (APC (\Cref{table:IL2RA-panel})).
+The purpose of the isotype control is thereby to observe the background level of any unspecific staining, although
+when dealing with cells with a low Fc receptor expression where unspecific antibody binding is less of an issue.
 
-The variation observed through time complicates the task of gating, which may already be influenced by the fact that gating is subjective as it relies,
-to an extent, on the opinion of the gater.  The time-dependent variation is, for example, observeable from the MFI of the memory population and this can
-be corrected using beads.  But the reliance on manual gating is more difficult to deal with and it has been questioned how good isotype controls are.
-The use of beads might help overcome the abolute need for isotypes, especially when dealing with cells with a low Fc receptor expression where
+
+However the process of gating introduces variation, since gating is subjective as it relies,
+to an extent, on the opinion of the gater.  
+Futhermore this process is tedious on large numbers of samples.
+There is therefore considerable interest in automating the process
+
+It might worth incorporating these points into a broader discussion regarding variables in the paragraph above 
+you could explain that the variables contributing to phenotypic variation of the data set are genotype, age and sex 
+stating the examples you mention 
+and also experimental/temporal variation as well as that introduced by gating 
+which are then focusing on more...
+
+
+Additionally to gating variation, long running flow experiments are also subject to instrument variation
+Since samples were collected and analysed over a period of seven months, 
+The variation observed through time complicates the task of gating, 
+The time-dependent variation is, for example, observeable from the MFI of the memory population and this can
+be corrected using beads. 
+
+
+The use of beads can also help overcome the abolute need for isotypes, especially when dealing with cells with a low Fc receptor expression where
 unspecific antibody binding is less of an issue.
 However, even the bead populations themselves require gating, and so in the first section of the chapter...
 
-the variables contributing to phenotypic variation are genotype, age and sex (examples), but alos experimental temporal variation as well
-as that introduced by gating, whic are then focusing on more...
 
 
 %adjusted depending on the MFI of the blank beads population on that day.
 %\protein{CD25} is known to be upregulated under inflammatory conditions
 
-I think that in this paragraph you perhaps need to describe what the problem is or convey why there is a need for automated gating ie: the variation observed through time complicates the task of gating, which may already be influenced by the fact that gating is subjective as it relies - to an extent - on the opinion of the gater.
-This time-dependent variation is, for example, observable from the MFI of the mem pop and this can corrected using the beads.
+
 But the reliance on manual gating is more difficult to deal with and it has been questioned how good isotype controls are.
-The use of the beads might help overcome the absolute need for isotypes, especially when dealing with cells with a low Fc receptor expression where unspecific antibody binding is less of an issue.
-However, even the beads populations themselves require gating, and so in the first section of the chapter you show how…etc etc
 
 
-Since samples were collected and analysed over a period of seven months, 
+
 instrument variation is detectable in the CD25 mean fluorescence intensity (MFI) of the memory cell population (\Cref{figure:memory-CD25MFI-time-effect}).
 This time effect was first discussed in \citet{Dendrou:2009bl}.
 To correct for this, beads were run daily in order to define a transform from MFI to molecules of equivalent fluorescence (MEF) which should be more stable over time.
-The bead data consist of six populations of increasing fluorescence intensity, which are manually gated by \citet{Dendrou:2009dv}.
-These gated bead populations can also be used to define a threshold above which cells are considered positive for \protein{CD25}.
+The bead data consist of six populations of increasing fluorescence intensity, 
+These bead populations can also be used to define a threshold above which cells are considered positive for \protein{CD25}, 
+to help overcome the absolute need for isotypes, 
+However, even the beads populations themselves require gating, which are manually gated by \citet{Dendrou:2009dv}.
+and so in the first section of the chapter, I will show how to gate the bead data automatically.
 
-In the first section of this chapter, I will show how to gate the bead data automatically.
+
 Next I will move on to the harder task of the automatic gating of some of the cell phenotypes studied by \citet{Dendrou:2009dv}.
 % Calli's results
 % cell phenotypes
 Two of these cell phenotypes, percent of \protein{CD25}\positive naive cells and CD25 MFI of memory cells, were found to be associated with SNPs near the \gene{IL2RA}.
 
-It might worth incorporating these points into a broader discussion regarding variables in the paragraph above - you could explain that the variables contributing to phenotypic variation of the data set are genotype, age and sex - stating the examples you mention - and also experimental/temporal variation as well as that introduced by gating - which are then focusing on more...
-
 Percent of \protein{CD25}\positive naive cells and percent of memory cells, were found to be associated with age and marginally associated with sex.
 The repeatability was also tested thanks to the 15 recalled individuals.
 Repeatability is important because better repeatability improves the power to detect an effect.
 These repeatability and association results, as reported by \citet{Dendrou:2009dv}, are summarised in \Cref{table:calli-results}.  
+
+
+
 In this chapter I will assess, whether I can replicate or improve on these results, with special attention given to repeatability,
 by replacing the last two univariate manual gating steps (\Cref{figure:manual-gating-strategy}d)
 with a computational method:
@@ -234,11 +201,31 @@ the CD25 MFI of memory cells.
 \centering
 \includegraphics[scale=.5] {IL2RA/figures/ManualGating/manual-gating.pdf}
 \mycaption{figure:manual-gating-strategy} 
-{Manual gating of IL2RA dataset.}
+{Manual gating strategy followed by \citet{Dendrou:2009dv}.}
 {
 Manual gating strategy to extract memory T cells and CD25\positive naive T cells (green boxes).
 Note that the CD45RA gates exclude cells which are considered to be neither memory nor naive.
 Our automated gating replaces the final stage of the manual gating on CD25 and CD45RA.
+Lymphocytes are distinguishable from more granular and larger cell types based on forward and side scatter.
+The lymphocytes include, B cells and T cells, and the latter population includes cells expressing \protein{CD8} or \protein{CD4}.
+Within the lymphocytes, the subset expressing \protein{CD4} are defined as T lymphocytes.
+The \protein{CD4}\positive T lymphocyte subset can be further divided into regulatory and non-regulatory cells (\Cref{figure:manual-gating-strategy}c).
+Regulatory cells represent a low-frequency subset which has the highest CD25 expression compared to other cells at rest, and which
+expresses no or only a very low level of \protein{CD127}.  
+%higher in \protein{CD25} and lower in \protein{CD127}.
+Regulatory T cells can be defined more precisely by the intracellular \protein{FOXP3} transcription factor, which is constitutively expressed
+only in regulatory T cells.
+Non-regulatory T cells represent a larger proportion of T lymphocytes,
+they express more \protein{CD127} and less \protein{CD25} than regulatory T cells.
+Non-regulatory T cells can be further divided into naive and memory subsets (\Cref{figure:manual-gating-strategy}d).  
+Upon antigen presentation, naive cells are activated and differentiate into effector cells, some of which further differentiate into memory cells
+while the remainder die.
+%Thus cells are in a transitional state between naive and memory.  
+As part of the transition process from naive to memory, the cell surface protein \protein{CD45RA} is lost so that consequently naive cells have higher \protein{CD45RA} expression than memory cells.
+A further difference between these subsets is that memory cells tend to have a higher CD25 expression than naive cells.
+%A further secondary distinguishable property is that memory cells tend to be higher in \protein{CD25} expression than naive cells.
+Since \protein{CD25} expression on the naive cells is low, with only a subset of the cells expressing substantial levels of the molecule,
+\citet{Dendrou:2009dv} define a threshold above which naive cells are deemed positive for CD25.
 }
 \end{figure} 
 
@@ -410,9 +397,10 @@ The approach adopted by the manual method is to define a threshold above which c
 According to \citet{Dendrou:2009dv} (and \contributor{Calliope Dendrou} personal communication),
 the CD25\positive threshold is set manually using an ad-hoc process based on an isotype control, bead data and ultimately a judgement call
 by the manual gater.
-An isotype control is a sample stained with the same fluorochrome (APC) but conjugated to a
-non-specific antibody not designed to target the marker we are interested in quantifying.
-It is used as a technique for assessing background APC fluorescence not resulting from CD25 binding.
+% already explained in introduction
+%An isotype control is a sample stained with the same fluorochrome (APC) but conjugated to a
+%non-specific antibody not designed to target the marker we are interested in quantifying.
+%It is used as a technique for assessing background APC fluorescence not resulting from CD25 binding.
 
 %adjusted using the daily bead data.
 This manual approach to setting the threshold, leads to a different gate position per sample per day (\Cref{figure:cd25pos-gates}).
@@ -445,7 +433,7 @@ the behaviour of the staining and other sources of technical variation \citep{Ma
 
 I wished to improve on this process by using a more consistent and economical approach, using only beads, which I called \texttt{beads.thresh}.
 Instead of using isotype data, my working hypothesis,
-was that blank beads would constitute a more stable reference, which can be used to define an APC-CD25 threshold.
+was that blank beads would constitute a more stable reference, which could be used to define an APC-CD25 threshold.
 To find a suitable bead-derived threshold, I first gated the blank beads using my \Rpackage{flowBeads}, then I searched for the APC percentile of the
 blank bead population which best agreed with the manual gate (\Cref{figure:cd25pos-gate-agreement}).
 I found that in this dataset, the $86^{th}$ percentile of the blank bead population, best matched the manual gate position.
