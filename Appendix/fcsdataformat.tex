@@ -1,0 +1,28 @@
+\chapter{ \label{appendix:fcs-data-format}Flow Cytometry Standard (FCS) Data Formats: FCS 2 vs FCS 3}
+
+The objective of the Flow Cytometry Standard is to define a unified file format for flow data
+that allows files created by one type of acquisition hardware and software to be analyzed by any other type.
+The data format determines the range and the precision of the data stored.
+
+The first Flow Cytometry Standard format for data files was FCS 1.0 \citep{Murphy:1984ev}.
+The standard was later updated in 1990 as FCS 2.0 \citep{Anon:1990ce} and again in 1997 as FCS 3.0 \citep{Anonymous:vr}.
+FCS 2.0 and FCS 3.0 are the current two main competing standards.
+
+
+FCS 2 is a logarithmically compressed format which does not allow negative intensities.  
+Instead negative values reported by the instrument are arbitrarily assigned the minimum value.
+This leads to what is described as the log artefact: a pile up of intensities on the axes for low intensity values.
+FCS2 data are integers in the range $1$ to $10000$ (4 decades).
+FCS 3 on the other hand is closer to the raw data, covers a greater range and allows for negative values.
+FCS 3 leaves more flexibility to the choice of transform.
+FCS 3 are floating point numbers in the range $-211$ to $262143$ (8 decades)
+FCS 2 is more trivial to process as it requires practically no post processing except for a log transform.
+FCS 3 requires more careful thought as it leaves to us the compensation and the choice of a suitable transformation.
+%In my work so far I have been using FCS 2 to facilitate comparison to the manual analysis but in the future I intend to use FCS 3 instead.  
+%FCS 2 has compensation pre-applied whereas in FCS 3 compensation matrix is stored as part of the data format and needs to be applied manually.
+%Unfortunately due to limitations of the fluorescent dyes and the instrument, the fluorescent signal measured in on channel is often a mixture of signals.
+%This phenomenon is known as spectral spillover.
+%The deconvolution of this signal is a process known as compensation.  The matrix solution is known as the spillover matrix
+%and is usually a square matrix if there as many dyes as there are detectors.
+
+

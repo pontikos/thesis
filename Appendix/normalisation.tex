@@ -4,17 +4,6 @@
 %These methods are illustrated on simulated and real biological datasets.
 %These methods can be generalised to multivariate datasets if ind
 
-The purpose of normalisation is to remove unwanted experimental variation to make data comparable even when the samples are
-collected on different days, processed with different protocols or instrumental configurations.
-However distinguishing between unwanted and biological variation necessitates some prior knowledge about the datasets, either in the form of distributional assumptions
-or of features which exist across samples.
-Such features can then be used as reference points to normalise across samples.
-If the features are modes in the data, then normalisation is equivalent to doing clustering, in order to identify the modes,
-followed by meta-clustering to match the modes across samples.
-In microarray gene epxression datasets, for example, one distributional assumption is that the majority of genes are not differentially expressed between samples from
-similar tissue types.
-The underlying principle is that true biological variation is specific whereas experimental variation affects the sample as a whole.
-
 %The objective of flow cytometry is to capture variation in the biological sample not variation linked to the instrument or to other experimental factors.
 %Normalisation is the process of factoring out non-biological for sensible comparison fo samples analysed at different times or on different instruments.
 
@@ -35,6 +24,35 @@ The underlying principle is that true biological variation is specific whereas e
 
 \section{Data driven normalisation}
 
+
+\paragraph{Data dependent normalisation}
+
+In the case of flow cytometry, the distributions are typically multimodal since they are representative of a mixture of cell populations.
+The modes of the distributions are representative of how the expected quantity of protein carried on the surface of different cell types which,
+in theory, should remain fairly stable if cells are of the same type.
+However, the relative frequencies of the cell populations is susceptible to variations in sampling and so is expected to be less stable.
+In such a scenario, a reasonable normalisation method is to align the modes i.e the peaks of the distributions so that different cell populations are centered
+in a similar location across samples even when their relative quantity changes.
+The implementation of this normalisation method then depends on the method used to identify the peaks and to match them across samples.
+
+The best scenario is when the number of peaks is known and constant across samples.
+In this scenario, basic clustering algorithms such as k-means or k-medoids, can be applied to identify the peaks in each sample.
+Once the peaks have been identified a transform can then be defined so that they are aligned across samples.
+If there are only two peaks, a linear transform can perfectly align the two peaks, but if there are more than two peaks, alignement may necessitate a non-linear transform.
+%The shifting of the data of the data can be done using a linear transform which scales the variance by the slope squared.
+
+Next let's consider normalisation of multivariate distributions.  
+The purpose of principal component correction is to remove unwanted correlation between samples.
+When applying a linear transform to multivariate data the correlation between the dimensions is preserved since the multiplicative factors cancel out.
+However the covariance changes.
+Care must be taken when applying a non-linear transform.  
+Normalisation is effectively analogous to meta-clustering since we are attempting to match cell populations across samples.  
+Normalisation facilitates matching clusters across datasets but in doing can remove meaningful biological variation.  
+A less biased approach is to allow for different cluster location and shapes across datasets and instead incorporate the clustering in some sort of hierarchical framework.  
+Normalisation or meta-clustering is a necessary step when data is pooled across studies.
+
+
+
 Perhaps the most basic form of normalisation is scaling: we substract the mean and divide by the variance so that the resulting distribution has a mean of zero and a variance of one.
 %This approach is sensible if the distibutions are symmetric unimodal like the normal distribution.
 Figure~\ref{normalisation-scaled} is a trivial example of scaling on simulated data.
@@ -53,7 +71,9 @@ Figure~\ref{normalisation-scaled} is a trivial example of scaling on simulated d
 \includegraphics[scale=.4]{figures/normalisation-scaled-b.pdf} 
 \caption{after scaling}
 \end{subfigure}
-\caption{ \label{normalisation-scaled}
+\mycaption{normalisation-scaled}
+{Normalisation by scaling on simulated data.}
+{
 In solid black line represents the density function obtained from $10,000$ draws from a normal distribution
 with with means $\mu_0=1$ and standard deviation $\sigma_0=1$.
 The dashed line represents the density function obtained from $1,000$ draws from a normal distribution
@@ -82,7 +102,9 @@ Quantile normalisation works well when the shape of the distributions is the sam
 \includegraphics[scale=.4]{figures/normalisation-quantile-b.pdf} 
 \caption{after aligning quantiles}
 \end{subfigure}
-\caption{ \label{normalisation-quantile}
+\mycaption{normalisation-quantile}
+{Normalisation by quantile alignment on simulated data.}
+{
 In solid black line represents the density function obtained from $10,000$ draws from a gamma distribution
 with with shape $\alpha_0=20$ and rate $\beta_0=1.5$.
 The dashed line represents the density function obtained from $1,000$ draws from a gamma distribution
@@ -140,7 +162,9 @@ This is the method we applied on qPCR data to align common copy number groups 1 
 \includegraphics[scale=.4]{figures/normalisation-peaks-b.pdf} 
 \caption{peak alignment}
 \end{subfigure}
-\caption{ \label{normalisation-peaks}
+\mycaption{normalisation-peaks}
+{Normalisation by peak alignment.}
+{
 Alignment of the two identified peaks.
 }
 \end{figure}
@@ -340,142 +364,8 @@ However often, little is known of the data being analysed and prior knowledge ca
 When available internal (spike-ins) or external controls, can yield a less biased normalisation technique.
 Instrument variation can be detected by using a synthetic object of known and stable property which can be analysed within the sample
 or independently.
-In flow cytometry, fluorescent beads can be used to make intensity data comparable across days. 
-
-
-
-\subsection{Normalisation Using Beads: Accounting for Non-Biological Variation Across Samples}
-
-
-In flow cytometry, one method of normalising fluorescence intensity is to convert Mean Fluorescence Intensity (MFI)
-to Molecules of Equivalent Fluorochrome (MEF) \citep{Schwartz:1996jj,Dendrou:2009bl}.
-In order to apply this conversion, specially designed beads of known and (assumed) constant fluorescence defined in terms of MEF are used as a reference.
-The MEF property of these beads is deemed stable whereas the MFI of the bead population is dependent on the instrument and varies over time.
-
-The beads we use are specially manufactured so that they belong to six distinct populations of increasing MEF as shown in Table~\ref{table:fluorospheres}.
-Following the bead manufacturer's guidelines, plotting the $\log_{10}(MEF)$ of these six bead populations against
-the corresponding calculated $log_{10}(MFI)$ from the gated bead populations, we fit the linear regression:
-
-
-\begin{equation}
-    \log_{10}(\text{MEF})=\beta  \times \log_{10}(\text{MFI}) + \alpha
-\label{equ:MEF}
-\end{equation}
-
-The MEF can then be obtained and is in fact a power transform of the MFI\footnote{This transform is only defined for strictly positive MFI values}:
-
-%\[
-%    MEF= 10^{\beta  \times log_{10}(MFI) + \alpha}
-%]
-
-\[
-    \text{MEF}= 10^\alpha \times \text{MFI}^\beta
-\]
-
-%and so is only defined for 
-%positive MFI values because $\beta$ is not an integer.
-
-%If we add a location parameter $b$ then as expected the MEF does not scale linearly.
-%\[
-    %MEF= 10^\alpha \times (MFI+b)^\beta
-%\]
-
-The original MEF transform used by \citet{Dendrou:2009bl} assumes that $\beta=1$ which
-gives similar results given that I found that the $\beta$ term in Equation~\ref{equ:MEF} turns out to be on average $0.96$.
-
-
-In estimating the parameters $\beta$ and $\alpha$ of the linear model, only the non blank beads are used because the MEF of the blank beads is not specified by the manufacturer.
-In fact extrapolating the MEF of the blank beads yields the detection threshold (Figure~\ref{figure:mef}) which we will see can be used in defining positive cell subsets.
-The MEF of the blank beads is always greater than the intercept $\alpha$  which represents the log offset (the zero channel value).
-%Below this threshold the intensity is meaningless as the blank beads contain by design no fluorochrome.
-
-Typically even bead data is gated manually.
-Here, in order to obtain $\beta$ and $\alpha$ parameters of the MEF transform, I will use an automatic process to gate the beads.
-
-\begin{table} [hb]
-\begin{center}
-\begin{tabular} {|c c c c c c|}
-\cline{1-6}
-Population & FITC & RPE & REP-Cy5 & \textbf{APC} & PE-Texas Red\\
-\cline{1-6}
-1 & B & B & B & \textbf{B} & B \\
-2 & 2,500 & 1,500 & 750 & \textbf{4,100} & 552\\
-3 & 6,500 & 4,400 & 2,100 & \textbf{10,300} & 2,014\\
-4 & 19,000 & 14,500 & 6900 & \textbf{25,500} & 6,975\\
-5 & 55,000 & 43,800 & 22,100 & \textbf{67,300} & 20,685\\
-6 & 150,000 & 131,200 & 77,100 & \textbf{139,100} & 71,888\\
-\cline{1-6}
-\end{tabular}
-\end{center}
-\caption{ \label{table:fluorospheres} FluoroSpheres from DakoCytomation. 
-    The Molecules of Equivalent Fluorochromes (MEF) values for the six bead populations as provided by the manufacturer.
-    B denote the blank beads which by design contain no fluorochrome.
-    Of the six fluorochromes contained by each bead only APC is used in the experiment.
- }
-\end{table}
-
-\begin{figure}[hb]
-    \centering
-    \includegraphics[scale=0.6]{IL2RA/figures/BeadNormalisation/MEF.pdf}
-    \caption{ Linear regression of bead MFI against MEF. The horizontal dash lines represent the MEF of the six bead populations.
-    The red and green vertical lines define the range of memory CD25 MFI across all samples in \citet{Dendrou:2009dv}. }
-    \label{figure:mef}
-\end{figure}
-
-
-
-Because all beads are known to be of identical shape and size, we expect a single cluster in the scatter channels.
-Events which lie away from the main bead population are deemed to be beads clumped together or debris and so are discarded.
-This can be done by fitting a bivariate normal distribution on forward and side scatter and only keeping the 95th percentile..
-Once we have identified the main bead population we known that the beads belong to six populations distinguishable in the APC channel.
-
-%We will see that these two steps are easily automated using existing tools (FlowClust on the scatter and K-Medoids on the APC channel)
-%which implies that gating of bead data can be fully automated.
-%Which in turn implies that channel normalisation using beads no longer needs to be a manual process.
-
-Having gated the singlets, I subset the data and proceed to gate on the fluorescence channels to identify the six bead populations.
-Since the bead population are distinguishable on all five fluorochromes (Table~\ref{table:fluorospheres}) it was first considered to use to gate on all five fluorescent channels at the same time.
-However, as we are solely interested in the APC channel, it was decided better to adhere to the bead manufacter's protocol (see Fluorospheres reference manual) of only gating on the channel of interest (APC channel).
-Furthermore the detectors on the flow cytometer on which the beads were run are not properly calibrated for the other fluorochromes and so the signal is noisy which adds variance to the APC signal.
-%However as FlowMeans is not capable of gating on only one dimension given that the number of cluster K is known and that the bead data is quite clean, more fundamental clustering alternatives were sought.
-Given that the number of clusters K is known, that the bead data is clean and the number of event is small (in the order to 10,000), we can apply the K-medoid algorithm.
-
-
-\begin{figure}[ht]
-%\begin{center}
-    \begin{subfigure}[b]{.5\textwidth}
-        \centering
-        \includegraphics[scale=.5]{IL2RA/figures/CD25-MFI-time-effect-repeatability.pdf}
-        \caption{Unormalised.}
-    \end{subfigure}
-    ~
-    \begin{subfigure}[b]{.5\textwidth}
-        \centering
-        \includegraphics[scale=.5]{IL2RA/figures/CD25-MFI-time-effect-beads-normalised.pdf}
-        \caption{Normalised}
-    \end{subfigure}
-    ~
-    \begin{subfigure}[b]{.5\textwidth}
-        \centering
-        \includegraphics[scale=.75]{IL2RA/figures/CD25-MFI-repeatability.pdf}
-        \caption{Unormalised: $R^2=0.629$}
-    \end{subfigure}
-    ~
-    \begin{subfigure}[b]{.5\textwidth}
-        \centering
-        \includegraphics[scale=.75]{IL2RA/figures/CD25-MFI-beads-normalised.pdf}
-        \caption{Normalised: $R^2=0.937$}
-    \end{subfigure}
-%\end{center}
-    \caption{ \label{figure:CD25-MFI-beads-normalised.pdf}
-\textbf{Bead normalisation partially corrects for long term time effect in CD25 MFI of the memory cell population.}
-In \textbf{(a)} and \textbf{(b)}, the blue points represent the MFIs of the bead populations, in black the MFIs of the memory cell populations.
-A loess is fitted to the MFIs of the beads and memory cells.
-The points joined by lines are MFIs from recalled individuals.
-The normalisation step involves aligning the peaks of the two bead populations across days to the overall mean of each of the populations (the dashed blue).
-The normalisation improves the repeatability of the MFI in recalled individuals from $R^2=0.629$ \textbf{(c)} to $R^2=0.937$ \textbf{(d)}.
-}
-\end{figure}
+In flow cytometry, fluorescent beads can be used to make intensity data comparable across days.
+This method is described in Chapter 1.
 
 
 \section{Normalisation of pSTAT5}
@@ -489,7 +379,9 @@ See for example individual b for marker CD45RA.
 \begin{figure}[h]
     \centering
     \includegraphics[scale=.75]{IL2/figures/channels-doses.pdf}
-    \caption{  \label{figure:channels-doses} 
+    \mycaption{figure:channels-doses} 
+    {Channels doses}
+    {
     In CD4 lymphocytes on same day different doses in 10 individuals (a, b, c, d, e, f, g, h, i, j).
   Black resting doses, in red 1000UL stimulation. As expected as a result of the stimulation, the peak of the pSTAT5 distribution shifts. }
 \end{figure}
@@ -543,28 +435,4 @@ This leads us to hypothesise that within one individual the response to \emph{IL
 %One method we have tried is based on the assumption is that in the ungated data, the bottom and top percentile of the pSTAT5 distribution do not respond to \emph{IL-2} and so can be used as reference points.  This is effectively a quantile normalisation method aligning the bottom and top percentile across doses.
 
 %However we found that this normalisation method d is not true in CD4+ lymphocyte gated data.
-
-\section{Discussion}
-
-%Sometimes it is better not to normalise and normalisation may hide the true biological effect.
-
-Certain normalisation methods make assumptions about the shape of the data.
-The actual choice of normalisation depends on the characteristics of the data we wish to compare.
-
-We have only considered the univariate density function here but identification can be extended to the multivariate case.
-
-Next let's consider normalisation of multivariate distributions.  
-The purpose of principal component correction is to remove unwanted correlation between samples.
-
-When applying a linear transform to multivariate data the correlation between the dimensions is preserved since the multiplicative factors cancel out.
-However the covariance changes.
-Care must be taken when applying a non-linear transform.  
-
-Normalisation is effectively analogous to meta-clustering since we are attempting to match cell populations across samples.  
-Normalisation facilitates matching clusters across datasets but in doing can remove meaningful biological variation.  
-
-
-A less biased approach is to allow for different cluster location and shapes across datasets and instead incorporate the clustering in some sort of hierarchical framework.  
-Normalisation or meta-clustering is a necessary step when data is pooled across studies.
-
 
