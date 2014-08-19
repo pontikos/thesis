@@ -463,17 +463,16 @@ because maximising the log-likelihood is asymptotically equivalent to minimising
 %However when spillover occurs the correlation has no biological meaning but the correlation can still be used to identify clusters.
 %The correlation within clusters is different than the overall correlation.
 %of tightly connected points.
-There are numerous methods which rely on grid based density estimation.
-DBM (Density Based Merging) which uses a region growing density approach so that points of high density are linked \cite{Walther:2009gn}),
-FLOCK (Flow Clustering without K, \cite{Qian:2010ep}) 
+There are numerous clustering methods which rely on density estimation.
+Possibly the most famous is DBM (Density Based Merging) which uses a region growing density approach so that points of high density are linked \cite{Walther:2009gn}).
+FLOCK (Flow Clustering without K, \cite{Qian:2010ep}) relies on grid based density estimation in higher dimensions.
 Misty Mountain \citep{Sugar:2010jf} takes decreasing cross sections of the two dimensional density histogram so that clusters are progressively merged as the threshold decreases.
 This approach can not distinguish rare cell population in close proximity to bigger cell populations and is limited to two dimensions.
 CurvHDR (negative Curvature and High Density Region, \citet{Naumann:2010fp}) identifies regions of significant curvature in the multivariate density function,
-specifies a bandwidth
-instead of the number of bins, however this approach can not go beyond four dimensions,
-Density based approaches require the number of bins or the bandwidth to be specified by the user or estimated according to some heuristic.  
-However as the number of dimensions increases, data tends to become sparser and so density estimation becomes more challenging.
-In this scenarios, distance based clustering becomes more appropriate.
+by using a bandwidth rather than the number of bins.
+However this approach does not go beyond four dimensions.
+All these density based approaches require the number of bins or the bandwidth to be specified by the user or estimated from the data according to some heuristic.
+However as the number of dimensions increases, data tends to become sparser and distance based clustering becomes more appropriate.
 %Unfortunately, many distance based clustering methods rely on computation of the entire distance matrix, provided the number of data points is not
 K-means is probably the simplest and most famous of these methods
 since it does not rely on the computation of the entire distance matrix (\Cref{appendix-clustering}).
@@ -485,7 +484,7 @@ However K-means is known to be very sensitive to starting conditions and is also
 Methods which calculate the entire distance matrix require some form of downsampling to reduce the total number of points.
 %$N$ when $N$ is large.
 Caution needs to be taken since random uniform downsampling runs the risk of discarding rarer populations.
-One workaround is to account for local density when doing the downsampling so that information is not lost.
+One workaround is to account for local density when doing the downsampling so that data is not lost.
 Once the downsampling has sufficiently reduced the number of points so that distance matrix may be computed,
 methods such as, spectral clustering which uses spectral graph theory to determine where to partition the network
 (SAMSpectral (Sampling followed by Spectral Clustering) \citet{Zare:2010cw}) or more conventional hierarchical clustering
@@ -500,45 +499,48 @@ They are also sensitive to starting conditions and tuning parameters which great
 %high variance low bias
 
 
-\paragraph{Estimating the optimal number of clusters}
+\paragraph{Estimating the optimal number of clusters from the data}
 %\paragraph{Estimating the optimal number of clusters: avoid overfitting}
 
-The methods described above return the optimal cluster assignment given an expected number of clusters.
-Although, there are many suggested heuristics for estimating an optimal number of clusters from the data
+%The methods described above return the optimal cluster assignment given an expected number of clusters.
+The methods described above, normally require as input parameter, the expected number of clusters.
+But esimating an optimal number of clusters from the data remains an open problem in machine learning and statistics,
+although there are many suggested heuristics.
 %However, estimating an optimal number of clusters from the data,
 %or more generally the number of parameters in a model
-this remains an open problem in machine learning and statistics.
-%The utility of a model can be interpreted as compromise between model complexity and precision.
 
 %The model which best explains the data i.e minimises the mean square error is the saturated one which assigns each cell to its own cluster.
 %Clearly this is a uninformative and trivial interpretation of the data since it tells us nothing new and holds no predictive power.
 %This phenomenon is known as overfitting.
 
-%All these methods employ some heuristic to determine the number of clusters.
 %Automatic gating is essentially a clustering problem when the number of clusters may not be known.  
 
 %The criterion can be to maximise information.
-These work by either on one hand, limiting the variance explained by each parameter (shrinkage),
-penalising for the number of parameters added to the model because
-effectively each parameter is reducing the degrees of freedom.
-Shrinkage can be useful when parameters are colinear.
-These can be thought of different methods of parameter regularization.
+Generally these methods seek to maximise utility by reaching a compromise between model complexity, number of parametes in the model,
+and accuracy, in supervised clustering, or some other metric like variance explained, in unsupervised clustering.
+%Model complexity is penalised by the number of parameters added to the model.
+%limiting the variance explained by each cluster using shrinkage methods,
+%or by penalising for the number of parameters added to the model.
+%Shrinkage can be useful when parameters are colinear.
+%because effectively each parameter is reducing the degrees of freedom.
+%These can be thought of different methods of parameter regularization.
 
-One way is to find modes in the data: regions of significantly high density \citep{Duong:2008eu,JING:2012ek}.
-
-Another way is to look at the ratio of intra-cluster to inter-cluster variance for different number of clusters and pick the elbow point where the ratio drops significantly.
-This relates to the $R^2$ ratio since the intercluster variance is the variance explained by the model and the intracluster variance is the remaining variance.
-
-The Bayesian Information Criterion can also be used which relies on maximising the log of the likelihood penalised by the number of clusters and free parameters.
+One way of estimating the expected number of clusters, is to find modes in the data: regions of significantly high density \citep{Duong:2008eu,JING:2012ek}.
+Another way is to look at the ratio of intra-cluster to inter-cluster variance at increasing number of clusters and pick the elbow point where the ratio drops significantly.
+This relates to the $R^2$ ratio in \gls{ANOVA}, since the intercluster variance is the variance explained by the model and the intracluster variance is the remaining variance.
+Another approach it to maximise the Bayesian Information Criterion, the log of the likelihood penalised by the number of clusters and free parameters.
 %In the non model based methods, a threshold for the inter cluster distance defines the number of clusters
 
-Another solution to the overfitting problem, is to introduce an extra parameter $\lambda$ which weights the influence of the variables in the model.
-Like with clustering there's a hard approach and a soft approach.
-If the weights are either 0 or 1, then variables are either excluded or included in the the model, this is the variable selection method.
-If $\lambda$ is allowed to take a range of values between 0 and 1 then this is the shrinkage methods such as ridge-regression and lasso.
+%Another solution to the overfitting problem, is to introduce an extra parameter $\lambda$ which weights the influence of the variables in the model.
+%Like with clustering there's a hard approach and a soft approach.
+%If the weights are either 0 or 1, then variables are either excluded or included in the the model, this is the variable selection method.
+%If $\lambda$ is allowed to take a range of values between 0 and 1 then this is the shrinkage methods such as ridge-regression and lasso.
 
-Dirichlet Process means is a derivative of the k-means algorithms which treats K as a parameter to be estimated from the data.
+An interesting alternative is a derivative of the k-means algorithms, the Dirichlet Process means, which includes the number of clusters
+K as a parameter to be estimated from the data.
 By taking larger subsets of the data, new clusters are created.
+
+%However, these clusters often need to be matched across samples for association testing.
 
 %\paragraph{Shrinkage estimation}
 %
@@ -559,20 +561,19 @@ By taking larger subsets of the data, new clusters are created.
 %
 
 
-\paragraph{Cell phenotypes: cluster properties}
+%\paragraph{Cell phenotypes: cluster properties}
+\paragraph{Association testing}
 
-Once clusters have been identified and matched across samples,
-the end-goal of gating is often to find features on the identified cell populations which correlate well with genotype, sex, age or clinical outcome.
-
-Two examples of such features are proportion of the cell population over its parent population and the mean or median fluorescence intensity of a particular marker in a cell population.
-The fluorescence intensity correlates with the quantitative expression of a protein expression on the cell surface.
-These cell population specific features are also referred to as cell phenotypes.  
-
-
-In gene to phenotype correlation the stability of these cell phenotypes indicates the importance of genotype relative to environment since a person's genotype is stable.
+Provided clusters have been identified and matched across samples within a study, it is then possible to test for association of cell population
+features with genotype, sex, age or clinical outcome.
+Two examples of such population features are the size of the population over its parent population and the \gls{MFI} on a particular marker.
+The fluorescence intensity correlates with the quantitative expression of a protein the cell surface.
+These cell population features are commonly referred to as cell phenotypes.  
+When assessing the gene to phenotype correlation, the reproducibility of these cell phenotypes is crucial since
+larger within-individual variance decreases the power to detect between-individual effects.
 %Certain phenotypes are more stable than others.
-%
-%
+
+%When a large number of clusters has been identified in a small number of samples then we risk overfitting.
 %To avoid overfitting feature selection
 %There has been work undertaken to select the features which best correlate with genotype.
 %FeaLect and RchyOptimyx constructs a hierarchy of cells which best explains clinical outcome or cytokine response
@@ -581,7 +582,6 @@ In gene to phenotype correlation the stability of these cell phenotypes indicate
 %Several random subsets are sampled from the input data and for each random subset, various linear models are fitted using lars method.
 %A score is assigned to each feature based on the tendency of LASSO in including that feature in the models.
 %Finally, the average score and the models are returned as the output.
-%
 %
 %The features with relatively low scores are recommended to be ignored because they can lead to overfitting of the model to the training data.
 %Moreover, for each random subset, the best set of features in terms of global error is returned.
@@ -592,8 +592,7 @@ In gene to phenotype correlation the stability of these cell phenotypes indicate
 %The approach followed by Nima et al, was to identify in an unsupervised manner cell features which correlate well with genotype or clinical outcome.
 %Cell phenotypes from more general cell populations were chosen
 %
-%In this project, the cell subsets we wished to identify are known so it was considered better to develop our own method which relies on partially manually gated data to make sure we were gating the right subsets.
-%
+
 
 %\paragraph{ Distance is a more suitable metric when  and density when $N \gg P$. }
 
@@ -633,3 +632,5 @@ In gene to phenotype correlation the stability of these cell phenotypes indicate
 %Probability binning can be used for this \cite{Roederer:2001tz}  whereby the data is binned in grid.
 %The idea is then to look for samples which are significantly different when compared to control samples.
 
+%In this project, the cell subsets we wished to identify are known so it was considered better to develop our own method which relies on partially manually gated data to make sure we were gating the right subsets.
+%
