@@ -118,7 +118,7 @@ so it is clear that T1D must involve smaller effect size risk variants that are 
 %\paragraph {GWAS}
 
 \Glspl{GWAS} use high density \gls{SNP} arrays, such as the GeneChip 500K Mapping Array Set (Affymetrix chip),
-to test the association of polymorphism in single basepairs, \glpl{SNP}, across the genome with disease or other traits,
+to test the association of polymorphism in single basepairs, \glspl{SNP}, across the genome with disease or other traits,
 in thousands of unrelated cases and controls.
 
 
@@ -340,9 +340,9 @@ Noise due to the flow operator:
 sometimes the operator might decide to not collect all the events and for example apply a cutoff.
 
 All these sources of noise contribute to different patterns of staining and concentrations of debris
-which can lead to spurious cell populations or skew the analysis, greatly complicated analysis across samples.
+which can lead to spurious cell populations or skew the analysis, complicating the analysis across samples.
 Some of these issues are addressed by the \gls{HIP} consortium standardisation efforts \citep{Maecker:2012gl}.
-However other issues need to dealt using data analysis techniques such as normalisation.
+However other issues need to be dealt with using data analysis techniques such as normalisation.
 
 \section{Normalisation}
 %\section{Normalisation: why it is needed, methods, utility}
@@ -350,7 +350,7 @@ However other issues need to dealt using data analysis techniques such as normal
 The purpose of normalisation is to remove unwanted experimental variation to make data comparable even when the samples are
 collected on different days, processed with different protocols or instrumental configurations.
 However distinguishing between unwanted and biological variation necessitates some prior knowledge about the datasets, either in the form of distributional assumptions
-or of features which exist across samples.
+or of the presence of features which exist across samples.
 Such features can then be used as reference points to normalise across samples.
 If the features are modes in the data, then normalisation is equivalent to doing clustering, in order to identify the modes,
 followed by meta-clustering to match the modes across samples.
@@ -358,7 +358,7 @@ In microarray gene epxression datasets, for example, one distributional assumpti
 similar tissue types.
 The underlying principle is that true biological variation is specific whereas experimental variation affects the sample as a whole.
 In order to decouple technical variation from biological variation, without making assumptions about the distributions of the data,
-synthetic object of known and stable property, such fluorescent beads in flow cytometry, can be used to this purpose.
+synthetic object of known and stable property, such as fluorescent beads in flow cytometry, can be used to this purpose.
 
 
 %\paragraph{Instrument variation}
@@ -396,20 +396,22 @@ In the context of flow cytometry, clusters constitute cell populations identifia
 When the properties of the sought population are known, a manual or supervised (semi automatic) approach can be used.
 
 The manual method, known as manual gating,
-is a step-by-step method where we consider and plot two channels at a time and delineate a region, called a gate, such that cells which lie outside the gate are filtered out,
-and repeat this step for a required number of iterations.
+is a step-by-step method where we consider and plot two channels at a time and delineate a region, called a gate, such that cells which lie outside the gate are filtered out.
+%This step is repeated for a required number of iterations.
 The result is that a population is defined as an intersection of multiple one or two dimensional gates.
 This process leaves room for improvement due to poor scaling when we increase the number of parameters (fluorochromes in flow cytometry)
-hence the number of dimensions in the data and the inability to cluster in more than three dimensions at a time.
-Also by clustering dimensions independently, this approach can  miss the correlation which exists between dimensions.
+%hence the number of dimensions in the data
+The inability to cluster in more than three dimensions at a time also
+only the pairwise correlation can be assessed which impinges
+on identification of higher-dimensional clusters.
+%since information is lost at each clustering step
+%Only methods which are capable of clustering all dimensions at the same time can exploit the full information available in the dataset.
+The ordering in which the gates are drawn thus has some bearing on the final clustering solution.
 
-But more importantly this step introduces further non-biological variation to an already noisy data set \citep{Maecker:2010fg} since the position of the gates
-on same data set may between gaters.
+But more importantly this step introduces further non-biological variation to an already noisy data set since the position of the gates
+on the same data can differ between gaters \citep{Maecker:2010fg}.
 %This provides motivation for considering more efficient and unbiased alternative methods of doing the gating.
 It also suffers from strong bias as it tends to force data to fit a model (the gater's expectation).
-Additionally higher-dimensional clusters might not be identified since only the pairwise correlation can be assessed, and the order in which the gates are drawn impacts
-the final clustering solution.
-Only methods which are capable of clustering all dimensions at the same time can exploit the full information available in the dataset.
 Finally manual gating is not feasible when an exhaustive enumeration of all identifiable cell populations is required \citep{Siebert:2010iv,Aghaeepour:2012fq} especially
 as the number of cellular markers increases.
 For this, unsupervised computational methods, which do not rely on visualisation, are essential.
@@ -432,16 +434,17 @@ supervised methods which require manual training by giving approximate starting 
 Clustering methods which make explicit assumptions about the shapes of populations (parametric or model-based)
 are model-based.
 Methods which do not are said to be non-parametric or heuristic.
-Although those these can be limiting cases of parametric models (\Cref{appendix:clustering}).
-Here we will mostly review unsupervised methods where training data is not provided but only some heuristic parameters can be provided like the expected
-number of clusters may be provided.
+Although the latter can be limiting cases of parametric models (\Cref{appendix:clustering}).
+Here we will mostly review unsupervised methods where training data is not provided but only some parameters such as the expected
+number of clusters.
 
 \paragraph{Model based methods: low variance high bias methods}
 
 Model based methods assume that the flow data can be explained by a mixture of multivariate distributions where each distribution is representative of a different type of cell.
 A nice feature of these methods is that they assign a probability of population membership to each cell which can be exploited in downstream statistical analysis to account for uncertainty in the clustering.
 The first and simplest of these methods assumed cell populations could be represented by a mixture of multivariate Gaussians \citep{Chan:2008gq}.
-However this method tends to over estimate the number of multivariate Gaussians which best models the data since outliers which are in the tails in the distributions are explained by new low mixture distributions, increasing unreasonably the number of cell populations.
+However this method tends to over estimate the number of multivariate Gaussians which best models the data since outliers which are in the tails of the distributions
+are explained by new low mixture distributions, increasing unreasonably the number of cell populations.
 To account for this, Flowclust \citep{Lo:2008it} replaced Gaussians by more robust heavy tailed t-distribution.
 However t-distributions are still symmetric distributions and so can not represent skewed populations which are common in stimulation experiments or more generally when cells are in a transitional state from one cell type to another.
 \citet{Pyne:2009hl} addressed this issue in FLAME (Flow Analysis with Automated Multivariate Estimation) by employing skewed t-distributions instead.
@@ -475,10 +478,10 @@ All these density based approaches require the number of bins or the bandwidth t
 However as the number of dimensions increases, data tends to become sparser and distance based clustering becomes more appropriate.
 %Unfortunately, many distance based clustering methods rely on computation of the entire distance matrix, provided the number of data points is not
 K-means is probably the simplest and most famous of these methods
-since it does not rely on the computation of the entire distance matrix (\Cref{appendix-clustering}).
+since it does not rely on the computation of the entire distance matrix (\Cref{appendix:clustering}).
 %Given an initial set of cluster means, which may be user-defined or selected at random, points are then assigned to the cluster.
 %After the assignment, the cluster centers are recomputed, and again points are re-assigned to whichever cluster ce
-For example flowMeans \citep{Aghaeepour:2010fv} is an extension to k-means.
+For example flowMeans \citep{Aghaeepour:2010fv} is an extension to k-means for flow cytometry.
 However K-means is known to be very sensitive to starting conditions and is also not robust to outliers.
 %a high variance method because small changes in the data can lead to very different clustering solutions.
 Methods which calculate the entire distance matrix require some form of downsampling to reduce the total number of points.
@@ -503,9 +506,9 @@ They are also sensitive to starting conditions and tuning parameters which great
 %\paragraph{Estimating the optimal number of clusters: avoid overfitting}
 
 %The methods described above return the optimal cluster assignment given an expected number of clusters.
-The methods described above, normally require as input parameter, the expected number of clusters.
-But esimating an optimal number of clusters from the data remains an open problem in machine learning and statistics,
-although there are many suggested heuristics.
+The methods described above, normally require the expected number of clusters as input parameter.
+Although there are many suggested heuristics,
+estimating an optimal number of clusters from the data remains an open problem in machine learning and statistics.
 %However, estimating an optimal number of clusters from the data,
 %or more generally the number of parameters in a model
 
@@ -536,7 +539,8 @@ Another approach it to maximise the Bayesian Information Criterion, the log of t
 %If the weights are either 0 or 1, then variables are either excluded or included in the the model, this is the variable selection method.
 %If $\lambda$ is allowed to take a range of values between 0 and 1 then this is the shrinkage methods such as ridge-regression and lasso.
 
-An interesting alternative is a derivative of the k-means algorithms, the Dirichlet Process means, which includes the number of clusters
+An interesting alternative to the number of cluster estimation problem is a derivative of the k-means algorithms,
+the Dirichlet Process means, which includes the number of clusters
 K as a parameter to be estimated from the data.
 By taking larger subsets of the data, new clusters are created.
 
@@ -567,11 +571,14 @@ By taking larger subsets of the data, new clusters are created.
 Provided clusters have been identified and matched across samples within a study, it is then possible to test for association of cell population
 features with genotype, sex, age or clinical outcome.
 Two examples of such population features are the size of the population over its parent population and the \gls{MFI} on a particular marker.
-The fluorescence intensity correlates with the quantitative expression of a protein the cell surface.
+The fluorescence intensity correlates with the quantitative expression of a protein on the cell surface.
 These cell population features are commonly referred to as cell phenotypes.  
 When assessing the gene to phenotype correlation, the reproducibility of these cell phenotypes is crucial since
 larger within-individual variance decreases the power to detect between-individual effects.
 %Certain phenotypes are more stable than others.
+
+As we will see in \Cref{chapter:il2ra}, the method used to do the gating of the cell phenotypes can have an important impact on the association
+statistics.
 
 %When a large number of clusters has been identified in a small number of samples then we risk overfitting.
 %To avoid overfitting feature selection

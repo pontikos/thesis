@@ -4,32 +4,36 @@
 
 
 Reproducibility in flow cytometry is challenging. 
-Staining and in particular intra-cellular staining, of internal markers such as STAT5 and FOXP3, is subject to batch and day variation.
 Subsequently, a sample from the same individual analysed on different days can have a very different profile.
-This intra-individual variability greatly compromises statistical power in detecting inter-individual associations.
+As seen in \Cref{chapter:il2ra}, this within-individual variation greatly compromises statistical power in detecting between-individual effects.
 
-To correct for day variation in long-running experiments, beads can be used to account for variation in instrument sensitivity \citep{Dendrou:2009bl}.
-However beads do not capture variation on shorter time scale or due to batch effect in staining.
-Another approach is to align the peaks of the univariate distribution in the whole sample.
+In long-running experiments when samples are analysed over a period of months, some noise may be attributed to
+variation in instrument sensitivity.
+In \Cref{chapter:il2ra}, we showed we can account for this using beads.
+%To correct for day variation in  beads can be used to account for \citep{Dendrou:2009bl}.
+However beads do not capture variation on shorter time scale or due to batch effects.
+Staining and in particular intra-cellular staining, of internal markers such as STAT5 and FOXP3, is subject to batch and day variation.
 
-
-However we found that the peaks cannot always be identified reliably and choosing the right window-size parameter for peak finding algorithms is channel specific and laborious.
-Also errors in peak identification and alignment are more detrimental to repeatability than not doing normalisation.
-
+Another approach is to align the peaks of the univariate distribution in the whole sample as was done for qPCR $\Delta$Ct values in \Cref{chapter:kir}.
+However, in the flow cytometry samples we studied, we found that the peaks cannot always be identified reliably and choosing the right window-size parameter
+for peak finding algorithms is channel specific and not trivial.
+Also mismatching of peaks in alignment are more detrimental to repeatability than not any doing normalisation.
 
 
 \section{To move data or to move gate: normalisation vs clustering}
 
 %Sometimes it is better not to normalise and normalisation may hide the true biological effect.
+The question really boils down to whether we should normalise the samples or cluster each sample separately.
+Normalisation is effectively analogous to meta-clustering since we are attempting to match cell populations across samples.  
+Normalisation facilitates matching clusters across datasets but in doing can remove meaningful biological variation.  
 
 Theoretically if the data was perfectly aligned across days then gates should not be moved.  
 Threshold gates should not move unless they are relative to some internal control.
 The cell phenotypes which are usually measured are the mean intensity of a particular channel, or the percentage of cells.
 Depending on the shape of the distribution these can be more or less sensitive to the position of the gate.
 
-
-
-Normalisation removes unwanted experimental variation to make data comparable even when collected on different days, proccessed with different protocols or analysed with different instruments.
+Normalisation removes unwanted experimental variation to make data comparable even when collected on different days,
+proccessed with different protocols or analysed with different instruments.
 However distinguishing between what is unwanted and what is meaningful variation relies ultimately on a bias-prone judgement call.
 
 As we have seen, different normalisation approaches make different assumptions about what is unwanted variation and the shape of the data.
@@ -44,31 +48,20 @@ When applying a linear transform to multivariate data the correlation between th
 However the covariance changes.
 Care must be taken when applying a non-linear transform.  
 
-Normalisation is effectively analogous to meta-clustering since we are attempting to match cell populations across samples.  
-Normalisation facilitates matching clusters across datasets but in doing can remove meaningful biological variation.  
-
-
+The samples are related and we wish to exploit this structure without forcing data to be perfectly comparable.
 A less biased approach is to allow for different cluster location and shapes across datasets and instead incorporate the clustering in some sort of hierarchical framework.  
 Normalisation or meta-clustering is a necessary step when data is pooled across studies.
 
 
-
-
-The question really boils down to whether we should normalise the samples or cluster each sample separately.
-
-The samples are related and we wish to exploit this structure without forcing data to be perfectly comparable.
-With normalisation non-linear tranforms are hard.
 
 %Therefore clustering is not an automatic task, but an iterative process of knowledge discovery or interactive multi-objective optimization that involves trial and error.  
 %It will often be necessary to modify data preprocessing and model parameters until the result achieves the desired properties.  
 %Clustering can also be viewed as a latent variable problem where the cluster labels are considered to be the missing data.
 
 
-
-
-
 \section{ Method of determining phenotype affects power to detect genetic association }
 
 \section{ future application of methods }
+
 
 
