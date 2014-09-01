@@ -3,6 +3,42 @@
 
 \chapter[Introduction]{ \label{chapter:intro} Introduction}
 
+Over the last twenty years, the size and scale of biological analyses has increased at an impressive throughput.
+As these datasets continue to grow, we are continuously interesting in discovering patterns or trends in the data
+and to assess whether they bear any relation to clinical variables, such as disease progression or status,
+but also at a gentic variables, in the hope of understanding new biology.
+
+One great tool which is finely tuned for pattern recognition is the human brain but it is perhaps not the most objective classification system
+and very good at dealing with uncertainty, and it is certainly not the fastest.
+Furthermore since the data collection technology is becoming massively parallelised
+and on the other hand more parameters can be concurrently measured, the scale of these datasets is beyond human analysis.
+
+In this thesis we will be dealing with some genetic and flow cytometry datasets.
+The technology that revolutionised genotyping, is SNP genotyping which probes concurrently hundred-thousands of genomic loci within an individual and has parallelised
+to thousands of individuals.
+A good example which is the main method studied in these thesis, is flow cytometry, a high-throughput technology which can currently measure up to twenty cell
+parameters in millions of cells in the space of a few minutes.
+In the future, high througput sequencing and massy cytometry will generate larger numbers of parameters at a higher rate.
+
+However when datasets are generated independently, even when on the same sample, the results might not be directly comparable because of
+instrument, experimental variation and variation in the analyses.
+Also the comparison methods needs to be defined and what is a meaningful biological comparison?
+These two related problems are addressed by normalisation and clustering.
+As in all statistcal anlyses, some prior knowledge is required explicitly or implicitly defined.
+
+In this thesis, I will focus on normalisation and clustering in cell-level parameters, acquired with flow cytometry,
+but also genetic data acquired from qPCR and SNP chip.
+
+The questions we will be addressing:
+
+Normalisation using external controls and internal controls.
+In flow can we replicate the analysis done by a human?
+Influence of clustering method on association testing.
+Can we discover novel clusters
+
+Using normalisation and clustering, joining datasets from different experiments, qPCR and SNP, to discover new patterns.
+
+
 \section{Biology of type 1 diabetes}
 
 \subsection{Etiology and diagnosis}
@@ -102,7 +138,7 @@ the disease \citep{Metcalfe:2001}.
 compared to $59.5\%$ in 47 discordant MZ twins.
 
 
-Linkage studies study based on the recombination of biallelic genetic markers in families affected by T1D,
+Linkage studies study based on the recombination of multiallelic genetic markers in families affected by T1D,
 first mapped a genetic risk factor to the HLA class II region on chromosome 6.
 
 %According to \citet{Alper200689}, in the $6\%$ of sibs of a patient which are concordant for T1D, $16\%$ are MHC identical.
@@ -122,8 +158,10 @@ to test the association of polymorphism in single basepairs, \glspl{SNP}, across
 in thousands of unrelated cases and controls.
 
 
-\Gls{GWAS} have confirmed strong association of T1D within the \Gls{HLA} loci (chr6p21) as well as over 40 other loci including notably \gene{INS} (chr11p15),
-\gene{CTLA4} (chr2q33), \gene{PTPN22} (chr1p13), \gene{IL2RA} (chr10p15) and \gene{IFIH1} (chr2q24) \citep{Burton:2007hta,Barrett:2009jq} (\url{www.t1dbase.org}).
+\Gls{GWAS} have confirmed strong association of T1D within the \Gls{HLA} loci (chromsosome 6p21) as well as 50 other loci including notably regions near
+\gene{INS} (chromosome 11p15), \gene{CTLA4} (chromosome 2q33), \gene{PTPN22} (chromosome 1p13), \gene{IL2RA} (chromosome 10p15)
+and \gene{IFIH1} (chromosome 2q24) \citep{Burton:2007hta,Barrett:2009jq}
+(\url{www.t1dbase.org}).
 
 Within the HLA region, the strongest effect comes from HLA class II loci, \gene{HLA-DRB1} and \gene{HLA-DQB1},
 but there is also an independent effect from HLA class I loci, HLA-A and HLA-B \citep{Howson:2009bl}.
@@ -141,7 +179,7 @@ Association was replicated and the signal was further fine mapped with the speci
 of $195806$ SNPs with dense coverage in immunologically important loci designed for deep-replication and fine-mapping of 12 common auto-immune diseases.
 
 %such as the HLA region 
-This confirmed the HLA class II effect but also the second independent effect from HLA class I loci,
+There is evidence for a second independent effect from HLA class I loci,
 involving HLA-A and HLA-B alleles \citep{Todd:2010bl}.
 Within the HLA-A and HLA-B alleles,
 the functionally important HLA-Bw4/Bw6 epitope \citep{Nejentsev:2007dv} was reported which motivated \cref{chapter:kir}.
@@ -350,11 +388,11 @@ However other issues need to be dealt with using data analysis techniques such a
 The purpose of normalisation is to remove unwanted experimental variation to make data comparable even when the samples are
 collected on different days, processed with different protocols or instrumental configurations.
 However distinguishing between unwanted and biological variation necessitates some prior knowledge about the datasets, either in the form of distributional assumptions
-or of the presence of features which exist across samples.
+or in the form of features which exist in a predictiable relationship across samples.
 Such features can then be used as reference points to normalise across samples.
 If the features are modes in the data, then normalisation is equivalent to doing clustering, in order to identify the modes,
 followed by meta-clustering to match the modes across samples.
-In microarray gene epxression datasets, for example, one distributional assumption is that the majority of genes are not differentially expressed between samples from
+In microarray gene expression datasets, for example, one distributional assumption is that the majority of genes are not differentially expressed between samples from
 similar tissue types.
 The underlying principle is that true biological variation is specific whereas experimental variation affects the sample as a whole.
 In order to decouple technical variation from biological variation, without making assumptions about the distributions of the data,
@@ -475,6 +513,9 @@ CurvHDR (negative Curvature and High Density Region, \citet{Naumann:2010fp}) ide
 by using a bandwidth rather than the number of bins.
 However this approach does not go beyond four dimensions.
 All these density based approaches require the number of bins or the bandwidth to be specified by the user or estimated from the data according to some heuristic.
+Care needs to be taken when selecting an appropriate bin or bandwidth as small number of bins or larger bandwidths,
+lead to overestimation of the density in low density regions and underestimation in high density regions.
+%On the other hand in the bandwidth is too small then the dynamic range of the density becomes small (few density levels).
 However as the number of dimensions increases, data tends to become sparser and distance based clustering becomes more appropriate.
 %Unfortunately, many distance based clustering methods rely on computation of the entire distance matrix, provided the number of data points is not
 K-means is probably the simplest and most famous of these methods
