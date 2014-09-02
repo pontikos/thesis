@@ -213,6 +213,20 @@ All clusters lie on the y=x line which suggests that clusters are correctly matc
 \end{figure}
 
 
+\hspace{-2cm}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=.5]{IL2/figures/pstat5-baseline-relative.pdf}
+\mycaption{figure:pstat5-baseline-relative}
+{ pSTAT5 intensity across the four proleukin doses, before (a) and after (b) baseline pSTAT5 subtraction in the ungated sample.}
+{
+  An important proportion of cells are already saturated for pSTAT5 in the resting sample (a).
+  Correcting for the per cell pSTAT5 baseline, shows the true proportion of cells which responds to proleukin within this sample (b).
+}
+\end{figure}
+
+
+
 
 \section{Cell Phenotypes Identified by Manual Analysis}
 
@@ -255,10 +269,11 @@ The top percentile of the pSTAT5 distribution in the resting sample is used as a
 \begin{figure}[h]
 \centering
 %\includegraphics[scale=.5]{figures/manual-gating.pdf}
-\begin{subfigure}[b]{.4\textwidth}
-\includegraphics[scale=.25]{IL2/figures/manual-gating-CB00165D_0U_2012-11-29.pdf}
-\caption{Resting sample.}
-\end{subfigure}
+%\begin{subfigure}[b]{.4\textwidth}
+%\includegraphics[scale=.25]{IL2/figures/manual-gating-CB00165D_0U_2012-11-29.pdf}
+  \includegraphics[scale=.75]{IL2/figures/CB00366X_2012-11-07.pdf}
+%\caption{Resting sample.}
+%\end{subfigure}
 %\begin{subfigure}[b]{.4\textwidth}
 %\includegraphics[scale=.25]{IL2/figures/manual-gating-CB00165D_01U_2012-11-29.pdf}
 %\caption{Stimulated at 0.1 units of proleukin.}
@@ -285,31 +300,34 @@ and memory effector and regulatory T cells (f).
 \hspace{-2cm}
 \begin{figure}[h]
 \centering
-\includegraphics[scale=.45]{IL2/figures/dose-effect-pstat5-cellsubsets-density.pdf}
-%\includegraphics[scale=.45]{figures/dose-effect-pstat5-cellsubsets-density-baseline.pdf}
+%\includegraphics[scale=.45]{IL2/figures/dose-effect-pstat5-cellsubsets-density.pdf}
+\includegraphics[scale=.45]{IL2/figures/dose-effect-pstat5-cellsubsets-density-baseline.pdf}
 %\includegraphics[scale=.45]{figures/dose-effect-pstat5-cellsubsets-ecdf-joined.pdf}
-\caption{ \label{figure:dose-effect-pstat5-cellsubsets}
-Distribution pSTAT5 in the manually gated cell subsets from \Cref{figure:tony-cd4-gating}.
+\mycaption{figure:dose-effect-pstat5-cellsubsets}
+{ Distribution pSTAT5 in the manually gated cell subsets from \Cref{figure:tony-cd4-gating}. }
+{
 The thickness of the lines is representative of the four increasing doses of proleukin (0, 0.1, 10 and 1000 units).
 The dose-response is most striking in the smaller subsets with high CD25 (b and d).
 }
 \end{figure}
 
+%
+%\hspace{-2cm}
+%\begin{figure}[h]
+%\centering
+%\includegraphics[scale=.4]{IL2/figures/pstat5-response-cellsubsets-manualgates.pdf}
+%\caption{ \label{figure:pstat5-response-cellsubsets-gate}
+%Fixed gates (a and b), magnetic gates (c and d).
+%The response is measured in terms of baseline relative pSTAT5 MFI.
+%a) The dose-response per cell-type in each sample obtained from manual gating with fixed gates.
+%Note the outstanding memory effector sample is due to poor gating of the memory populatin in that particular sample.
+%%CB01500E
+%This in part due to the gate position but also because that sample does not have a clear memory population.
+%b) The median dose-response per cell-type obtained from manual gating with fixed gates.
+%}
+%\end{figure}
+%
 
-\hspace{-2cm}
-\begin{figure}[h]
-\centering
-\includegraphics[scale=.5]{IL2/figures/pstat5-response-cellsubsets-manualgates.pdf}
-\caption{ \label{figure:pstat5-response-cellsubsets-gate}
-Fixed gates (a and b), magnetic gates (c and d).
-The response is measured in terms of baseline relative pSTAT5 MFI.
-a) The dose-response per cell-type in each sample obtained from manual gating with fixed gates.
-Note the outstanding memory effector sample is due to poor gating of the memory populatin in that particular sample.
-%CB01500E
-This in part due to the gate position but also because that sample does not have a clear memory population.
-b) The median dose-response per cell-type obtained from manual gating with fixed gates.
-}
-\end{figure}
 
 
 \subsection{Reproducibility of pSTAT5 response within an individual}
@@ -342,33 +360,33 @@ The repeatability of these three metrics was tested but none were found to be re
 %Using the automatically adjusted gates from manual gating, we assess the repeatability of the response in the four identified cell subsets.
 
 
-\hspace{-2cm}
-\begin{figure}[h]
-\centering
-%\includegraphics[scale=.5]{figures/manual-gating.pdf}
-\begin{subfigure}[b]{.4\textwidth}
-  \includegraphics[scale=.25]{IL2/figures/repeatability-pstat5-mfi-Memory-Eff.pdf}
-\caption{Memory Effector}
-\end{subfigure}
-\begin{subfigure}[b]{.4\textwidth}
-  \includegraphics[scale=.25]{IL2/figures/repeatability-pstat5-mfi-Memory-Treg.pdf}
-\caption{Memory Treg}
-\end{subfigure}
-\begin{subfigure}[b]{.4\textwidth}
-  \includegraphics[scale=.25]{IL2/figures/repeatability-pstat5-mfi-Naive-Eff.pdf}
-\caption{Naive Effector}
-\end{subfigure}
-\begin{subfigure}[b]{.4\textwidth}
-  \includegraphics[scale=.25]{IL2/figures/repeatability-pstat5-mfi-Naive-Treg.pdf}
-\caption{Naive Treg}
-\end{subfigure}
-\caption{
-\label{figure:repeatability-gating}
-In black manual gates, in red magnetic gates.
-The AUC is the area under the dose response curve.
-}
-\end{figure}
-
+%\hspace{-2cm}
+%\begin{figure}[h]
+%\centering
+%%\includegraphics[scale=.5]{figures/manual-gating.pdf}
+%\begin{subfigure}[b]{.4\textwidth}
+  %\includegraphics[scale=.25]{IL2/figures/repeatability-pstat5-mfi-Memory-Eff.pdf}
+%\caption{Memory Effector}
+%\end{subfigure}
+%\begin{subfigure}[b]{.4\textwidth}
+  %\includegraphics[scale=.25]{IL2/figures/repeatability-pstat5-mfi-Memory-Treg.pdf}
+%\caption{Memory Treg}
+%\end{subfigure}
+%\begin{subfigure}[b]{.4\textwidth}
+  %\includegraphics[scale=.25]{IL2/figures/repeatability-pstat5-mfi-Naive-Eff.pdf}
+%\caption{Naive Effector}
+%\end{subfigure}
+%\begin{subfigure}[b]{.4\textwidth}
+  %\includegraphics[scale=.25]{IL2/figures/repeatability-pstat5-mfi-Naive-Treg.pdf}
+%\caption{Naive Treg}
+%\end{subfigure}
+%\caption{
+%\label{figure:repeatability-gating}
+%In black manual gates, in red magnetic gates.
+%The AUC is the area under the dose response curve.
+%}
+%\end{figure}
+%
 
 \subsection{Normalisation of pSTAT5 improves repeatability}
 
@@ -378,6 +396,11 @@ The AUC is the area under the dose response curve.
 %We need to subtract the background mfi.
 %We can either do this on a cluster basis or use ann joining.
 %What is more repeatable?  
+
+NO OPTIMAL TRANSFORM ACROSS ALL SAMPLES!!!
+Per sample transform required like flowClust but using the sliding window approach.
+Some prior knowledge is required to know what makes a sensible density plot.
+Care needs to be taken not to introduce spurious peaks.
 
 Given the poor repeatability of pSTAT5, I was keen on seeking a normalisation technique that could improve the repeatability.
 The approach of using beads on the same fluorochrome Alexa-488 used for pSTAT5 (\Cref{table:IL2-panels}) described in \Cref{chapter:il2ra}
@@ -431,29 +454,42 @@ We also apply this method the pSTAT5 positivity threshold
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=.5]{IL2/figures/kmeans-fail.pdf}
-    \mycaption{figure:kmeans-fail.pdf}
-    {Kmeans can fail to partition clusters when the clusters are of very uneven size (black vertical line).}
+    \includegraphics[scale=.5]{IL2/figures/pstat5-peak-normalisation.pdf}
+    \mycaption{figure:pstat5-peak-normalisation}
+    {Normalisation by peak alignment of the pSTAT5 distribution in lymphocytes (a and b) and CD4\positive lymphocytes (c and d).}
     {
-      Fitting a mixture model allows for different cluster variance and so provides a better partitioning of the clusters.
+      The two peaks of the pSTAT5 distribution are identified using a clustering/sliding window approach,
+      in the lymphocyte sample stimulated at 1000 units (a) and in the manually gated CD4\positive lymphocyte subset stimulated at 10 units (c).
+      In the normalised pSTAT5 distribution in the ungated (a) and CD\positive lymphocyte subset (d),
+      the identified peaks in (a) and (c) have been mapped to the respective medians of the peaks.
     }
 \end{figure}
-
 
 
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=.5]{IL2/figures/pstat5-peak-normalisation.pdf}
-    \mycaption{figure:pstat5-peak-normalisation}
-    {Normalisation by peak alignment in ungated sample (a and b) and CD4\positive lymphocytes (c and d).}
-    {
-      The two peaks of the pSTAT5 distribution are identified using a clustering/sliding window approach,
-      in the ungated sample stimulated at 1000 units (a) and in the manually gated CD4\positive lymphocyte subset stimulated at 10 units (c).
-      In the normalised pSTAT5 distribution in the ungated (a) and CD\positive lymphocyte subset (d),
-      the identified peaks in (a) and (c) have been mapped to 1 and 2 using a linear transform.
-    }
+    \includegraphics[scale=.5]{IL2/figures/pstat5-auc-celltypes.pdf}
+    \mycaption{figure:pstat5-auc-celltypes}
+    { pSTAT5 area under dose-response curve }
+    { }
 \end{figure}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=.5]{IL2/figures/pstat5-auc-boxplots-celltypes.pdf}
+    \mycaption{figure:pstat5-auc-boxplots-celltypes}
+    { Influence of normalisation on pSTAT5 area under curve. }
+    { }
+\end{figure}
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=.5]{IL2/figures/pstat5-auc-repeatability-celltypes.pdf}
+    \mycaption{figure:pstat5-auc-repeatability-celltypes}
+    { Influence of normalisation on the repeatability of the pSTAT5 area under the curve. }
+    { }
+\end{figure}
 
 
 %In the manual analysis conducted by Tony Cutler, he found that he could identify individuals which were low or high responders.
@@ -549,6 +585,15 @@ Having not identified a significant association, this now brings us to the next 
 cell subsets besides the ones which we are gating which are responsive to proleukin 
 
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=.5]{IL2/figures/pstat5-auc-t1d-celltypes.pdf}
+    \mycaption{figure:pstat5-auc-t1d-celltypes}
+    { Influence of normalisation on the association of pSTAT5 area under the curve with type 1 diabetes in the four cell subsets. }
+    { }
+\end{figure}
+
+
 
 \section{Response in the whole sample}
 
@@ -572,11 +617,11 @@ cell subsets besides the ones which we are gating which are responsive to proleu
 %
 
 
-In \Cref{figure:dose-effect} we observe that at the lowest 0.1U dose there seems to be a much more stronger relative repsonse
-in the whole sample than in the lymphocyte subset which suggests that there exist other cells beside CD4\positive lymphocytes
-which are also responsive to low doses of IL-2.  
-However the relative difference in response between 10U and 1000U seems much more important in lymphocytes than in the whole sample
-suggesting that the non-CD4\positive lymphocytes in the whole sample reach saturation at 0.1U.
+%In \Cref{figure:dose-effect} we observe that at the lowest 0.1U dose there seems to be a much more stronger relative repsonse
+%in the whole sample than in the lymphocyte subset which suggests that there exist other cells beside CD4\positive lymphocytes
+%which are also responsive to low doses of IL-2.  
+%However the relative difference in response between 10U and 1000U seems much more important in lymphocytes than in the whole sample
+%suggesting that the non-CD4\positive lymphocytes in the whole sample reach saturation at 0.1U.
 %Also since the resting sample sample displays a shoulder this suggests a mixture of resting and already semi-activated lymphocytes.
 
 We are interested in identifying and classifying cell subsets by their sensitivity to proleukin.
