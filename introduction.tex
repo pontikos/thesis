@@ -3,20 +3,21 @@
 
 \chapter[Introduction]{ \label{chapter:intro} Introduction}
 
-Over the last twenty years, the size and scale of biological analyses has increased at an impressive throughput.
+Over the last twenty years, the size and scale of biological analyses has increased at a tremendous rate.
 As these datasets continue to grow, we are continuously interesting in discovering patterns or trends in the data
-and to assess whether they bear any relation to clinical variables, such as disease progression or status,
+which may influence clinical variables, such as disease progression or status,
 but also at a gentic variables, in the hope of understanding new biology.
 
-One great tool which is finely tuned for pattern recognition is the human brain but it is perhaps not the most objective classification system
+Although the human brain is finely tuned for pattern recognition, it is perhaps not the most objective classification system
 and very good at dealing with uncertainty, and it is certainly not the fastest.
 Furthermore since the data collection technology is becoming massively parallelised
-and on the other hand more parameters can be concurrently measured, the scale of these datasets is beyond human analysis.
+and more and more parameters can be concurrently measured, the scale of these datasets has long surpassed manual analysis.
 
 In this thesis we will be dealing with some genetic and flow cytometry datasets.
 The technology that revolutionised genotyping, is SNP genotyping which probes concurrently hundred-thousands of genomic loci within an individual and has parallelised
 to thousands of individuals.
-A good example which is the main method studied in these thesis, is flow cytometry, a high-throughput technology which can currently measure up to twenty cell
+Another important tool to immunologists or any researcher studying large volumes of cells,
+which is the main method studied in these thesis, is flow cytometry, a high-throughput technology which can currently measure up to twenty cell
 parameters in millions of cells in the space of a few minutes.
 In the future, high througput sequencing and massy cytometry will generate larger numbers of parameters at a higher rate.
 
@@ -29,14 +30,20 @@ As in all statistcal anlyses, some prior knowledge is required explicitly or imp
 In this thesis, I will focus on normalisation and clustering in cell-level parameters, acquired with flow cytometry,
 but also genetic data acquired from qPCR and SNP chip.
 
-The questions we will be addressing:
+Throughout the thesis the main themes will be normalisation and clustering.
 
-Normalisation using external controls and internal controls.
-In flow can we replicate the analysis done by a human?
-Influence of clustering method on association testing.
+In the first chapter, I will revisit a large, long-running flow cytometry experiment.
+normalisation using external controls, fluoresecent beads, then
+flow can we replicate the analysis done by a human?
+I will also assess the influence of clustering method on association testing.
+
+In the second chapter,
+Using normalisation and clustering, joining datasets from different experiments, qPCR and SNP, to discover new patterns.
+
+In the following chapter,
+we will once more consider normalisation 
 Can we discover novel clusters
 
-Using normalisation and clustering, joining datasets from different experiments, qPCR and SNP, to discover new patterns.
 
 
 \section{Biology of type 1 diabetes}
@@ -224,12 +231,12 @@ Such a region is KIR which will be an object of study in \cref{chapter:kir}.
 %Genetic risk variants which are significantly associated with T1D have been identified by comparing their frequency in cases and in suitably matched controls.
 %The next step is to understand why these variants are more frequent in cases.  
 %However between genetic variation (e.g SNPs or copy number variation) and the disease, lies a convoluted network of regulatory genes, RNA, protein expression and environmental factors, so that all but the strongest effects might be obfuscated.  
-Many of these T1D-associated genetic variants, are located in proximity of regions of immune function such as HLA and IL2RA, which code for surface receptors
-found at the surface of immune cells.
+Many of these T1D-associated genetic variants, are located in proximity to genes and regions with know immune function such as HLA and \gene{IL2RA},
+which code for receptors found at the surface of immune cells.
 
 Immune cells are white blood cells formally known as leukocytes, which agglomerate in the lymph nodes but can also be found at small concentrations in the peripheral blood.
 They include lymphocytes, monocytes and granulocytes, and within these subsets, there exists a huge diversity in terms of size, gene expression and function.
-It is this diversity that enables the versatility of the immune system in neutralising all kinds of pathogens (acquired and innate immunity),
+It is this diversity that enables the versatility of the immune system in neutralising all kinds of pathogens (innate immunity),
 its ability to distinguish them from endogenous cells (self tolerance),
 %The purpose of the immune system is to distinguish self from non-self and neutralise any pathogens which enter the body.
 and its capacity to adapt to better counter future infections (adaptive immunity).
@@ -245,14 +252,14 @@ In order to moderate the scale of the immune response and preserve self-toleranc
 mediated using small signalling molecules known as cytokines (for example \cytokine{IL-2}).
 These regulatory T cells are important in preventing auto-immunity and hence are the object of intense scrutiny in T1D.
 
-Hence some insight may be gained by seeing how these variants correlate with quantitative cell phenotypes such as, 
+Some insight into the aetiology of T1D may be gained by seeing how T1D associated variants correlate with quantitative cell phenotypes such as, 
 ratios of different cell types or mean expression of surface proteins.
 For example, \citet{Dendrou:2009dv} showed that, T1D risk variants risk loci which in the proximity of the protein coding gene \gene{IL2RA},
-correlate well with decreased mean expression of CD25 on the surface of memory T cells.
-Understanding the influence of these genetic variants on intermediate cell phenotypes, can shed light on the cell mechansism which lead to T1D.
+correlate with decreased mean expression of CD25 on the surface of memory T cells.
+%This could be the mechanism by which T1D risk is increased since lower CD25 on memory T cells could reduce the immune tolerance.
+Understanding the influence of these genetic variants on intermediate cell phenotypes can shed light on the cell mechansism which lead to T1D.
 %Genetic association works on quite coarse and fuzzy clinical classification which does not account for the biological heterogeneity within cases.
 
-The established high-throughput method for measuring immune cell phenotypes is flow cytometry.
 
 %The peripheral blood is predominantly consituted of (99.9\%) red blood cells, erythrocytes and thrombocytes.
 %red blood cells which bind oxygen
@@ -305,15 +312,16 @@ The established high-throughput method for measuring immune cell phenotypes is f
 %Confocal Laser Scanning Microscopy for instance is a technique which can examine different layers in the cell at different confocal lenghts.
 
 
+The established high-throughput method for measuring immune cell phenotypes is flow cytometry.
 By labelling cells with fluorescent probes conjugated to antibodies, it is possible to distinguish a wealth of distinct cell
 subsets which concomitantly express specific molecules.
-Flow cytometry allows us to identify and quantify these different types of cells, through individual cell measurements.
+Flow cytometry allows us to identify and quantify different types of cells, through individual cell measurements.
 
 Fluorescence intensity is measured accurately by using photosensitive detectors, normally a photomultiplier tube (PMT), which turn light into an analogue (current or voltage)
 or digital (photon counting) electronic signal which is later translated into a digital number indicating the intensity of the fluorescence \citep{Shapiro:2003vq,Snow:2004ci}.
 For a fluorochrome to emit fluorescent light, it needs to have absorbed high energy light of a given wavelength from an illumination source, usually from a laser, which it can then release at a lower energy, longer wavelength, resulting in a so-called Stokes shift.
 The wavelength spectrum at which a given fluorochrome most efficiently absorbs and emits light and Stokes shift are known and depend on the physico-chemical properties of that molecule.
-To enable optical illumination, separation and collection of various fluorochromes with different emission and excitation spectra, a flow cytometer is usally equipped with serveral lasers which emit at different wavelengths, specifically configured optical mirror and filters and photosensitive detectors which are sensitive to light at distinct frequency ranges \citep{Shapiro:2003vq}.
+To enable optical illumination, separation and collection of various fluorochromes with different emission and excitation spectra, a flow cytometer is usally equipped with serveral lasers which emit at different wavelengths and specially configured optical mirror, filters and photosensitive detectors which are sensitive to light at distinct frequency ranges \citep{Shapiro:2003vq}.
 
 %\paragraph{Preparing and running a sample on the flow cytometer}
 %\paragraph{Sample Preparation} 
@@ -321,7 +329,7 @@ To enable optical illumination, separation and collection of various fluorochrom
 When staining a sample, fluorochromes are conjugated with antibodies with an affinity for the target polypeptide we wish to quantify.
 The target can be external, for example a cell receptor, or internal, for example a transcription factor or a cytokine.
 If the target is internal, the cells have to undergo permeabilisation which can deteriorate the general quality of the staining.
-Fluorochromes, should be selected to minimise overlapping of their emission spectra.  Spectral overlap, also known as spillover, leads to a convoluted signal
+Fluorochromes should be selected to minimise overlapping of their emission spectra.  Spectral overlap, also known as spillover, leads to a convoluted signal
 signal reaching the detectors.
 Antibodies, are also a potential source of noise, since both primary and secondary antibodies may bind to more than one target.
 Antibodies differing in the constant regions of the heavy and light chains, known as isotypes, or non-immune sera, can be used to control non-specific staning and/or reduce non-specific binding by blocking secondary targets.
@@ -379,7 +387,8 @@ sometimes the operator might decide to not collect all the events and for exampl
 
 All these sources of noise contribute to different patterns of staining and concentrations of debris
 which can lead to spurious cell populations or skew the analysis, complicating the analysis across samples.
-Some of these issues are addressed by the \gls{HIP} consortium standardisation efforts \citep{Maecker:2012gl}.
+Some of these issues are addressed by the \gls{HIP} consortium standardisation efforts \citep{Maecker:2012gl}
+by using lyoplates, experimental protocols and instrument configurations.
 However other issues need to be dealt with using data analysis techniques such as normalisation.
 
 \section{Normalisation}
@@ -427,7 +436,7 @@ which can be matched across samples.
 %
 
 %\paragraph{Identifying Cell Populations with Manual Gating}
-\paragraph{Manual clustering: gating}
+\subsection{Manual clustering}
 
 Given a one, two or three dimensional projection of the data, clusters can in some cases, be identified by eye.
 In the context of flow cytometry, clusters constitute cell populations identifiable by the concomitant expression of internal or surface markers.
@@ -437,16 +446,16 @@ The manual method, known as manual gating,
 is a step-by-step method where we consider and plot two channels at a time and delineate a region, called a gate, such that cells which lie outside the gate are filtered out.
 %This step is repeated for a required number of iterations.
 The result is that a population is defined as an intersection of multiple one or two dimensional gates.
-This process leaves room for improvement due to poor scaling when we increase the number of parameters (fluorochromes in flow cytometry)
+This process leaves room for improvement due to poor scaling when we increase the number of parameters (fluorochromes in flow cytometry).
 %hence the number of dimensions in the data
-The inability to cluster in more than three dimensions at a time also
-only the pairwise correlation can be assessed which impinges
+%The inability to cluster in more than three dimensions at a time also
+Also only the pairwise correlation can be assessed which impinges
 on identification of higher-dimensional clusters.
 %since information is lost at each clustering step
 %Only methods which are capable of clustering all dimensions at the same time can exploit the full information available in the dataset.
 The ordering in which the gates are drawn thus has some bearing on the final clustering solution.
 
-But more importantly this step introduces further non-biological variation to an already noisy data set since the position of the gates
+More importantly this step introduces further non-biological variation to an already noisy data set since the position of the gates
 on the same data can differ between gaters \citep{Maecker:2010fg}.
 %This provides motivation for considering more efficient and unbiased alternative methods of doing the gating.
 It also suffers from strong bias as it tends to force data to fit a model (the gater's expectation).
@@ -455,7 +464,7 @@ as the number of cellular markers increases.
 For this, unsupervised computational methods, which do not rely on visualisation, are essential.
 
 
-\paragraph{Automatic method for identifying clusters}
+\subsection{Automatic methods for identifying clusters}
 
 Automatic flow data analysis methods were first reviewed in \citeyear{Bashashati:2009em} by \citeauthor{Bashashati:2009em} then in \citeyear{Lugli:2010ki} by \citeauthor{Lugli:2010ki}
 and more recently by \citet{Aghaeepour:2013dg}.
@@ -469,17 +478,17 @@ and
 %sample classification methods
 supervised methods which require manual training by giving approximate starting gates.
 
-Clustering methods which make explicit assumptions about the shapes of populations (parametric or model-based)
-are model-based.
-Methods which do not are said to be non-parametric or heuristic.
-Although the latter can be limiting cases of parametric models (\Cref{appendix:clustering}).
-Here we will mostly review unsupervised methods where training data is not provided but only some parameters such as the expected
+Clustering methods which make explicit assumptions about the shapes of populations are model-based or parametric.
+Methods which do not are said to be heuristic or non-parametric,
+although the latter can be limiting cases of parametric models (\Cref{appendix:clustering}).
+Here I will mostly review unsupervised methods where training data is not provided,
+and focus on those which require specification of only some parameters such as the expected
 number of clusters.
 
 \paragraph{Model based methods: low variance high bias methods}
 
 Model based methods assume that the flow data can be explained by a mixture of multivariate distributions where each distribution is representative of a different type of cell.
-A nice feature of these methods is that they assign a probability of population membership to each cell which can be exploited in downstream statistical analysis to account for uncertainty in the clustering.
+A nice feature of these methods is that they can assign a probability of population membership to each cell which can be exploited in downstream statistical analysis to account for uncertainty in the clustering.
 The first and simplest of these methods assumed cell populations could be represented by a mixture of multivariate Gaussians \citep{Chan:2008gq}.
 However this method tends to over estimate the number of multivariate Gaussians which best models the data since outliers which are in the tails of the distributions
 are explained by new low mixture distributions, increasing unreasonably the number of cell populations.
@@ -505,8 +514,8 @@ because maximising the log-likelihood is asymptotically equivalent to minimising
 %The correlation within clusters is different than the overall correlation.
 %of tightly connected points.
 There are numerous clustering methods which rely on density estimation.
-Possibly the most famous is DBM (Density Based Merging) which uses a region growing density approach so that points of high density are linked \cite{Walther:2009gn}).
-FLOCK (Flow Clustering without K, \cite{Qian:2010ep}) relies on grid based density estimation in higher dimensions.
+Possibly the most famous is Density Based Merging (DBM) which uses a region growing density approach so that points of high density are linked \cite{Walther:2009gn}).
+Flow Clustering without K (FLOCK) \citep{Qian:2010ep} relies on grid based density estimation in higher dimensions.
 Misty Mountain \citep{Sugar:2010jf} takes decreasing cross sections of the two dimensional density histogram so that clusters are progressively merged as the threshold decreases.
 This approach can not distinguish rare cell population in close proximity to bigger cell populations and is limited to two dimensions.
 CurvHDR (negative Curvature and High Density Region, \citet{Naumann:2010fp}) identifies regions of significant curvature in the multivariate density function,
@@ -522,7 +531,7 @@ K-means is probably the simplest and most famous of these methods
 since it does not rely on the computation of the entire distance matrix (\Cref{appendix:clustering}).
 %Given an initial set of cluster means, which may be user-defined or selected at random, points are then assigned to the cluster.
 %After the assignment, the cluster centers are recomputed, and again points are re-assigned to whichever cluster ce
-For example flowMeans \citep{Aghaeepour:2010fv} is an extension to k-means for flow cytometry.
+For example flowMeans \citep{Aghaeepour:2010fv} is an extension to K-means for flow cytometry.
 However K-means is known to be very sensitive to starting conditions and is also not robust to outliers.
 %a high variance method because small changes in the data can lead to very different clustering solutions.
 Methods which calculate the entire distance matrix require some form of downsampling to reduce the total number of points.
@@ -531,8 +540,8 @@ Caution needs to be taken since random uniform downsampling runs the risk of dis
 One workaround is to account for local density when doing the downsampling so that data is not lost.
 Once the downsampling has sufficiently reduced the number of points so that distance matrix may be computed,
 methods such as, spectral clustering which uses spectral graph theory to determine where to partition the network
-(SAMSpectral (Sampling followed by Spectral Clustering) \citet{Zare:2010cw}) or more conventional hierarchical clustering
-as done by SPADE (Spanning-tree Progression Analysis of Density-normalized Events, \cite{Simonds:2011jh}), may be applied.
+Sampling followed by Spectral Clustering (SAMSpectral, \citet{Zare:2010cw}) or more conventional hierarchical clustering
+as done by Spanning-tree Progression Analysis of Density-normalized Events (SPADE, \citet{Simonds:2011jh}), may be applied.
 
 The advantage of these non-parametric methods is that they are fast and flexible and can often come with heuristics for estimating the parameters.
 Unfortunately the disadvantage is that the results are not easily interpretable or generalisable to another dataset since there is no explicit model.
@@ -572,6 +581,10 @@ and accuracy, in supervised clustering, or some other metric like variance expla
 One way of estimating the expected number of clusters, is to find modes in the data: regions of significantly high density \citep{Duong:2008eu,JING:2012ek}.
 Another way is to look at the ratio of intra-cluster to inter-cluster variance at increasing number of clusters and pick the elbow point where the ratio drops significantly.
 This relates to the $R^2$ ratio in \gls{ANOVA}, since the intercluster variance is the variance explained by the model and the intracluster variance is the remaining variance.
+\[
+  R^2 = 1 - \frac{ \sum}
+\]
+
 Another approach it to maximise the Bayesian Information Criterion, the log of the likelihood penalised by the number of clusters and free parameters.
 %In the non model based methods, a threshold for the inter cluster distance defines the number of clusters
 
