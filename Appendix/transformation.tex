@@ -2,7 +2,7 @@
 
 
 As fluorescence intensity tends to scale multiplicatively, intensity data needs to be linearised for the purpose of visualisation and clustering.
-Clustering algorithms based on variance (average distance to the mean) perform poorly on skewed data. 
+Clustering algorithms based on variance (average distance to the mean) perform poorly on skewed data.
 
 %Given a finite range (number of channels/bins), a logarithmic transform can be used to maximise the range of data that can be captured by a detector.
 
@@ -35,7 +35,7 @@ But, as illustrated by \citet{Tung:2006uw}, care needs to be taken in choosing a
 infuences the shape of the distribution and can introduce extra modes.
 Figure~\ref{figure:log10-transform} illustrates this phenomenon in our data when we apply the $Log_{10}$ transform.
 Instead if we apply the logicle transform as defined by \citet{Parks:2006gaa} in Figure~\ref{figure:logicle-transform}, we see that we can address the spurious mode
-by reducing the w parameter which represents the slope of the linear transform around zero.
+by reducing the w parameter which influences the slope of the linear transform around zero.
 
 %Update for the Logicle Data Scale Including Operational Code Implementations \citet{Moore:2012gz}
 
@@ -45,8 +45,8 @@ by reducing the w parameter which represents the slope of the linear transform a
 \mycaption{figure:log10-transform} 
 {$Log_{10}$ transformed data}
 {
-  In black, intensity values of zero or less are assigned to 1.
-  In red, the intensity value are shifted by the minimum so that all negative values are greater than zero.
+  In black, intensity values of zero or less are assigned to zero.
+  In red, the intensity value have been shifted by the minimum, before applying the transform, so that all negative values are greater than zero.
 }
 \end{figure}
 
@@ -59,7 +59,40 @@ by reducing the w parameter which represents the slope of the linear transform a
 {
   The logicle transform is similar to a logistic function in that it approximates a linear transform around the first decade
   and a log transform elsewhere.
-  As w, the slope of the linear transform, increases the shape of the distribution approximates the shifted log transform in Figure~\ref{figure:log10-transform}.
+  As the slope of the linear transform, increases the shape of the distribution approximates the shifted log transform in Figure~\ref{figure:log10-transform}.
+}
+\end{figure}
+
+
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{.4\textwidth}
+    \centering
+    \includegraphics[scale=.3]{Appendix/figures/logicle-transform-a.pdf}
+    \caption{w=0}
+\end{subfigure}
+~
+\begin{subfigure}[b]{.4\textwidth}
+    \centering
+    \includegraphics[scale=.3]{Appendix/figures/logicle-transform-b.pdf}
+    \caption{w=.25}
+\end{subfigure}
+~
+\begin{subfigure}[b]{.4\textwidth}
+    \centering
+    \includegraphics[scale=.3]{Appendix/figures/logicle-transform-c.pdf}
+    \caption{w=.5}
+\end{subfigure}
+~
+\begin{subfigure}[b]{.4\textwidth}
+    \centering
+    \includegraphics[scale=.3]{Appendix/figures/logicle-transform-d.pdf}
+    \caption{w=1}
+\end{subfigure}
+\mycaption{figure:CD25-MFI-beads-normalised}
+{Effect of the w parameter of the logicle transform.}
+{
+  The w parameter maps the zero of the transform to w.
 }
 \end{figure}
 
