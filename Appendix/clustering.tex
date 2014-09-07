@@ -46,6 +46,7 @@ The algorithm terminates when no cluster medoid changes.
 The algorithm is reasonably fast but can be slower for larger datasets due to the first step of calculating the complete distance matrix.
 For sufficiently large $N$, the size of the distance matrix may be prohibitive and too large for memory.
 Therefore this version of the algorithm may not scale to large $N$ as well as K-means. 
+%There exists an implementation in R which works on subsets of the data and combines the results: clara
 
 
 
@@ -127,19 +128,15 @@ e^{-\frac{1}{2}({\mathbf x_i}-{\boldsymbol\mu_k})^T{\boldsymbol\Sigma_k}^{-1}({\
 }; \quad \sum_{k=1}^K\tau_k = 1
 \]
 
-\section{Parameter estimation} 
-
-The time of convergence of the parameters depends on the softness of the method.
-For example soft k-means takes longer to converge than hard k-means since the matrix of posterior probabilities is updated in small steps.
 
 \section{Parameter constraints: regularisation} 
 %\section{Clustering with priors}
 
-Algorithms proceed in an iterative fashion to explore the parameter space with the objective of finding a global minimum/maximum of the
+Algorithms proceed in an iterative fashion to explore the parameter space with the objective of finding a global optimum of the
 least-squares or likelihood function.
 The stopping criterion is reached upon convergence of the objective function or equivalently of the parameter updates.
-However local minimums/maximums of the objective function can also lead to convergence.
-There are also regions fo the parameter space which need to be avoided.
+However local optimums of the objective function can also lead to convergence.
+There are also regions of the parameter space which need to be avoided.
 For example, the likelihood function can also be made arbitrarily large if the variance of a cluster is allowed to shrink to zero.
 
 %One pitfall of these methods is that the objective landscape may contain many local minimum or maximums 
@@ -191,9 +188,25 @@ Since a product of small numbers is numerically unstable, the logarithm of the l
 
 The time of convergence of the parameters depends on the softness of the method.
 For example soft k-means takes longer to converge than hard k-means since the matrix of posterior probabilities is updated in small steps.
+%Generally large updates in parameter estimates tend to converge faster but to less optimal solutions.
+%In gradient descent, the step size is inversely proportional to the gradient, so that flat regions of the parameter space are explored faster.
+%Small updates to the objective function translate to small parameter updates.
 
 Another issue with soft clustering approaches is if the number of components is large and the method is too soft, than assignment cannot be achieved with
 any degree of certainty (low max posterior probability).
-This is especially true with noisy data.
+This is usually an indication that the data is too noisy.
 
+
+
+% example of kmeans fail on skewed data
+%\begin{figure}[h]
+    %\centering
+    %\includegraphics[scale=.5]{IL2/figures/kmeans-fail.pdf}
+    %\mycaption{figure:kmeans-fail.pdf}
+    %{Kmeans can fail to partition clusters when the clusters are of very uneven size (black vertical line).}
+    %{
+      %Fitting a mixture model allows for different cluster variance and so provides a better partitioning of the clusters.
+    %}
+%\end{figure}
+%
 

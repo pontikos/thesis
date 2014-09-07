@@ -1,0 +1,217 @@
+% The document will be printed one side in A4 paper.
+%\documentclass[12pt,a4paper,oneside]{report}
+%\documentclass[12pt,a4paper,twoside]{report}
+\documentclass[12pt,a4paper,twoside]{article}
+
+\usepackage[round]{natbib}
+
+\usepackage[pdftex]{color,graphicx}
+\usepackage{setspace}
+\usepackage{a4wide}
+
+\usepackage[a4paper]{geometry}
+\usepackage[cm]{fullpage}
+
+
+%subfigures deprecated
+%\usepackage{subfigure}
+%use subcaption instead
+\usepackage{caption}
+\usepackage{subcaption}
+%side caption: SCfigure
+%\usepackage{sidecap}
+% Use PDF output.
+% The output should be wide.
+\usepackage{url}
+%for definition list
+\usepackage{enumitem}
+%for celsius
+%\usepackage{gensymb}
+%for listing code
+\usepackage{listings}
+%for table cell with diagonal division
+\usepackage{slashbox}
+\usepackage{tabularx}
+\usepackage{amsmath}
+
+%\usepackage[graphics,tightpage,active]{preview}
+%\PreviewEnvironment{tikzpicture}
+%\PreviewEnvironment{equation}
+%\PreviewEnvironment{equation*}
+%\newlength{\imagewidth}
+%\newlength{\imagescale}
+%\pagestyle{empty}
+%\thispagestyle{empty}
+%\usepackage{standalone}
+
+\usepackage[french, greek, english]{babel}
+%input encoding
+%\usepackage[iso-8859-7]{inputenc}
+%\usepackage[latin1]{inputenc}
+%output encoding
+\usepackage[T1]{fontenc}
+\selectlanguage{english}
+
+% Pour la dedicace
+\usepackage{frcursive}
+
+\usepackage[table]{xcolor}
+\usepackage{booktabs}
+\usepackage{tabu}
+
+\usepackage[section,subsection,subsubsection]{extraplaceins}
+\usepackage{url} %tablerules
+\usepackage{xr}
+\externaldocument{supplementary}
+
+\usepackage[labelfont=bf,labelsep=period,justification=raggedright]{caption}
+\usepackage{authblk}
+
+
+\setcounter{secnumdepth}{0}
+
+
+
+%\doublespacing
+
+%\title{Leveraging qPCR with SNP data achieves large scale case-control analysis of KIR3DL1/3DS1 copy number variation in type 1 diabetes}
+\title{Predicting \emph{KIR3DL1/S1} copy number from ImmunoChip signals in large scale type 1 diabetes association study}
+%and reveals no association in type 1 diabetes}
+\author[1]{Nikolas Pontikos}
+\author[1]{Deborah Smyth}
+\author[1]{Helen Schuilenburg}
+\author[1]{Joanna MM Howson}
+\author[1]{Neil M. Walker}
+\author[2]{Jyothi Jayaraman}
+\author[2]{Wei Jiang}
+\author[2]{James Traherne}
+\author[2]{John Trowsdale}
+\author[1]{John A. Todd}
+\author[1]{Chris Wallace}
+\affil[1]{JDRF/Wellcome Trust Diabetes and Inflammation Laboratory, Cambridge Institute for Medical Research, University of Cambridge, Wellcome Trust/MRC Building, Cambridge CB2 0XY, United Kingdom;}
+\affil[2]{Division of Immunology, Department of Pathology, University of Cambridge, Cambridge CB2 1QP, United Kingdom}
+
+\renewcommand\Authands{ and }
+
+
+\date{}
+
+
+\begin{document}
+
+\newlength{\oparindent}
+\setlength{\oparindent}{\parindent}
+\setlength{\parindent}{0pt}
+
+\maketitle
+\noindent
+
+
+%\newpage
+%\thispagestyle{empty} 
+%\addtocounter{page}{-1}
+%\vspace*{\fill}
+%\begin{center}
+%{\fontfamily{frc}\selectfont \foreignlanguage{french} {Pour ma petite Maman ch\'erie, \`a qui je dois tout \ldots}}
+%{\fontfamily{frc}\selectfont Pour ma petite Maman cherie, a qui je dois tout \ldots}
+%\end{center}
+%\vspace*{\fill}
+%\clearpage
+
+\abstract{
+Killer Immunoglobulin-like Receptors (KIR) are important surface receptors of Natural Killer cells.
+KIRs mediate the fate of target cells based on the composite inhibiting/activating signal generated on binding to their corresponding HLA (Human Leukocyte Antigen) class I ligands.
+Type 1 diabetes (T1D) is an autoimmune disease strongly associated with genetic variation in the HLA region, primarily with Class II genes, but also with HLA Class I loci including HLA-Bw4, an epitope grouping both HLA-A and HLA-B alleles into HLA-Bw4-80I and HLA-Bw4-80T subgroups.
+Amongst the 17 known genes of the KIR region, characterised by alternative haplotypes of variable gene copy numbers, \emph{KIR3DL1} is the only one proven to bind in-vitro with both HLA-Bw4 epitopes.
+Its activating counterpart, \emph{KIR3DS1}, putatively binds the HLA-Bw4-80I epitope only.
+\emph{KIR3DL1/S1} is therefore an interesting T1D candidate gene but since the KIR region is poorly characterised, genotyping with conventional SNP arrays is unreliable.
+So far, insufficiently powered PCR-based genotyping studies of less than 600 individuals, have failed to detect convincing association of T1D with presence or absence of \emph{KIR3DL1/S1}.  
+For the first time, we are able to test for association in a sample size of 6,744 cases and 5,362 controls, twenty-fold larger than any previous study, by using \emph{KIR3DL1/S1} copy number calls from a recently developed KIR qPCR assay in order to impute copy number in samples assayed only with ImmunoChip,
+a custom Illumina genotyping chip with probes for 30 SNPs in the target region.
+%with dense coverage of autoimmune regions
+
+%The \emph{KIR3DL1/S1} copy numbers from qPCR data were called by clustering jointly on the $\Delta$Ct values of \emph{KIR3DL1} and \emph{KIR3DS1}.
+%The imputed \emph{KIR3DL1/S1} copy numbers from SNP data were predicted from Log R Ratio and B Allele Frequency with a 1.3\% misclassification error rate
+%in leave-one-out cross-validation in the \emph{KIR3DL1/S1} region using a nearest neighbour classifier trained on 747 case and 727 control samples analysed
+%both with qPCR and on Immunochip, a custom SNP array.
+The association of \emph{KIR3DL1/S1} copy number with T1D was tested in all samples and conditional on the corresponding HLA-Bw4 ligand subsets.
+The interaction effect between \emph{KIR3DL1/S1} and HLA-Bw4 was also tested with a case-only analysis.
+We can confirm from our study with a substantially increased sample size, that copy number variation in \emph{KIR3DL1/S1} is not an important modifier of T1D risk (0.9 < OR < 1.1 at 95\% confidence for the common genotype), either alone or dependent on HLA-Bw4 epitope, and that furthermore, there is no evidence of statistical interaction effect between HLA-Bw4 and \emph{KIR3DL1/S1} copy number in T1D.  
+\emph{( 340 words )}
+%This implies that NK are unlikely to be important players in the aetiology of T1D.
+%This presents evidence against the role of NK cells in the aetiology of T1D.
+%The association is not caused by the interaction with KIR
+%These results suggest that HLA Class I susceptibility alleles do not mediate risk to T1D through interplay with KIR3DL1/S1 which would imply that NK cells are not causal of T1D
+%These results suggest that the interplay between KIR and HLA may not be an signifcant risk factor in aetology of T1D.
+%This strengthens the hypothesis that NK cells are not involved in aetiology of T1D.
+}
+
+
+\doublespacing
+%\onehalfspacing
+
+\section{Introduction}
+\input{introduction}
+
+\section{Methods}
+\input{methods}
+
+\section{Results}
+\input{results}
+
+\section{Discussion}
+\input{discussion}
+
+\section{Acknowledgements}
+
+This work was funded by the Juvenile Diabetes Research Foundation International, the Wellcome Trust and the National Institute for Health Research (NIHR) Cambridge Biomedical Research Centre.
+The research leading to these results has received funding from the European Union's 7th Framework Programme (FP7/2007-2013) under grant agreement no.241447 (NAIMIT).
+We thank David Dunger, Barry Widmer, and the British Society for Paediatric Endocrinology and Diabetes for the TID case collection.  
+We would like to thank the UK Medical Research Council and Wellcome Trust for funding the collection of DNA for the British 1958 Birth Cohort (MRC grant G0000934, WT grant 068545/Z/02).
+DNA control samples were prepared and provided by S. Ring, R. Jones, M. Pembrey, W. McArdle, D. Strachan and P. Burton. 
+NP is supported by the Medical Research Council Doctoral Training Grant (C006148).
+CW is funded by the Wellcome Trust (089989).
+The Diabetes and Inflammation Laboratory is funded by the JDRF, the Wellcome Trust and the National Institute for Health Research (NIHR) Cambridge Biomedical Research Centre.
+The Cambridge Institute for Medical Research (CIMR) is in receipt of a Wellcome Trust Strategic Award (100140).
+
+\singlespacing
+\footnotesize
+
+
+% Bibliography
+%\bibliographystyle{abbrvnat}
+%\bibliographystyle{plainnat}
+%\bibliographystyle{chicago}
+%\bibliographystyle{apalike}
+%\bibliographystyle{naturemag}
+%\bibliographystyle{plos2009}
+
+% 32 references
+\bibliographystyle{genomeresearch}
+\bibliography{paper}
+
+
+
+\clearpage
+
+
+\section*{Figures}
+\input{figures}
+\FloatBarrier
+
+\clearpage
+
+%\section*{Tables}
+%\input{tables}
+\FloatBarrier
+
+
+
+%\chapter{\label{flowsorting}{Flow Cytometry Cell Sorting}}
+%\input{flowsorting}
+
+
+
+
+
+\end{document}

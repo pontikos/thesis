@@ -1,0 +1,27 @@
+\begin{thebibliography}{3}
+\providecommand{\natexlab}[1]{#1}
+
+\bibitem[{Gonzalez-Galarza et~al(2011)Gonzalez-Galarza, Christmas, Middleton,
+  and Jones}]{GonzalezGalarza:2011gm}
+Gonzalez-Galarza FF, Christmas S, Middleton D, and Jones AR. 2011.
+\newblock {Allele frequency net: a database and online repository for immune
+  gene frequencies in worldwide populations.}
+\newblock \emph{Nucleic acids research} \textbf{39}: D913--9.
+
+\bibitem[{Jiang et~al(2012)Jiang, Johnson, Jayaraman, Simecek, Noble, Moffatt,
+  Cookson, Trowsdale, and Traherne}]{Jiang:2012cf}
+Jiang W, Johnson C, Jayaraman J, Simecek N, Noble J, Moffatt MF, Cookson WO,
+  Trowsdale J, and Traherne JA. 2012.
+\newblock {Copy number variation leads to considerable diversity for B but not
+  A haplotypes of the human KIR genes encoding NK cell receptors.}
+\newblock \emph{Genome Research} \textbf{22}: 1845--1854.
+
+\bibitem[{Martin et~al(2002)Martin, Gao, Lee, Nelson, Detels, Goedert,
+  Buchbinder, Hoots, Vlahov, Trowsdale et~al}]{Martin:2002el}
+Martin MP, Gao X, Lee JH, Nelson GW, Detels R, Goedert JJ, Buchbinder S, Hoots
+  K, Vlahov D, Trowsdale J, et~al. 2002.
+\newblock {Epistatic interaction between KIR3DS1 and HLA-B delays the
+  progression to AIDS}.
+\newblock \emph{Nature Genetics} \textbf{31}: 429--434.
+
+\end{thebibliography}

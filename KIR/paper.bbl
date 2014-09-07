@@ -1,0 +1,236 @@
+\begin{thebibliography}{32}
+\providecommand{\natexlab}[1]{#1}
+
+\bibitem[{Barrett et~al(2009)Barrett, Clayton, Concannon, Akolkar, Cooper,
+  Erlich, Julier, Morahan, Nerup, Nierras et~al}]{Barrett:2009jq}
+Barrett JC, Clayton DG, Concannon P, Akolkar B, Cooper JD, Erlich HA, Julier C,
+  Morahan G, Nerup J, Nierras C, et~al. 2009.
+\newblock {Genome-wide association study and meta-analysis find that over 40
+  loci affect risk of type 1 diabetes}.
+\newblock \emph{Nature Genetics} \textbf{41}: 703--707.
+
+\bibitem[{Carrington et~al(2005)Carrington, Wang, Martin, Gao, Schiffman,
+  Cheng, Herrero, Rodriguez, Kurman, Mortel et~al}]{Carrington:2005ee}
+Carrington M, Wang S, Martin MP, Gao X, Schiffman M, Cheng J, Herrero R,
+  Rodriguez AC, Kurman R, Mortel R, et~al. 2005.
+\newblock {Hierarchy of resistance to cervical neoplasia mediated by
+  combinations of killer immunoglobulin-like receptor and human leukocyte
+  antigen loci.}
+\newblock \emph{The Journal of Experimental Medicine} \textbf{201}: 1069--1075.
+
+\bibitem[{Cordell(2006)}]{Cordell:2006da}
+Cordell HJ. 2006.
+\newblock {Estimation and testing of genotype and haplotype effects in
+  case-control studies: comparison of weighted regression and multiple
+  imputation procedures.}
+\newblock \emph{Genetic epidemiology} \textbf{30}: 259--275.
+
+\bibitem[{Cordell(2009)}]{Cordell:2009jb}
+Cordell HJ. 2009.
+\newblock {Detecting gene--gene interactions that underlie human diseases}.
+\newblock \emph{Nature Reviews Genetics} \textbf{10}: 392--404.
+
+\bibitem[{Cortes and Brown(2011)}]{immunochip}
+Cortes A and Brown MA. 2011.
+\newblock {Promise and pitfalls of the Immunochip}.
+\newblock \emph{Arthritis research {\&} therapy} \textbf{13}: 101.
+
+\bibitem[{Gonzalez-Galarza et~al(2011)Gonzalez-Galarza, Christmas, Middleton,
+  and Jones}]{GonzalezGalarza:2011gm}
+Gonzalez-Galarza FF, Christmas S, Middleton D, and Jones AR. 2011.
+\newblock {Allele frequency net: a database and online repository for immune
+  gene frequencies in worldwide populations.}
+\newblock \emph{Nucleic acids research} \textbf{39}: D913--9.
+
+\bibitem[{Gumperz et~al(1997)Gumperz, Barber, Valiante, Percival, Phillips,
+  Lanier, and Parham}]{Gumperz:1997ve}
+Gumperz JE, Barber LD, Valiante NM, Percival L, Phillips JH, Lanier LL, and
+  Parham P. 1997.
+\newblock {Conserved and variable residues within the Bw4 motif of HLA-B make
+  separable contributions to recognition by the NKB1 killer cell-inhibitory
+  receptor.}
+\newblock \emph{Journal of immunology (Baltimore, Md. : 1950)} \textbf{158}:
+  5237--5241.
+
+\bibitem[{Howson et~al(2009)Howson, Walker, Clayton, Todd, and {Diabetes
+  Genetics Consortium}}]{Howson:2009bl}
+Howson JMM, Walker NM, Clayton D, Todd JA, and {Diabetes Genetics Consortium}.
+  2009.
+\newblock {Confirmation of HLA class II independent type 1 diabetes
+  associations in the major histocompatibility complex including HLA-B and
+  HLA-A}.
+\newblock \emph{Diabetes, Obesity and Metabolism} \textbf{11}: 31--45.
+
+\bibitem[{Jiang et~al(2012)Jiang, Johnson, Jayaraman, Simecek, Noble, Moffatt,
+  Cookson, Trowsdale, and Traherne}]{Jiang:2012cf}
+Jiang W, Johnson C, Jayaraman J, Simecek N, Noble J, Moffatt MF, Cookson WO,
+  Trowsdale J, and Traherne JA. 2012.
+\newblock {Copy number variation leads to considerable diversity for B but not
+  A haplotypes of the human KIR genes encoding NK cell receptors.}
+\newblock \emph{Genome Research} \textbf{22}: 1845--1854.
+
+\bibitem[{Jobim et~al(2010)Jobim, Chagastelles, Salim, Portela, Wilson, Curti,
+  Jobim, Jo{\~a}o, Nardi, Tschiedel et~al}]{Jobim:2010}
+Jobim M, Chagastelles P, Salim PH, Portela P, Wilson TJ, Curti AG, Jobim MR,
+  Jo{\~a}o DA, Nardi NB, Tschiedel B, et~al. 2010.
+\newblock {Association of killer cell immunoglobulin-like receptors and human
+  leukocyte antigen--C genotypes in South Brazilian with type 1 diabetes}.
+\newblock \emph{Human Immunology} \textbf{71}: 799--803.
+
+\bibitem[{K{\"o}rner and Altfeld(2012)}]{Korner:2012im}
+K{\"o}rner C and Altfeld M. 2012.
+\newblock {Role of KIR3DS1 in human diseases}.
+\newblock \emph{Frontiers in Immunology} \textbf{3}.
+
+\bibitem[{Lumley(2012)}]{mitools}
+Lumley T. 2012.
+\newblock \emph{mitools: Tools for multiple imputation of missing data}.
+\newblock R package version 2.1.
+
+\bibitem[{Martin et~al(2002)Martin, Gao, Lee, Nelson, Detels, Goedert,
+  Buchbinder, Hoots, Vlahov, Trowsdale et~al}]{Martin:2002el}
+Martin MP, Gao X, Lee JH, Nelson GW, Detels R, Goedert JJ, Buchbinder S, Hoots
+  K, Vlahov D, Trowsdale J, et~al. 2002.
+\newblock {Epistatic interaction between KIR3DS1 and HLA-B delays the
+  progression to AIDS}.
+\newblock \emph{Nature Genetics} \textbf{31}: 429--434.
+
+\bibitem[{Martin et~al(2007)Martin, Qi, Gao, Yamada, Martin, Pereyra, Colombo,
+  Brown, Shupert, Phair et~al}]{Martin:2007ik}
+Martin MP, Qi Y, Gao X, Yamada E, Martin JN, Pereyra F, Colombo S, Brown EE,
+  Shupert WL, Phair J, et~al. 2007.
+\newblock {Innate partnership of HLA-B and KIR3DL1 subtypes against HIV-1.}
+\newblock \emph{Nature Genetics} \textbf{39}: 733--740.
+
+\bibitem[{Mehers et~al(2011)Mehers, Long, van~der Slik, Aitken, Nathwani, Wong,
+  Bain, Gill, Roep, Bingley et~al}]{Mehers:2011fj}
+Mehers KL, Long AE, van~der Slik AR, Aitken RJ, Nathwani V, Wong FS, Bain S,
+  Gill G, Roep BO, Bingley PJ, et~al. 2011.
+\newblock {An increased frequency of NK cell receptor and HLA-C group 1
+  combinations in early-onset type 1 diabetes.}
+\newblock \emph{Diabetologia} \textbf{54}: 3062--3070.
+
+\bibitem[{Middleton et~al(2006)Middleton, Halfpenny, Meenagh, Williams, Sivula,
+  and Tuomilehto-Wolf}]{Middleton:2006ba}
+Middleton D, Halfpenny I, Meenagh A, Williams F, Sivula J, and Tuomilehto-Wolf
+  E. 2006.
+\newblock {Investigation of KIR Gene Frequencies in Type 1 Diabetes Mellitus}.
+\newblock \emph{Human Immunology} \textbf{67}: 986--990.
+
+\bibitem[{Mogami et~al(2007)Mogami, Hasegawa, Nakayama, Asano, Hosoda, Kadono,
+  Fukui, Kitagawa, Nakano, Ohta et~al}]{Mogami:2007gj}
+Mogami S, Hasegawa G, Nakayama I, Asano M, Hosoda H, Kadono M, Fukui M,
+  Kitagawa Y, Nakano K, Ohta M, et~al. 2007.
+\newblock {Killer cell immunoglobulin-like receptor genotypes in Japanese
+  patients with type 1 diabetes.}
+\newblock \emph{Tissue Antigens} \textbf{70}: 506--510.
+
+\bibitem[{Nejentsev et~al(2007)Nejentsev, Howson, Walker, Szeszko, Field,
+  Stevens, Reynolds, Hardy, King, Masters et~al}]{Nejentsev:2007dv}
+Nejentsev S, Howson JMM, Walker NM, Szeszko J, Field SF, Stevens HE, Reynolds
+  P, Hardy M, King E, Masters J, et~al. 2007.
+\newblock {Localization of type 1 diabetes susceptibility to the MHC class I
+  genes HLA-B and HLA-A.}
+\newblock \emph{Nature} \textbf{450}: 887--892.
+
+\bibitem[{Nikitina-Zake et~al(2004)Nikitina-Zake, Rajalingham, Rumba, and
+  Sanjeevi}]{NikitinaZake:2004jv}
+Nikitina-Zake L, Rajalingham R, Rumba I, and Sanjeevi CB. 2004.
+\newblock {Killer cell immunoglobulin-like receptor genes in Latvian patients
+  with type 1 diabetes mellitus and healthy controls.}
+\newblock \emph{Annals of the New York Academy of Sciences} \textbf{1037}:
+  161--169.
+
+\bibitem[{Park et~al(2006)Park, Choi, Park, Park, Yoo, Kim, and
+  Sanjeevi}]{PARK:2006km}
+Park Y, Choi H, Park H, Park S, Yoo EK, Kim D, and Sanjeevi CB. 2006.
+\newblock {Predominance of the group A killer Ig-like receptor haplotypes in
+  Korean patients with T1D.}
+\newblock \emph{Annals of the New York Academy of Sciences} \textbf{1079}:
+  240--250.
+
+\bibitem[{Plagnol et~al(2007)Plagnol, Cooper, Todd, and
+  Clayton}]{Plagnol:2007dw}
+Plagnol V, Cooper JD, Todd JA, and Clayton DG. 2007.
+\newblock {A Method to Address Differential Bias in Genotyping in Large-Scale
+  Association Studies}.
+\newblock \emph{PLoS Genetics} \textbf{3}: e74.
+
+\bibitem[{Santin et~al(2006)Santin, de~Nanclares, Calvo, Gaafar, Casta{\~n}o,
+  and Bilbao}]{Santin:2006hh}
+Santin I, de~Nanclares GP, Calvo B, Gaafar A, Casta{\~n}o L, and Bilbao JR.
+  2006.
+\newblock {Killer Cell Immunoglobulin-Like Receptor (KIR) Genes in the Basque
+  Population: Association Study of KIR Gene Contents With Type 1 Diabetes
+  Mellitus}.
+\newblock \emph{Human Immunology} \textbf{67}: 118--124.
+
+\bibitem[{Shastry et~al(2008)Shastry, Sedimbi, Rajalingam, Nikitina-Zake,
+  Rumba, Wigzell, and Sanjeevi}]{Shastry:2008id}
+Shastry A, Sedimbi SK, Rajalingam R, Nikitina-Zake L, Rumba I, Wigzell H, and
+  Sanjeevi CB. 2008.
+\newblock {Combination of KIR 2DL2 and HLA-C1 (Asn 80) confers susceptibility
+  to type 1 diabetes in Latvians}.
+\newblock \emph{International Journal of Immunogenetics} \textbf{35}: 439--446.
+
+\bibitem[{Single et~al(2007)Single, Martin, Gao, Meyer, Yeager, Kidd, Kidd, and
+  Carrington}]{Single:2007br}
+Single RM, Martin MP, Gao X, Meyer D, Yeager M, Kidd JR, Kidd KK, and
+  Carrington M. 2007.
+\newblock {Global diversity and evidence for coevolution of KIR and HLA}.
+\newblock \emph{Nature Genetics} \textbf{39}: 1114--1119.
+
+\bibitem[{van~der Slik et~al(2007)van~der Slik, Alizadeh, Koeleman, Roep, and
+  Giphart}]{vanderSlik:2007hi}
+van~der Slik AR, Alizadeh BZ, Koeleman B, Roep BO, and Giphart MJ. 2007.
+\newblock {Modelling KIR--HLA genotype disparities in type 1 diabetes}.
+\newblock \emph{Tissue Antigens} \textbf{69}: 101--105.
+
+\bibitem[{van~der Slik et~al(2003)van~der Slik, Koeleman, Verduijn, Bruining,
+  Roep, and Giphart}]{vanderSlik:2003gq}
+van~der Slik AR, Koeleman BPC, Verduijn W, Bruining GJ, Roep BO, and Giphart
+  MJ. 2003.
+\newblock {KIR in Type 1 Diabetes: Disparate Distribution of Activating and
+  Inhibitory Natural Killer Cell Receptors in Patients Versus HLA-Matched
+  Control Subjects}.
+\newblock \emph{Diabetes} \textbf{52}: 2639--2642.
+
+\bibitem[{Todd(2010)}]{Todd:2010bl}
+Todd JA. 2010.
+\newblock {Etiology of type 1 diabetes.}
+\newblock \emph{Immunity} \textbf{32}: 457--467.
+
+\bibitem[{Vivian et~al(2011)Vivian, Duncan, Berry, O'Connor, Reid, Beddoe,
+  Gras, Saunders, Olshina, Widjaja et~al}]{Vivian:2011gt}
+Vivian JP, Duncan RC, Berry R, O'Connor GM, Reid HH, Beddoe T, Gras S, Saunders
+  PM, Olshina MA, Widjaja JML, et~al. 2011.
+\newblock {Killer cell immunoglobulin-like receptor 3DL1-mediated recognition
+  of human leukocyte antigen B.}
+\newblock \emph{Nature} \textbf{479}: 401--405.
+
+\bibitem[{{Wellcome Trust Case Control Consortium}(2007)}]{Burton:2007hta}
+{Wellcome Trust Case Control Consortium}. 2007.
+\newblock {Genome-wide association study of 14,000 cases of seven common
+  diseases and 3,000 shared controls.}
+\newblock \emph{Nature} \textbf{447}: 661--678.
+
+\bibitem[{Yang et~al(1999)Yang, Khoury, Sun, and Flanders}]{Yang:1999wk}
+Yang Q, Khoury MJ, Sun F, and Flanders WD. 1999.
+\newblock {Case-only design to measure gene-gene interaction.}
+\newblock \emph{Epidemiology (Cambridge, Mass.)} \textbf{10}: 167--170.
+
+\bibitem[{Young et~al(2009)Young, Hunter, Chauveau, and
+  Benaglia}]{Young:2009ty}
+Young D, Hunter D, Chauveau D, and Benaglia T. 2009.
+\newblock {mixtools: An R Package for Analyzing Mixture Models}.
+\newblock \emph{Journal of Statistical Software} \textbf{32}.
+
+\bibitem[{Zhi et~al(2011)Zhi, Sun, Sedimbi, Luo, Shen, and
+  Sanjeevi}]{Zhi:2011kl}
+Zhi D, Sun C, Sedimbi SK, Luo F, Shen S, and Sanjeevi CB. 2011.
+\newblock {Killer cell immunoglobulin-like receptor along with HLA-C ligand
+  genes are associated with type 1 diabetes in Chinese Han population}.
+\newblock \emph{Diabetes/Metabolism Research and Reviews} \textbf{27}:
+  872--877.
+
+\end{thebibliography}

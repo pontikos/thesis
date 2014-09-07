@@ -19,13 +19,13 @@
 %We will see that different normalisation approaches make different assumptions about what is unwanted variation.
 
 %\section{Data sets} 
-%\paragraph{KIR copy number} 
-%\paragraph{Flow data}
+%\section{KIR copy number} 
+%\section{Flow data}
 
-\section{Data driven normalisation}
+%\section{Data driven normalisation}
 
 
-\paragraph{Data dependent normalisation}
+\section{Data dependent normalisation}
 
 In the case of flow cytometry, the distributions are typically multimodal since they are representative of a mixture of cell populations.
 The modes of the distributions are representative of how the expected quantity of protein carried on the surface of different cell types which,
@@ -248,7 +248,7 @@ Here we might try to use the score of the peaks to decide of where the should pe
 \clearpage
 
 
-\paragraph{Feature signifance of the density function}
+\section{Feature signifance of the density function}
 
 %The reliance on the bandwidth by trying a selection of bandwidths.
 Another approach is to estimate feature significance using the gradient and curvature kernel density estimation \citep{Chaudhuri:1999gu,Duong:2008eu}.
@@ -265,7 +265,7 @@ In practise however this method does not reliably identify peaks.
 Possibly, the bandwidth and threshold significance threshold selection require better estimation.
 
 
-\paragraph{Clustering}
+\section{Clustering}
 Peaks in the density function can be also identified without explicitly analysing the density function but instead by using data clustering.
 These methods are sensitive to the number of clusters parameters which, as mentionned, may not always be consistently identifiable across samples.
 Perhaps the number of cluster can be estimated from the sliding window results obtained on all samples.
@@ -293,14 +293,14 @@ But if there are more than two peaks, alignment could necessitate a non-linear t
 However this runs the risk of introducing too much extra-variation in the dataset.
 %The shifting of the data of the data can be done using a linear transform which scales the variance by the slope squared.
 
-\paragraph{Linear}
+\section{Linear}
 
 Linear regression preserves variance.
 But certain peaks which are far from the mean have more leverage.
 Peaks may be weighted by their height, since more significant should be attributed more weight.
 
 
-\paragraph{Non-linear}
+\section{Non-linear}
 
 In the \Rpackage{flowStats}, two methods non-linear are suggested: \Rfunction{gaussNorm} and \Rfunction{fdaNorm}.
 

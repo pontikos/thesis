@@ -61,10 +61,33 @@ so much so that in certain samples the peaks are only identifiable after prelimi
 %It will often be necessary to modify data preprocessing and model parameters until the result achieves the desired properties.  
 %Clustering can also be viewed as a latent variable problem where the cluster labels are considered to be the missing data.
 
+\section{Supervised clustering}
+
+On the KIR dataset, we used prior information about the copy number in order to identify clusters in the SNP dataset.
+In the flow data, the manual gates could be used as prior information to guide the automatic gating.
+For example in flowClust, the manual gates can be used to define the priors in the mixture model.
 
 \section{ Method of determining phenotype affects power to detect genetic association }
 
+
+Consistency is an important factor in identifying clusters.
+%Decomposing the variance into tech
+
 \section{ future application of methods }
+
+% experiment vs analysis: the great divide?
+Perhaps the geatest obstacle to standardising analysis is our inherent dislike of standards.
+What motivates an experiment is may be a moment of inspiriation and leads to the generation of flow data is often an adhoc thought process,
+which is implemented with different degrees of thouroughness and method.
+However, simple things like naming conventions waste precious man hours.
+To err is human,  which is why automation is necessary.
+
+On the other hand, statisticians need to have an understanding of: the underlying technology, the purpose of the experiment.
+For example, in flow cytometry, a large number of events are debris of no biological interest and some patterns are just artefacts of the staining
+or the experimental protocol.
+
+A lot of my work unfortunately has involved dealing with typos and inconsistencies in file names and channel names.
+
 
 
 

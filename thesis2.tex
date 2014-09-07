@@ -1,0 +1,316 @@
+% The document will be printed one side in A4 paper.
+\documentclass[12pt,a4paper,table,twoside]{report}
+
+%%% Packages
+\usepackage[round]{natbib} 
+% Use Charter font.
+%\usepackage{charter}
+% for line spacing
+\usepackage{setspace}
+% Use PDF output.
+\usepackage[pdftex]{color,graphicx}
+% The output should be wide.
+\usepackage{a4wide}
+\usepackage[a4paper]{geometry}
+%\usepackage[text={7.5in,9in},centering]{geometry}
+%\usepackage[cm]{fullpage}
+\usepackage{rotating}
+\usepackage{lscape} 
+%for definition list
+\usepackage{enumitem}
+%for celsius
+\usepackage{gensymb}
+%percentages, microliters, nanograms etc
+\usepackage{siunitx}
+\DeclareSIUnit[number-unit-product={}]\unit{U}
+%subfigures deprecated
+%\usepackage{subfigure}
+%use subcaption instead
+\usepackage{caption}
+\usepackage{subcaption}
+%puts silly zeroes in section names
+%\usepackage{fancyhdr}
+%for code snippets
+%\usepackage{float}
+%\floatstyle{ruled}
+%\newfloat{program}{thp}{lop}
+%\floatname{program}{Code snippet} 
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,calc,through,backgrounds,decorations.pathmorphing,shadows} 
+%\usepackage[active,tightpage]{preview} 
+\usepackage[french, greek, english]{babel}
+%input encoding
+%\usepackage[iso-8859-7]{inputenc}
+%\usepackage[latin1]{inputenc}
+%output encoding
+\usepackage[T1]{fontenc}
+\selectlanguage{english} 
+% Pour la dedicace
+\usepackage{frcursive} 
+\usepackage[labelfont=bf,labelsep=period,justification=raggedright]{caption}
+\usepackage{subcaption}
+%side caption: SCfigure
+%\usepackage{sidecap}
+%for table cell with diagonal division
+\usepackage{tabularx}
+\usepackage{slashbox}
+\usepackage{longtable} 
+\usepackage{booktabs}
+\usepackage{tabu}
+\usepackage{xcolor,colortbl}
+%\usepackage[table]{xcolor}
+%\usepackage[graphics,tightpage,active]{preview}
+%\PreviewEnvironment{tikzpicture}
+%\PreviewEnvironment{equation}
+%\PreviewEnvironment{equation*}
+%\newlength{\imagewidth}
+%\newlength{\imagescale}
+%\pagestyle{empty}
+%\thispagestyle{empty}
+%\usepackage{standalone} 
+\usepackage{url} %tablerules
+\usepackage{hyperref} 
+\usepackage{xr} 
+\usepackage[section,subsection,subsubsection]{extraplaceins} 
+\usepackage[labelfont=bf,labelsep=period,justification=raggedright]{caption}
+\usepackage{authblk} 
+\usepackage{graphicx} 
+%unicode support
+\usepackage[utf8]{inputenc} 
+% packages for reviewer comments
+\usepackage{changebar}
+\usepackage{xifthen}
+\usepackage{marginnote}
+\usepackage[normalem]{ulem} 
+\usepackage{amsthm,amsmath} 
+%multiple indices
+\usepackage{multind}
+%glossary
+\usepackage[acronym]{glossaries}
+
+
+%%% My definitions 
+
+% colors
+\definecolor{LightCyan}{rgb}{.88,1,1}
+\definecolor{LightYellow}{rgb}{1,1,.88}
+\definecolor{LightRed}{rgb}{1,.88,1}
+\definecolor{Gray}{gray}{.9}
+%\definecolor{Gray}{gray}{0.85}
+
+% cells for tables
+\newcolumntype{g}{>{\columncolor{LightCyan}}r}
+\newcommand{\mc}[3]{\multicolumn{#1}{#2}{#3}}
+\newcommand{\mcc}[1]{\mc{1}{c}{#1}}
+\newcommand{\cc}[1]{\cellcolor{Gray}{#1}}
+%\rowcolors{2}{gray!25}{white}
+
+% biology
+\newcommand{\gene}[1]{\protect\index{genes}{#1}\emph{#1}}
+\newcommand{\snp}[1]{\index{snps}{#1}#1}
+\newcommand{\protein}[1]{\index{proteins}{#1}#1}
+% R
+%\usepackage{Sweave}
+%for listing code
+\usepackage{listings}
+%\setkeys{Gin}{width=0.95\textwidth}
+%\SweaveOpts{keep.source=TRUE,pdf=TRUE,eps=FALSE} 
+\newcommand{\Rpackage}[1]{\textsf{#1} \citep{#1}}
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+%\newcommand{\scscst}{\scriptscriptstyle}
+%\newcommand{\scst}{\scriptstyle}
+%\newcommand{\Rcode}[1]{{\texttt{#1}}}
+%\newcommand{\Robject}[1]{{\texttt{#1}}}
+%\newcommand{\Rdata}[1]{{\textsf{#1}}}
+%\newcommand{\Rclass}[1]{{\textit{#1}}} 
+%contributors
+\newcommand{\contributor}[1]{\index{contributors}{#1}#1}
+
+%acronyms
+\input{acronyms}
+
+%make indexes
+\makeindex{contributors}
+\makeindex{genes}
+\makeindex{proteins}
+\makeindex{snps}
+
+%make glossaries
+\makeglossaries
+
+\newenvironment{itemise}
+{ \begin{itemize}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt] }
+{ \end{itemize} }
+
+% \usepackage{setspace}
+% \setlength{\parindent}{0in} 
+%\setcounter{secnumdepth}{0}
+
+\doublespacing
+
+%\setcounter{secnumdepth}{0}
+%%% Put your definitions there:
+%\startlocaldefs
+%\newcommand{\mc}[3]{\multicolumn{#1}{#2}{#3}}
+%\newcommand{\mcc}[1]{\mc{1}{c}{#1}}
+%\newcommand{\cc}[1]{\cellcolor{Gray}{#1}}
+%%% For highlighting changes:
+%\newif\ifdiff
+
+% The document begins here.
+\begin{document}
+%\SweaveOpts{concordance=TRUE}
+
+% Front Matter.
+\title{
+%\centering
+%\includegraphics[scale=0.6]{pictures/KiPhoDB.png}
+%Development of data analysis techniques in high-throughput flow cytometry for characterising the immune profile associated with type 1 diabetes
+%High-throughput and Objective and Improved and Robust/Precise
+  %title 1
+  %Normalisation and Clustering Methods Applied to Genotype-Phenoype Association in Type 1 Diabetes
+  %title 2: we are also associating with dose as well as genotype
+  Normalisation and Clustering Methods Applied to Association Studies in Type 1 Diabetes
+}
+
+\author{
+\textbf{Nikolas Pontikos}\\
+\texttt{nikolas.pontikos@cimr.cam.ac.uk}\\
+Under the supervision of:\\
+Chris Wallace \\
+%\small{\textit{Word Count: ~6358}}\\
+}
+\date{\today}
+\maketitle
+
+\vspace*{\stretch{1}}
+\begin{small}
+%This report is submitted as part requirement for the MSci Degree in ``Bioinformatics'' at Imperial College London.
+%It is substantially the result of my own work except where explicitly stated otherwise.
+%The report may be freely copied and distributed provided the source is explicitly acknowledged.
+This thesis is submitted as part requirement for the PhD Degree in ``Medical Genetics'' at Cambridge University.
+It is substantially the result of my own work except where explicitly stated otherwise.
+The report may be freely copied and distributed provided the source is explicitly acknowledged.
+\end{small}
+\vspace*{\stretch{1}}
+
+
+\newpage
+\thispagestyle{empty} 
+%\addtocounter{page}{-1}
+\vspace*{\fill}
+\begin{center}
+%{\fontfamily{frc}\selectfont \foreignlanguage{french} {Pour ma petite Maman ch\'erie, \`a qui je dois tout \ldots}}
+%{\fontfamily{frc}\selectfont Pour ma petite Maman cherie, a qui je dois tout \ldots}
+\end{center}
+\vspace*{\fill}
+\clearpage
+
+
+%\newpage
+%\thispagestyle{empty} 
+%\addtocounter{page}{-1}
+%\begin{abstract}
+	%\input{abstract}
+%\end{abstract}
+\clearpage
+
+%Create an empty page.
+%\newpage
+%\thispagestyle{empty} 
+%\addtocounter{page}{-1}
+%\ \clearpage
+
+% Create the table of contents, list of figures and list of tables.
+\tableofcontents
+%\listoffigures
+%\listoftables
+\printindex{contributors}{Contributors}
+%
+%* Thesis
+
+
+\newpage
+%\input{lexicon}
+
+% Chapter 1: Introduction
+\chapter{Introduction}
+\section{Biology of type 1 diabetes}
+\subsection{Genetics}
+\input{introduction/genetics.tex}
+\subsection{T1D Phenotypes}
+\input{introduction/phenotypes.tex}
+\section{Flow Cytometry: higher resolution cell phenotypes}
+\input{introduction/flowcytometry.tex}
+\section{Normalisation: why it is needed, methods, utility}
+\input{introduction/normalisation.tex}
+\section{Clustering}
+\input{introduction/clustering.tex}
+
+%\chapter{Normalisation and univariate clustering}
+%\input{normalisation/normalisation.tex}
+
+\chapter{ Effect of IL2RA Genotype on Cell Phenotypes }
+\input{IL2RA/il2ra.tex}
+
+
+\chapter{ Effect of IL-2 Stimulation on Cell Phenotypes }
+\input{IL2/exvivo.tex}
+\section{ Normalisation }
+\input{IL2/normalise.tex}
+\section{ cluster spade }
+\section{ visualise }
+\section{ test? }
+
+
+\chapter{ \protect\gene{KIR3DL1}/\protect\gene{KIR3DS1} Copy Number Variation in Type 1 Diabetes }
+\input{KIR/kir.tex}
+
+
+\chapter{Discussion}
+\section{ Method of determining phenotype affects power to detect genetic association }
+\section{ future application of methods }
+
+\appendix
+
+%\chapter{\label{appendix:flowdatasets}Flow datasets}
+%\section{IL2RA}
+%\input{flowdatasets/il2ra.tex}
+%\section{IL-2 stimulation}
+%\input{flowdatasets/il2-stimulation.tex}
+%\section{DILT1D}
+%\input{flowdatasets/dilt1d.tex}
+
+\chapter{\label{appendix:transformation}Data transformations}
+\input{Appendix/transformation}
+
+\chapter{\label{appendix:clustering}Clustering}
+\input{Appendix/clustering}
+
+\chapter{\label{appendix:flowsorting}{Flow markers}}
+\input{Appendix/flow}
+
+%\chapter{ Normalisation of fluorescence intensity using beads }
+%\input{IL2RA/beads.tex}
+
+
+%\chapter{\label{maths}{Maths}}
+%\input{Appendix/maths}
+
+\singlespacing
+\footnotesize
+
+\printglossary[type=\acronymtype]
+\printindex{genes}{Genes}
+\printindex{snps}{SNPs}
+\printindex{proteins}{Proteins}
+
+\newpage
+
+
+% Bibliography
+%\bibliographystyle{unsrt.bst}
+\bibliographystyle{genomeresearch}
+\bibliography{thesis}
+
+\end{document}

@@ -17,7 +17,7 @@ However, one of the major challenges we face with these datasets, is that they a
 technical reasons such as differences in the instrument configuration, experimental protocol or the analysis methods.
 %Also the method used to conduct biological meaningful comparison needs to be formalised.
 Throughout my thesis I will investigate how to correct for technical variation using normalisation techniques, 
-and how to formalise the analysis using clustering.
+and how to formalise the analysis with clustering.
 %These related problems are addressed by normalisation and clustering.
 In particular, I will focus on normalisation and clustering of cell-level parameters, acquired with flow cytometry,
 as well as genetic data acquired from \gls{qPCR} and \gls{SNP} chip.  
@@ -33,45 +33,51 @@ In cases, when clusters overlap too much or samples lie very far from cluster ce
 An equally influential technology which has brought cell biology into the sphere of big biology, is flow cytometry,
 a high-throughput technique for measuring up to twenty cell parameters in millions of cells.
 Here, clustering is done to group similar cell measurements together to identify cell types within a sample.
-Clustering of cell types is more uncertain than clustering of genotypes because the number of cell types is not known and
-cells are often in intermediate states between cell types.
 Normalisation is typically applied as a meta-clustering step for matching and comparing properties of these cell types in samples analysed across days or batches,
 but can also be applied before the clustering to enable pooling to aid identification of rarer cell types.
 %In the future, high througput sequencing and mass cytometry will generate even larger numbers of parameters at possibly higher rates.
 
 While clustering applied to SNP calling is practically fully automated,
 clustering in flow cytometry is still reliant on manual inspection.
-One good reason for this, is that, in genetics
-the expected number of clusters at a given loci is known,
+One good reason for this, is that,
+clustering of cell types is more uncertain than clustering of genotypes because the number of cell types is not known and
+cells are often in intermediate states between cell types.
+In genetics the expected number of clusters at a given loci is known,
 since there is only a set number of possible genotypes, namely homozygote recessive,
 heterozygote or homozygote dominant.
 However, we will see that there are regions of copy number variation in the genome
 which do not fit this model.
 
-When the number of clusters is unknown, some prior information can be provided to guide cluster identification
-For example in flow cytometry, clusters identified in one sample can be used to help identify clusters in another sample.
-In SNP genotyping, qPCR information can be used to help infer copy number groups.
+When the number of clusters is unknown, some prior information can be provided to guide cluster identification.
+For example in flow cytometry, clusters manually identified in one sample can be used to help identify clusters in another sample.
+In SNP genotyping, qPCR data can be used to help infer copy number groups.
 
 %As in all statistcal anlyses, some prior knowledge is required explicitly or implicitly defined.
-One of the key questions of this thesis will be how influential are these clustering on downstream data analysis.
-
-In the first chapter, I will revisit a large, long-running flow cytometry experiment
+The choice of normalisation and clustering method can have an important impact on reproducibility and association statistics.
+Plagnol et al showed that clustering restrictions can introduce bias in test statisitics \citep{Plagnol:2007bw}.
+%One of the key questions of this thesis will be how influential are these clustering on downstream data analysis.
+This will be the main objective of the first chapter, where I will revisit a large, long-running flow cytometry experiment
 designed to measure genotype-phenotype correlation in large number of individuals.
-In this dataset, time-effect are non-negligeable and need to be addressed by normalisation.
-Normalisation is performed using external controls, fluoresecent beads.
-The clustering has been conducted manually by drawing gates to delineate populations of cells.
-As first task, part of the gating will be replaced by computational thresholding and clustering methods, which aim
+In this dataset, time-effect linked to instrument variation are non-negligeable and will need to be addressed by normalisation,
+using fluorescent beads as an external control.
+While the clustering has initially been conducted manually by drawing gates to delineate populations of cells,
+I will assess the influence of clustering method on association testing,
+when part of the gating is replaced by computational thresholding and clustering methods, which aim
 to match the manual gating.  
-I will also assess the influence of clustering method on association testing.
 
-In the second chapter,
-Using normalisation and clustering, joining datasets from different experiments, qPCR and SNP, to discover new patterns.
+In the following chapter, I will analyse another flow cytometry dataset, this time an exvivo stimulation dataset,
+primarily generated to assess whether there is a different in stimulation response in certain cell types, between type 1 diabetics and controls.
+I will once more consider normalisation for the purpose of improving the reproducibility of the cell phenotypes and hence the power of association testing.
+Furthermore we will apply computational methods to discover new clusters not identified by manual gating which are responsive to stimulation.
 
-In the following chapter, I will analyse an exvivo stimulation dataset, primarily generated to asses whether there
-is a different in stimulation response between type 1 diabetics and controls.
-We will once more consider normalisation for the purpose of improving the power of association testing.
-If computational methods can discover clusters not identified by manual gating which are responsive to stimulation.
+In the third chapter, no prior manual analysis has been done but instead we use prior information in terms of population frequencies
+to guide the clustering.
+The size of the clusters is also known a priori because of population estimates obtained from previous studies.
+The clusters applied in qPCR are then used to identify the SNP patterns which are predictive copy number.
+%Variable selection
+%Using normalisation and clustering, joining datasets from different experiments, qPCR and SNP, to discover new patterns.
 
+Finally I will conclude with what I have generally learned about normalisation and clustering, and the specifics of these datasets.
 
 
 \section{Biology of type 1 diabetes}
@@ -558,14 +564,30 @@ and are sensitive to starting conditions.
 %low variance high bias
 
 %\paragraph{Non-model based methods or non-parametric methods: low bias high variance methods}
-\section{Non-model based methods or non-parametric methods}
+\section{Non-model based methods}
 
-Non model-based methods make no explicit assumptions about the shape of populations but instead try to minimise some loss function such as the within-cluster variance.
+Non model-based methods make no explicit assumptions about the shape of populations but instead
+given an expected number of clusters K, try to minimise some loss function such as the within-cluster variance.
 %These methods do not return any explicit parameters.
-They use measures of density or distance to identify clusters of points.
-These methods can also sometimes be qualified as model-free or non-parametric because there are no explicit parameters to the model.
+They often use local estimates of density or distance to identify clusters of points.
+These methods are also sometimes qualified as model-free or non-parametric because there are no explicit parameters to the model.
 %Distance is a more suitable metric when $N \ll P$ and density when $N \gg P$.
-However it can be shown that certain non-parametric methods turn out to be limiting cases of parametric methods.
+Perhaps the most popular, due to its implementation simplicity and speed, is the K-means algorithm.
+The objective function of K-means is to try to minimise the overall sum of within-cluster sum of squares.
+
+\[
+    \sum_{k=1}^{K} \sum_{\mathbf x_i \in S_k} ( \mathbf x_i - \boldsymbol\mu_k )^2 ; \quad \boldsymbol\mu_k=\text{E}(x_i| x_i \in S_k)
+\]
+
+The algorithm starts by picking K random points which are the initial guess as to where the cluster means lie.
+Then for each iteration:
+\begin{itemise}
+    \item Each point $x_i$ is assigned to the cluster $S_k$ of the closest current cluster mean $\mu_k$.
+    \item Based on this new cluster assignment, the new cluster mean of each cluster is computed.
+\end{itemise}
+The algorithm terminates when no cluster mean changes.
+
+However it can be shown that certain so called non-parametric methods turn out to be limiting cases of parametric methods.
 For example K-means, which uses the squared distance loss function, is a limiting case of spherical \glspl{GMM} when the covariance tends to zero (\Cref{appendix:clustering}),
 because maximising the log-likelihood of a multivariate Gaussian is asymptotically equivalent to minimising the residual sum of squares.
 
@@ -581,16 +603,18 @@ CurvHDR (negative Curvature and High Density Region, \citet{Naumann:2010fp}) ide
 by using a bandwidth rather than the number of bins.
 However this approach does not go beyond four dimensions.
 All these density based approaches require the number of bins or the bandwidth to be specified by the user or estimated from the data according to some heuristic.
-Care needs to be taken when selecting an appropriate bin or bandwidth as small number of bins or larger bandwidths,
-lead to overestimation of the density in low density regions and underestimation in high density regions.
+Care needs to be taken when selecting an appropriate bin or bandwidth to avoid under or over smoothing of the data.
+For example, smaller number of bins or equivalently larger bandwidths, lead to overestimation of the density in low density regions and underestimation in high density regions.
 %On the other hand in the bandwidth is too small then the dynamic range of the density becomes small (few density levels).
-However as the number of dimensions increases, data tends to become sparser and distance based clustering becomes more appropriate
-because the lower bound on the density estimation error increases with the dimensionality.
+However as the number of dimensions increases, data tends to become sparser
+and density based clustering becomes inefficient because the lower bound on the density estimation error increases with the dimensionality.
 %the lower bound of the \gls{MSE} increases with the number of dimensions order of n^{-4/(4+d)}
 %The density estimation tends to be underestimated in dense regions and overestimated in sparse regions.
-%Unfortunately, many distance based clustering methods rely on computation of the entire distance matrix, provided the number of data points is not
-K-means is probably the simplest and most famous of these methods
-since it does not rely on the computation of the entire distance matrix (\Cref{appendix:clustering}).
+%Unfortunately, many distance based clustering methods rely on computation of the entire distance matrix, provided the number of data points is not 
+Therefore in high-dimensional settings, distance based clustering becomes more appropriate and
+fast methods like K-means, which do not rely on the computation of the entire distance matrix, are popular.
+Also in truly high-dimensional data, the Manhanttan distance metric becomes more appropriate than the euclidean one \citep{Aggarwal:2001tg}.
+
 %Given an initial set of cluster means, which may be user-defined or selected at random, points are then assigned to the cluster.
 %After the assignment, the cluster centers are recomputed, and again points are re-assigned to whichever cluster ce
 For example flowMeans \citep{Aghaeepour:2010fv} is an extension to K-means for flow cytometry.
@@ -599,9 +623,9 @@ However K-means is known to be very sensitive to starting conditions and is also
 Methods which calculate the entire distance matrix require some form of subsampling to reduce the total number of points.
 Downsampling is a computational technique for reducing the number the datapoints by randomly selecting a subset of the data.
 This can be used for obtaining some initial clustering estimate to initialise parameters.
-Also subsampling can be repeated without replacement to obtain subsets of the data, on which clustering can be run on parallel
-and some consensus clustering can be reached on completion.
-Points which were not selected would then be assigned to the closest cluster. 
+Also subsampling can be repeated without replacement to split the dataset into subsets on which clustering can be run in parallel
+followed by consensus clustering to merge the results.
+Points which were not selected in the subsamling can then be assigned to the closest cluster. 
 
 %$N$ when $N$ is large.
 If subsamping is used only once to reduce the number of datapoints then 
@@ -613,12 +637,12 @@ methods such as, spectral clustering which uses spectral graph theory to determi
 Sampling followed by Spectral Clustering (SAMSpectral, \citet{Zare:2010cw}) or more conventional hierarchical clustering
 as done by Spanning-tree Progression Analysis of Density-normalized Events (SPADE, \citet{Simonds:2011jh}), may be applied.
 
-The advantage of these non-parametric methods is that they are fast and flexible and can often come with heuristics for estimating the parameters.
+The advantage of these non-parametric methods is that they are usually fast and flexible and can often come with heuristics for estimating the parameters.
 Unfortunately the disadvantage is that the results are not easily interpretable or generalisable to another dataset since there is no explicit model.
 %These methods return a clustering of the data but do no estimate any parameters from the data.
-They are also reliant on parameters which are dataset specific which complicates comparison of clustering results across datasets.
+They are also reliant on parameters tuned to a specific dataset, which complicates comparison of clustering results across datasets.
 Furthermore, these parameters do not necessarily have an intuitive interpretation or biological significance.
-%For example, they may represent local parameters such as bandwidth, 
+%For example, they may represent local parameters such as bandwidth, or the minimum separation distance between points for DBM
 %Moreover they do hard clustering 
 %high variance low bias
 
@@ -697,7 +721,7 @@ By taking larger subsets of the data, new clusters may be created if
 
 
 %\paragraph{Cell phenotypes: cluster properties}
-\paragraph{Association testing}
+\section{Association testing}
 
 Provided clusters have been identified and matched across samples within a study, it is then possible to test for association of cell population
 features with genotype, sex, age or clinical outcome.

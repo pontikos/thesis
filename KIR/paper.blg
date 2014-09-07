@@ -1,0 +1,47 @@
+This is BibTeX, Version 0.99d (TeX Live 2011)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: paper.aux
+The style file: genomeresearch.bst
+Database file #1: paper.bib
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+You've used 32 entries,
+            3195 wiz_defined-function locations,
+            866 strings with 13889 characters,
+and the built_in function-call counts, 47063 in all, are:
+= -- 4238
+> -- 2213
+< -- 7
++ -- 2144
+- -- 600
+* -- 4023
+:= -- 6190
+add.period$ -- 96
+call.type$ -- 32
+change.case$ -- 351
+chr.to.int$ -- 32
+cite$ -- 32
+duplicate$ -- 3390
+empty$ -- 3540
+format.name$ -- 690
+if$ -- 9637
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 389
+newline$ -- 164
+num.names$ -- 128
+pop$ -- 939
+preamble$ -- 1
+purify$ -- 319
+quote$ -- 0
+skip$ -- 1152
+stack$ -- 0
+substring$ -- 4790
+swap$ -- 906
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 288
+warning$ -- 0
+while$ -- 352
+width$ -- 0
+write$ -- 418

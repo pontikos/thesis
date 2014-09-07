@@ -1,0 +1,172 @@
+\subsection*{Subjects}
+
+We analysed 12,106 individuals, 6,744 cases (age of onset less than 16) from the Genetic Resource Investigating Diabetes cohort,
+and 5,362 controls from the British 1958 Birth Cohort (1958BC).
+All subjects were of white European ancestry with written informed consent and Ethics Committee/Institutional Review Board approval.
+The DNA for the cases and controls was prepared using the same protocols in Cambridge and in Bristol respectively.
+All samples were cell-line derived.
+
+
+\subsection{\emph{KIR3DL1/S1} Data}
+
+
+\subsubsection*{qPCR Data}
+
+A subset of 1,629 samples, 816 cases and 813 controls, were analysed with quantitative Polymerase Chain Reaction (qPCR) on the LightCycler 480 Real-Time PCR Instrument.
+Primers were designed to determine copy numbers of \emph{KIR3DL1} and \emph{KIR3DS1}.
+The housekeeping gene \emph{STAT6}, known to always be present in two copies, was used as a reference.
+The forward/reverse primers and probe sequences for \emph{KIR3DL1}, \emph{KIR3DS1} and \emph{STAT6} are summarised in Table~S\ref{table:qPCR-primers}.
+The qPCR assays were developed in collaboration with \citet{Jiang:2012cf}.
+
+A subset of 1629 samples, 816 cases and 813 controls, were analysed
+with qPCR on the LightCycler
+480 Real-Time PCR Instrument.  Primers were designed to determine copy
+numbers of \emph{KIR3DL1} and \emph{KIR3DS1}.  The gene
+\emph{STAT6}, known to always be present in two copies, was used as a
+reference.  The forward/reverse primers and probe sequences for
+\emph{KIR3DL1}, \emph{KIR3DS1} and \emph{STAT6} are summarised in
+Table~S\ref{Table-S2}.  The qPCR assays were developed in
+collaboration with Jiang et al \cite{Jiang:2012cf}.
+
+For each qPCR reaction, \SI{2}{\micro\litre} of DNA at
+\SI{5}{\nano\gram\per\micro\litre} were used with \SI{5}{\micro\litre} of
+Quantifast Multiplex PCR mastermix (\SI{0.25}{\micro\litre} primer mix,
+\SI{0.045}{\micro\litre} probe mix and \SI{4.705}{\micro\litre} of water).
+qPCR conditions were \SI{95}{\degreeCelsius} for \SI{5}{\minute}, followed by 40
+cycles at \SI{95}{\degreeCelsius} for \SI{15}{\second} and
+\SI{66}{\degreeCelsius} for \SI{50}{\second}.  Data was collected at
+\SI{66}{\degreeCelsius}.  The samples were tagged with three different dyes,
+Fam for \emph{KIR3DS1}, Cy5 for \emph{KIR3DL1} and DFO for \emph{STAT6}, and
+amplified on eighteen 384-well plates.  On all plates, samples were replicated
+across four wells.  So that each plate contained a maximum of 96 samples.  Four
+calibrator samples of known \emph{KIR3DL1/3DS1} copy number and one water
+sample were included on all but one plate.  Cases and controls were distributed
+evenly across all plates.  Four plates were analysed in duplicate.
+
+
+The experiment files exported from the LightCycler gave us the crossingpoint (Ct) value for each dye-DNA conjugate.
+The Ct value is the number of amplification cycles required for the fluorescence of a dye in a given well to reach a certain detection threshold.
+Hence, a higher Ct value implies a smaller starting quantity of DNA in the reaction well.
+The Ct value also depends on the efficiency of the qPCR reaction.
+%http://blog.mcbryan.co.uk/2013/06/qpcr-normalisation.html 
+The expected reaction efficiency is 100 percent so that each PCR cycle leads to exactly one duplication of the DNA.
+To measure the true reaction efficiency we can measure the increase in Ct when the concentration is diluted two-fold.
+The slope is indicative of the reaction efficiency: 
+if the decrease in Ct is larger than one than that indicates that the reaction is less than 100 percent efficient.
+
+$ \textrm{Efficiency} = 2^{-\frac{1}{slope}} $
+
+The Ct value also depends on the starting quantity of DNA which varies between wells.
+
+To account for this a reference gene \emph{STAT6} is used, always present in two copies.
+By subtracting from the Ct value of the reference dye-DNA conjugate, DFO-STAT6, we obtained the baseline relative $\Delta$Ct value for Fam-KIR3DL1 and Cy5-KIR3DS1.  
+In theory negative values of $\Delta$Ct indicate two or more copies, and positive values, two copies or less, but the offset is not necessarily respected due to differences in dye efficiency.
+
+
+As part of our quality control (QC), we dropped $64$ samples which did not yield a DFO-STAT6 Ct reading in all four well replicates
+or for which the maximum difference in DFO-STAT Ct between wells was larger than 2.
+All remaining samples were summarised by the $\Delta$Ct median of the four well replicates.
+
+
+%\paragraph{Quality Control and Normalisation}
+
+%The QC procedure for the controls is explained in more detail in \citet{Cooper:2012il}.
+%Post QC, 6541 control samples were kept.
+
+We normalised $\Delta$Ct values for \emph{KIR3DL1} and \emph{KIR3DS1} across plates by a linear transformation so that
+the mean $\Delta$Ct of the two most distinguishable copy number groups, one and two copies, were aligned across all nineteen plates.
+The group means were identified using the k-means algorithm.
+%Furthermore samples for which the range in background Ct values was larger than $2$
+Visual inspection of the data distributions by plate led us to drop plate 22 because it appeared excessively noisy (Figure~S\ref{figure:normalised-median} and Figure~S\ref{figure:QC}).
+
+
+%The first method aligned the $\Delta$Ct values of calibrator samples containing known copy numbers, the second, aligned the two peaks of the $\Delta$Ct histogram corresponding to one and two copies.
+%Of the two methods, the second peak-normalisation method was preferred as it allowed for normalisation of the leftovers plate which did not contain any calibrator samples and additionally yielded better repeatability.
+After normalisation, samples repeated in different plates showed good reproducibility of the \emph{KIR3DL1} and \emph{KIR3DS1} $\Delta$Ct values (Figure~S\ref{figure:repeatability}).
+Samples repeated across plates were summarised by the median of their repeated value.
+%such as the calibrator samples 
+Following QC, we were left with 1,474 individuals, 747 cases and 727 controls, for analysis (Figure~S\ref{figure:QC}).
+
+%which is still the largest cohort to date for T1D association.
+%A word of caution because the DNA quality in cases is poorer, excessive QC will eliminate cases rather than controls
+%Dropping samples is a judgment call which introduces bias.
+%\footnote{John, I still need to confirm this by looking at whether KIR genotypes agree.}
+
+\subsection*{HLA typing}
+
+In order to test for interaction with HLA-Bw4,
+genotyping of HLA alleles was done using the DYNAL technologies from Invitrogen in a subset of 5,603 individuals,  2,922 cases and 2,681 controls (Table~S\ref{table:HLA-typing}).
+%The HLA-DRB1, HLA-DQB1, HLA-A, HLA-B, and HLA-C
+The HLA-A and HLA-B genes were typed at four-digit allele resolution using Dynal RELI SSO assays (Invitrogen, Paisley, U.K.).
+The epitope classification of HLA-A and HLA-B alleles is given in Table~S\ref{table:HLA-epitope}.
+
+
+\subsection{SNP data}
+
+%\subsubsection*{Genome Wide SNP Array}
+All 12,106 samples were genotyped using ImmunoChip, a custom Illumina 200K Infinium high-density SNP array \citep{immunochip},
+according to the manufacturer's protocol, and processed at the University of Virginia in Charlottesville, USA.
+%The dense SNP map for 186 confirmed and distinct loci, mainly derived from GWA studies, which have been associated (required P , 5 × 1028) with one or more autoimmune diseases,
+%consisted of all known SNPs, and small insertion deletions, in the dbSNP database, in the 1000 Genomes project (February 2010 release)
+%and in additional sequencing data provided by collaborators.
+%The ImmunoChip contains 196,524 polymorphisms (718 insertion/deletions and 195 806 SNPs) \citep{immunochip}.
+At each SNP, two readings were obtained, the Log R Ratio, indicative of copy number, and theta, indicative of allelic frequency.
+On ImmunoChip there are 30 SNPs which fall in the \emph{KIR3DL1} region according to the human genome reference build36/hg18.
+The \emph{KIR3DS1} gene is missing from build36/hg18.
+%we should probably include more SNPs
+
+
+
+\subsection{\emph{KIR3DL1/S1} Copy Number Calling}
+
+In the qPCR dataset, samples which yielded one or less Ct reading for Fam-KIR3DL1 or Cy5-KIR3DS1, but all four Ct readings for the reference DFO-STAT6,
+were assumed to contain zero copies of \emph{KIR3DL1} or \emph{KIR3DS1}.
+For the remainder of the samples, we called genotypes using a mixture of bivariate Gaussian distributions allowing for eight \emph{KIR3DL1/S1} genotype groups:
+three common groups of two copy numbers (major homozygote, heterozygote, minor homozygote) and five rarer groups of lower or higher copy numbers (Figure~\ref{figure:fuzzy-genotyping}).
+The initial mixing and covariance parameters for the mixture of bivariate Gaussian distributions were calculated from the clusters returned by k-means
+with centers set to the eight copy number groups.
+%the initial mixing parameters could be the expected frequencies as derived from Trowsdale KIR haplotype paper
+The parameters were then further refined using an EM algorithm \citep{Young:2009ty}.
+After fitting the mixture model each sample is assigned a posterior probability of belonging to each of the eight genotype groups which allows for uncertainty in genotype calling.
+%These posterior probabilities were taken into account in downstream statistical analysis.
+
+We increased our sample size with the SNP data,
+by using the subset of samples, 747 cases and 727 controls, common between the qPCR and SNP datasets to train a k-nearest neighbour classifier
+to predict \emph{KIR3DL1/S1} copy number from  SNP signals on ImmunoChip.
+For the k-nearest neighbour classifier we chose $k=3$ as it minimised the leave one out cross validation error (Table~S\ref{table:knn-loo}).
+The classification was achieved by using the 3 nearest neighbours on the Log R Ratio and Theta signals from 30 SNPs lying within the \emph{KIR3DL1} region (Table~S\ref{table:ImmunoChip-SNPs}) which were associated with \emph{KIR3LD1-KIR3DS1} copy number in individual linear regression.
+Applying the nearest neigbour classifier independently on 10 multiply imputed data set generated from the qPCR posterior probabilities,
+we estimated the mean misclassification error at $1.5\%$ (Table~S\ref{table:knn-misclassification}). 
+
+
+%This allowed us to impute the \emph{KIR3DL1/S1} copy number in 6,744 cases and 5,362 controls.
+%The misclassification error rate of our k-nearest neighbour predictor was in leave-one-out cross-validation (Table~\ref{table:knn-misclassification}).
+
+%(6,004 cases and 4,663 controls).
+
+%\begin{table}[ht]
+%\begin{center}
+%\end{center}
+%\end{table}
+
+%The three common genotype groups are close to Hardy Weinberg Equilibrium given that the respective frequencies of KIR3DL1 and KIR3DS1 is 8:2.
+
+\subsection{Testing for Association of \emph{KIR3DL1/S1} Copy Number with T1D}
+
+%Furthermore a Fisher test on the contingency table of genotype counts (Figure~\ref{figure:fuzzy-genotyping}) showed no significant association of the genotype groups on T1D status.
+We tested for association of T1D with the predicted copy numbers from the qPCR and SNP datasets using logistic regression.
+We allowed for copy number prediction uncertainty in the association test for qPCR data by doing multiple imputation (N=10)
+with the \texttt{R mitools package} \citep{mitools} on the genotype group membership probabilities \citep{Cordell:2006da}. 
+%To boost our power we also tested for T1D association with copy number in \emph{KIR3DL1} and \emph{KIR3DS1} separately.
+%From the effect size and significance of the genotype groups we derived the odd ratios and confidence intervals.
+We allowed for statistical interaction with HLA-Bw4 by repeating the association test
+in the subsets of individuals carriers of the respective HLA ligands,
+HLA-Bw4 ligand for \emph{KIR3DL1} and the HLA-Bw4-80I putative ligand for \emph{KIR3DS1}.
+We further tested for interaction with a more powerful case-only $\chi^2$ test \citep{Yang:1999wk,Cordell:2009jb}.
+%After not detecting any association with copy number groups,
+%In order to increase the power of our test, we reduced the degrees of freedom by grouping copy number genotypes into presence/absence genotypes, 
+
+
+
+
+
