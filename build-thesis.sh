@@ -75,11 +75,6 @@ pdflatex thesis
 pdflatex thesis
 }
 
-# copy output PDF to GoogleDrive for upload
-function copyToGoogleDrive() {
-cp thesis.pdf ~nikolas/GoogleDrive/PhD/
-}
-
 function GoogleDriveLinks() {
    echo ln -s ~nikolas/GoogleDrive/PhD/Thesis/figures  ~nikolas/Thesis/figures
    ln -s ~nikolas/GoogleDrive/PhD/Thesis/figures  ~nikolas/Thesis/figures
@@ -89,6 +84,13 @@ function GoogleDriveLinks() {
         ln -s ~nikolas/GoogleDrive/PhD/Thesis/$x/figures  ~nikolas/Thesis/$x/figures
     done
 }
+
+# copy output PDF to GoogleDrive for upload
+function copyToGoogleDrive() {
+cp thesis.pdf ~nikolas/GoogleDrive/PhD/Thesis/
+}
+
+
 
 GoogleDriveLinks
 clean
