@@ -87,7 +87,7 @@ function GoogleDriveLinks() {
 
 # copy output PDF to GoogleDrive for upload
 function copyToGoogleDrive() {
-cp thesis.pdf ~nikolas/GoogleDrive/PhD/Thesis/
+cp thesis.pdf ~/GoogleDrive/PhD/Thesis/
 }
 
 
