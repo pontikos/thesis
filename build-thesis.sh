@@ -76,12 +76,12 @@ pdflatex thesis
 }
 
 function GoogleDriveLinks() {
-   echo ln -s ~nikolas/GoogleDrive/PhD/Thesis/figures  ~nikolas/Thesis/figures
-   ln -s ~nikolas/GoogleDrive/PhD/Thesis/figures  ~nikolas/Thesis/figures
-   for x in IL2RA IL2 KIR Appendix flowdatasets
+   echo ln -s ~/GoogleDrive/PhD/Thesis/figures  ~/Thesis/figures
+   ln -s ~/GoogleDrive/PhD/Thesis/figures  ~/Thesis/figures
+   for x in IL2RA IL2 KIR Appendix flowdatasets introduction2
     do
-        echo ln -s ~nikolas/GoogleDrive/PhD/Thesis/$x/figures  ~nikolas/Thesis/$x/figures
-        ln -s ~nikolas/GoogleDrive/PhD/Thesis/$x/figures  ~nikolas/Thesis/$x/figures
+        echo ln -s ~/GoogleDrive/PhD/Thesis/$x/figures  ~/Thesis/$x/figures
+        ln -s ~/GoogleDrive/PhD/Thesis/$x/figures  ~/Thesis/$x/figures
     done
 }
 
