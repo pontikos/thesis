@@ -54,9 +54,10 @@ In SNP genotyping, qPCR data can be used to help infer copy number groups.
 
 %As in all statistcal anlyses, some prior knowledge is required explicitly or implicitly defined.
 The choice of normalisation and clustering method can have an important impact on reproducibility and association statistics.
-Plagnol et al showed that clustering restrictions can introduce bias in test statisitics \citep{Plagnol:2007bw}.
+Plagnol et al showed that clustering constraints can introduce bias in test statisitics \citep{Plagnol:2007dw}.
 %One of the key questions of this thesis will be how influential are these clustering on downstream data analysis.
-This will be the main objective of the first chapter, where I will revisit a large, long-running flow cytometry experiment
+The influence gating on reproducibility and association testing will be the focurs my first chapter, where I will revisit a large,
+long-running flow cytometry experiment
 designed to measure genotype-phenotype correlation in large number of individuals.
 In this dataset, time-effect linked to instrument variation are non-negligeable and will need to be addressed by normalisation,
 using fluorescent beads as an external control.
@@ -66,12 +67,13 @@ when part of the gating is replaced by computational thresholding and clustering
 to match the manual gating.  
 
 In the following chapter, I will analyse another flow cytometry dataset, this time an exvivo stimulation dataset,
-primarily generated to assess whether there is a different in stimulation response in certain cell types, between type 1 diabetics and controls.
+primarily generated to assess whether there are differences in stimulation response in certain cell types, between type 1 diabetics and matched controls.
 I will once more consider normalisation for the purpose of improving the reproducibility of the cell phenotypes and hence the power of association testing.
-Furthermore we will apply computational methods to discover new clusters not identified by manual gating which are responsive to stimulation.
+Furthermore I will apply computational methods to discover new clusters not identified by manual gating which are responsive to stimulation.
 
-In the third chapter, no prior manual analysis has been done but instead we use prior information in terms of population frequencies
-to guide the clustering.
+In the third chapter, I will apply some of the techniques to \gls{qPCR} and \gls{SNP} data where no prior manual analysis has been done.
+Instead I will use prior information in terms of population frequencies
+obtained from previous studies to guide the clustering.
 The size of the clusters is also known a priori because of population estimates obtained from previous studies.
 The clusters applied in qPCR are then used to identify the SNP patterns which are predictive copy number.
 %Variable selection
@@ -381,6 +383,23 @@ The absorbed light is later emitted as heat and fluorescent light.
 The intensity of the scattered and fluorescently emitted light measured by the detector thus provides quantitative information about the correlates of size and granularity, and the presence of certain fluorescently-marked molecules for each cell.
 When examining leukocytes, using only the physical properties provided by the scattered light intensity it is possible to distinguish lymphocytes from monocytes and more granular neutrophils.
 Combining this information with the fluorescent intensities it is possible to further distinguish between different types of lymphocytes which have in common certain cellular receptors or transcription factors.
+%\paragraph{Fluorescent crosstalk}
+As we delve deeper into the lymphocyte subsets more fluorochromes are needed to further distinguish between different classes \citep{Perfetto:2004cy}.
+However when adding more and more fluorochromes, overlap of emission spectra becomes unavoidable \citep{Roederer:2001vi}.
+%This implies that the intensity signal captured in a given detector is no longer originating from one single fluorochrome but is actually a combined signal emanating from multiple fluorochromes \citep{Roederer:2001vi}.
+This implies that the intensity signal measured in one detector is in fact a mixture of signals from other flurochromes which spillover across detectors (Figure~\ref{figure:spillover}).
+The deconvolution of this signal is a process known as compensation.
+The matrix solution is known as the spillover matrix and is usually a square matrix with as many rows as there are fluorochromes and columns as there are detectors
+%if there as many dyes as there are detectors 
+(Table~\ref{table:spillover}).
+To calculate the spillover matrix single coloured beads are used. 
+The pairwise contribution of a fluorochrome to a non-specific channel is then summarised in a compensation matrix.
+%To account and correct for this, the overlap needs to be assessed by evaluating the pairwise contribution of the signal of one fluorochrome to that of an other.
+%These pairwise values can then be summarised in what is known as a spillover or compensation matrix (Table\ref{table:spillover}).
+%This phenomenon is known as spectral spillover.
+By subtracting the spillover values from the mixed intensity one can then recover the original intensity.
+This compensation step is usually performed after all the data from an experiment has been collected before commencing analysis.
+
 
 %\subsection{What is Flow Cytometry, How Does it Work?}
 %First the sample is prepared.
@@ -398,34 +417,10 @@ Combining this information with the fluorescent intensities it is possible to fu
 %Cells may clump together, antibodies may be none specific, cells die causing cell debris, fluorochromes can deteriorate and not fluoresce in the expected spectrum.
 %All these factors tend to result in erratic or misleading fluorescence reading which contribute to making the results noisy and hard to analyse.
 
-Flow data has many intricacies
-such as compensation to account for fluorescence crosstalk (\Cref{appendix:compensation}),
-data format (\Cref{appendix:fcs-data-format})
-and choice of transformation (\Cref{appendix:transformation}),
-which need to be understood before attempting to extract information from the data.
-
-
-\paragraph{Fluorescent crosstalk}
-As we delve deeper into the lymphocyte subsets more fluorochromes are needed to further distinguish between different classes \citep{Perfetto:2004cy}.
-However when adding more and more fluorochromes, overlap of emission spectra becomes unavoidable \citep{Roederer:2001vi}.
-%This implies that the intensity signal captured in a given detector is no longer originating from one single fluorochrome but is actually a combined signal emanating from multiple fluorochromes \citep{Roederer:2001vi}.
-This implies that the intensity signal measured in one detector is in fact a mixture of signals from other flurochromes which spillover across detectors (Figure~\ref{figure:spillover}).
-The deconvolution of this signal is a process known as compensation.
-The matrix solution is known as the spillover matrix and is usually a square matrix with as many rows as there are fluorochromes and columns as there are detectors
-%if there as many dyes as there are detectors 
-(Table~\ref{table:spillover}).
-To calculate the spillover matrix single coloured beads are used. 
-The pairwise contribution of a fluorochrome to a non-specific channel is then summarised in a compensation matrix.
-%To account and correct for this, the overlap needs to be assessed by evaluating the pairwise contribution of the signal of one fluorochrome to that of an other.
-%These pairwise values can then be summarised in what is known as a spillover or compensation matrix (Table\ref{table:spillover}).
-
-%This phenomenon is known as spectral spillover.
-
-By subtracting the spillover values from the mixed intensity one can then recover the original intensity.
-
-This compensation step is usually performed after all the data from an experiment has been collected before commencing analysis.
-
-
+Compensation to account for fluorescence crosstalk, is just one of the intricacies of flow data.
+Other intricacies are data format (\Cref{appendix:fcs-data-format})
+and the choice of variance-stabilising transformation (\Cref{appendix:transformation}),
+which can have an important impact on the analysis.
 
 %\paragraph{Noise} 
 Futhermore, there are many sources of noise in flow cytometry which complicate sample comparison and impact reproducibility.  
@@ -459,9 +454,21 @@ or in the form of features which exist in a predictiable relationship across sam
 Such features can then be used as reference points to normalise across samples.
 If the features are modes in the data, then normalisation is equivalent to doing clustering, in order to identify the modes,
 followed by meta-clustering to match the modes across samples.
-In microarray gene expression datasets, for example, one distributional assumption is that the majority of genes are not differentially expressed between samples from
-similar tissue types hence the ratio M should be centered on zero \citet{Smyth:2003ie,Bolstad:2003ia}.
+In microarray gene expression datasets, for example, one distributional assumption is that the majority of genes are not differentially expressed between similar samples
+hence the mean of the ratio should be centered on zero \citet{Smyth:2003ie,Bolstad:2003ia}.
+Another assumption in microarray data is that the shape of the distributions are similar enough that normalisation  methods like scaling and quantile normalisation
+are appropriate.
+Also the M and A should follow the same relationship.
+But in practise, in brighter spots the balance between the green signal is stronger than the red while in dimmer spots the red signal is stronger than the green.
+This artefact means that low and high intensity genes would wrongly be identified as differentially expressed.
+Smoothing methods like loess can also correct MA trends \citet{Smyth:2003ie}.
+%splines and running median line
 %Other methods are quantile or rank normalisation.
+%spikeins would be equivalent of inserting beads or the other know entities into our sample
+%which can then be used as an internal control.
+%MA norm works on 2 dimensions and the probes are known and can be matched across arrays.
+%in flow, common cell types are expected to exist across arrays but ungated data does not necessarily match
+%because of differences in staining and preparation which creates debris
 The underlying principle is that true biological variation is specific whereas experimental variation affects the whole sample.
 In order to decouple technical variation from biological variation, without making distributional assumptions,
 synthetic object of known and stable property, such as fluorescent beads in flow cytometry, can be used to this purpose.
@@ -474,11 +481,12 @@ synthetic object of known and stable property, such as fluorescent beads in flow
 %\subsection{Analysis of Results: Identifying Cell Populations and Defining Cell Phenotypes}
 %\subsection{Analysis of Flow Data: Identifying Cell Populations}
 
+%Once the data is normalised, we can pool across samples to proceed with cluster analysis, the purpose of which is to identify homogeneous (sharing the same properties) groups (clusters) in the data.
+%%TODO normalisation does not usually precede clustering in flow cytometry
 Once the data has been made comparable thanks to normalisation, the next task is to identify clusters, groups of cells of similar of properties,
 which can be matched across samples.
 %, either pooling the samples together or by clustering them separately.
 
-%Once the data is normalised, we can pool across samples to proceed with cluster analysis, the purpose of which is to identify homogeneous (sharing the same properties) groups (clusters) in the data.
 %The task is to define groups in such a way that data points in the same group are more similar, in some sense or another, to each other than to those in other groups (clusters).
 
 %Clustering is the main task of exploratory and statistical data analysis, used in many fields, including machine learning, pattern recognition, image analysis, information retrieval, and bioinformatics.
@@ -514,7 +522,7 @@ on identification of higher-dimensional clusters.
 %Only methods which are capable of clustering all dimensions at the same time can exploit the full information available in the dataset.
 The ordering in which the gates are drawn thus has some bearing on the final clustering solution.
 
-More importantly this step introduces further non-biological variation to an already noisy data set since the position of the gates
+This step introduces further technical variation since the position of the gates
 on the same data can differ between gaters \citep{Maecker:2010fg}.
 %This provides motivation for considering more efficient and unbiased alternative methods of doing the gating.
 It also suffers from strong bias as it tends to force data to fit a model (the gater's expectation).
@@ -538,7 +546,7 @@ and
 supervised methods which require manual training by giving approximate starting gates.
 
 Clustering methods which make explicit assumptions about the shapes of populations are model-based or parametric.
-Methods which do not are said to be heuristic or non-parametric,
+Methods which do not are said to be model-free or non-parametric,
 although the latter can be limiting cases of parametric models (\Cref{appendix:clustering}).
 Here I will mostly review unsupervised methods where training data is not provided,
 and focus on those which require specification of only some parameters such as the expected
@@ -564,13 +572,14 @@ and are sensitive to starting conditions.
 %low variance high bias
 
 %\paragraph{Non-model based methods or non-parametric methods: low bias high variance methods}
-\section{Non-model based methods}
+\section{Model-free methods}
 
-Non model-based methods make no explicit assumptions about the shape of populations but instead
-given an expected number of clusters K, try to minimise some loss function such as the within-cluster variance.
+Model-free methods state no explicit assumptions about the shape of populations but instead
+%given an expected number of clusters K,
+attempt to minimise some loss function such as the total within-cluster sum of squares.
+These methods are also sometimes qualified as non-parametric because there are no explicit parameters to the model.
 %These methods do not return any explicit parameters.
 They often use local estimates of density or distance to identify clusters of points.
-These methods are also sometimes qualified as model-free or non-parametric because there are no explicit parameters to the model.
 %Distance is a more suitable metric when $N \ll P$ and density when $N \gg P$.
 Perhaps the most popular, due to its implementation simplicity and speed, is the K-means algorithm.
 The objective function of K-means is to try to minimise the overall sum of within-cluster sum of squares.
@@ -579,16 +588,16 @@ The objective function of K-means is to try to minimise the overall sum of withi
     \sum_{k=1}^{K} \sum_{\mathbf x_i \in S_k} ( \mathbf x_i - \boldsymbol\mu_k )^2 ; \quad \boldsymbol\mu_k=\text{E}(x_i| x_i \in S_k)
 \]
 
-The algorithm starts by picking K random points which are the initial guess as to where the cluster means lie.
+The algorithm starts by picking K random points which are initial guesses as to where the cluster means lie.
 Then for each iteration:
 \begin{itemise}
     \item Each point $x_i$ is assigned to the cluster $S_k$ of the closest current cluster mean $\mu_k$.
     \item Based on this new cluster assignment, the new cluster mean of each cluster is computed.
 \end{itemise}
-The algorithm terminates when no cluster mean changes.
+The algorithm terminates when no cluster mean changes, or equivalently when the cluster assignment does not change.
 
 However it can be shown that certain so called non-parametric methods turn out to be limiting cases of parametric methods.
-For example K-means, which uses the squared distance loss function, is a limiting case of spherical \glspl{GMM} when the covariance tends to zero (\Cref{appendix:clustering}),
+For example K-means, is a limiting case of spherical \glspl{GMM} when the covariance tends to zero (\Cref{appendix:clustering}),
 because maximising the log-likelihood of a multivariate Gaussian is asymptotically equivalent to minimising the residual sum of squares.
 
 %However when spillover occurs the correlation has no biological meaning but the correlation can still be used to identify clusters.
@@ -642,12 +651,12 @@ Unfortunately the disadvantage is that the results are not easily interpretable 
 %These methods return a clustering of the data but do no estimate any parameters from the data.
 They are also reliant on parameters tuned to a specific dataset, which complicates comparison of clustering results across datasets.
 Furthermore, these parameters do not necessarily have an intuitive interpretation or biological significance.
+%Chosing an appropriate parameter relies on some heuristic and the choice of parameter is particular sensitive to the size and dimensions of the dataset.
 %For example, they may represent local parameters such as bandwidth, or the minimum separation distance between points for DBM
 %Moreover they do hard clustering 
 %high variance low bias
 
 
-%\paragraph{Estimating the optimal number of clusters from the data}
 %\paragraph{Estimating the optimal number of clusters: avoid overfitting}
 \section{Estimating the optimal number of clusters from the data}
 
@@ -687,7 +696,7 @@ This relates to the $R^2$ ratio in \gls{ANOVA}, since the intercluster variance 
 \]
 
 Another approach it to maximise the Bayesian Information Criterion, the log of the likelihood penalised by the number of clusters and free parameters.
-%In the non model based methods, a threshold for the inter cluster distance defines the number of clusters
+%In the model-free methods, a threshold for the inter cluster distance defines the number of clusters
 
 %Another solution to the overfitting problem, is to introduce an extra parameter $\lambda$ which weights the influence of the variables in the model.
 %Like with clustering there's a hard approach and a soft approach.
@@ -729,8 +738,13 @@ Two examples of such population features are the size of the population over its
 The fluorescence intensity correlates with the quantitative expression of a protein on the cell surface.
 These cell population features are commonly referred to as cell phenotypes.  
 When assessing the gene to phenotype correlation, the reproducibility of these cell phenotypes is crucial since
-larger within-individual variance decreases the power to detect between-individual effects.
+larger within-individual variance decreases the power to detect between-individual genotype-phenotype effects.
 %Certain phenotypes are more stable than others.
+
+The association test can be done with multivariate linear regression of the SNPs, age, sex against an approximately normally distributed cell phenotype.
+Or for case-control association tests, a logistic regression of the copy number group against the case-control status.
+When individuals are repeated, we may summarise each repeated measurement by the mean of the two measurement, or
+alternatively apply a linear mixed effects model with a random individual effect to account for the within-individual variability.
 
 As we will see in \Cref{chapter:il2ra}, the method used to do the gating of the cell phenotypes can have an important impact on the association
 statistics.
@@ -738,7 +752,7 @@ statistics.
 %When a large number of clusters has been identified in a small number of samples then we risk overfitting.
 %To avoid overfitting feature selection
 %There has been work undertaken to select the features which best correlate with genotype.
-%FeaLect and RchyOptimyx constructs a hierarchy of cells which best explains clinical outcome or cytokine response
+%FeaLect and RchyOptimyx try to find the marker hierarchy which best predicts clinical outcome or cytokine respons (in terms of AUC ROC).
 %
 %For each feature, a score is computed that can be useful for feature selection.
 %Several random subsets are sampled from the input data and for each random subset, various linear models are fitted using lars method.
@@ -769,7 +783,6 @@ statistics.
 %Parametric where a given form for the density function is assumed (e.g Gaussian) and the parameters are optimised to maximise the likelihood.
 %Non-parametric where no functional form for the density function is assumed and instead the density estimation is driven entirely by the data.
 %These methods require such as the bin width for crude density estimation using the histogram, and the kernel bandwidth and the choice of kernel function in the kernel density estimation. A major drawback of the histogram approach are the location of the bins.
-%Chosing an appropriate parameter relies on some heuristic and the choice of parameter is particular sensitive to the size and dimensions of the dataset.
 %
 %The median distance from the origin to the closest point where $N$ is the number of points and $p$ is the number of dimensions is given by (accord to Elements of Statistical Learning):
 %% figure for Elements of Statistical Learning
