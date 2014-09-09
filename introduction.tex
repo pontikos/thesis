@@ -7,8 +7,8 @@
 
 Over the last twenty years, the size and dimensionality of biological datasets has increased at a tremendous rate,
 giving rise to very large data matrices.
-As a result, there is much interest in developing computational methods for identifying patterns or trends 
-within this datasets, which associate with clinical variables, such as disease progression or status,
+As a result, there is growing interest in developing computational methods for identifying patterns or trends 
+within these datasets, which could potentially associate with clinical variables, such as disease progression or status,
 and genetic variables, such as gene sequence or expression, in the hope of discovering new biology
 to help predict and prevent disease.
 %Although the human brain is finely tuned for certain types pattern recognition tasks,
@@ -17,9 +17,10 @@ to help predict and prevent disease.
 
 However, the analysis of such large datasets is not without difficulties for both practical and theoretical reasons.
 %greatly complicated by biological and technical noise.
-One of the major challenges is dealing with experimental noise due to differences in instrument configuration, experimental protocol or method of analysis.
-This greatly complicates the extraction and comparision of biologically useful information across datasets.
-Another challenge is in identifying outliers which can skew association statistics or rare subsets which may be biologically significant.
+One of the major challenges is dealing with noise due to differences in instrument configuration, experimental protocol or method of analysis.
+This greatly complicates the extraction and comparison of biologically useful information across datasets.
+Another challenge is in identifying rare subsets and outliers.
+Rare subsets may be biologically significant whereas outliers tend to be noisy samples which can skew association statistics.
 %Also the method used to conduct biological meaningful comparison needs to be formalised.
 Throughout my thesis I will investigate how to address these issues using normalisation and clustering techniques.
 %These related problems are addressed by normalisation and clustering.
@@ -37,7 +38,7 @@ In cases, when clusters overlap too much or individuals lie too far from cluster
 An equally influential technology which has brought cell biology into the sphere of big biology, is flow cytometry,
 a high-throughput technique for measuring up to twenty cell parameters in millions of cells.
 In flow cytometry, clustering is performed to group similar cell measurements to identify cell types within a sample.
-Typically, the relative size of these clusters and their means are of biological interest and are between compared samples after normalisation.
+Typically, the relative size of these clusters and their means are of biological interest and are compared between samples after normalisation.
 Alternatively, normalisation can also be applied before the clustering to enable pooling to aid identification of rarer cell types.
 %Normalisation is typically applied as a meta-clustering step for matching and comparing properties of these cell types in samples analysed across days or batches,
 %but can also be applied before the clustering to enable pooling to aid identification of rarer cell types.
@@ -45,11 +46,11 @@ Alternatively, normalisation can also be applied before the clustering to enable
 
 While clustering applied to \gls{SNP} calling is practically fully automated,
 clustering in flow cytometry is still reliant on manual inspection.
-One good reason for this, is that,
+One good reason, is that
 clustering of cell types is more uncertain than clustering of genotypes because the number of cell types is not known and
 cells are often in intermediate states between cell types.
-In genetics the expected number of clusters at a given loci is known,
-since there is only a set number of possible genotypes, namely homozygote recessive,
+In genetics, the expected number of clusters at a given loci is typically known,
+since there are only a finite set number of possible genotypes at a loci, namely homozygote recessive,
 heterozygote or homozygote dominant.
 However, we will see that there are regions of copy number variation in the genome
 which do not fit this model.
@@ -60,9 +61,9 @@ In SNP genotyping, qPCR data can be used to help infer copy number groups.
 
 %As in all statistcal anlyses, some prior knowledge is required explicitly or implicitly defined.
 The choice of normalisation and clustering method can have an important impact on reproducibility and association statistics.
-Plagnol et al showed that clustering constraints can introduce bias in test statisitics \citep{Plagnol:2007dw}.
+Plagnol et al showed that clustering constraints can introduce bias in test statistics \citep{Plagnol:2007dw}.
 %One of the key questions of this thesis will be how influential are these clustering on downstream data analysis.
-Hence the influence of gating on reproducibility and association testing will be the focurs my first chapter, where I will revisit a large,
+Hence the influence of gating on reproducibility and association testing will be the focus of my first chapter, where I will revisit a large,
 long-running flow cytometry experiment designed to measure genotype-phenotype correlation in hundreds of individuals.
 In this dataset, time-effect linked to instrument variation are non-negligeable and will need to be addressed by normalisation,
 using fluorescent beads as an external control.
@@ -74,7 +75,7 @@ to match the manual gating.
 In the following chapter, I will analyse another flow cytometry dataset, this time an exvivo stimulation dataset,
 primarily generated to assess whether there are differences in stimulation response in certain cell types, between type 1 diabetics and matched controls.
 I will once more consider normalisation for the purpose of improving the reproducibility of the cell phenotypes and hence the power of association testing.
-Furthermore I will apply computational methods to discover new clusters not identified by manual gating which are responsive to stimulation.
+Furthermore, I will apply computational methods to discover new clusters not identified by manual gating which are responsive to stimulation.
 
 In the third chapter, I will apply some of these techniques to \gls{qPCR} and \gls{SNP} data where no prior manual analysis has been done.
 Instead, I will use prior information in terms of population frequencies obtained from previous studies to guide the clustering of qPCR data.
@@ -82,9 +83,9 @@ The clusters applied in qPCR will then be used to identify the SNP patterns whic
 %Variable selection
 %Using normalisation and clustering, joining datasets from different experiments, qPCR and SNP, to discover new patterns.
 
-Finally, I will conclude with what I have generally learned about normalisation and clustering in general, and the specifics of their application to these datasets.
-I will discuss how these methods could be further applied and refined, especially with regards to flow cytometry, for which these methods are
-not yet as well established as in genetics.
+Finally, I will conclude with what I have learned about normalisation and clustering in general, and the specifics of their application to these datasets.
+I will discuss how these methods could be further applied and refined, especially with regards to flow cytometry, for which they are
+not yet as used as in genetics.
 
 
 \section{Biology of type 1 diabetes}
@@ -184,7 +185,7 @@ an excess risk of disease in \gls{MZ} vs \gls{DZ} twins is indicative of genetic
 
 \subsection{Genetic architecture}
 
-Having established that there is a considerable genetic predisposition to T1D, researches are interested in identifying likely causal variants in our genetic code which might lead
+Having established that there is a considerable genetic predisposition to T1D, reseachers have long been interested in identifying likely causal variants in our genetic code which might lead
 some insights onto the mechanism of the disease.
 %We are interesting in discovering how many genes have an effect
 
@@ -195,15 +196,11 @@ Since insulin is a target of the autoimmune response in T1D, the insulin gene \g
 the disease \citep{Metcalfe:2001}. 
 \citet{Metcalfe:2001} found that within 40 \gls{MZ} twin pairs concordant for T1D, $87.5\%$ carried the high risk \gene{INS} variant (Hph I),
 compared to $59.5\%$ in 47 discordant MZ twins.
-
-
 %According to \citet{Alper200689}, in the $6\%$ of sibs of a patient which are concordant for T1D, $16\%$ are MHC identical.
 %However in concordant MZ twins, only $33$ to $42\%$ share the same variant.  This suggests that other genes are important.
 
 %\paragraph {Linkage Studies}
-
 %If we take into account the cumulative genetic risk and assume an additive model of risk
-
 However, the risk variants detected by linkage studies only explained a percentage of the heritability,
 so it is clear that T1D must involve smaller effect size risk variants that are only detectable at sample sizes larger than those achievable by linkage studies.
 
@@ -370,7 +367,7 @@ Fluorescence intensity is measured accurately by using photosensitive detectors,
 or digital (photon counting) electronic signal which is later translated into a digital number indicating the intensity of the fluorescence \citep{Shapiro:2003vq,Snow:2004ci}.
 For a fluorochrome to emit fluorescent light, it needs to have absorbed high energy light of a given wavelength from an illumination source, usually from a laser, which it can then release at a lower energy, longer wavelength, resulting in a so-called Stokes shift.
 The wavelength spectrum at which a given fluorochrome most efficiently absorbs and emits light and Stokes shift are known and depend on the physico-chemical properties of that molecule.
-To enable optical illumination, separation and collection of various fluorochromes with different emission and excitation spectra, a flow cytometer is usally equipped with serveral lasers which emit at different wavelengths and specially configured optical mirror, filters and photosensitive detectors which are sensitive to light at distinct frequency ranges \citep{Shapiro:2003vq}.
+To enable optical illumination, separation and collection of various fluorochromes with different emission and excitation spectra, a flow cytometer is usually equipped with several lasers which emit at different wavelengths and specially configured optical mirror, filters and photosensitive detectors which are sensitive to light at distinct frequency ranges \citep{Shapiro:2003vq}.
 
 %\paragraph{Preparing and running a sample on the flow cytometer}
 %\paragraph{Sample Preparation} 
@@ -501,7 +498,7 @@ FCS 3 requires more careful thought as it leaves to us the compensation and the 
 
 %FCS data needs to be rescaled for Display and Analysis}
 As fluorescence intensity tends to scale multiplicatively, intensity data needs to be linearised for the purpose of visualisation and clustering.
-Clustering algorithms based on variance (average distance to the mean) perform poorly on skewed data, and in general we are more comfortable dealing
+Clustering algorithms based on variance (average distance to the mean) perform poorly on skewed data, and in general humans are more comfortable dealing
 with data on a linear scale.
 %Given a finite range (number of channels/bins), a logarithmic transform can be used to maximise the range of data that can be captured by a detector.
 Given FCS 2 data is strictly positive, a simple $\log_{10}$ transform is usually applied to linearise the data.
@@ -510,9 +507,19 @@ However FCS 3 allows negative values so an offset parameter $b$ may be specified
     f(x) = \log_{10}(x+b)
 \]
 However for low intensities the logarithmic transform is distortive since it inflates the variance as illustrated in \Cref{figure:log10-deform}.
+
+\begin{figure}
+\centering
+\includegraphics[scale=.5] {Appendix/figures/log10-deform.pdf}
+\mycaption{figure:log10-deform} 
+{Log transform inflates variance around zero.}
+{
+}
+\end{figure}
+
 %this transform distorts the data: it shrinks the distance between points making clusters less distinguishable
 Therefore, transforms which are more linear close to zero are preferred \citep{Durbin:2002tj,Tung:2006uw}.
-Aappropriate transformations for FCS 3 are the Generalized Arcsinh, the Biexponential, the LinLog and the Generalized BoxCox
+Appropriate transformations for FCS 3 are the Generalized Arcsinh, the Biexponential, the LinLog and the Generalized BoxCox
 \citep{Bagwell:2005he,Parks:2006gaa,Finak:2010is}.
 Given the data, parameters for these transformations can be estimated using maximum likelihood assuming a multivariate Gaussian distribution of the data \citep{Finak:2010is}. 
 %assume a global distance metric.
@@ -528,12 +535,9 @@ Given the data, parameters for these transformations can be estimated using maxi
 %whereas for FCS3.0 we use an offset $b=50$ so to make all values positive:
 %\[
     %f(x) = log(x+50)
-But, as illustrated by \citet{Tung:2006uw}, care needs to be taken in choosing a suitable transform, as the choice of the parameters
+But, as illustrated by \citet{Tung:2006uw}, care needs to be taken in choosing a suitable transform, as the value of the parameters
 infuences the shape of the distribution and can introduce extra modes.
 \Cref{figure:log10-transform} illustrates this phenomenon in our data when we apply the $Log_{10}$ transform.
-Instead if we apply the logicle transform as defined by \citet{Parks:2006gaa} in \Cref{figure:logicle-transform-w,figure:logicle-transform},
-we see that we can address the spurious mode by reducing the w parameter of the transform which influences the slope of the linear transform around zero.
-%Update for the Logicle Data Scale Including Operational Code Implementations \citet{Moore:2012gz}
 
 \begin{figure}[h]
 \centering
@@ -546,14 +550,9 @@ we see that we can address the spurious mode by reducing the w parameter of the 
 }
 \end{figure}
 
-\begin{figure}
-\centering
-\includegraphics[scale=.5] {Appendix/figures/log10-deform.pdf}
-\mycaption{figure:log10-deform} 
-{Log transform inflates variance around zero.}
-{
-}
-\end{figure}
+Instead if we apply the logicle transform as defined by \citet{Parks:2006gaa} in \Cref{figure:logicle-transform-w,figure:logicle-transform},
+we see that we can address the spurious mode by reducing the w parameter of the transform which influences the slope of the linear transform around zero.
+%Update for the Logicle Data Scale Including Operational Code Implementations \citet{Moore:2012gz}
 
 
 \begin{figure}[h]
@@ -596,7 +595,7 @@ we see that we can address the spurious mode by reducing the w parameter of the 
 {
   The logicle transform is similar to a logistic function in that it approximates a linear transform around the first decade
   and a log transform elsewhere.
-  As the slope of the linear transform, increases the shape of the distribution approximates the shifted log transform in Figure~\ref{figure:log10-transform}.
+  As the slope of the linear transform, increases the shape of the distribution approximates the shifted log transform in \Cref{figure:log10-transform}.
 }
 \end{figure}
 
@@ -629,12 +628,12 @@ However other issues need to be dealt with using data analysis techniques such a
 The purpose of normalisation is to remove unwanted experimental variation to make data comparable even when the samples are
 collected on different days, processed with different protocols or instrumental configurations.
 However distinguishing between unwanted and biological variation necessitates some prior knowledge about the datasets, either in the form of distributional assumptions
-or in the form of features which exist in a predictiable relationship across samples.
+or in the form of features which exist in a predictable relationship across samples.
 Such features can then be used as reference points to normalise across samples.
 If the features are modes in the data, then normalisation is equivalent to doing clustering, in order to identify the modes,
 followed by meta-clustering to match the modes across samples.
 In microarray gene expression datasets, for example, one distributional assumption is that the majority of genes are not differentially expressed between similar samples
-hence the mean of the ratio should be centered on zero \citet{Smyth:2003ie,Bolstad:2003ia}.
+hence the mean of the ratio should be centered on zero \citep{Smyth:2003ie,Bolstad:2003ia}.
 Another assumption in microarray data is that the shape of the distributions are similar enough that normalisation  methods like scaling and quantile normalisation
 are appropriate.  In scaling, we subtract the mean and divide by the variance so that the resulting distribution has a mean of zero and a variance of one:
 \[
@@ -716,13 +715,13 @@ synthetic object of known and stable property, such as fluorescent beads in flow
 
 While these methods have been successfully applied to microarray data, they are not generally applicable
 to multimodal univariate distributions commonly found in datasets containing mixtures of groups.
-In flow cytometry data, the groups are cell populations, and the modes of the distributions, esentially peaks in the density function,
+In flow cytometry data, the groups are cell populations, and the modes of the distributions, essentially peaks in the density function,
 represent the protein quantity carried on the surface of different cell types.
 In theory, the locations of these peaks should remain fairly stable across samples provided experimental parameters are kept constant.
 Though, in practise there is variation attributed to factors which are beyond our control such as long-term instrument decalibration.
 On the other hand, the height of the peaks, the relative frequencies of the cell populations, are expected to change since they are
 are susceptible to sampling variation.
-%In the case of qPCR data, the groups are reprentative of the copy numbers.
+%In the case of qPCR data, the groups are representative of the copy numbers.
 
 In such a scenario, a reasonable normalisation method is to align the peaks of the distributions so that different cell populations are centered
 in a similar location across samples even when their relative quantity changes.
@@ -744,7 +743,7 @@ As a result returning a list of highest density points of which the top K may be
 This is one of the approaches implemented in the \Rpackage{flowStats} BioConductor package.
 \Cref{figure:normalisation-peaks} illustrates this method on real flow data where two common groups stand out and are reasonably well separated .
 Sometimes it may be preferable to identify only the most distinguishable subset of peaks, those representative of the most common groups.
-This is the method I applied in the qPCR data, in Chapter\ref{chapter:KIR}, to align common copy number groups 1 and 2 across plates.
+This is the method I applied in the qPCR data, in \Cref{chapter:kir}, to align common copy number groups 1 and 2 across plates.
 %However peaks are not always easily identifiable.
 
 
@@ -797,7 +796,7 @@ Alignment of the two identified peaks.
 %\paragraph{Identifying Cell Populations with Manual Gating}
 \section{Manual clustering}
 
-Once the data has been made comparable thanks to normalisation, the next task is to identify clusters, groups of cells of similar of properties,
+Once the data has been made comparable thanks to normalisation, the next task is to identify clusters, which in the case of flow cytometry are groups of cells which share some similar properties,
 which can be matched across samples.  
 
 Given a one, two or three dimensional projection of the data, clusters can in some cases, be identified by eye.
@@ -877,10 +876,10 @@ But since a product of small numbers is numerically unstable, the logarithm of t
 \]
 
 In order to find a global optimum of the likelihood function, algorithms proceed in an iterative fashion to explore the parameter space.
-The stopping criterion is reached upon convergence of the objective function or equivalently of the parameter updates.
-However local optimums of the objective function can also lead to convergence.
+The stopping criterion is reached upon convergence of the likelihood function or equivalently of the parameter updates.
+However local optimums in the likelihood function can also lead to convergence.
 There are also regions of the parameter space which need to be avoided.
-For example, the likelihood function can also be made arbitrarily large if the variance of a cluster is allowed to shrink to zero.
+For example, the likelihood function can also be made arbitrarily large if the variance of one of the clusters is allowed to shrink to zero.
 %One pitfall of these methods is that the objective landscape may contain many local minimum or maximums 
 To safeguard from these situations,
 some guidance can be provided by picking sensible starting conditions or by fixing hard boundaries on the parameter space.
@@ -889,19 +888,20 @@ This approach is also called regularisation.
 Regularisation can be achieved using a prior probability density function on the parameters as implemented in the \Rpackage{mclust}.
 
 
-One drawback of the \gls{GMM} tends to overestimate the number of multivariate Gaussians which best models the data since outliers which are in the tails of the distributions
-are explained by new low mixture distributions, increasing unreasonably the number of cell populations.
-To account for this, Flowclust \citep{Lo:2008it} replaced Gaussians by
+One drawback of the \gls{GMM} is that it tends to overestimate the number of multivariate Gaussians which best models the data since outliers which are in the tails of the distributions
+are explained by new low mixture distributions, increasing unreasonably the number of reported cell populations.
+To account for this, Flowclust replaces Gaussians by
 %more robust heavy tailed 
-t-distributions which give more weight to observations in the tails.
+t-distributions which give more weight to observations in the tails \citep{Lo:2008it}.
 Still, t-distributions are symmetric distributions and so can not model skewed populations which are common in stimulation experiments or more generally when cells are in a transitional state from one cell type to another.
 \citet{Pyne:2009hl} addressed this issue with FLAME (Flow Analysis with Automated Multivariate Estimation) by employing skewed t-distributions instead.
 Yet a remaining issue is that these distributions are convex by nature and so a concave population which can arise in transitional cell populations undergoing progressive change on more than one marker may only be represented by the merging of several convex populations.
 This merging step can be accomplished using FlowMerge \citep{Finak:2009fk}.
-We see that by adding more parameters to these distributions we can make them model-based methods more flexible but at the price of reducing the degrees of
-freedom and at the potentially computionally expensive cost of estimating these parameters.
-Sometimes, for parameters such as mean and covariance, closed-form solutions exist and they can be estimated using an \gls{EM} algorithm \citep{Dempster:1977ul},
-but other parameters such as, central location, skewness factor and degrees of freedom,
+We see that by adding more parameters to these distributions we can make model-based methods more flexible.
+But this comes at the price of reducing the degrees of freedom and having to estimate more parameters which 
+can potentially be computationally expensive.
+For certain parameters such as mean and covariance, closed-form solutions exist or can efficiently be estimated with  an \gls{EM} algorithm \citep{Dempster:1977ul},
+but others such as, the skewness factor and degrees of freedom of the T-distributions,
 may need to be estimated numerically using computationally expensive methods like \gls{MCMC} which sample from the parameter space
 and consequently scale poorly with increasing dimensionality.
 %as they rely on inversion of large matrices
@@ -1021,8 +1021,8 @@ Sampling followed by Spectral Clustering (SAMSpectral, \citet{Zare:2010cw}) or m
 as done by Spanning-tree Progression Analysis of Density-normalized Events (SPADE, \citet{Simonds:2011jh}), may be applied.
 
 The advantage of these non-parametric methods is that they are usually fast and flexible and often provide some heuristics for estimating the parameters.  
-Unfortunately, this seeming flexibility comes at the price of poor interpretatability or generalisation to other dataset since there is no explicit model
-and the parmaters tend to dataset specific.
+Unfortunately, this seeming flexibility comes at the price of poor interpretability or generalisation to other dataset since there is no explicit model
+and the parameters tend to be dataset specific.
 %These methods return a clustering of the data but do no estimate any parameters from the data.
 %They are also reliant on parameters tuned to a specific dataset, which complicates comparison of clustering results across datasets.
 Furthermore, these parameters do not necessarily have an intuitive interpretation or biological significance which makes setting their value hard to justify.
@@ -1037,7 +1037,7 @@ Furthermore, these parameters do not necessarily have an intuitive interpretatio
 \subsection{Estimating the optimal number of clusters from the data}
 
 %The methods described above return the optimal cluster assignment given an expected number of clusters.
-The methods described above, normally require the expected number of clusters as input parameter.
+The methods described above, normally require the expected number of clusters as an input parameter.
 Although there are many suggested heuristics,
 estimating an optimal number of clusters from the data remains an open problem in machine learning and statistics.
 %However, estimating an optimal number of clusters from the data,
@@ -1052,9 +1052,9 @@ estimating an optimal number of clusters from the data remains an open problem i
 %The criterion can be to maximise information.
 Generally these methods seek to maximise utility by reaching a compromise between model complexity, number of parameters in the model,
 and accuracy, in supervised clustering, or some other metric like variance explained, in unsupervised clustering.
-Model complexity is penalised by the number of parameters added to the model.
+This methods penalise for model complexity, the number of parameters added to the model.
 %BIC and AIC
-In order to avoid overfitting, the variance explained by each cluster can also be limited using shrinkage methods.
+%In order to avoid overfitting, the variance explained by each cluster can also be limited using shrinkage methods.
 %or by penalising for the number of parameters added to the model.
 %Shrinkage can be useful when parameters are colinear.
 %because effectively each parameter is reducing the degrees of freedom.
@@ -1063,16 +1063,17 @@ In order to avoid overfitting, the variance explained by each cluster can also b
 One way of estimating the expected number of clusters, is to find modes in the data: regions of significantly high density \citep{Duong:2008eu,JING:2012ek}.
 %But this is difficult because modes are hard to identify in higher dimensions.
 An alternative brute force approach is to cluster at increasing number of clusters 
-and to pick the value wich optimises some criterion, such as the Gap statistic \citep{Tibshirani:2001fj}
+and to pick the cluster value which optimises some criterion, such as the Gap statistic \citep{Tibshirani:2001fj}
 or the variance-ratio criterion \citep{Calinski:1974bt}.
-These clustering metrics are usually derived from the within-cluster to between-cluster sum of squares ratio.
+These clustering metrics are usually derived from the ratio of the between-cluster sum-of-squares (variance explained by the model)
+to the within-cluster sum-of-squares (remaining variance).
 %pick the elbow point where the ratio drops significantly introduced the 
 For example, the variance-ratio criterion as defined by \citet{Calinski:1974bt}, for $k$ clusters defined on a dataset of size $n$:
 \[
   \text{VRC} = \frac{SS_{b}/(k-1)}{SS_{w}/(n-k)}
 \]
 
-where $SS_{w}$ is the total within-sum-of-squares (previously defined) and $SS_{b}$ is:
+where $SS_{w}$ is the total within-sum-of-squares (previously defined as the objective function of the K-means algorithm) and $SS_{b}$ is:
 
 \[
    SS_{b} = SS_{t} - SS_{w}
@@ -1121,8 +1122,9 @@ This is the criterion used by the \Rpackage{mclust} to find the optimal number o
 An interesting alternative to the number of cluster estimation problem is a derivative of the K-means algorithms,
 the Dirichlet Process means, which treats the number of clusters
 K as a parameter to be estimated from the data \citep{Kulis:2011wj}.
-The estimation follows Gibbs sampling for a Dirichlet process.
+%The estimation uses Gibbs sampling from a Dirichlet process.
 %By taking larger subsets of the data, new clusters may be created if 
+%this method still relies on a parameter lambda which is a continuous variable
 
 %However, these clusters often need to be matched across samples for association testing.
 
@@ -1149,7 +1151,8 @@ The estimation follows Gibbs sampling for a Dirichlet process.
 \section{Association testing}
 
 Once clusters have been identified and matched across samples within a study, it is then possible to test for association of cell population
-features with genotype, sex, age or clinical outcome.
+features which potentially vary significantly with explanatory variables such as genotype, sex, age or clinical outcome,
+in order to understand human immunology and the etiology or consequences of disease.
 
 %When a large number of clusters has been identified in a small number of samples then we risk overfitting.
 %To avoid overfitting feature selection
@@ -1172,11 +1175,11 @@ features with genotype, sex, age or clinical outcome.
 %
 
 Occasionally, the cluster properties may not be directly comparable and some normalisation is required.
-Two examples of such population features are the size of the population over its parent population and the \gls{MFI} on a particular marker.
+Two examples of such cluster poperties in flow cytometry are the size of the population over its parent population and the \gls{MFI} on a particular marker.
 The fluorescence intensity correlates with the quantitative expression of a protein on the cell surface.
 These cell population features are commonly referred to as cell phenotypes.  
-When assessing the gene to phenotype correlation, the reproducibility of these cell phenotypes is crucial since
-larger within-individual variance decreases the power to detect between-individual genotype-phenotype effects.
+When assessing association, the reproducibility of these cell phenotypes is crucial since
+larger within-individual variance decreases the power to detect between-individual effects.
 %Certain phenotypes are more stable than others.
 
 The association test can be done with multivariate linear regression of the SNPs, age, sex against an approximately normally distributed cell phenotype.
@@ -1184,7 +1187,7 @@ Or for case-control association tests, a logistic regression of the copy number 
 When individuals are repeated, we may summarise each repeated measurement by the mean of the two measurement, or
 alternatively apply a linear mixed effects model with a random individual effect to account for the within-individual variability.
 
-As we will see in Chapter \Cref{chapter:il2ra}, the method used to do the gating of the cell phenotypes can have an important impact on the association
+As we will see in \Cref{chapter:il2ra}, the method used to do the gating of the cell phenotypes can have an important impact on the association
 statistics.
 
 
