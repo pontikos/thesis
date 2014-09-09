@@ -116,6 +116,18 @@
 %figures and tables
 \newcommand{\mycaption}[3]{\caption[\textbf{#2}]{\label{#1} \textbf{#2} #3}}
 
+%my figure
+\newcommand{\myfigure}[4]{
+\begin{figure} [h]
+\begin{center}
+   \includegraphics[#1]{figures/#2.pdf}
+\end{center}
+\mycaption{figure:#2} { #3 } { #4 }
+\end{figure}
+}
+
+
+
 %
 \newcommand{\pct}[1]{\SI{#1}{\percent}}
 
@@ -205,7 +217,27 @@
 %\input{discussion}
 
 % ********************************** Appendices ********************************
-\input{Appendix/appendix.tex}
+\begin{appendices} % Using appendices environment for more functionality 
+%\chapter{\label{appendix:flowdatasets}Flow datasets}
+%\section{IL2RA}
+%\input{flowdatasets/il2ra.tex}
+%\section{IL-2 stimulation}
+%\input{flowdatasets/il2-stimulation.tex}
+%\section{DILT1D}
+%\input{flowdatasets/dilt1d.tex} 
+%\input{Appendix/fcsdataformat} 
+%\input{Appendix/compensation} 
+%\input{Appendix/transformation}
+\input{Appendix/normalisation}
+\input{Appendix/clustering}
+\input{Appendix/flow} 
+%\chapter{ Normalisation of fluorescence intensity using beads }
+%\input{IL2RA/beads.tex} 
+%\chapter{\label{maths}{Maths}}
+%\input{Appendix/maths} 
+\end{appendices}
+
+
 
 \printglossary[type=\acronymtype]
 \fancyhf{}
