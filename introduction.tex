@@ -510,7 +510,7 @@ to loss of information (\Cref{figure:fcs2-fcs3}).
 \mycaption{figure:fcs2-fcs3}
   {FCS2 vs FCS3}
   {
-    FCS 2 truncates intensity values at zero while FCS 3 allows for negative intensities.
+    %FCS 2 truncates intensity values at zero while FCS 3 allows for negative intensities.
     In FCS 2 (a), truncation at zero leads to loss of low intensity clusters as compared to FCS 3 (b).
   }
 \end{figure}
@@ -524,7 +524,7 @@ with data on a linear scale.
 %Given a finite range (number of channels/bins), a logarithmic transform can be used to maximise the range of data that can be captured by a detector.
 Given FCS 2 data is strictly positive, a simple $\log_{10}$ transform is usually applied to linearise the data.
 As FCS 3 allows for negative values a different transform is required.
-Transforms which are more linear close to zero are preferred, 
+Transforms which are closer to linear near zero are preferred, 
 since the logarithmic transform is distorting (as illustrated in \Cref{figure:log10-deform})
 for low intensity values \citep{Durbin:2002tj,Tung:2006uw}.
 \begin{figure}
@@ -646,7 +646,7 @@ The influence of the w parameter on the shape of the transformed intensity distr
 \clearpage
 
 
-\paragraph{Noise} 
+\paragraph{Noise in flow cytometry} 
 Beside these data format and transformation intricacies, there are many sources of noise in flow cytometry which complicate sample comparison and impact reproducibility.  
 \begin{itemize}
   \item \textbf{Sample processing and storage conditions noise.}
@@ -674,126 +674,50 @@ However data analysis techniques such as normalisation are still necessary to de
 \section{Normalisation}
 %\section{Normalisation: why it is needed, methods, utility}
 
+%Heraclitus said `` you cannot step into the same river twice ''
+%Experiments in biology are very difficult to replicate exactly for technical and biological reasons.
 The purpose of normalisation is to remove unwanted experimental variation to make data comparable even when the samples are
 collected on different days, processed with different protocols or instrumental configurations.
-However distinguishing between unwanted and biological variation necessitates some prior knowledge about the datasets, either in the form of distributional assumptions
-or in the form of features which exist in a predictable relationship across samples.
-Such features can then be used as reference points to normalise across samples.
-If the features are modes in the data, then normalisation is equivalent to doing clustering, in order to identify the modes,
-followed by meta-clustering to match the modes across samples.
-In microarray gene expression datasets, for example, one distributional assumption is that the majority of genes are not differentially expressed between similar samples
-hence the expected log ratio of gene expression in two samples should be centered on zero \citep{Smyth:2003ie,Bolstad:2003ia}.
-Another assumption in microarray data is that the shape of the distributions are similar enough that normalisation  methods like scaling and quantile normalisation
-are appropriate.  In scaling, we subtract the mean and divide by the variance so that the resulting distribution has a mean of zero and a variance of one.
-%This approach is sensible if the distibutions are symmetric unimodal like the normal distribution.
-\Cref{normalisation-scaled} is a trivial example of scaling on simulated data.
-%$x_0 \sim N
-
-%% Scaling
-\begin{figure}[h]
-\begin{subfigure}[b]{.5\textwidth}
-\centering
-\includegraphics[scale=.4]{figures/normalisation-scaled-a.pdf} 
-\caption{before scaling}
-\end{subfigure}
-~
-\begin{subfigure}[b]{.5\textwidth}
-\centering
-\includegraphics[scale=.4]{figures/normalisation-scaled-b.pdf} 
-\caption{after scaling}
-\end{subfigure}
-\mycaption{normalisation-scaled}
-{Normalisation by scaling on simulated data.}
-{
-In solid black line represents the density function obtained from $10,000$ draws from a normal distribution
-with with means $\mu_0=1$ and standard deviation $\sigma_0=1$.
-The dashed line represents the density function obtained from $1,000$ draws from a normal distribution
-where $\mu_1=5$ and $\sigma_1=3$.
-After scaling both distributions have a mean of zero and standard deviation of one.
-}
-\end{figure}
-
-If the distributions are unimodal but not symmetric, such as $\chi^2$ distributions, then an alternative is quantile normalisation.
-
-As can be seen in \Cref{figure:normalisation-quantile}, the quantiles of the distribution are identified
-then a transform is applied so that quantiles of one distribution are aligned with those of the other.
-Here the transform is a simple linear regression.
-Quantile normalisation works well when the shape of the distributions is the same and only shifted.  
-
-%% Quantile
-\begin{figure}[h]
-\begin{subfigure}[b]{.5\textwidth}
-\centering
-\includegraphics[scale=.4]{figures/normalisation-quantile-a.pdf} 
-\caption{before aligning quantiles}
-\end{subfigure}
-~
-\begin{subfigure}[b]{.5\textwidth}
-\centering
-\includegraphics[scale=.4]{figures/normalisation-quantile-b.pdf} 
-\caption{after aligning quantiles}
-\end{subfigure}
-\mycaption{figure:normalisation-quantile}
-{Normalisation by quantile alignment on simulated data.}
-{
-In solid black line represents the density function obtained from $10,000$ draws from a gamma distribution
-with with shape $\alpha_0=20$ and rate $\beta_0=1.5$.
-The dashed line represents the density function obtained from $1,000$ draws from a gamma distribution
-where $\alpha_1=10$ and $\beta_1=2$.
-The black dots are the quantiles.
-The normalisation finds a linear mapping of the quantiles of the dashed-line distribution onto those of the solid-line distribution.
-}
-\end{figure}
-
-
-%Also the M and A should follow the same relationship.  Smoothing methods like loess can also correct MA trends \citet{Smyth:2003ie}.
-%But in practise, in brighter spots the balance between the green signal is stronger than the red while in dimmer spots the red signal is stronger than the green.
-%This artefact means that low and high intensity genes would wrongly be identified as differentially expressed.
-%splines and running median line
-%Other methods are quantile or rank normalisation.
-%spikeins would be equivalent of inserting beads or the other know entities into our sample
-%which can then be used as an internal control.
-%MA norm works on 2 dimensions and the probes are known and can be matched across arrays.
-%in flow, common cell types are expected to exist across arrays but ungated data does not necessarily match
-%because of differences in staining and preparation which creates debris
-The underlying principle is that true biological variation is specific whereas experimental variation affects the whole sample.
-In order to decouple technical variation from biological variation, without making distributional assumptions,
-objects with known properties, such as fluorescent beads in flow cytometry or reference probes on microarrays, can be used.
-
-
-While these methods have been successfully applied to microarray data, they are not generally applicable
-to multimodal univariate distributions commonly found in datasets containing mixtures of groups.
-In flow cytometry data, the groups are cell populations, and the modes of the distributions, essentially peaks in the density function,
-represent the average protein quantity carried on the surface of different cell types.
-In theory, the locations of these peaks should remain fairly stable across samples provided experimental parameters are kept constant.
-In practise there may be variation attributed to factors which are beyond our control such as long-term instrument decalibration.
+%The underlying principle being that true biological variation is specific whereas experimental variation affects the whole sample.
+Nonetheless, distinguishing between unwanted and biological variation necessitates some prior knowledge about the datasets,
+either in the form of global distributional assumptions or in the form of local features which exist in a predictable relationship across samples.
+In microarray gene expression datasets, for example, one distributional assumption is that the majority of genes are not differentially expressed between similar samples,
+hence the expected log ratio of gene expression in two samples should be centered on zero \citep{Smyth:2003ie,Bolstad:2003ia}.  
+It is also possible to use reference points to normalise across samples
+%decouple technical variation from biological variation
+%without making global distributional assumptions,
+by using local features of the distribution or objects with known properties, such as beads in flow cytometry or reference probes in microarrays.
+%These features can also be added to the sample, commonly known as spike-ins, or
+In microarray, data quantile normalisation works well because the shape of the distributions are similar enough across samples \citep{Bolstad:2003ia}.
+However in flow cytometry, this approach is not appropriate because samples contain different number of events and 
+the distributions are multimodal, as commonly found in datasets containing mixtures of groups.
+%The modes of the distributions or peaks of the density function, represent the average protein quantity carried on the surface of different cell types.
+While in theory, the locations of these modes or peaks of the density function should remain fairly stable across samples provided experimental parameters are kept constant,
+in practise there is often variation attributed to factors which are beyond our control such as long-term instrument decalibration.
 On the other hand, the height of the peaks, the relative frequencies of the cell populations, are expected to change since they are
 are susceptible to sampling variation.
 %In the case of qPCR data, the groups are representative of the copy numbers.
-
+%and cells cannot be matched across samples in the way microarray probes are.  
+%If the features are modes in the data, then normalisation is equivalent to doing clustering, in order to identify modes, followed by meta-clustering to match the modes across samples.
+%While these methods have been successfully applied to microarray data, they are not generally applicable to multimodal univariate distributions commonly found in datasets containing mixtures of groups.
 In such a scenario, a reasonable normalisation method is to align the peaks of the distributions so that different cell populations are centered
-in a similar location across samples even when their relative quantity changes.
-The implementation of this normalisation method then depends on the method used to identify the peaks and to match them across samples.
-
-The ideal scenario is when the number of peaks is known and constant across samples.
-%This is the case when dealing with synthetic data such as beads.
-%In this scenario, basic clustering algorithms as covered in the next section, can be applied to identify the peaks in each sample.
-%This is the method which I have developed in the \Rpackage{flowBeads} BioConductor package which identifies bead populations with the K-medoids algorithm
-%for the purpose of fluorescence normalisation.
-Unfortunately, on real data, variation between biological samples means that not all peaks are consistently identifiable across all samples.
-The true number of peaks is unknown and can vary between samples. 
-More flexible peak searching algorithms are required to allow for this per sample-variation.
-
+in a similar location across samples even when their relative proportions changes.
+The implementation of this normalisation method then depends on the method used to identify and match the peaks across samples.
+%The ideal scenario is when the number of peaks is known and constant across samples.
+%More flexible peak searching algorithms are required to allow for this per sample-variation.
 One method of identifying peaks of the density function is with a sliding window approach.
 The sliding window records the point with the highest density estimate in the current window and
 returns a list of highest density points of which the top K may be chosen.
 This is one of the approaches implemented in the \BioConductor{flowStats}.
-\Cref{figure:normalisation-peaks} illustrates this method on real flow data where two common groups stand out and are reasonably well separated .
-Sometimes it may be preferable to identify only the most distinguishable subset of peaks, those representative of the most common groups.
+\Cref{figure:normalisation-peaks} illustrates this method on real flow data where two common groups stand out and are reasonably well separated.
+Unfortunately, peaks are not always consistently identifiable across samples.
+In these cases, it may be preferable to only identify the most distinguishable subset of peaks, those representative of the most common groups.
+%This is the case when dealing with synthetic data such as beads.
+%In this scenario, basic clustering algorithms as covered in the next section, can be applied to identify the peaks in each sample.
+%This is the method which I have developed in the \Rpackage{flowBeads} BioConductor package which identifies bead populations with the K-medoids algorithm
+%for the purpose of fluorescence normalisation.
 %This is the method I applied in the qPCR data, in \Cref{chapter:kir}, to align common copy number groups 1 and 2 across plates.
 %However peaks are not always easily identifiable.
-
-
 %% Peaks
 \begin{figure}[h]
 \begin{subfigure}[b]{.5\textwidth}
@@ -810,10 +734,80 @@ Sometimes it may be preferable to identify only the most distinguishable subset 
 \mycaption{figure:normalisation-peaks}
 {Normalisation by peak alignment.}
 {
-  Two bimodal univariate distributions where simulated from two two-component mixture of Gaussians with different means and mixing weights.
+  Distributions of the same marker in two different flow cytometry samples.
   The two peaks of each distribution are identified in (a) using a sliding window of size $40$ on the density function and aligned in (b) using a linear transform.
 }
 \end{figure}
+
+
+
+%In scaling, we subtract the mean and divide by the standard deviation so that the resulting distribution has a mean of zero and a standard deviation of one.
+%This approach is sensible if the distibutions are symmetric unimodal like the normal distribution.
+%\Cref{normalisation-scaled} is a trivial example of scaling on simulated data.
+%$x_0 \sim N
+%% Scaling
+%\begin{figure}[h]
+%\begin{subfigure}[b]{.5\textwidth}
+%\centering
+%\includegraphics[scale=.4]{figures/normalisation-scaled-a.pdf} 
+%\caption{before scaling}
+%\end{subfigure}
+%~
+%\begin{subfigure}[b]{.5\textwidth}
+%\centering
+%\includegraphics[scale=.4]{figures/normalisation-scaled-b.pdf} 
+%\caption{after scaling}
+%\end{subfigure}
+%\mycaption{normalisation-scaled}
+%{Normalisation by scaling on simulated data.}
+%{
+%In solid black line represents the density function obtained from $10,000$ draws from a normal distribution
+%with with means $\mu_0=1$ and standard deviation $\sigma_0=1$.
+%The dashed line represents the density function obtained from $1,000$ draws from a normal distribution
+%where $\mu_1=5$ and $\sigma_1=3$.
+%After scaling both distributions have a mean of zero and standard deviation of one.
+%}
+%\end{figure}
+%If the distributions are unimodal but not symmetric, such as $\chi^2$ distributions, then an alternative is quantile normalisation.
+%%As can be seen in \Cref{figure:normalisation-quantile}, the quantiles of the distribution are identified
+%%then a transform is applied so that quantiles of one distribution are aligned with those of the other.
+%%Here the transform is a simple linear regression.
+%%Quantile normalisation works well when the shape of the distributions is the same and only shifted.  
+%%% Quantile
+%\begin{figure}[h]
+%\begin{subfigure}[b]{.5\textwidth}
+%\centering
+%\includegraphics[scale=.4]{figures/normalisation-quantile-a.pdf} 
+%\caption{before aligning quantiles}
+%\end{subfigure}
+%~
+%\begin{subfigure}[b]{.5\textwidth}
+%\centering
+%\includegraphics[scale=.4]{figures/normalisation-quantile-b.pdf} 
+%\caption{after aligning quantiles}
+%\end{subfigure}
+%\mycaption{figure:normalisation-quantile}
+%{Normalisation by quantile alignment on simulated data.}
+%{
+%In solid black line represents the density function obtained from $10,000$ draws from a gamma distribution
+%with with shape $\alpha_0=20$ and rate $\beta_0=1.5$.
+%The dashed line represents the density function obtained from $1,000$ draws from a gamma distribution
+%where $\alpha_1=10$ and $\beta_1=2$.
+%The black dots are the quantiles.
+%The normalisation finds a linear mapping of the quantiles of the dashed-line distribution onto those of the solid-line distribution.
+%}
+%\end{figure}
+%
+%Also the M and A should follow the same relationship.  Smoothing methods like loess can also correct MA trends \citet{Smyth:2003ie}.
+%But in practise, in brighter spots the balance between the green signal is stronger than the red while in dimmer spots the red signal is stronger than the green.
+%This artefact means that low and high intensity genes would wrongly be identified as differentially expressed.
+%splines and running median line
+%Other methods are quantile or rank normalisation.
+%spikeins would be equivalent of inserting beads or the other know entities into our sample
+%which can then be used as an internal control.
+%MA norm works on 2 dimensions and the probes are known and can be matched across arrays.
+%in flow, common cell types are expected to exist across arrays but ungated data does not necessarily match
+%because of differences in staining and preparation which creates debris
 
 
 %\paragraph{Instrument variation}
@@ -978,7 +972,7 @@ K-means attempts to minimise the overall sum of within-cluster sum of squares as
 \label{equation:ssw}
 SS_{w} = \sum_{k=1}^{K} \sum_{\mathbf x_i \in S_k} ( \mathbf x_i - \boldsymbol\mu_k )^2 ; \quad \boldsymbol\mu_k=\text{E}(x_i| x_i \in S_k)
 \end{equation}
-where each point, $x_i$, is assigned to exactly one of the sets $S_1, S_2, \cdots S_k$.
+where each point, $x_i$, is assigned to exactly one of the clusters $S_1, S_2, \cdots S_k$.
 
 The algorithm starts by picking $K$ random points which are initial guesses as to where the cluster means lie.
 Then for each iteration:
@@ -989,7 +983,8 @@ Then for each iteration:
 The algorithm terminates when no cluster mean changes, or equivalently when the cluster assignment does not change.
 
 However, it can be shown that certain so called non-parametric methods turn out to be limiting cases of parametric methods.
-For example K-means, is a limiting case of spherical \glspl{GMM} when the covariance tends to zero (see \Cref{appendix:clustering} for derivation),
+For example K-means, is a limiting case of spherical \glspl{GMM} when the covariance tends to zero.
+%(see \Cref{appendix:clustering} for derivation),
 because maximising the log-likelihood of a multivariate Gaussian is asymptotically equivalent to minimising the residual sum of squares (\Cref{figure:gmm-variance}).
 %The exponential weighted responsibility between 0 and 1 turns into a 0-1 assignment because as sigma -> 0 then expr( -x**2 / sigma ) 
 
@@ -1010,7 +1005,7 @@ There are numerous clustering methods which rely on density estimation.
 Possibly the most famous is Density Based Merging (DBM) which uses a region growing density approach so that points of high density are linked \citep{Walther:2009gn}.
 Flow Clustering without K (FLOCK) relies on grid based density estimation in higher dimensions \citep{Qian:2010ep}.
 Misty Mountain takes decreasing cross sections of the two dimensional density histogram so that clusters are progressively merged as the threshold decreases \citep{Sugar:2010jf}.
-However when applied to flow cytometry data, this approach cannot distinguish rare cell populations in close proximity from bigger cell populations and is limited to two dimensions.
+%However when applied to flow cytometry data, this approach cannot distinguish rare cell populations in close proximity from bigger cell populations and is limited to two dimensions.
 CurvHDR (negative Curvature and High Density Region) identifies regions of significant curvature in the multivariate density function,
 by using a bandwidth rather than the number of bins, but cannot be applied beyond four dimensions \citep{Naumann:2010fp}.
 All these density based approaches require the number of bins or the bandwidth to be specified by the user or estimated from the data according to some heuristic.
