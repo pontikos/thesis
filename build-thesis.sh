@@ -16,7 +16,7 @@ rm thesis.brf
 rm thesis.glg
 rm thesis.glo
 rm thesis.gls
-rm thesis.ist
+#rm thesis.ist
 rm thesis.lof
 rm thesis.log
 rm thesis.lot
@@ -27,7 +27,6 @@ rm *.toc
 rm *.ind 
 rm *.idx 
 rm *.ilg 
-rm *.ist 
 rm *.aux 
 rm *.log 
 rm *.nlo 
@@ -47,10 +46,10 @@ pdflatex -jobname=thechap01 "\includeonly{chap01}\input{thesis}"
 }
 
 function makeindexes() {
-makeindex genes
-makeindex proteins
-makeindex snps
-makeindex contributors
+makeindex -s cdots.ist genes
+makeindex -s cdots.ist proteins
+makeindex -s cdots.ist snps
+makeindex -s cdots.ist contributors
 }
 
 function build() {
