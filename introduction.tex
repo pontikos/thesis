@@ -30,8 +30,8 @@ as well as genetic data, acquired from \gls{qPCR} and \gls{SNP} arrays.
 \gls{SNP} arrays have been at the core of \gls{GWAS} over the last ten years.
 They concurrently probe hundred-thousands of genomic loci, \glspl{SNP}, within an individual and the technology
 has been parallelised so that each experiment can test thousands of individuals.
-Each SNP probe is fluorescently labelled so that at a given genomic locus, the intensity values can be clustered,
-once normalised, across individuals.
+Each SNP probe is fluorescently labelled so that at a given genomic locus, the intensity values can be clustered across individuals, 
+after normalisation.
 Genotypes at a given loci can be called by individual, depending on the cluster in the pooled dataset to which the individual is assigned.
 Common genotypes form larger clusters whereas rarer genotypes form smaller clusters.
 %In cases, when clusters overlap too much or individuals lie too far from cluster centers, it is not possible to call a genotype with certainty.
@@ -67,15 +67,15 @@ long-running flow cytometry experiment designed to measure genotype-phenotype co
 %In this dataset, time-effect linked to instrument variation are non-negligeable and will need to be addressed by normalisation, using fluorescent beads as an external control.
 While the clustering was initially conducted manually by drawing gates to delineate populations of cells,
 I assess the influence of clustering method on association testing,
-when part of the gating is replaced by computational thresholding and clustering methods, which aim
-to match the manual gating.  
+when part of the gating is replaced by computational thresholding and clustering methods.
+%, which aim to match the manual gating.  
 
 In \Cref{chapter:il2}, I analyse another flow cytometry dataset, this time an exvivo stimulation dataset,
 primarily generated to assess whether there are differences in stimulation response in certain cell types, between type 1 diabetics and matched controls.
 I will once more consider normalisation for the purpose of improving the reproducibility of the cell phenotypes and hence the power of association testing.
 Furthermore, I apply computational methods to discover new clusters not identified by manual gating which are responsive to stimulation.
 
-In \Cref{chapter:kir}, I apply some of these techniques to \gls{qPCR} and \gls{SNP} data where no prior manual analysis has been done.
+In \Cref{chapter:kir}, I apply normalisation and clustering to \gls{qPCR} and \gls{SNP} data where no prior manual analysis has been done.
 Instead, I use prior information in terms of population frequencies obtained from previous studies to guide the clustering of qPCR data.
 The clusters applied in qPCR are used to identify the SNP patterns which are predictive of copy number, using supervised clustering.
 %Variable selection
@@ -83,7 +83,7 @@ The clusters applied in qPCR are used to identify the SNP patterns which are pre
 
 Finally, I will conclude with what I have learned about normalisation and clustering in general, and the specifics of their application to these datasets.
 I will discuss how these methods could be further applied and refined, especially with regards to flow cytometry,
-for which they are not yet as widely used as in genetics.  
+where they are not yet as commonly used as in genetics.  
 
 \section{Biology of type 1 diabetes}
 
@@ -129,7 +129,7 @@ in newly diagnosed \gls{T1D} patients (\url{http://www.clinical-trials-type1-dia
 %(and hinder ketonacidocis)
 %There are numerous genetic markers which increase susceptibility to T1D but these only indicate a pre-disposition to the disease.  
 
-\subsection{Heritability}
+\subsection{Genetics of type 1 diabetes}
 
 %T1D is an auto-immune disease whereby cells of the immune system target and destroy the body’s own insulin secreting cells of the pancreas, the $\beta$-cells.
 
@@ -137,14 +137,13 @@ in newly diagnosed \gls{T1D} patients (\url{http://www.clinical-trials-type1-dia
 Patterns of familial clustering suggest that some portion of T1D risk is genetically inheritable.
 %The sibling relative risk which is the ratio of the sibling recurrence risk and the overall disease prevalence,
 A measure of heritability used by geneticists is the sibling recurrence risk $\lambda_s$, which is defined as
-the ratio of the probability that a sibling of an affected individual has the disease over the probablity of a random individual in the population
+the ratio of the probability that a sibling of an affected individual has the disease over the probability of a random individual in the population
 having the disease.
-An initial estimate of $\lambda_s$ was 15 according to \citet{Risch:1987wm},
-based on the \citet{Spielman:1980vv} and \citet{Wagener:1982up} studies,
+Initial estimates of $\lambda_s$ were close 15 \citep{Risch:1987wm},
+%based on the \citet{Spielman:1980vv} and \citet{Wagener:1982up} studies,
 %\citet{Risch:1987wm} defines this as the relative recurrence risk: $\lambda_R = \frac{K_R}{K}$.
-but \citet{Clayton:2009kf} suggested that $\lambda_s$ is more likely to lie between 5 and 8.9,
-given new evidence from larger studies
-conducted in Danish \citep{Kyvik:1995vs} and Finnish cohorts \citep{Hyttinen:2003kn,Harjutsalo:2005uo}.
+although \citet{Clayton:2009kf} suggested that these might be overestimates and that $\lambda_s$ is more likely to lie between 5 and 8.9.
+%given more recent evidence from larger studies conducted in Danish \citep{Kyvik:1995vs} and Finnish cohorts \citep{Hyttinen:2003kn,Harjutsalo:2005uo}.
 
 %in planning and evaluating studies aimed at discovering genes conferring susceptibility to disease.
 %$\lambda_s = \frac {Pr( Y_j=1 | Y_k=1)} {Pr( Y_k=1 )} $
@@ -188,12 +187,12 @@ conducted in Danish \citep{Kyvik:1995vs} and Finnish cohorts \citep{Hyttinen:200
 
 %However since related individuals also tend to share environment, it is difficult to decouple the genetic from the environmental effect.
 
-\subsection{Genetic architecture}
-
-Since there is considerable genetic predisposition to T1D, researchers have long been interested in dentifying likely causal variants in our genetic code
+%\subsection{Genetic architecture}
+Regardless of the exact estimate of $\lambda_s$, the genetic predisposition to \gls{T1D} is indisputable
+and researchers have long been interested in identifying likely causal variants in our genetic code
 which might lead some insights onto the mechanism of the disease.
 %We are interesting in discovering how many genes have an effect
-Linkage studies based on the recombination of multiallelic genetic markers in families affected by T1D,
+Linkage studies based on the recombination of multiallelic genetic markers in families affected by \gls{T1D},
 first mapped a genetic risk factor to the \gls{HLA} region on chromosome 6 \citep{Singal:1973tg,Cudworth:1974ve,Nerup:1974ui}.
 As insulin is a target of the autoimmune response in T1D, the insulin gene (\gene{INS}), on chromosome 11, was tested as a strong candidate region
 and was also found to associate with the disease \citep{Bell:1984uw,Permutt:1984wt}.
@@ -205,8 +204,8 @@ and was also found to associate with the disease \citep{Bell:1984uw,Permutt:1984
 %However, the risk variants detected by linkage studies only explained a percentage of the heritability,
 %so it is clear that T1D must involve smaller effect size risk variants that are only detectable at sample sizes larger than those achievable by linkage studies.
 In \citeyear{Davies:1994gu}, \citeauthor{Davies:1994gu} using a linkage map of 290 marker loci in 96 sibling pairs,
-confirmed the association with the HLA and insulin gene regions, and further reported
-reported eighteen new chromosome regions showing some evidence of linkage to \gls{T1D}.
+confirmed the association with the HLA and insulin gene regions, and further 
+reported a number of new chromosome regions showing some potential evidence of linkage to \gls{T1D}.
 The study confirmed that \gls{T1D} is a polygenic disease and that furthermore, there are unlikely to exist other loci with as strong an effect as HLA.
 
 More recently, \Glspl{GWAS} using high density \gls{SNP} arrays,
@@ -216,13 +215,13 @@ have confirmed strong association of T1D within the \gls{HLA} (chromosome 6p21) 
 and reported 50 other loci, including regions near
 \gene{CTLA4} (chromosome 2q33), \gene{PTPN22} (chromosome 1p13), \gene{IL2RA} (chromosome 10p15)
 and \gene{IFIH1} (chromosome 2q24) \citep{Nejentsev:2007dv,Burton:2007hta,Barrett:2009jq}.
-A comprehensive and updated list of all T1D associated loci found so far is maintained on the T1DBase website (\url{www.t1dbase.org}).
-
 Within the HLA region, the strongest effect comes from the HLA class II loci, \gene{HLA-DRB1} and \gene{HLA-DQB1},
 but, there is evidence for a second independent effect from the HLA class I loci,
 involving HLA-A and HLA-B alleles \citep{Nejentsev:2007dv,Howson:2009bl}. 
-Notably, \citet{Nejentsev:2007dv} found association at the functionally important HLA-Bw4/Bw6 epitope which motivated work in \Cref{chapter:kir}
-due to its interaction with \glsdesc{KIR} molecules.
+A comprehensive and updated list of all T1D associated loci found so far is maintained on the T1DBase website (\url{www.t1dbase.org}).
+
+%Notably, \citet{Nejentsev:2007dv} found association at the functionally important HLA-Bw4/Bw6 epitope which motivated work in \Cref{chapter:kir}
+%due to its interaction with \glsdesc{KIR} molecules.
 
 
 %IL2RA codes for the alpha chain of the IL2 cytokine receptor (better known as CD25), are situated outside of the HLA region.
@@ -274,7 +273,7 @@ due to its interaction with \glsdesc{KIR} molecules.
 %Genetic risk variants which are significantly associated with T1D have been identified by comparing their frequency in cases and in suitably matched controls.
 %The next step is to understand why these variants are more frequent in cases.  
 %However between genetic variation (e.g SNPs or copy number variation) and the disease, lies a convoluted network of regulatory genes, RNA, protein expression and environmental factors, so that all but the strongest effects might be obfuscated.  
-Many of these T1D-associated genetic variants, are located in proximity to genes and regions with known immune function such as HLA and \gene{IL2RA},
+Many of the reported T1D-associated genetic variants, are located in proximity to genes and regions with known immune function such as HLA and \gene{IL2RA},
 which code for receptors found at the surface of immune cells.
 %HLA class II genes code for membrane-bound proteins which expose extra-cellular antigens to T cells,
 %it is hypothesized that they may play a role in the insulin presentation pathway.  
@@ -295,12 +294,12 @@ at which point they mainly differentiate into effector T cells, capable of mount
 but also into longer-lived memory T cells, capable of mounting a stronger and faster response in the future thus
 resulting in long lasting immunity against this pathogen (acquired immunity).
 In order to moderate the scale of the immune response and preserve self-tolerance, some T cells also have a regulatory function on the immune response
-mediated using small signalling molecules known as cytokines (for example \cytokine{IL-2}).
-These regulatory T cells are important in preventing auto-immunity and hence are the object of intense scrutiny in T1D.
+mediated using small signalling molecules known as cytokines (for example \acrfull{IL-2}).
+These regulatory T cells are important in preventing auto-immunity and hence are the object of thorough study in T1D.
 
 Some insight into the aetiology of T1D may be gained by seeing how T1D associated variants correlate with quantitative cell phenotypes such as, 
 ratios of different cell types or mean expression of surface proteins.
-For example, \citet{Dendrou:2009dv} showed that, T1D risk variants risk loci which in the proximity of the protein coding gene \gene{IL2RA},
+For example, \citet{Dendrou:2009dv} showed that, T1D risk variants risk loci in the proximity of the protein coding gene \gene{IL2RA},
 correlate with decreased mean expression of CD25 on the surface of memory T cells.
 %This could be the mechanism by which T1D risk is increased since lower CD25 on memory T cells could reduce the immune tolerance.
 Understanding the influence of these genetic variants on intermediate cell phenotypes can shed light on the cell mechansism which lead to T1D.
@@ -365,7 +364,7 @@ Flow cytometry allows us to identify and quantify different types of cells, thro
 
 \paragraph{The flow cytometer}
 Fluorescence intensity is measured accurately using photosensitive detectors, normally a photomultiplier tube (PMT), which turn light into an analogue (current or voltage)
-or digital (photon counting) electronic signal which is later translated into a digital number indicating the intensity of the fluorescence \citep{Shapiro:2003vq,Snow:2004ci}.
+or digital (photon counting) electronic signal which is translated into a digital number indicating the intensity of the fluorescence \citep{Shapiro:2003vq,Snow:2004ci}.
 For a fluorochrome to emit fluorescent light, it needs to have absorbed high energy light of a given wavelength from an illumination source, usually from a laser, which it can then release at a lower energy, longer wavelength, resulting in a so-called Stokes shift.
 The wavelength spectrum at which a given fluorochrome most efficiently absorbs and emits light and Stokes shift are known and depend on the physico-chemical properties of that molecule.
 To enable optical illumination, separation and collection of various fluorochromes with different emission and excitation spectra, a flow cytometer is usually equipped with several lasers which emit at different wavelengths and specially configured optical mirror, filters and photosensitive detectors which are sensitive to light at distinct frequency ranges \citep{Shapiro:2003vq}.
@@ -414,7 +413,7 @@ The deconvolution of this signal is a process known as compensation.
 The matrix solution is known as the spillover matrix and is usually a square matrix with as many rows as there are fluorochromes and columns as there are detectors.
 %if there as many dyes as there are detectors 
 To calculate the spillover matrix, single coloured beads are used. 
-The pairwise contribution of a fluorochrome to a non-specific channel is then summarised in a compensation matrix (\Cref{table:spillover}).
+The pairwise contribution of a fluorochrome to a non-specific channel is then summarised as a compensation matrix (\Cref{table:spillover}).
 %To account and correct for this, the overlap needs to be assessed by evaluating the pairwise contribution of the signal of one fluorochrome to that of an other.
 %These pairwise values can then be summarised in what is known as a spillover or compensation matrix (Table\ref{table:spillover}).
 %This phenomenon is known as spectral spillover.
@@ -508,7 +507,7 @@ to loss of information (\Cref{figure:fcs2-fcs3}).
     \caption{ FCS 3 }
 \end{subfigure} 
 \mycaption{figure:fcs2-fcs3}
-  {FCS2 vs FCS3}
+  {The same data encoded in FCS2 (a) and FCS3 (b).}
   {
     %FCS 2 truncates intensity values at zero while FCS 3 allows for negative intensities.
     In FCS 2 (a), truncation at zero leads to loss of low intensity clusters as compared to FCS 3 (b).
@@ -525,7 +524,7 @@ with data on a linear scale.
 Given FCS 2 data is strictly positive, a simple $\log_{10}$ transform is usually applied to linearise the data.
 As FCS 3 allows for negative values a different transform is required.
 Transforms which are closer to linear near zero are preferred, 
-since the logarithmic transform is distorting (as illustrated in \Cref{figure:log10-deform})
+since the logarithmic transform is distorting (\Cref{figure:log10-deform})
 for low intensity values \citep{Durbin:2002tj,Tung:2006uw}.
 \begin{figure}
 \centering
@@ -688,21 +687,22 @@ It is also possible to use reference points to normalise across samples
 %without making global distributional assumptions,
 by using local features of the distribution or objects with known properties, such as beads in flow cytometry or reference probes in microarrays.
 %These features can also be added to the sample, commonly known as spike-ins, or
-In microarray, data quantile normalisation works well because the shape of the distributions are similar enough across samples \citep{Bolstad:2003ia}.
-However in flow cytometry, this approach is not appropriate because samples contain different number of events and 
-the distributions are multimodal, as commonly found in datasets containing mixtures of groups.
+In microarray, since the number of data points is constant and the distributions are unimodal across samples,
+normalisation methods like quantile normalisation perform well \citep{Bolstad:2003ia}.
+However in flow cytometry, this type of normalisation is not appropriate because samples contain different number of events and 
+the distributions are typically multimodal, as commonly found in datasets containing mixtures of groups.
 %The modes of the distributions or peaks of the density function, represent the average protein quantity carried on the surface of different cell types.
 While in theory, the locations of these modes or peaks of the density function should remain fairly stable across samples provided experimental parameters are kept constant,
 in practise there is often variation attributed to factors which are beyond our control such as long-term instrument decalibration.
 On the other hand, the height of the peaks, the relative frequencies of the cell populations, are expected to change since they are
-are susceptible to sampling variation.
+are sensitive to sampling variation.
 %In the case of qPCR data, the groups are representative of the copy numbers.
 %and cells cannot be matched across samples in the way microarray probes are.  
 %If the features are modes in the data, then normalisation is equivalent to doing clustering, in order to identify modes, followed by meta-clustering to match the modes across samples.
 %While these methods have been successfully applied to microarray data, they are not generally applicable to multimodal univariate distributions commonly found in datasets containing mixtures of groups.
-In such a scenario, a reasonable normalisation method is to align the peaks of the distributions so that different cell populations are centered
+These observations motivate a normalisation method which aligns the peaks of the distributions so that cell populations are centered
 in a similar location across samples even when their relative proportions changes.
-The implementation of this normalisation method then depends on the method used to identify and match the peaks across samples.
+The implementation of this normalisation method then depends on the technique used to identify and match the peaks across samples.
 %The ideal scenario is when the number of peaks is known and constant across samples.
 %More flexible peak searching algorithms are required to allow for this per sample-variation.
 One method of identifying peaks of the density function is with a sliding window approach.
@@ -711,7 +711,8 @@ returns a list of highest density points of which the top K may be chosen.
 This is one of the approaches implemented in the \BioConductor{flowStats}.
 \Cref{figure:normalisation-peaks} illustrates this method on real flow data where two common groups stand out and are reasonably well separated.
 Unfortunately, peaks are not always consistently identifiable across samples.
-In these cases, it may be preferable to only identify the most distinguishable subset of peaks, those representative of the most common groups.
+In these cases, it may be preferable to only identify the most distinguishable subset of peaks, those representative of the most common groups,
+in order to do the alignment.
 %This is the case when dealing with synthetic data such as beads.
 %In this scenario, basic clustering algorithms as covered in the next section, can be applied to identify the peaks in each sample.
 %This is the method which I have developed in the \Rpackage{flowBeads} BioConductor package which identifies bead populations with the K-medoids algorithm
@@ -862,7 +863,7 @@ Manual gating introduces further technical variation since the position of the g
 on the same data can differ between gaters \citep{Maecker:2010fg}.
 %This provides motivation for considering more efficient and unbiased alternative methods of doing the gating.
 It suffers from strong bias as it tends to force data to fit a model (the gater's expectation).
-Finally, manual gating is not feasible when an exhaustive enumeration of all identifiable cell populations is required \citep{Siebert:2010iv,Aghaeepour:2012fq} especially
+Finally, manual gating is not practical when an exhaustive enumeration of all identifiable cell populations is required \citep{Siebert:2010iv,Aghaeepour:2012fq} especially
 as the number of cellular markers increases.
 For this, unsupervised computational methods, which do not rely on visualisation, are essential.
 
@@ -872,7 +873,7 @@ For this, unsupervised computational methods, which do not rely on visualisation
 Automatic flow data analysis methods have been reviewed by \citet{Bashashati:2009em}, \citet{Lugli:2010ki},
 and, more recently, by \citet{Aghaeepour:2013dg}.
 %\citeauthor{Lugli:2010ki} suggest looking at NMF.
-They are benchmarked annually by the FlowCAP (Flow Cytometry Critical Assessment of Population Identification Methods)
+They are benchmarked annually by the \gls{FlowCAP} 
 group and broadly fall in two camps:
 %The outcome of FlowCAP is that ensemble methods (boosting approaches) might be the way forward.  
 %cell population identification methods
@@ -893,8 +894,9 @@ number of clusters.
 \subsection{Model-based methods}
 
 Model-based methods stipulate that flow data can be explained by a mixture of multivariate distributions where each distribution is representative of a different type of cell.
-A nice feature of these methods is that they can assign a probability of population membership to each cell which can be exploited in downstream statistical analysis to account for uncertainty in the clustering.
-The first and simplest of these methods assumed cell populations could be represented by a mixture of $K$ multivariate Gaussians \citep{Chan:2008gq}:
+A nice property of these methods is that they can assign a probability of population membership to each cell which can be exploited in downstream statistical analysis to account for uncertainty in the clustering.
+The first and simplest of these methods applied to flow cytometry data \citep{Chan:2008gq}, assumed cell populations could be represented by
+a \acrfull{GMM} of $K$ multivariate Gaussians:
 
 \[
 p(x_i) = \sum_{k=1}^K\tau_k \frac{1}{\sqrt{(2\pi)^2|\boldsymbol\Sigma_k|}}
@@ -902,17 +904,19 @@ e^{-\frac{1}{2}({\mathbf x_i}-{\boldsymbol\mu_k})^T{\boldsymbol\Sigma_k}^{-1}({\
 }; \quad \sum_{k=1}^K\tau_k = 1
 \]
 
-where $x_i$ is the coordinate of the i$^th$ cell observed and the parameters, $\boldsymbol\mu_k$, $\boldsymbol\Sigma_k$ and $\boldsymbol\tau_k$,
-correspond to the cluster mean, covariance and weight, respectively, and $k$ indexes the clusters $1 \cdots K$.
-Assuming the data are identically and independently distributed, we can attempt to maximise the joint probability, or likelihood,
-of observing the data given the model:
+where $x_i$ are the coordinates of the i$^{th}$ cell in a data set of size $N$.
+The parameters, $\boldsymbol\mu_k$, $\boldsymbol\Sigma_k$ and $\tau_k$,
+correspond to the cluster mean, covariance and weight, respectively, and $k$ indexes the clusters from $1$ to $K$.
+Assuming the data are identically and independently distributed, we can attempt to estimate
+the parameter $\theta$, representing the sets of $(\mu, \Sigma, \tau)$, which maximises the joint probability,
+or likelihood function, of observing the data given the model:
 %Given $\theta$, the likelihood $P(X|\theta) \propto $  density function:
 
 \[
 \mathcal{L}(\theta |X) = \prod_{i=1}^N p(x_i|\theta).
 \]
 
-where $\theta$ represents the sets of $(\mu, \Sigma, \tau)$.
+
 %the probability density $p(x_i|\theta)$ of the \gls{GMM} at each data point $x_i$, can be computed.
 As products of small numbers are hard to deal with analytically and are numerically unstable,
 this is more commonly done by maximising the logarithm of the likelihood:
@@ -929,13 +933,15 @@ There are also regions of the parameter space which need to be avoided.
 For example, the likelihood function can be made arbitrarily large if the variance of one of the clusters is allowed to shrink to zero.
 %One pitfall of these methods is that the objective landscape may contain many local minimum or maximums 
 To safeguard from these situations,
-some guidance can be provided by picking sensible starting conditions or by fixing hard boundaries on the parameter space.
+some guidance can be provided by picking sensible starting conditions or by setting hard boundaries on the parameter space.
 Another softer approach is to weight parameter updates with a distribution.
 This approach is also called regularisation.
-Regularisation can be achieved using a prior probability density function on the parameters as implemented in the \Rpackage{mclust}.
+Regularisation can be achieved using a prior probability density function on the parameters as implemented in the \Rpackage{mclust}
+and the \BioConductor{flowClust}.
 
 
-One drawback of the \gls{GMM} is that it tends to overestimate the number of multivariate Gaussians which best models the data since outliers which are in the tails of the distributions
+One drawback of the \gls{GMM} is that it tends to overestimate the number of multivariate Gaussians which best models the data since outliers
+which are in the tails of the distributions
 are explained by new low mixture distributions, increasing the number of reported cell populations.
 To account for this, Flowclust replaces Gaussians by
 %more robust heavy tailed 
@@ -967,7 +973,7 @@ although the parameter estimation is usually implicit.
 They typically use local estimates of density or distance to identify clusters of points.
 %Distance is a more suitable metric when $N \ll P$ and density when $N \gg P$.
 Perhaps the oldest and most popular of the model-free methods, due to its simplicity and speed, is the K-means algorithm \citep{MacQueen:1967uv}.
-K-means attempts to minimise the overall sum of within-cluster sum of squares as its objective function:
+K-means attempts to minimise the total within-cluster sum of squares as its objective function:
 \begin{equation}
 \label{equation:ssw}
 SS_{w} = \sum_{k=1}^{K} \sum_{\mathbf x_i \in S_k} ( \mathbf x_i - \boldsymbol\mu_k )^2 ; \quad \boldsymbol\mu_k=\text{E}(x_i| x_i \in S_k)
@@ -983,11 +989,10 @@ Then for each iteration:
 The algorithm terminates when no cluster mean changes, or equivalently when the cluster assignment does not change.
 
 However, it can be shown that certain so called non-parametric methods turn out to be limiting cases of parametric methods.
-For example K-means, is a limiting case of spherical \glspl{GMM} when the covariance tends to zero.
+For example K-means, is a limiting case of spherical \glspl{GMM} when the covariance tends to zero
 %(see \Cref{appendix:clustering} for derivation),
 because maximising the log-likelihood of a multivariate Gaussian is asymptotically equivalent to minimising the residual sum of squares (\Cref{figure:gmm-variance}).
 %The exponential weighted responsibility between 0 and 1 turns into a 0-1 assignment because as sigma -> 0 then expr( -x**2 / sigma ) 
-
 \myfigure{scale=0.6}{gmm-variance}
 { Effect of shrinking variance in a two compnent \gls{GMM} on the decision boundary. }
 {
@@ -996,18 +1001,18 @@ because maximising the log-likelihood of a multivariate Gaussian is asymptotical
   As the variance of the two Gaussian components shrinks, the soft decision boundary approaches the hard K-means decision boundary, so that we go from
   a soft probabilistic assignment to a hard binary assignment. 
 }
-
-
 %However when spillover occurs the correlation has no biological meaning but the correlation can still be used to identify clusters.
 %The correlation within clusters is different than the overall correlation.
 %of tightly connected points.
-There are numerous clustering methods which rely on density estimation.
-Possibly the most famous is Density Based Merging (DBM) which uses a region growing density approach so that points of high density are linked \citep{Walther:2009gn}.
-Flow Clustering without K (FLOCK) relies on grid based density estimation in higher dimensions \citep{Qian:2010ep}.
-Misty Mountain takes decreasing cross sections of the two dimensional density histogram so that clusters are progressively merged as the threshold decreases \citep{Sugar:2010jf}.
+There are numerous clustering methods which rely on density estimation:
+\begin{itemize}
+  \item Density Based Merging (DBM) uses a region growing density approach so that points of high density are linked \citep{Walther:2009gn}.
+  \item Flow Clustering without K (FLOCK) relies on grid based density estimation in higher dimensions \citep{Qian:2010ep}.
+  \item Misty Mountain takes decreasing cross sections of the two dimensional density histogram so that clusters are progressively merged as the threshold decreases \citep{Sugar:2010jf}.
 %However when applied to flow cytometry data, this approach cannot distinguish rare cell populations in close proximity from bigger cell populations and is limited to two dimensions.
-CurvHDR (negative Curvature and High Density Region) identifies regions of significant curvature in the multivariate density function,
+  \item CurvHDR (negative Curvature and High Density Region) identifies regions of significant curvature in the multivariate density function,
 by using a bandwidth rather than the number of bins, but cannot be applied beyond four dimensions \citep{Naumann:2010fp}.
+\end{itemize}
 All these density based approaches require the number of bins or the bandwidth to be specified by the user or estimated from the data according to some heuristic.
 Care needs to be taken when selecting an appropriate bin or bandwidth to avoid under or over smoothing of the data.
 For example, smaller numbers of bins or equivalently larger bandwidths, lead to overestimation of the density in low density regions and underestimation in high density regions.
@@ -1023,8 +1028,8 @@ fast methods like K-means, which do not rely on the computation of the entire di
 %Given an initial set of cluster means, which may be user-defined or selected at random, points are then assigned to the cluster.
 %After the assignment, the cluster centers are recomputed, and again points are re-assigned to whichever cluster ce
 For example, flowMeans is an extension to K-means for flow cytometry \citep{Aghaeepour:2010fv}.
-However K-means is known to be very sensitive to starting conditions and is also not robust to outliers.
-This implies that small changes in the data can lead to very different clustering solutions.
+Unfortunately, K-means is known to be very sensitive to starting conditions and is also not robust to outliers,
+so small changes in the data can lead to very different clustering solutions.
 %a high variance method because small changes in the data can lead to very different clustering solutions.  
 These shortcomings are addressed by a related but slower algorithm: K-medoids.
 Instead of using the cluster means, K-medoids updates the cluster medoids.
@@ -1047,17 +1052,17 @@ Then for each iteration:
 The algorithm terminates when no cluster medoid changes.
 The algorithm is reasonably fast but can be slower for larger datasets due to the first step of calculating the complete distance matrix.
 For sufficiently large $N$, the size of the distance matrix may be prohibitive and too large for memory.
-Therefore this version of the algorithm may not scale to large $N$ as well as K-means. 
+Therefore this version of the algorithm may not scale with large $N$ as well as K-means. 
 This performance issue can be ameliorated by clustering subsets of the data and combining the results.
+Points which were not selected in the subsampling can be assigned to the closest cluster. 
 This is the approach implemented by the \Rfunction{clara} (Clustering Large Application) in the \Rpackage{cluster}.
 
-In fact, the computational technique of subsampling or downsampling, to reduce the total number of points by randomly selecting a subset of the data,
-is essential for computation of the pairwise distance matrix in larger datasets.
-This technique can also be used for obtaining some initial clustering estimate or to initialise parameters.
+%In fact, the computational technique of subsampling or downsampling, to reduce the total number of points by randomly selecting a subset of the data,
+%is essential for computation of the pairwise distance matrix in larger datasets.
+%This technique can also be used for obtaining some initial clustering estimate or to initialise parameters.
 %Repeated subsampling is in fact a very popular technique for bootstrap aggregation (bagging)
-Also subsampling can be repeated without replacement to split the dataset into subsets on which clustering can be run in parallel
-followed by consensus clustering to merge the results.
-Points which were not selected in the subsampling can then be assigned to the closest cluster. 
+%Also subsampling can be repeated without replacement to split the dataset into subsets on which clustering can be run in parallel
+%followed by consensus clustering to merge the results.
 
 %$N$ when $N$ is large.
 If subsamping is used only once to reduce the number of datapoints then 
@@ -1075,6 +1080,7 @@ and the parameters tend to be dataset specific.
 %These methods return a clustering of the data but do no estimate any parameters from the data.
 %They are also reliant on parameters tuned to a specific dataset, which complicates comparison of clustering results across datasets.
 Furthermore, these parameters do not necessarily have an intuitive interpretation or biological significance which makes setting their value hard to justify.
+%Local parameters are hard to interpret, we prefer global parameters such as total number of clusters.
 %These methods run the risk of overfitting or tweaking the parameters till the results look ``right''.
 %Chosing an appropriate parameter relies on some heuristic and the choice of parameter is particular sensitive to the size and dimensions of the dataset.
 %For example, they may represent local parameters such as bandwidth, or the minimum separation distance between points for DBM
@@ -1111,7 +1117,7 @@ and accuracy, in supervised clustering, or some other metric like variance expla
 
 One way of estimating the expected number of clusters, is to find modes in the data: regions of significantly high density \citep{Duong:2008eu,JING:2012ek}.
 %But this is difficult because modes are hard to identify in higher dimensions.
-An alternative brute force approach is to cluster at increasing number of clusters 
+An alternative brute force approach is to cluster for increasing numbers of clusters 
 and to pick the cluster value which optimises some criterion, such as the Gap statistic \citep{Tibshirani:2001fj}
 or the variance-ratio criterion \citep{Calinski:1974bt}.
 These clustering metrics are usually derived from the ratio of the between-cluster sum-of-squares (variance explained by the model)
@@ -1122,7 +1128,7 @@ For example, the variance-ratio criterion as defined by \citet{Calinski:1974bt},
   \text{VRC} = \frac{SS_{b}/(k-1)}{SS_{w}/(n-k)}
 \]
 
-where $SS_{w}$ is the total within-sum-of-squares (\Cref{equation:ssw}) and $SS_{b}$ is:
+where $SS_{w}$ is the total within-sum-of-squares (\Cref{equation:ssw}) and $SS_{b}$, the total between-sum-of-squares, is defined as:
 
 \[
    SS_{b} = SS_{t} - SS_{w}
@@ -1136,9 +1142,8 @@ where $SS_{t}$ is the total sum-of-squares:
 
 \citeauthor{Calinski:1974bt}  note that the variance-ratio criterion relates to
 %the $R^2$ ratio in 
-to the \gls{ANOVA} F-test,
-since the between-cluster variance is the variance explained by the model
-and the within-cluster variance is the remaining variance.
+to the \gls{ANOVA} F-test.
+%since the between-cluster variance is the variance explained by the model and the within-cluster variance is the remaining variance.
 \Cref{figure:variance-ratio-criterion} illustrates that the performance of this metric in predicting the number of clusters
 is very much dependent on the inherent noise in the data.
 
@@ -1244,9 +1249,6 @@ The \gls{BIC} is used by the \Rpackage{mclust} to find the optimal number of par
 %
 
 %\paragraph{ Distance is a more suitable metric when  and density when $N \gg P$. }
-
-%wikipedia
-
 
 %\paragraph{Density Estimation}
 %

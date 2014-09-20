@@ -81,7 +81,8 @@
 % ********************************** Preamble **********************************
 % Preamble: Contains packages and user-defined commands and settings
 \input{common/official-preamble}
-%\usepackage{biblatex} 
+%incompatible with natbib
+%\usepackage[style=authoryear,natbib=true]{biblatex} 
 %\input{common/preamble}
 
 % ************************ Thesis Information & Meta-data **********************
@@ -126,10 +127,16 @@
 \end{figure}
 }
 
-
-
 %
 \newcommand{\pct}[1]{\SI{#1}{\percent}}
+
+% citejournal comand requires biblatex to work (biblatex is incompatible with natbib which is what i'm using)
+%\DeclareCiteCommand{\citejournal}
+  %{\usebibmacro{prenote}}
+  %{\usebibmacro{citeindex}%
+    %\usebibmacro{journal}}
+  %{\multicitedelim}
+  %{\usebibmacro{postnote}}
 
 %make indexes
 \makeindex{contributors}
@@ -139,6 +146,7 @@
 
 %make glossaries
 \makeglossaries
+\renewcommand*\glspostdescription{\dotfill}
 
 % \usepackage{setspace}
 % \setlength{\parindent}{0in} 
@@ -197,6 +205,15 @@
 \printindex{contributors}{Contributors}
 %\input{lexicon}
 
+%\renewcommand*{\glossarypreamble}{%
+  %\label{\currentglossary}%
+%}
+%\renewcommand{\glsnumberformat}[1]{ page #1 }
+ %(\ifthenelse{\DTLisSubString{#1}{\delimN}\OR\DTLisSubString{#1}{\delimR}}%
+  %{pages #1}{page #1})}
+
+
+\printglossary[type=\acronymtype]
 
 % ******************************** Main Matter *********************************
 \mainmatter
@@ -208,13 +225,13 @@
 \input{IL2RA/il2ra.tex}
 
 % Chapter
-%\input{IL2/il2.tex}
+\input{IL2/il2.tex}
 
 % Chapter
-%\input{KIR/kir.tex} 
+\input{KIR/kir.tex} 
 
 % Chapter
-%\input{discussion}
+\input{discussion}
 
 % ********************************** Appendices ********************************
 \begin{appendices} % Using appendices environment for more functionality 
@@ -228,8 +245,8 @@
 %\input{Appendix/fcsdataformat} 
 %\input{Appendix/compensation} 
 %\input{Appendix/transformation}
-\input{Appendix/normalisation}
-\input{Appendix/clustering}
+%\input{Appendix/normalisation}
+%\input{Appendix/clustering}
 \input{Appendix/flow} 
 %\chapter{ Normalisation of fluorescence intensity using beads }
 %\input{IL2RA/beads.tex} 
@@ -239,7 +256,6 @@
 
 
 
-\printglossary[type=\acronymtype]
 \fancyhf{}
 \printindex{genes}{Genes}
 \fancyhf{}
