@@ -212,8 +212,14 @@
  %(\ifthenelse{\DTLisSubString{#1}{\delimN}\OR\DTLisSubString{#1}{\delimR}}%
   %{pages #1}{page #1})}
 
-
 \printglossary[type=\acronymtype]
+\fancyhf{}
+\printindex{genes}{Genes}
+\fancyhf{}
+\printindex{snps}{SNPs}
+\fancyhf{}
+\printindex{proteins}{Proteins}
+
 
 % ******************************** Main Matter *********************************
 \mainmatter
@@ -254,14 +260,6 @@
 %\input{Appendix/maths} 
 \end{appendices}
 
-
-
-\fancyhf{}
-\printindex{genes}{Genes}
-\fancyhf{}
-\printindex{snps}{SNPs}
-\fancyhf{}
-\printindex{proteins}{Proteins}
 
 %\newpage
 
