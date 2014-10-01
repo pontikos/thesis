@@ -95,6 +95,6 @@ cp thesis.pdf ~/GoogleDrive/PhD/Thesis/
 GoogleDriveLinks
 clean
 build
-copyToGoogleDrive
+#copyToGoogleDrive
 
 
