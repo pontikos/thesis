@@ -4,13 +4,15 @@
 \chapter[KIR3DL1/KIR3DS1 copy number variation in type 1 diabetes]{ \label{chapter:kir} \protect\gene{KIR3DL1}/\protect\gene{KIR3DS1} copy number variation in type 1 diabetes }
 
 
-In \Cref{chapter:il2ra} and \Cref{chapter:il2}, I have identified cell populations in flow cytometry using normalisation and clustering methods.
+In \Cref{chapter:il2ra} and \Cref{chapter:il2}, I have identified and analysed cell populations in flow cytometry using normalisation and clustering methods.
 Of the clustering methods I have applied, mixture-model clustering proved to be particularly useful in dealing with noise.
 As discussed, one of the benefits of mixture-model approach are the posterior probabilities which can be used in downstream statistical analysis.
-So far, I have not made full use of this feature in the association tests, partly because the number of cells is large.
-However, as we deal with smaller datasets, the uncertainty in clustering can be benefitial.
+So far, I have not made full use of this feature in the association tests, partly because the number of cells is large and so unlikely to have
+a significant effect on the association statistics.
+%and so the posterior probability instead
+However, as we deal with smaller datasets, the uncertainty in clustering can have an important impact on the association statistics.
 %Hard clustering is more bias-prone
-Now I will apply these methods to a different kind of dataset, qPCR.
+In this chapter, I will apply normalisation and mixture model clustering to a much smaller genetic dataset.
 %SNP arrays only target common variants ($MAF > 5\%$) and
 %we know that many regions of the genome have been neglected by SNP arrays as they are poorly mapped on the reference genome.
 %Such a region is \gls{KIR} which will be 
@@ -969,7 +971,7 @@ Study           & 2DS3        & 2DS4        & 2DS5        & 3DL1        & 3DL2  
 {Proportion of cases to controls in all known \gls{KIR} studies in T1D.}
 {
   Study $14$ is the study presented in this chapter.
-  Cells highlighted in gray are the ones which report a significant association.
+  Table cells highlighted in gray are the ones which report a significant association.
 }
 \end{table}
 
@@ -1025,7 +1027,7 @@ Study           & 2DS3        & 2DS4        & 2DS5        & 3DL1        & 3DL2  
 {
 \gls{KIR} studies in \gls{T1D}. Study $14$ is the study presented in this chapter.
 The case-control ratio is given per \gls{KIR} gene.
-Cells highlighted in gray are the ones which report a significant association.
+Table cells highlighted in gray are the ones which report a significant association.
 }
 \end{sidewaystable}
 
@@ -1207,7 +1209,7 @@ variation and sequence complexity as KIR, in order to leverage existing SNP data
     \centering
         \includegraphics[scale=.5] {KIR/figures/method-flowchart.pdf}
 \mycaption{Figure-S4}
-{Flow chart summarising the key steps involved in the KNN imputation of \gene{KIR3DL1}/\gene{KIR3DS1} copy numner in SNP data
+{Flow chart summarising the key steps involved in the KNN imputation of \gene{KIR3DL1}/\gene{KIR3DS1} copy number in SNP data
 ($R$ and $\theta$ signal) from qPCR copy number predictions obtained from GMM clustering.}
 {
 \Glspl{GMM} clustering of the qPCR data assigns to each sample a posterior probability of belonging to each \gls{CN} group.

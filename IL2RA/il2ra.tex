@@ -932,11 +932,11 @@ In this chapter, I have shown that bead data is readily gated by automatic metho
 Automatic gating of bead data is fast and automates other related tasks such as MFI to MEF transformation, and threshold selection.
 %and reporting of instrument properties such as the detection threshold or the signal-to-noise ratio (or coefficient of variation).
 
-Gating of biological data is more difficult as we have little prior knowledge of the sample we are analysing.
+Gating of biological data is more difficult as we have little prior knowledge of the sample we are analysing and the data is far more noisy.
 So far, I have developed two automatic univariate gating strategies:
 \begin{itemise}
 \item a bead defined threshold method on \protein{CD25} to identify CD25\positive naive cells
-\item a two component mixture model on \protein{CD45RA} to identify memory cells (CD45RA-)
+\item a two component mixture model on \protein{CD45RA} to identify memory cells (CD45RA\negative)
 \end{itemise}
 
 My \protein{CD25} univariate gating method (\texttt{beads.thresh}) relies on defining a threshold based on automatically gated bead data.
@@ -948,7 +948,7 @@ whereas the manual approach, relies on isotype controls and allows for different
 Isotype controls should theoretically be an estimate of background but have been criticised for being an extra source of noise \citep{OGorman:1999vd,Maecker:2006ft}.
 
 My \protein{CD45RA} univariate gating method fits a specific model to the data: a mixture of two univariate distributions.
-The parameters of the model are estimated using an \Gls{EM} algorithm \citep{Dempster:1977ul} initialised with K-medoids (\Cref{appendix:clustering}).
+The parameters of the model are estimated using an \Gls{EM} algorithm \citep{Dempster:1977ul} initialised with K-medoids.
 
 In a first instance, I used the parameters estimated by the two-component mixture model.
 Specifically, I used the weight parameter of the first component as the percentage of memory cells phenotype.
@@ -959,7 +959,7 @@ cells should be excluded.
 Therefore, in the second instance, I attempted to emulate manual gating by defining a threshold.
 I tried two approaches of defining a threshold, \texttt{pct.thresh} which thresholds on the percentile of the first component of the fitted mixture model,
 and \texttt{post.thresh} which thresholds instead on the posterior probability of the first component.
-As with the \texttt{beads.thresh}, the value of the threshold is selected as the value which mimimises the mean squared difference with manual gate positions.
+As with the \texttt{beads.thresh}, the value of the threshold is selected as the value which mimimises the \gls{MSD} with manual gate positions.
 %In the future it may be interesting to use all cells and average over the posterior probabilities.
 %I have found however that there is sometimes an upper bound to the posterior probability
 %However, if the model does not fit the data then it is unlikely that the position of the gate will be sensible, which may give rise to outliers.
