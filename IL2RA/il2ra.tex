@@ -932,11 +932,11 @@ In this chapter, I have shown that bead data is readily gated by automatic metho
 Automatic gating of bead data is fast and automates other related tasks such as MFI to MEF transformation, and threshold selection.
 %and reporting of instrument properties such as the detection threshold or the signal-to-noise ratio (or coefficient of variation).
 
-Gating of biological data is more difficult as we have little prior knowledge of the sample we are analysing.
+Gating of biological data is more difficult as we have little prior knowledge of the sample we are analysing and the data is far more noisy.
 So far, I have developed two automatic univariate gating strategies:
 \begin{itemise}
 \item a bead defined threshold method on \protein{CD25} to identify CD25\positive naive cells
-\item a two component mixture model on \protein{CD45RA} to identify memory cells (CD45RA-)
+\item a two component mixture model on \protein{CD45RA} to identify memory cells (CD45RA\negative)
 \end{itemise}
 
 My \protein{CD25} univariate gating method (\texttt{beads.thresh}) relies on defining a threshold based on automatically gated bead data.
@@ -948,7 +948,7 @@ whereas the manual approach, relies on isotype controls and allows for different
 Isotype controls should theoretically be an estimate of background but have been criticised for being an extra source of noise \citep{OGorman:1999vd,Maecker:2006ft}.
 
 My \protein{CD45RA} univariate gating method fits a specific model to the data: a mixture of two univariate distributions.
-The parameters of the model are estimated using an \Gls{EM} algorithm \citep{Dempster:1977ul} initialised with K-medoids (\Cref{appendix:clustering}).
+The parameters of the model are estimated using an \Gls{EM} algorithm \citep{Dempster:1977ul} initialised with K-medoids.
 
 In a first instance, I used the parameters estimated by the two-component mixture model.
 Specifically, I used the weight parameter of the first component as the percentage of memory cells phenotype.
@@ -959,7 +959,7 @@ cells should be excluded.
 Therefore, in the second instance, I attempted to emulate manual gating by defining a threshold.
 I tried two approaches of defining a threshold, \texttt{pct.thresh} which thresholds on the percentile of the first component of the fitted mixture model,
 and \texttt{post.thresh} which thresholds instead on the posterior probability of the first component.
-As with the \texttt{beads.thresh}, the value of the threshold is selected as the value which mimimises the mean squared difference with manual gate positions.
+As with the \texttt{beads.thresh}, the value of the threshold is selected as the value which mimimises the \gls{MSD} with manual gate positions.
 %In the future it may be interesting to use all cells and average over the posterior probabilities.
 %I have found however that there is sometimes an upper bound to the posterior probability
 %However, if the model does not fit the data then it is unlikely that the position of the gate will be sensible, which may give rise to outliers.
@@ -982,22 +982,22 @@ When testing for association with genotype, outlier cell phenotypes from rarer v
 Hence, if we are to deploy automatic gating techniques more generally, detection of outliers is crucial, to avoid false positive associations.
 In particular, we require outlier detection metrics which do not only rely on the availability of repeated samples or manual gates.
 Already, we have seen that looking at the maximum posterior probability in a sample can give us some insight (\Cref{figure:cd45ra-posterior-threshold-fail}).
-Another metric of evaluating how well a model fits the data could be a cost function like the Mean Integrated Squared Error (MISE).
-I will expound on other outlier metrics in later chapters.
+Another metric of evaluating how well a model fits the data could be a cost function like the \gls{MISE}.
+I will revisit outlier metrics in the next two chapters.
 
-When outliers have been detected, we may want to exclude or down-weight them, or extend our gating method to account for these.
-One simple way of modifying the method, could be to use the gate positions in non-outlier samples to influence those in outliers.
-This motivates borrowing information from other samples, using for example a hierarchical Bayesian framework as was recently developed by \citet{Cron:2013dh}.
+When outliers have been detected, we may want to exclude or down-weight them, or extend the gating method to account for these.
+One simple way of modifying the method, could be to use the gate positions in non-outlier samples to influence that in outliers.
+This could motivate borrowing information from other samples, using for example a hierarchical Bayesian framework as was recently developed by \citet{Cron:2013dh}.
 
 However, one may argue that this approach, conceals rather than addresses the underlying problem of poor model fit.
 For example, as we see from the trimodal distribution in \Cref{figure:cd45ra-threshold-example},
 it may be more appropriate to fit a three component instead of a two component mixture model on this sample.
 
 So far, MFI to MEF using beads has been automated but there are still many parts of the process left to be automated.
-In later chapters, I will develop a modular pipeline to further automate the analysis of flow cytometry data generated by our lab.
+In the next chapter, I will develop a modular pipeline to further automate the analysis of flow cytometry data generated by our lab.
 It will be possible to plug in different types of transformations and gating strategies and see how this influences
 the results of the analysis.
-This should encourage the wider use of automatic analysis methods for flow data within our lab.
+This should encourage the wider use of automatic analysis methods for flow data.
 
 %Chris points:
 %Manual gating could be applied in a subset of samples and then auto gating could use that info to guide the gating.

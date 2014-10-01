@@ -3,7 +3,22 @@
 
 \chapter[KIR3DL1/KIR3DS1 copy number variation in type 1 diabetes]{ \label{chapter:kir} \protect\gene{KIR3DL1}/\protect\gene{KIR3DS1} copy number variation in type 1 diabetes }
 
-\section{Introduction}
+
+In \Cref{chapter:il2ra} and \Cref{chapter:il2}, I have identified and analysed cell populations in flow cytometry using normalisation and clustering methods.
+Of the clustering methods I have applied, mixture-model clustering proved to be particularly useful in dealing with noise.
+As discussed, one of the benefits of mixture-model approach are the posterior probabilities which can be used in downstream statistical analysis.
+So far, I have not made full use of this feature in the association tests, partly because the number of cells is large and so unlikely to have
+a significant effect on the association statistics.
+%and so the posterior probability instead
+However, as we deal with smaller datasets, the uncertainty in clustering can have an important impact on the association statistics.
+%Hard clustering is more bias-prone
+In this chapter, I will apply normalisation and mixture model clustering to a much smaller genetic dataset.
+%SNP arrays only target common variants ($MAF > 5\%$) and
+%we know that many regions of the genome have been neglected by SNP arrays as they are poorly mapped on the reference genome.
+%Such a region is \gls{KIR} which will be 
+
+
+\section{Background}
 
 \subsection{\Acrlongpl{KIR} and their interaction with \acrlong{HLA} molecules}
 
@@ -609,7 +624,7 @@ rs3826878               & 60069023 & [A/G] & ok          & 2.63E-05 & 3.55E-06 \
   Only 295 samples are required to achieve LOOCV error rates $<5\%$ and 590 for error rates $<2.5\%$. }
 \end{figure}
 
-\section{Association testing of \gene{KIR3DL1}/\gene{KIR3DS1} copy number with T1D}
+\section{Association testing of \emph{KIR3DL1}/\emph{KIR3DS1} copy number with T1D}
 
 In calling copy number states from qPCR data, rare amplifications of three or more copies are harder to classify with certainty than more common copy number states such as zero, one, or two copies.
 This is mainly because copy numbers higher than two are rare but also because the $\Delta$Ct difference between successive higher copy numbers shrinks logarithmically.
@@ -956,7 +971,7 @@ Study           & 2DS3        & 2DS4        & 2DS5        & 3DL1        & 3DL2  
 {Proportion of cases to controls in all known \gls{KIR} studies in T1D.}
 {
   Study $14$ is the study presented in this chapter.
-  Cells highlighted in gray are the ones which report a significant association.
+  Table cells highlighted in gray are the ones which report a significant association.
 }
 \end{table}
 
@@ -1012,7 +1027,7 @@ Study           & 2DS3        & 2DS4        & 2DS5        & 3DL1        & 3DL2  
 {
 \gls{KIR} studies in \gls{T1D}. Study $14$ is the study presented in this chapter.
 The case-control ratio is given per \gls{KIR} gene.
-Cells highlighted in gray are the ones which report a significant association.
+Table cells highlighted in gray are the ones which report a significant association.
 }
 \end{sidewaystable}
 
@@ -1122,7 +1137,7 @@ While these arrays are typically cost effective ways to assay common genetic var
 difficult or impossible, which has contributed to low SNP coverage in the KIR region on most kinds of SNP arrays.
 The SNPs that do exist on arrays, such as ImmunoChip, are often discarded during the QC phase of any GWAS because they do not exhibit the expected three clusters.
 In contrast, assaying individual genes by other methods can prove expensive.
-For example, the qPCR assays used here to target \gene{KIR3DL1} and \gene{KIR3DS1} cost \pounds12 per sample.
+For example, the qPCR assays used here to target \gene{KIR3DL1} and \gene{KIR3DS1} cost \textsterling 12 per sample.
 
 %Further, qPCR derived data, despite careful design and multiplexing, remain subject to noise.
 %We ameliorated this by first normalising across plates, and then jointly clustering \gene{KIR3DL1} and \gene{KIR3DS1}, which has the advantage of exploiting the correlation between the $\Delta$Ct values.
@@ -1154,7 +1169,7 @@ However long reads will be required for correct assembly, because of great seque
 According to our collaborator \contributor{James Traherne}, sequencing would require amplification of the the polymorphic exons
 using locus-specific primers and sequencing of the barcoded products.
 This would necessitate read lengths of at least 300 base pairs to span the exons.
-The cost of this using x has been estimated to be of approximately \textsterling y per sample.
+The cost of this using Roche 454 has been estimated to be of approximately \textsterling 30 per sample.
 
 % James Traherne:
 % Other methods which do KIR allele typing without sequencing are pyrosequencing \citep{Norman:2009fi} and sequence-specific oligo hybridisation \citep{Martin:2007ik}.
@@ -1194,7 +1209,7 @@ variation and sequence complexity as KIR, in order to leverage existing SNP data
     \centering
         \includegraphics[scale=.5] {KIR/figures/method-flowchart.pdf}
 \mycaption{Figure-S4}
-{Flow chart summarising the key steps involved in the KNN imputation of \gene{KIR3DL1}/\gene{KIR3DS1} copy numner in SNP data
+{Flow chart summarising the key steps involved in the KNN imputation of \gene{KIR3DL1}/\gene{KIR3DS1} copy number in SNP data
 ($R$ and $\theta$ signal) from qPCR copy number predictions obtained from GMM clustering.}
 {
 \Glspl{GMM} clustering of the qPCR data assigns to each sample a posterior probability of belonging to each \gls{CN} group.

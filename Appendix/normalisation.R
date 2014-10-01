@@ -237,8 +237,8 @@ res1 <- Mclust(x1,3)
 ## a) Look at CD45RA in ungated data
 ## b) Look at CD45RA in CD4+ lymphocytes
 ## Use logicleTransform(w=1)
-## Answer: yes they do! peaks are not conserved on channels
-## which are not used to gate
+## Answer: yes they do! peaks are not conserved on the channels
+## which are not used in the gating
 par(mfrow=c(1,1))
 print(load('~/dunwich/Projects/IL2/PSTAT5-CD25-CD45RA-CD4-FOXP3/pstat5-join/All/KM00813H_2012-08-03.RData'))
 print(load('~/dunwich/Projects/IL2/PSTAT5-CD25-CD45RA-CD4-FOXP3/magnetic-manual-gates2/CLR/KM00813H_2012-08-03.RData'))
@@ -252,6 +252,46 @@ lgcl <- logicleTransform(w=1)
 plot(density(lgcl(fcs.data[,'SSCA'])))
 lines(density(lgcl(fcs.data[as.logical(CLR[,'CD4']),'SSCA'])),col='red')
 lines(density(lgcl(fcs.data[as.logical(CLR[,'Lymphocytes']),'SSCA'])),col='green')
+
+
+## Question: does K nearest neighbour normalise if one of the channels is noisy?
+## Answer: the channel which is left out of the joining will be aligned, provided
+## the clusters align on the other dimensions.
+library(mvtnorm)
+### Easy
+noise <- .05
+set.seed(1234)
+n <- 100
+D <- 10
+l <- list(
+          list(tau=.5, mu=rep(0,D), sigma=noise*diag(D)),
+          list(tau=.5, mu=c(1,rep(0,D-1)), sigma=noise*diag(D))
+          )
+d <- as.matrix( cbind(mvtnorm::rmvnorm(n*l[[1]]$tau, mean=l[[1]]$mu, sigma=l[[1]]$sigma), 1) )
+for (i in 2:length(l)) d <- rbind(d, cbind(mvtnorm::rmvnorm(n*l[[i]]$tau, mean=l[[i]]$mu, sigma=l[[i]]$sigma), i))
+d.easy <- data.frame(d[,1:D], label=factor(d[,D+1]))
+X.easy <- d.easy[,1:D]
+X1 <- X.easy[which(d.easy$label==1),]
+X2 <- X.easy[which(d.easy$label==2),]
+
+library(RANN)
+nn <- RANN::nn2(X2[,-1],query=X1[,-1],k=1)
+
+#
+pairs(X.easy, pch=20, col=d.easy$label, lower.panel=NULL, upper.panel=function(x, y, ...) {
+  X <- cbind(x,y)
+  x1 <- X[which(d.easy$label==1),]
+  x2 <- X[which(d.easy$label==2),]
+  segments(x1[,1], x1[,2], x2[nn$nn.idx,1], x2[nn$nn.idx,2], lwd=.25)
+  points(X, pch=20, col=d.easy$label)
+}
+)
+
+source('~nikolas/bin/FCS/fcs.R')
+plotClusters(X.easy, classification=d.easy$label, chulls=FALSE, ellipses=FALSE , cex=.5)
+
+
+
 
 
 
