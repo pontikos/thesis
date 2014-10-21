@@ -261,18 +261,23 @@ Normalisation or meta-clustering is a necessary step when data is pooled across 
 
 \paragraph{Normalising before clustering: good for pooling to find identify rare populations}
 
-If applied before the clustering it enables data pooling to identify clusters across all samples. If the alignment isn’t perfect, the clustering results can be refined across all samples. Pooling is crucial for identifying rare groups which are difficult to identify within one sample.
+If applied before the clustering it enables data pooling to identify clusters across all samples.
+If the alignment isn’t perfect, the clustering results can be refined across all samples.
+Pooling is crucial for identifying rare groups which are difficult to identify within one sample.
 
 Theoretically, if flow cytometry data was perfectly aligned across days then gates should not be moved.  
 Threshold gates should not move unless they are relative to some internal control.
 The cell phenotypes which are usually measured are the mean intensity of a particular channel, or the percentage of cells.
 Depending on the shape of the distribution these can be more or less sensitive to the position of the gate.
 
+
 \paragraph{Conclusion}
 
 Normalisation is a necessary process for comparing across samples.
 However, normalisation before clustering should be avoided when possible because 
 it can easily over correct.
+Normalisation is meant to be a simpler preliminary step to simply the clustering, however, in flow cytometry,
+normalisation can be as challenging as performing the gating.
 %generally relies makes big assumptions and leads to major changes in the data.
 Clustering sometimes relies on pooled samples when they are not sufficient data points
 to form clusters such as in the case of rare subsets like 3-0 in KIR or Tregs in flow cytometry data.
@@ -412,11 +417,11 @@ My approach was generally to select a K that gave consistent clustering results 
 
 \paragraph{ Incomplete experiments and small sample sizes}
 
-The majority of experiments undertaken in flow cytometry are 
-pilot experiments or tubes ran to test and optimise panels.
+The majority of experiments undertaken in flow cytometry are pilot experiments or tubes ran to test and optimise panels.
 Pilot experiments
 %may be motivated by a moment of inspiration and leads to the generation of flow data is often an adhoc thought process,
 are often implemented with varying degrees of thoroughness.
+Normalisation beads or controls are not consistently which complicates analysis.
 While the FCS files are saved and analysed by the person who generated the data, the naming and documentation is incomplete
 making it hard to automate the analysis of these data.
 Since the FCS file does not contain sufficient metadata to understand the context of the experiment, the name of the FCS

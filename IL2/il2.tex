@@ -168,23 +168,26 @@ Samples were also matched for age and sex to allow for paired analysis.
   \centering
 \begin{tabularx}{\textwidth}{lcccc}
 \rowcolor{Gray}
-Flurochrome       & T/NK Cells & CD4 T Cells & CD4/naive & NK Cells \\
-Alexa Fluor 488   & pSTAT5     & pSTAT5      & pSTAT5    & pSTAT5  \\
-Alexa Fluor 700   & CD4        & CD4         & CD4       & CD4     \\
-APC               & CD25       & CD25        & CD25      & CD25    \\
-Pacific Blue      & CD56       & CD45RA      & CD45RA    & CD45RA  \\
-PE YG             & FOXP3      & FOXP3       & FOXP3     & FOXP3   \\
-PE-Cy7 YG         & CD45RA     &             & CD31      & CD56    \\
-PerCP Cy5-5       & CD3        &             &           & \\
-Qdot 605          & CD8        &             &           & \\
+Flurochrome       & T/NK cell panel & CD4 T cell panel & CD4/naive cell panel & NK cell panel \\
+Alexa Fluor 488   & pSTAT5          & pSTAT5           & pSTAT5               & pSTAT5  \\
+Alexa Fluor 700   & CD4             & CD4              & CD4                  & CD4     \\
+APC               & CD25            & CD25             & CD25                 & CD25    \\
+Pacific Blue      & CD56            & CD45RA           & CD45RA               & CD45RA  \\
+PE YG             & FOXP3           & FOXP3            & FOXP3                & FOXP3   \\
+PE-Cy7 YG         & CD45RA          &                  & CD31                 & CD56    \\
+PerCP Cy5-5       & CD3             &                  &                      & \\
+Qdot 605          & CD8             &                  &                      & \\
 \hline
-Number of samples & 26         & 95         & 12        & 66 \\
+Number of samples & 26              & 95               & 12                   & 66 \\
 %Number of samples & 13 & 96 &
 \end{tabularx}
 \mycaption{table:IL2-panels}
 {Proleukin stimulation assay antibody-fluorochrome panels.}
 {
 The fluorochrome-antibody panels used in IL-2 stimulation.
+The panel used on the majority of samples was the CD4 T cell panel, used to disriminate
+effector and regulatory naive and memory T cells.
+The T/NK cell panel, which contains the most markers, was only ran on a subset of 26 samples.
 }
 \end{table}
 %CD14-CD19-CD3-CD45RA-CD56-HLA-DR-PSTAT5
@@ -226,9 +229,11 @@ The fluorochrome-antibody panels used in IL-2 stimulation.
 \myfigure{scale=.5}{IL2-sample-time} 
 { Number of cases and controls analysed per day. }
 {
-  To account for day of analysis effect in the case-control association testing,
-  Tony Cutler aimed to analyse
+  To account for batch effects in the case-control association testing,
+  Tony Cutler aimed to analyse, when possible,
   at least one healthy control sample and one type 1 diabetic sample per day.
+  %However on some days the number of cases and controls did not match.
+  On two days, no matching controls were ran.
 }
 
 
@@ -486,20 +491,26 @@ Here I describe the methods I applied.
 \paragraph{Bead normalisation} 
 The normalisation method applied to CD25 normalisation,
 in \Cref{chapter:il2ra}, was to use beads to correct for day variation.
-However for the stimulation data, beads on the Alexa-488 fluorochrome, used for pSTAT5 (\Cref{table:IL2-panels}),
+However for the stimulation data, beads in the Alexa-488 channel, the fluorochrome conjugated to pSTAT5 (\Cref{table:IL2-panels}),
 %\Cref{chapter:il2ra}
 did not adequately capture the short term variation in pSTAT5 (\Cref{figure:pstat5-beads}).  
+This suggests that for this experiment, flurorescent beads do not explain the day to day variation in the pSTAT5 MFI.
 \begin{figure}[h]
     \centering
     %\includegraphics[scale=.5]{IL2/figures/beads.pdf}
     %\includegraphics[scale=.5]{IL2/figures/beads.pdf}
-    \includegraphics[scale=.75]{figures/alexa488-beads.pdf}
+    %\includegraphics[scale=.75]{figures/alexa488-beads.pdf}
+    \includegraphics[scale=.6]{figures/pstat5-beads.pdf}
     \mycaption{figure:pstat5-beads}
     {Variation in sample MFI is not captured by variation in bead MFI.}
     {
-      In blue, the three dimmest populations of beads, in black the \gls{MFI} in the resting ungated sample, and in green the MFI in the ungated
-      sample stimulated at 1000 units of proleukin.
-      The MFI of the bead populations does not capture the variation in the sample MFI.
+      For the purpose of MFI normalisation, the fluorescence intensity of six-peak flow cytometry beads
+      was measured in the Alexa 488 channel, the fluorochrome conjugated to the pSTAT5 marker.
+      However, as illustrated by the loess lines, the beads are not appropriate for pSTAT5 normalisation,
+      since the MFI of the three dimmest populations of beads (orange)
+      does not capture the pSTAT5 MFI time variation in the four cell subsets.
+      The pSTAT5 MFIs are obtained from samples stimulated at 1000 units of proleukin.
+      
     }
 \end{figure} 
 
@@ -585,10 +596,10 @@ a linear transformation was used to exactly map the two peaks across all samples
 %how?  
 
 \paragraph{Nearest-neighbour joining}
-While using a different background MFI should account for differences in resting MFI,
-this assumes that the MFI difference is representative of the pSTAT5 shift.
-This may not be true for distributions which change modality.
-Another concern is that if cell counts are very different across stimulation doses, this could influence the accuracy of the MFI estimate.
+%While using a different background MFI should account for differences in resting MFI,
+%this assumes that the MFI difference is representative of the pSTAT5 shift.
+%This may not be true for distributions which change modality.
+One concern is that if cell counts are very different across stimulation doses, this could influence the accuracy of the MFI estimate.
 Instead, a more correct approach would be to subtract the background for each cell.
 One way of emulating this is to match each cell to its closest neighbour in the unstimulated sample.  
 This was accomplished by first joining samples on their core markers using the \gls{ANN} to the resting sample \citep{Jones:2011ez}
@@ -630,7 +641,7 @@ The \gls{ANN} approach is valid without normalisation since the distributions of
 \mycaption{figure:ann-join-0U-01U}
 {Nearest neighbour join on core markers of ungated resting sample with ungated sample stimulated at 0.1 units. }
 {
-All clusters lie on the y=x line which suggests that clusters are correctly matched across samples.
+All clusters lie on the y=x line which suggests that the largest clusters are correctly matched across samples.
 }
 \end{figure} 
 %\hspace{-2cm}
@@ -673,11 +684,20 @@ All clusters lie on the y=x line which suggests that clusters are correctly matc
     %{ Influence of normalisation on the repeatability of the pSTAT5 area under the curve. }
     %{ In red the normalisation using the peak alignment in CD4\positive lymphocytes, in blue the normalisation using peak alignment in lymphocytes. }
 %\end{figure}
+\myfigure{scale=.75}
+{nn-pstat5-mfi-cellsubsets-repeatability}
+{ Nearest-neighbour joined pSTAT5 MFI (black), NN background subtracted pSTAT5 MFI (red) }
+{ 
+  Background subtraction does no substantially improve the repeatability of the pSTAT5 MFI phenotype.
+}
+
+
 
 
 \subsection{Repeatability}
 
-\Cref{figure:nn-pstat5-mfi-cellsubsets-repeatability}
+
+The NN joining does not significantly improve the repeatability (\Cref{figure:nn-pstat5-mfi-cellsubsets-repeatability}).
 
 For all ten repeated samples, the Pearson correlation squared $r^2$ of the MFI was assessed at the four increasing doses, in the four cell subsets,
 for the raw (\Cref{figure:repeatability-PSTAT5-MFI}a),
@@ -689,13 +709,8 @@ but at the highest dose it appears that the least responsive naive effector cell
 repeatability (\Cref{figure:repeatability-PSTAT5-pos}).
 Suprisingly, the memory regulatory T cells have the highest repeatability at the 0.1 unit dose.
 The repeatability of the naive regulatory T cell phenotype is poor at all doses.
+No normalisation approach stands out as improving the repeatability.
 
-\myfigure{scale=.75}
-{nn-pstat5-mfi-cellsubsets-repeatability}
-{ NN pSTAT5 MFI (black), NN background subtracted pSTAT5 MFI (red) }
-{
-
-}
 \myfigure{scale=.5}
 {repeatability-PSTAT5-MFI}
 {
@@ -856,14 +871,33 @@ Using the paired design, we also control for sex and day of analysis.
 
 Having not identified a significant association, this now brings us to the next question of whether there are other
 cell subsets besides the ones which we are gating which are sensitive to proleukin, and in particular low doses of proleukin?
+%
+%\begin{figure}[h]
+    %\centering
+    %\includegraphics[scale=.5]{IL2/figures/pstat5-auc-t1d-celltypes.pdf}
+    %\mycaption{figure:pstat5-auc-t1d-celltypes}
+    %{ Influence of normalisation on the association of pSTAT5 area under the curve with type 1 diabetes in the four cell subsets. }
+    %{ }
+%\end{figure}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=.5]{IL2/figures/pstat5-auc-t1d-celltypes.pdf}
-    \mycaption{figure:pstat5-auc-t1d-celltypes}
-    { Influence of normalisation on the association of pSTAT5 area under the curve with type 1 diabetes in the four cell subsets. }
-    { }
-\end{figure}
+% pSTAT5 MFI
+\myfigure{scale=.5}{pstat5-mfi-t1d-celltypes}
+{ Association test of percent pSTAT5\positive with disease status. }
+{ }
+\myfigure{scale=.5}{nn-pstat5-mfi-t1d-celltypes}
+{ Association test of percent pSTAT5\positive with disease status. }
+{ }
+
+% pct pSTAT5+
+\myfigure{scale=.5}{pstat5-pos-t1d-celltypes}
+{ Association test of percent pSTAT5\positive with disease status. }
+{ }
+\myfigure{scale=.5}{nn-pstat5-pos-t1d-celltypes}
+{ Association test of NN percent pSTAT5\positive with disease status. }
+{ } 
+\myfigure{scale=.5}{nn-pstat5-pos-t1d-celltypes}
+{ Association test of NN percent pSTAT5\positive with disease status. }
+{ }
 
 \section{Response in the whole sample}
 
