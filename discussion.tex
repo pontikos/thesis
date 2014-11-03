@@ -233,7 +233,7 @@ The question really boils down to whether we should normalise the samples or clu
 
 In genotyping, we have a large number of markers and too few replicates to do within sample clustering, so normalisation is usually applied before data pooling.
 Clustering is then applied on the pooled data.
-Normalisation is faciliated here by having 
+%Normalisation is faciliated here by having 
 
 In flow cytometry, we have much large number of cell than markers per sample,
 so clustering tends to happen within a single sample in order to identify cell populations.
@@ -261,18 +261,23 @@ Normalisation or meta-clustering is a necessary step when data is pooled across 
 
 \paragraph{Normalising before clustering: good for pooling to find identify rare populations}
 
-If applied before the clustering it enables data pooling to identify clusters across all samples. If the alignment isn’t perfect, the clustering results can be refined across all samples. Pooling is crucial for identifying rare groups which are difficult to identify within one sample.
+If applied before the clustering it enables data pooling to identify clusters across all samples.
+If the alignment isn’t perfect, the clustering results can be refined across all samples.
+Pooling is crucial for identifying rare groups which are difficult to identify within one sample.
 
 Theoretically, if flow cytometry data was perfectly aligned across days then gates should not be moved.  
 Threshold gates should not move unless they are relative to some internal control.
 The cell phenotypes which are usually measured are the mean intensity of a particular channel, or the percentage of cells.
 Depending on the shape of the distribution these can be more or less sensitive to the position of the gate.
 
+
 \paragraph{Conclusion}
 
 Normalisation is a necessary process for comparing across samples.
 However, normalisation before clustering should be avoided when possible because 
 it can easily over correct.
+Normalisation is meant to be a simpler preliminary step to simply the clustering, however, in flow cytometry,
+normalisation can be as challenging as performing the gating.
 %generally relies makes big assumptions and leads to major changes in the data.
 Clustering sometimes relies on pooled samples when they are not sufficient data points
 to form clusters such as in the case of rare subsets like 3-0 in KIR or Tregs in flow cytometry data.
@@ -332,6 +337,9 @@ Consistency is an important factor in identifying clusters.
 Decomposing the variance into within sample and between variation
 
 Subset analysis is also very important because of a phenomenon known as Simpson’s paradox whereby a trend that is visible in a group may not hold in all subsets of the group and may even be reversed in certain subsets of that group.
+
+When a hierarchical gating approach is taken, errors at the top of the hierarchy propagate down the tree.
+This complicates an automated approach to step by step gating since errors which occur in earlier steps of the gating may not be recovered from.
 
 \subsection{Reproducibility}
 
@@ -409,11 +417,11 @@ My approach was generally to select a K that gave consistent clustering results 
 
 \paragraph{ Incomplete experiments and small sample sizes}
 
-The majority of experiments undertaken in flow cytometry are 
-pilot experiments or tubes ran to test and optimise panels.
+The majority of experiments undertaken in flow cytometry are pilot experiments or tubes ran to test and optimise panels.
 Pilot experiments
 %may be motivated by a moment of inspiration and leads to the generation of flow data is often an adhoc thought process,
 are often implemented with varying degrees of thoroughness.
+Normalisation beads or controls are not consistently which complicates analysis.
 While the FCS files are saved and analysed by the person who generated the data, the naming and documentation is incomplete
 making it hard to automate the analysis of these data.
 Since the FCS file does not contain sufficient metadata to understand the context of the experiment, the name of the FCS
@@ -461,12 +469,73 @@ In fact I found that just loading an FCS file into FlowJo and reexporting it cha
 In the end I found the best solution was to export CLR files which are simply the classification results from FlowJo.
 Unfortunately, instead exporting these files in a compressed memory-efficient format binary format, FlowJo, in its unfathomable wisdom, exports them in text which results in very large files and makes exporting of all clustering results impractical.
 Hence I have often resorted to exporting only a few CLR files from which I can estimate the gate coordinates.
+One thing however that lacks from the CLR format is to retrieve the gate coordinates is the dimensions in which the gate is defined.
 One method of approximating gate coordinate is to calculate the mean and covariance of a CLR cluster and to use the Mahalanobis distance,
 hence approximating the cluster with an ellipse.
 However, it helps to know in which dimensions the gate was defined manually.
 
 Another solution to including manual gates in R without relying on their coordinates in FlowJo
 is to draw polygons in R and use the \Rfunction{in.polygon} to extract points in the polygon.
-\paragraph{Inconsistencies in file naming}
+%\paragraph{Inconsistencies in file naming}
+
+\paragraph{Mass cytometry}
+
+Time of flight cytometry (CyTOF) is a biotechnology which combines mass spectometry with cytometry.
+The throughput is not as high as fluorescence flow cytometry but the number of markers which can measure up to 34 markers.
+
+\section{Summary}
+
+Large datasets have allowed us to see much finer biological variation both in genotypes and cell subsets.
+
+Sometimes taking a different view of the same dataset, by doing a different type of experiment like qPCR or adding markers as in flow cytometry,
+can help us uncover patterns in the larger datasets which we did not know existed.
+For example, qPCR allowed us to discover SNPs predictive of KIR3DL1/3DS1 copy number.
+Considering pSTAT5 response at different doses allowed us to discover a responsive subset of cells we previously ignored.
+
+Although large datasets can support methods with larger number of parameters as they are less prone to overfitting,
+it is easy to fall into the trap of applying over complex methods to account for all the intricacies of the data,
+when in practice, simpler methods may perform as well and are much faster and easy to implement.
+Simple methods can also be combined to reach a consensus and this popular machine learning approach known as boosting
+may increase performance at the expense of interpretability.
+
+Interpretability is perhaps one of the more important issues in order to encourage biologists to use these methods.
+While mixture modelling approaches are conceptually close to manual gating, overlapping populations are not intuitive to biologists.
+Biologists enjoy manual gating becomes it gives them the freedom to draw arbitrary gates.
+This freedom however comes at the cost of exacerbating the disagreement in standards and definitions in immunology.
+Discrepancies in gate positions are unlikely to make much of an impact on common cell populations but can make a big difference on rarer cell populations
+such as regulatory cells.
+
+In order to encourage the use of these methods, biologist need to be lured in by incrementally habituating them to these tools.
+Completely removing the two dimensional visualisation for example might scare them off.
+Also the cellular hierarchical view is so deeply engrained in the minds of certain biologists that presenting them the clustering results
+in a different order would perturb them.  Although attractive this hierarchical model misses populations and imposes a directionality
+in cell lineages which may not always be correct.  In the same way that phylogenies change as new animal species are discovered,
+the cell lineage model should be influenced by new cells.
+
+A first step is to use the manual gates but to allow them to move with the data.
+%This can occasionally be achieved by centering the ellipse on the mean of the datapoints which fall within the gate.
+
+While in my opinion automated clustering need to be applied more widely in flow cytometry data analysis,
+I recognise that these methods require some level of expertise and decent visualisation to guide the user.
+However, over-reliance on visualisation can mislead the analysis of high-dimensional because clustering is always projected back to two dimensions
+or linear combinations of dimensions.
+Hence it is important that we continue developing these methods because biologists will need to resort to fully automated method once the number of parameters
+or number of samples becomes unmanageable.
+
+The automatic gating of flow cytometry community is strong with a lot of contibutions to BioConductor and the GenePattern web interface from the Broad Institute.
+In particular two labs,
+Raphael Gottardo at the Fred Hutchinson Cancer Research Center in the USA
+and
+Ryan Brinkman at the Terry Fox Laboratory in Canada,
+are central in developing auto gating software and bring together,
+
+In Stanford, Gary Nolan lab are using mass cytometry to analyse cell heterogeneity in cancer.
+These high-dimensional datasets require visualisation and Dana Pe'er group at Columbia University have devised various tools to do so.
+
+
+
+
+
+
 
 
