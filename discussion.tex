@@ -96,6 +96,8 @@ could have been to use expected copy number group frequencies obtained from prev
 In the flow data, the manual gates can be used as prior information in order to guide the automatic gating.  
 Manual gates give good initial starting parameters but can, as is done in flowClust, be used to define the priors in the mixture model,
 so to guide the parameter estimation.
+If several samples have been manually gated then these can be incorporated in the definition of the prior on the parameters of the mixture model.
+FlowClust as opposed to Mclust offers the option of defining per component priors.
 Another way that manual gating can be used is to use the manual labelling of the data by converting the labelling in one sample to
 the mean and covariance of an ellipse which can then be applied to another sample.
 The parameters of the ellipse can then be influenced by the data.
@@ -104,7 +106,7 @@ The Mahalanobis distance then allows us to go from a mean and covariance of an e
 above which points are excluded from the ellipse.
 %This threshold can be defined by using a chi squared distribution in the one dimensional case.
 
-Supervised clustering really helps out when trying to identify rare subsets.
+Supervised clustering can be really beneficial in trying to identify rare subsets.
 This is because rare subsets, by definition, may not always be visible in all samples.
 %Futhermore another concern with clustering and statistics in general is distinguising rare subsets from outliers.
 
@@ -146,8 +148,9 @@ A metric for detecting outliers is the Mahalanobis distance, large distances imp
 \]
 where $\boldsymbol{x_i}$ is the point, and $\boldsymbol{\mu}$ is the cluster mean and $\boldsymbol{\Sigma}$ is the cluster covariance.
 
-One issue however is that the outliers influences and greatly increase the covariance matrix, which is why R packages like robustbase,
-use leave-one-out methods to identify outliers which have high leverage on the covariance.
+One issue however is that the outliers influences and greatly inflate the covariance matrix which is used in calculating the Mahalanobis distance.
+To address this, R packages like robustbase,
+use leave-one-out methods to identify outliers which have high leverage on the covariance estimation.
 Another outlier metric, commonly used in linear regression is Cook's distance,
 which returns the leverage of every data point $i$  on the estimation of $\hat Y$ when the point is left out:
 \[
@@ -161,8 +164,9 @@ This score could have been used to downweight these samples in the mixture model
 
 As well as techniques for visualising multiple dimensions.
 Tools are being developed for visualisation of summary statistics in mutliple samples in order to spot outliers.
-In genetics, boxplots are the typical visualisation tool for viewing univariate intensity data but in flow cytometry where we typically have multivariate data,
+Boxplots are the typical visualisation tool for viewing univariate intensity data but in flow cytometry where we typically have multivariate data,
 SPICE presents an overview using pie charts of multiple samples \citep{Roederer:2011hy}.
+%An alternative visual representation are radarplots
 
 They are however obvious outliers and less obvious outliers, which is why I believe a confidence score is appropriate in calling outliers.
 While certain outliers can be confidently called independently because their values are at the extreme of the range of the instrument,
@@ -233,7 +237,9 @@ The question really boils down to whether we should normalise the samples or clu
 
 In genotyping, we have a large number of markers and too few replicates to do within sample clustering, so normalisation is usually applied before data pooling.
 Clustering is then applied on the pooled data.
-%Normalisation is faciliated here by having 
+In genotyping, normalisation is faciliated by having the same number of markers per sample.
+Features are directly comparable.
+On the other in hand in flow cytometry, there is much variation in the count of cells per sample.
 
 In flow cytometry, we have much large number of cell than markers per sample,
 so clustering tends to happen within a single sample in order to identify cell populations.
@@ -499,29 +505,29 @@ Simple methods can also be combined to reach a consensus and this popular machin
 may increase performance at the expense of interpretability.
 
 Interpretability is perhaps one of the more important issues in order to encourage biologists to use these methods.
-While mixture modelling approaches are conceptually close to manual gating, overlapping populations are not intuitive to biologists.
-Biologists enjoy manual gating becomes it gives them the freedom to draw arbitrary gates.
+While mixture modelling approaches are conceptually close to manual gating, probabilistic populations are not intuitive to biologists,
+so their true power cannot be fully exploited.
+Biologists enjoy manual gating becomes it gives them the freedom to draw somewhat arbitrary exclusive gates.
 This freedom however comes at the cost of exacerbating the disagreement in standards and definitions in immunology.
-Discrepancies in gate positions are unlikely to make much of an impact on common cell populations but can make a big difference on rarer cell populations
-such as regulatory cells.
+While discrepancies in gate positions are unlikely to make much of an impact on the MFI and relative proportion of common cell populations,
+they can make a big difference on rarer cell populations such as regulatory cells.
 
 In order to encourage the use of these methods, biologist need to be lured in by incrementally habituating them to these tools.
-Completely removing the two dimensional visualisation for example might scare them off.
+Completely removing the two dimensional visualisation for example might be discouraging.
 Also the cellular hierarchical view is so deeply engrained in the minds of certain biologists that presenting them the clustering results
-in a different order would perturb them.  Although attractive this hierarchical model misses populations and imposes a directionality
+in a different order would perturb them.  Although attractive, this hierarchical model misses populations and imposes a directionality
 in cell lineages which may not always be correct.  In the same way that phylogenies change as new animal species are discovered,
-the cell lineage model should be influenced by new cells.
+the cell lineage model should be influenced by the discovery of new cell subsets.
 
 A first step is to use the manual gates but to allow them to move with the data.
 %This can occasionally be achieved by centering the ellipse on the mean of the datapoints which fall within the gate.
 
 While in my opinion automated clustering need to be applied more widely in flow cytometry data analysis,
-I recognise that these methods require some level of expertise and decent visualisation to guide the user.
-However, over-reliance on visualisation can mislead the analysis of high-dimensional because clustering is always projected back to two dimensions
-or linear combinations of dimensions.
-Hence it is important that we continue developing these methods because biologists will need to resort to fully automated method once the number of parameters
+hence it is important that we continue developing these methods because biologists will need to resort to fully automated method once the number of parameters
 or number of samples becomes unmanageable.
-
+However, I recognise that these methods require some level of expertise and decent visualisation to guide (and reassure?) the user.
+Although, over-reliance on visualisation can mislead the analysis of high-dimensional because clustering is always projected back to two dimensions
+or linear combinations of dimensions.
 The automatic gating of flow cytometry community is strong with a lot of contibutions to BioConductor and the GenePattern web interface from the Broad Institute.
 In particular two labs,
 Raphael Gottardo at the Fred Hutchinson Cancer Research Center in the USA
@@ -531,6 +537,33 @@ are central in developing auto gating software and bring together,
 
 In Stanford, Gary Nolan lab are using mass cytometry to analyse cell heterogeneity in cancer.
 These high-dimensional datasets require visualisation and Dana Pe'er group at Columbia University have devised various tools to do so.
+
+I have also identified regions of flow cytometry which need more work such as normalisation and selection an optimal transform.
+Both of these can be included as part of the clustering step.
+Logarithmic transform greatly influence the identification of lower intensity populations which overlap into the negative range.
+The wrong transform can introduce splits giving rise to spurious cell populations.
+This is why applying a straightforward arcinsh transform like is done in spade is wrong.
+In FlowJo, the transform is selecting visually, given the knowledge of what cell populations to expect.
+The only existing automated  methods of optimally selecting a transform that I am aware of are flowTrans and flowClust.
+FlowTrans assumes an underlying Gaussian distribution and used maximum likelihood to estimate the optimal transform parameter.
+But there is still the question of which transform function to apply?
+FlowClust applies a Box-Cox transform for which the lambda parameter is estimated as part of the ML estimation.
+
+There is also a growing need for non-proprietary software which integrates well with the manual analysis.
+The openCyto BioConductor package currently being developed by Gottardo
+The automated methods need to complement the manual methods for now, so that the change from manual to automated happens gradually.
+On the other hand by continuously benchmarking automated analysis against manual,
+we are not exploiting the true power of automated algorithms which is to teach us new biology or to put back into question our hiearchical view of immunology.
+As an example I ran flowClust unsupervised with a large number of clusters and then picked the cluster which gave the best association with each SNP.
+This is the idea which was explored with flowMeans.  The issue however is the metaclustering step of matching clusters across samples is not trivial especially if
+there is a lot of noise between samples.
+
+
+% I admit there has been a lack of simulations but flow data is hard to simulate.
+% simulate small responsive population?
+
+No matter how sophisticated the method, there is no replacement for good data.
+Often this a judgment call which needs to be made with prior information which relies on havin seen a large number of samples and hence not available to the automated method.
 
 
 
