@@ -41,6 +41,10 @@ rm *.cb
 rm *.acn *.alg *.acr
 }
 
+function copyPDFs() {
+    mv ~/thor/Thesis/figures/*.pdf ~/Thesis/figures/
+}
+
 function chapter() {
 pdflatex -jobname=thechap01 "\includeonly{chap01}\input{thesis}"
 }
@@ -91,8 +95,9 @@ cp thesis.pdf ~/GoogleDrive/PhD/Thesis/
 
 
 
-GoogleDriveLinks
+#GoogleDriveLinks
 clean
+copyPDFs
 build
 copyToGoogleDrive
 

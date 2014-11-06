@@ -341,6 +341,9 @@ Subset analysis is also very important because of a phenomenon known as Simpsonâ
 When a hierarchical gating approach is taken, errors at the top of the hierarchy propagate down the tree.
 This complicates an automated approach to step by step gating since errors which occur in earlier steps of the gating may not be recovered from.
 
+In the same way wrongly gating samples can lead to outliers which can create false positive association due to their high leverage,
+fixed gating can lead to all samples have the same profile.
+
 \subsection{Reproducibility}
 
 Reproducibility in flow cytometry is challenging.
@@ -482,6 +485,8 @@ is to draw polygons in R and use the \Rfunction{in.polygon} to extract points in
 
 Time of flight cytometry (CyTOF) is a biotechnology which combines mass spectometry with cytometry.
 The throughput is not as high as fluorescence flow cytometry but the number of markers which can measure up to 34 markers.
+It cannot be used for sorting as the cells are destroyed when measured.
+Since it does not report side and forward scatter live/dead markers tend to be used instead to spot debris.
 
 \section{Summary}
 
