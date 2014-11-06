@@ -99,6 +99,6 @@ cp thesis.pdf ~/GoogleDrive/PhD/Thesis/
 clean
 copyPDFs
 build
-copyToGoogleDrive
+#copyToGoogleDrive
 
 
