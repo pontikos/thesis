@@ -827,9 +827,12 @@ cell phenotypes in the four cell subsets considered.
 %Also since the resting sample sample displays a shoulder this suggests a mixture of resting and already semi-activated lymphocytes.
 
 DILT1D and other clinical trials of IL-2 have largely focused on lymphoyctes. %CD4\positive cells.
-However, biologists know that any cell which carries high levels of any of the trimeric components of the IL-2 receptor, alpha, beta or gamma,
-should respond to IL-2, however due to the limits on the antibodies and the number of fluorochromes per tube,
+However, biologists know that any cell which carries high levels of any of the trimeric components of the IL-2 receptor,
+alpha (CD25), beta (CD122) or gamma (CD132), should respond to IL-2, however
+due to limitations on binding affinity of the CD122 antibody and the number of fluorochromes per tube,
 they cannot all be included as part of every flow experiment.  
+%Plus at low doses of IL-2 the CD25 chain is the most important
+%Also the gamma chain is expressed by all cells and so not specific
 This study of \emph{ex vivo} stimulated whole blood offers a chance to explore potentially new cell subsets responsive to IL-2.
 To increase my chances of characterising unstudied cells subsets, I will be using the more complete marker panel containing CD3, CD8
 and CD56 (\Cref{table:IL2-panels}) which is only available in a subset of samples.
@@ -886,7 +889,7 @@ in each file.
 The tree nodes are coloured according to the functional marker, here pSTAT5, which was not used in its construction.  
 
 I first ran \gls{SPADE} on the core surface markers, CD25, CD3, CD4, CD45RA, CD56, CD8 and FOXP3,
-on the manually gated lymphocyte subset.
+on the manually gated lymphocyte subset (excluding doublets).
 The resting and stimulated at 0.1, 10 and 1000 units of proleukin,
 tubes from an individual were downsampled and pooled for the clustering.
 The desired number of cluster was set to 500.
@@ -922,16 +925,20 @@ difficult to distinguish whether the noise of the pSTAT5 influences more the siz
 
 
 
-An alternative to clustering aross samples is to use binning instead to partition the space into hypercubes in which the proportion
-of events is counted across tubes.
-The original idea applied to flow cytometry was suggested by \citet{Roederer:2001tz} as a method for comparing if samples were significantly different.
+An alternative to clustering aross samples, is to use binning instead to partition the marker space into regions containing roughly the same number of
+events across tubes. Hence, the binning is finer in regions of high density and coarser in regions of low density.
+This is another approach of achieving a uniform density to the method of downsampling.
+The original univariate approach, known as probability binning, was first applied to flow cytometry by \citet{Roederer:2001tz}
+as a method for comparing if samples were significantly different.
 
-The size of the hypercubes is chosen so that each cube contains roughly the same number of events.
-Hence the binning is finer in regions of high density and coarser in regions of low density.
-This is another way of achieving a uniform density.
-The original univariate approach which is known as probability binning was extended to multiple dimensions in the form of frequency difference gating,
-a binary space partitioning technique in which data is iteratively partitioned along the median.
-This is the approach taken by the \BioConductor{flowFP}.  \citep{Rogers:2008ij,Rogers:2009ff} 
+The approach was extended to multiple dimensions with
+so called flow cytometric fingerprinting as implemented in
+the \BioConductor{flowFP},
+by using multidimensional volumes (usually hypercubes) \citep{Rogers:2008ij,Rogers:2009ff}.
+
+%it also used by kd trees
+%in the form of frequency difference gating,
+%a binary space partitioning technique in which data is iteratively partitioned along the median.
 
 
 %flowBin
@@ -944,48 +951,23 @@ or as a measure to determine the distance between two flow cytometry samples.
 %However, the binning process is obviously sensitive to noise so methods which are point centric rather than based on regions are preferred.
 
 If left untransformed, the forward and side scatter bare a lot of influence on the clustering since they typically very large ranges.
-However, unlike fluorescence, scatter does not scale multiplicatively and so they are not amenable to logarithmic scaling.
+Furthermore, scatter is not amenable to logarithmic scaling since, unlike fluorescence, it does not scale multiplicatively.
 To remedy this I considered the following two options, either first cluster on the side and forward scatter using mixture models
 and then run spade on each scatter cluster individually,
 or, scale the scatter so that it appears on a similar scale as the fluorescence.
+%It is also unclear to me whether scatter should feature in the density estimation and clustering.
+%This is a general problem when trying to include variables of a very different nature.
+%In cell biology is size more important than surface marker intensity?
+%The challenge is that on one hand we have a covariate that scale multiplicately (fluorescence) and on the other
+%we have a covariate that scales linearly.
 An advantage of the first approach is that it removes many spurious events which are likely to be noise and so more spade clusters are
 dedicated to relevant events.
 %scatter clusters can be examined in closer detail.
 The disadvantage is that certain of the events which are filtered based on scatter may be biologically relevant.
 Hence I tried and compared the output of both approaches.
 
-
-%\begin{figure}[h]
-  %\centering
-%\begin{subfigure}[b]{.4\textwidth}
-  %\includegraphics[scale=.4]{figures/CB00406Q-0U-2012-06-12.pdf}
-%\caption{Resting sample.}
-%\end{subfigure}
-%\begin{subfigure}[b]{.4\textwidth}
-  %\includegraphics[scale=.4]{figures/CB00406Q-01U-2012-06-12.pdf}
-  %\caption{0.1 units}
-%\end{subfigure}
-%\begin{subfigure}[b]{.4\textwidth}
-  %\includegraphics[scale=.4]{figures/CB00406Q-10U-2012-06-12.pdf}
-  %\caption{10 units}
-%\end{subfigure}
-%\begin{subfigure}[b]{.4\textwidth}
-  %\includegraphics[scale=.4]{figures/CB00406Q-1000U-2012-06-12.pdf}
-  %\caption{1000 units}
-%\end{subfigure}
-%\mycaption{figure:spade-output}
-%{pSTAT5 coloured \gls{MST} generated by applying \gls{SPADE} on lymphocytes (k=712).}
-%{
-  %The \gls{MST} was constructed from running \gls{SPADE} on the core surface markers,
-  %CD25, CD3, CD4, CD45RA, CD56, CD8 and FOXP3, in the manually gated lymphocyte subset, of four samples from one individual,
-  %stimulated at increasing doses of proleukin.
-  %As the proleukin dose is increased more clusters in the tree are illuminated, as the pSTAT5 MFI increases in various cell subsets.
-  %The size of each node in the tree is representative of the number of cells which are assigned to that cluster. 
-%}
-%\end{figure}
-
-\myfigure{scale=.5}{spade-pstat5mfi}
-{pSTAT5 coloured \gls{MST} generated by applying \gls{SPADE} on lymphocytes (k=712).}
+\myfigure{scale=.75}{spade-lymphocytes-pstat5mfi}
+{pSTAT5 coloured \gls{MST} generated by applying \gls{SPADE} on lymphocytes (k=1000).}
 {
   The \gls{MST} was constructed from running \gls{SPADE} on the core surface markers,
   CD25, CD3, CD4, CD45RA, CD56, CD8 and FOXP3, in the manually gated lymphocyte subset, of four samples from one individual,
@@ -994,32 +976,49 @@ Hence I tried and compared the output of both approaches.
   The size of each node in the tree is representative of the number of cells which are assigned to that cluster. 
 }
 
-\myfigure{scale=.75}{spade-celltypes}
+
+\myfigure{scale=.65}{spade-lymphocytes-celltypes}
 {(a) pSTAT5 MFI in lymphocyte \gls{MST} when stimulated at 1000 units of proleukin (b) mapping of cell types defined by manual gates, memory effectors (black), memory regulatory T cells (red), naive effectors (green) and naive regulatory T cells (blue), to \gls{MST} obtained in \Cref{figure:spade-pstat5mfi}}
 {
   Certain nodes of the tree contain a mixture of cell types which complicates the interpretation.
   Also the different manually gated cell types do not segregate to different branches but are spread across the tree.
 }
 
-\myfigure{scale=.5}{responsive-lymphocyte-subset}
+\myfigure{scale=.65}{spade-lymphocytes-cd56bright}
 { Considering non-gated cells, a reponsive cell subset within lymphocytes is identified which is not assigned to any manual gate.  }
 {
-A subset of cells, delineated in purple, clusters in one of the branches which does not overlap with any of the manual gates as seen in \Cref{figure:spade-celltypes}b.
-Projecting these cells back to intensity space it surfaces that they are CD4\negative which explains why they were not included in the manual gating.
-They are also CD45RA\negative and high for CD25 which explains why they respond to proleukin.
+%A subset of cells, delineated in purple, clusters in one of the branches which does not overlap with any of the manual gates as seen in \Cref{figure:spade-celltypes}b.
+%Projecting these cells back to intensity space it surfaces that they are CD4\negative which explains why they were not included in the manual gating.
+%They are also CD45RA\negative and high for CD25 which explains why they respond to proleukin.
 }
 
-\myfigure{scale=.5}{notlymphocytes-spade-pstat5mfi}
+\myfigure{scale=.75}{spade-notlymphocytes-pstat5mfi}
 {pSTAT5 MFI coloured \gls{MST} generated by applying \gls{SPADE} on cells which fall outside of the lymphocyte gate.}
 {
-  The \gls{MST} was constructed from running \gls{SPADE} on the core surface markers,
-  CD25, CD3, CD4, CD45RA, CD56, CD8 and FOXP3, in cell which do not belong to the lymphocyte gate, of four samples from one individual,
-  stimulated at increasing doses of proleukin.
-  As the proleukin dose is increased more clusters in the tree are illuminated, as the pSTAT5 MFI increases in various cell subsets.
-  The size of each node in the tree is representative of the number of cells which are assigned to that cluster. 
-  No nodes in the tree appear to be brightly illuminated which suggests that the pSTAT5 response is low or not detectable using SPADE.
+  %The \gls{MST} was constructed from running \gls{SPADE} on the core surface markers,
+  %CD25, CD3, CD4, CD45RA, CD56, CD8 and FOXP3, in cell which do not belong to the lymphocyte gate, of four samples from one individual,
+  %stimulated at increasing doses of proleukin.
+  %As the proleukin dose is increased more clusters in the tree are illuminated, as the pSTAT5 MFI increases in various cell subsets.
+  %The size of each node in the tree is representative of the number of cells which are assigned to that cluster. 
+  %No nodes in the tree appear to be brightly illuminated which suggests that the pSTAT5 response is low or not detectable using SPADE.
 }
+%
 
+\myfigure{scale=.75}{spade-notlymphocytes-response}
+{None-lymphocyte cell which respond to low doses of proleukin, tend to lie close to the lymphocyte cluster (black).}
+{
+  %The \gls{MST} was constructed from running \gls{SPADE} on the core surface markers,
+  %CD25, CD3, CD4, CD45RA, CD56, CD8 and FOXP3, in cell which do not belong to the lymphocyte gate, of four samples from one individual,
+  %stimulated at increasing doses of proleukin.
+  %As the proleukin dose is increased more clusters in the tree are illuminated, as the pSTAT5 MFI increases in various cell subsets.
+  %The size of each node in the tree is representative of the number of cells which are assigned to that cluster. 
+  %No nodes in the tree appear to be brightly illuminated which suggests that the pSTAT5 response is low or not detectable using SPADE.
+}
+%
+
+%\myfigure{scale=.75}{scatter-gating4}
+%{ }
+%{ }
 
 
 \subsection{Binary recursive partitioning of pSTAT5 response with regression trees} 
@@ -1252,6 +1251,7 @@ The methods described in this chapter can be applied to identifying dose-respons
 Although spade suggests the mst as a visualisation tool, it is not necessarily the most representative representation of the data since
 established cell types do not necessarily cluster in the branches.
 Furthermore it can be misleading since the layout is arbitrary and the branching is not always meaningful.
+Spade contains an element of stochasticity in its downsampling so that running spade twice on the same data does not give the same tree.
 In my opinion, the true value of spade as applied to automatic gating or exploration of the dose-response in these datasets,
 lies in the downsampling and agglomerative clustering steps which allow for probing of the entire marker space.
 Furthermore, the raw data used to create the mst visualisation can been used to represent the data in a number of ways using established
