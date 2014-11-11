@@ -28,14 +28,14 @@ In particular, I will focus on normalisation and clustering of cell-level parame
 as well as genetic data, acquired from \gls{qPCR} and \gls{SNP} arrays.  
 %In this thesis, I will be dealing with some large genetic and cell measurements datasets.
 \gls{SNP} arrays have been at the core of \gls{GWAS} over the last ten years.
-They concurrently probe hundred-thousands of genomic loci, \glspl{SNP}, within an individual and the technology
-has been parallelised so that each experiment can test thousands of individuals.
+They concurrently probe several hundred thousand of \glspl{SNP} within an individual and the technology
+has been parallelised so that a single experiment can assay thousands of individuals.
 Each SNP probe is fluorescently labelled so that at a given genomic locus, the intensity values can be clustered across individuals, 
 after normalisation.
 Genotypes at a given loci can be called by individual, depending on the cluster in the pooled dataset to which the individual is assigned.
 Common genotypes form larger clusters whereas rarer genotypes form smaller clusters.
 %In cases, when clusters overlap too much or individuals lie too far from cluster centers, it is not possible to call a genotype with certainty.
-An equally influential technology which has brought cell biology into the sphere of big biology, is flow cytometry,
+An equally influential technology which has brought cell biology into the sphere of ``big biology'', is flow cytometry,
 a high-throughput technique for measuring up to twenty cell parameters in millions of cells.
 In flow cytometry, clustering is performed to group similar cell measurements to identify cell types within a sample.
 Typically, the relative size of these clusters and their means are of biological interest and are compared between samples after normalisation.
@@ -43,7 +43,6 @@ Typically, the relative size of these clusters and their means are of biological
 %Normalisation is typically applied as a meta-clustering step for matching and comparing properties of these cell types in samples analysed across days or batches,
 %but can also be applied before the clustering to enable pooling to aid identification of rarer cell types.
 %In the future, high througput sequencing and mass cytometry will generate even larger numbers of parameters at possibly higher rates.
-
 While clustering applied to \gls{SNP} calling can be fully automated,
 clustering in flow cytometry is still reliant on manual inspection.
 One reason is that
@@ -51,7 +50,7 @@ clustering of cell types is more uncertain than clustering of genotypes because 
 cells are often in intermediate states between cell types.
 In genetics, in the absence of copy number variation,
 the expected number of clusters at a given loci is typically known
-since there are only a finite set number of possible genotypes at a loci.
+since there are only a finite number of possible genotypes at a \gls{SNP}.
 %, namely homozygote recessive, heterozygote or homozygote dominant.
 %However, we will see that there are regions of copy number variation in the genome which do not fit this model.
 
@@ -62,20 +61,21 @@ since there are only a finite set number of possible genotypes at a loci.
 %As in all statistcal anlyses, some prior knowledge is required explicitly or implicitly defined.
 The choice of normalisation and clustering methods can have an important impact on reproducibility and association statistics \citep{Plagnol:2007dw}.
 %One of the key questions of this thesis will be how influential are these clustering on downstream data analysis.
-Hence the influence of clustering on reproducibility and association testing will be the focus of \Cref{chapter:il2ra}, where I revisit a large,
+The influence of clustering on reproducibility and association testing will be the focus of \Cref{chapter:il2ra}, where I revisit a large,
 long-running flow cytometry experiment designed to measure genotype-phenotype correlation in hundreds of individuals.
 %In this dataset, time-effect linked to instrument variation are non-negligeable and will need to be addressed by normalisation, using fluorescent beads as an external control.
-While the clustering was initially conducted manually by drawing gates to delineate populations of cells,
+The cell type clustering was initially conducted manually by drawing gates to delineate populations of cells.
 I assess the influence of clustering method on association testing,
 when part of the gating is replaced by computational thresholding and clustering methods.
 %, which aim to match the manual gating.  
 
-In \Cref{chapter:il2}, I analyse another flow cytometry dataset, this time an exvivo stimulation dataset,
+In \Cref{chapter:il2}, I analyse another flow cytometry dataset, this time an \emph{ex vivo} stimulation dataset,
 primarily generated to assess whether there are differences in stimulation response in certain cell types, between type 1 diabetics and matched controls.
 I will once more consider normalisation for the purpose of improving the reproducibility of the cell phenotypes and hence the power of association testing.
 Furthermore, I apply computational methods to discover new clusters not identified by manual gating which are responsive to stimulation.
 
-In \Cref{chapter:kir}, I apply normalisation and clustering to \gls{qPCR} and \gls{SNP} data where no prior manual analysis has been done.
+In \Cref{chapter:kir}, I apply normalisation and clustering to genetic copy number genotyping of \gls{qPCR} and \gls{SNP} array data
+where no prior manual analysis has been done.
 Instead, I use prior information in terms of population frequencies obtained from previous studies to guide the clustering of qPCR data.
 The clusters applied in qPCR are used to identify the SNP patterns which are predictive of copy number, using supervised clustering.
 %Variable selection
@@ -100,7 +100,6 @@ It has since been established that this symptom is the consequence of persistent
 the hormone responsible for glucose regulation.
 Long term high-glucose levels lead to dehydration, drowsiness, cardio-vascular complications, increased chances of morbidity and death.  
 If left untreated T1D is a debilitating and life-threatening disease.
-
 From post-mortem analysis of pancreatic samples and animal models,
 it is widely accepted that the cause of the insulin deficiency in \gls{T1D} is an autoimmune reaction
 in which insulin and insulin-producing $\beta$-cells of the pancreatic islets
@@ -113,7 +112,6 @@ affecting mainly children under the age of 5 \citep{Patterson:2009gj}.
 The World Health Organization reported that in August 2011 around 34 million people worldwide were diagnosed with T1D.
 %Glycaemia and diabetes are rising globally, driven both by population growth and ageing and by increasing age-specific prevalences.
 %and affects around 5\% of the UK population \cite{Levy:2011wz}.
-
 At present there is no cure for \gls{T1D}.
 %T1D is diagnosed by screening for consistently high levels of glucose in the blood at which point
 The only existing treatment is the regular intravenous administration of exogenous insulin.  
@@ -134,15 +132,15 @@ in newly diagnosed \gls{T1D} patients (\url{http://www.clinical-trials-type1-dia
 %T1D is an auto-immune disease whereby cells of the immune system target and destroy the body’s own insulin secreting cells of the pancreas, the $\beta$-cells.
 
 %Every trait is the result of a genetic and environmental influence and interaction.
-Patterns of familial clustering suggest that some portion of T1D risk is genetically inheritable.
+Patterns of familial clustering suggest that a portion of T1D risk is inherited.
 %The sibling relative risk which is the ratio of the sibling recurrence risk and the overall disease prevalence,
 A measure of heritability used by geneticists is the sibling recurrence risk $\lambda_s$, which is defined as
 the ratio of the probability that a sibling of an affected individual has the disease over the probability of a random individual in the population
 having the disease.
-Initial estimates of $\lambda_s$ were close 15 \citep{Risch:1987wm},
+For \gls{T1D}, $\lambda_s$ has been estimated to be close to 15 \citep{Risch:1987wm},
 %based on the \citet{Spielman:1980vv} and \citet{Wagener:1982up} studies,
 %\citet{Risch:1987wm} defines this as the relative recurrence risk: $\lambda_R = \frac{K_R}{K}$.
-although \citet{Clayton:2009kf} suggested that these might be overestimates and that $\lambda_s$ is more likely to lie between 5 and 8.9.
+although \citet{Clayton:2009kf} suggested that this might be an overestimate and that $\lambda_s$ is more likely to lie between 5 and 8.9.
 %given more recent evidence from larger studies conducted in Danish \citep{Kyvik:1995vs} and Finnish cohorts \citep{Hyttinen:2003kn,Harjutsalo:2005uo}.
 
 %in planning and evaluating studies aimed at discovering genes conferring susceptibility to disease.
@@ -188,9 +186,9 @@ although \citet{Clayton:2009kf} suggested that these might be overestimates and 
 %However since related individuals also tend to share environment, it is difficult to decouple the genetic from the environmental effect.
 
 %\subsection{Genetic architecture}
-Regardless of the exact estimate of $\lambda_s$, the genetic predisposition to \gls{T1D} is indisputable
+Regardless of the exact estimate of $\lambda_s$, some genetic predisposition to \gls{T1D} is indisputable
 and researchers have long been interested in identifying likely causal variants in our genetic code
-which might lead some insights onto the mechanism of the disease.
+that might lead to some insights into the mechanism of the disease.
 %We are interesting in discovering how many genes have an effect
 Linkage studies based on the recombination of multiallelic genetic markers in families affected by \gls{T1D},
 first mapped a genetic risk factor to the \gls{HLA} region on chromosome 6 \citep{Singal:1973tg,Cudworth:1974ve,Nerup:1974ui}.
@@ -203,10 +201,10 @@ and was also found to associate with the disease \citep{Bell:1984uw,Permutt:1984
 %If we take into account the cumulative genetic risk and assume an additive model of risk
 %However, the risk variants detected by linkage studies only explained a percentage of the heritability,
 %so it is clear that T1D must involve smaller effect size risk variants that are only detectable at sample sizes larger than those achievable by linkage studies.
-In \citeyear{Davies:1994gu}, \citeauthor{Davies:1994gu} using a linkage map of 290 marker loci in 96 sibling pairs,
+In \citeyear{Davies:1994gu}, \citeauthor{Davies:1994gu}, using a linkage map of 290 marker loci in 96 sibling pairs,
 confirmed the association with the HLA and insulin gene regions, and further 
 reported a number of new chromosome regions showing some potential evidence of linkage to \gls{T1D}.
-The study confirmed that \gls{T1D} is a polygenic disease and that furthermore, there are unlikely to exist other loci with as strong an effect as HLA.
+The study confirmed that \gls{T1D} is a polygenic disease and that furthermore, there were unlikely to exist other loci with as strong an effect as HLA.
 
 More recently, \Glspl{GWAS} using high density \gls{SNP} arrays,
 %, such as the GeneChip 500K Mapping Array Set (Affymetrix chip),
@@ -214,9 +212,9 @@ More recently, \Glspl{GWAS} using high density \gls{SNP} arrays,
 have confirmed strong association of T1D within the \gls{HLA} (chromosome 6p21) and \gene{INS} (chromosome 11p15) loci,
 and reported 50 other loci, including regions near
 \gene{CTLA4} (chromosome 2q33), \gene{PTPN22} (chromosome 1p13), \gene{IL2RA} (chromosome 10p15)
-and \gene{IFIH1} (chromosome 2q24) \citep{Nejentsev:2007dv,Burton:2007hta,Barrett:2009jq}.
+and \gene{IFIH1} (chromosome 2q24) \citep{Smyth:2006ce,Nejentsev:2007dv,Burton:2007hta,Barrett:2009jq}.
 Within the HLA region, the strongest effect comes from the HLA class II loci, \gene{HLA-DRB1} and \gene{HLA-DQB1},
-but, there is evidence for a second independent effect from the HLA class I loci,
+but, there is evidence for additional independent effects from the HLA class I loci,
 involving HLA-A and HLA-B alleles \citep{Nejentsev:2007dv,Howson:2009bl}. 
 A comprehensive and updated list of all T1D associated loci found so far is maintained on the T1DBase website (\url{www.t1dbase.org}).
 
@@ -273,13 +271,14 @@ A comprehensive and updated list of all T1D associated loci found so far is main
 %Genetic risk variants which are significantly associated with T1D have been identified by comparing their frequency in cases and in suitably matched controls.
 %The next step is to understand why these variants are more frequent in cases.  
 %However between genetic variation (e.g SNPs or copy number variation) and the disease, lies a convoluted network of regulatory genes, RNA, protein expression and environmental factors, so that all but the strongest effects might be obfuscated.  
-Many of the reported T1D-associated genetic variants, are located in proximity to genes and regions with known immune function such as HLA and \gene{IL2RA},
+Many of the reported T1D-associated genetic variants are located in proximity to genes and regions with known immune function such as HLA and \gene{IL2RA},
 which code for receptors found at the surface of immune cells.
 %HLA class II genes code for membrane-bound proteins which expose extra-cellular antigens to T cells,
 %it is hypothesized that they may play a role in the insulin presentation pathway.  
 %the HLA class I proteins expose fragments of the cell's internal peptides to its surface for inspection by immune cells such as \gls{NK} cells.  
 
-Immune cells are white blood cells formally known as leukocytes, which agglomerate in the lymph nodes but can also be found at low concentrations in the peripheral blood.
+Immune cells are white blood cells formally known as leukocytes, that function in the lymph nodes
+and other lymphoid tissues but can also be found at lower concentrations in the peripheral blood as they circulate throughout the body.
 They include lymphocytes, monocytes and granulocytes, and within these subsets, there exists a huge diversity in terms of size, gene expression and function.
 It is this diversity that enables the versatility of the immune system in neutralising all kinds of pathogens (innate immunity),
 its ability to distinguish them from endogenous cells (self tolerance),
@@ -295,15 +294,21 @@ but also into longer-lived memory T cells, capable of mounting a stronger and fa
 resulting in long lasting immunity against this pathogen (acquired immunity).
 In order to moderate the scale of the immune response and preserve self-tolerance, some T cells also have a regulatory function on the immune response
 mediated using small signalling molecules known as cytokines (for example \acrfull{IL-2}).
-These regulatory T cells are important in preventing auto-immunity and hence are the object of thorough study in T1D.
+These regulatory T cells are important in preventing autoimmunity and hence are the object of thorough study in T1D.
 
-Some insight into the aetiology of T1D may be gained by seeing how T1D associated variants correlate with quantitative cell phenotypes such as, 
+Some insight into the aetiology of T1D may be gained by seeing how T1D-associated variants correlate with quantitative cell phenotypes such as, 
 ratios of different cell types or mean expression of surface proteins.
-For example, \citet{Dendrou:2009dv} showed that, T1D risk variants risk loci in the proximity of the protein coding gene \gene{IL2RA},
-correlate with decreased mean expression of CD25 on the surface of memory T cells.
+For example, \citet{Dendrou:2009dv} showed that protective T1D risk variants in proximity of the protein coding gene \gene{IL2RA},
+correlate with increased mean expression of CD25 on the surface of memory T cells.
 %This could be the mechanism by which T1D risk is increased since lower CD25 on memory T cells could reduce the immune tolerance.
-Understanding the influence of these genetic variants on intermediate cell phenotypes can shed light on the cell mechansism which lead to T1D.
+%Understanding the influence of these genetic variants on intermediate cell phenotypes can shed light on the cell mechansism which lead to T1D.
 %Genetic association works on quite coarse and fuzzy clinical classification which does not account for the biological heterogeneity within cases.
+CD4\positive memory cells with higher CD25 levels are likely more responsive to IL-2 and TCR-mediated activation,
+which in turn leads to increased production of IL-2, suggesting a mechanism by which self-tolerance may be boosted.
+%by anti-self effector T cells activation-induced cell death.
+
+%reduced CD25 on naive cells leads to reduced likelihood of activation, while in contrast,
+%They propose that the CD4\positive memory T-cell phenotype is critical for protection from T1D
 
 
 %The peripheral blood is predominantly consituted of (99.9\%) red blood cells, erythrocytes and thrombocytes.
@@ -357,7 +362,7 @@ Understanding the influence of these genetic variants on intermediate cell pheno
 %Through the principle of fluorescence it is possible to identify specific molecules which are characterisitic to certain cells.
 %Confocal Laser Scanning Microscopy for instance is a technique which can examine different layers in the cell at different confocal lenghts.
 
-The established high-throughput method for measuring immune cell phenotypes is flow cytometry.
+The established method for measuring immune cell phenotypes is flow cytometry.
 By labelling cells with fluorescent probes conjugated to antibodies, it is possible to distinguish a wealth of distinct cell
 subsets which concomitantly express specific molecules.
 Flow cytometry allows us to identify and quantify different types of cells, through individual cell measurements.
@@ -373,11 +378,12 @@ To enable optical illumination, separation and collection of various fluorochrom
 \paragraph{Sample staining} 
 When staining a sample, fluorochromes are conjugated with antibodies with an affinity for the target polypeptide we wish to quantify.
 The target can be external, for example a cell receptor, or internal, for example a transcription factor or a cytokine.
-If the target is internal, the cells have to undergo permeabilisation which can deteriorate the general quality of the staining.
+If the target is internal, the cells have to undergo permeabilisation that can deteriorate the general quality of the staining.
 Fluorochromes should be selected to minimise overlapping of their emission spectra.
 Spectral overlap, also known as spillover, leads to a convoluted signal reaching the detectors.
-Antibodies, are also a potential source of noise, since both primary and secondary antibodies may bind to more than one target.
-Antibodies differing in the constant regions of the heavy and light chains, known as isotypes, or non-immune sera, can be used to control non-specific staning and/or reduce non-specific binding by blocking secondary targets.
+Antibodies are also a potential source of noise, since both primary and secondary antibodies may bind to more than one target.
+Antibodies differing in the constant regions of the heavy and light chains, known as isotypes, or non-immune sera, can be used to control non-specific staining
+and/or reduce non-specific binding by blocking secondary targets.
 %Secondary antibodies known as isotypes can be used to reduce non-specific binding by blocking secondary targets.
 
 \paragraph{Running a sample on the flow cytometer}
@@ -391,7 +397,7 @@ Light scattered in the forward direction (diffracted light) is correlated with t
 The absorbed light is later emitted as heat and fluorescent light.
 The intensity of the scattered and fluorescently emitted light measured by the detector thus provides quantitative information about the correlates of size and granularity,
 and the presence of certain fluorescently-marked molecules for each cell.
-When examining leukocytes, using only the physical properties provided by the scattered light intensity it is possible to distinguish lymphocytes from monocytes and more granular neutrophils.
+When examining leukocytes using only the physical properties provided by the scattered light intensity, it is possible to distinguish lymphocytes from monocytes and more granular neutrophils.
 Combining this information with the fluorescent intensities it is possible to further distinguish between different types of lymphocytes which have in common certain cellular receptors or transcription factors.
 
 \paragraph{Fluorescent crosstalk}
@@ -426,12 +432,12 @@ This compensation step is usually performed after all the data from an experimen
 %\backslashbox{Signal}{Detector} & Alexa-488 & PE-Cy7 & APC & PE & Alexa-700 & Pacific Blue \\ 
 \backslashbox{Signal}{Detector} & PMT 1 & PMT 2 & PMT 3 & PMT 4 & PMT 5 & PMT 6 \\ 
   \hline
-Alexa-488    & 100 &   0 &   0 &  16 &   0 &   0 \\
-PE-Cy7       &   0 & 100 &   0 &   1 &   2 &   0 \\
-APC          &   0 &   0 & 100 &   0 &  30 &   0 \\
-PE           &   2 &   1 &   0 & 100 &   0 &   0 \\
-Alexa-700    &   0 &   1 &   2 &   0 & 100 &   0 \\
-Pacific Blue &   0 &   0 &   0 &   0 &   0 & 100 \\
+Alexa-488    & 1   & 0   & 0   & 0.16 & 0   & 0 \\
+PE-Cy7       & 0   & 1   & 0   & 0.1  & 0.2 & 0 \\
+APC          & 0   & 0   & 1   & 0    & 0.3 & 0 \\
+PE           & 0.2 & 0.1 & 0   & 1    & 0   & 0 \\
+Alexa-700    & 0   & 0.1 & 0.2 & 0    & 1   & 0 \\
+Pacific Blue & 0   & 0   & 0   & 0    & 0   & 1 \\
    \hline
 \end{tabular}
 \end{center}
@@ -462,7 +468,7 @@ Notice that there is non-negligeable spillover (\SI{30}{\percent}) of APC into P
 %Cells may clump together, antibodies may be none specific, cells die causing cell debris, fluorochromes can deteriorate and not fluoresce in the expected spectrum.
 %All these factors tend to result in erratic or misleading fluorescence reading which contribute to making the results noisy and hard to analyse.
 
-Compensation to account for fluorescence crosstalk, is just one of the intricacies of flow data.
+Compensation to account for fluorescence crosstalk is just one of the intricacies of flow data.
 Other intricacies are data format
 and the choice of
 the data transformation,
@@ -476,16 +482,16 @@ that allows files created by one type of acquisition hardware and software to be
 The first \gls{FCS} format for data files was FCS 1.0 \citep{Murphy:1984ev}.
 The standard was later updated in 1990 as FCS 2.0 \citep{Anon:1990ce} and again in 1997 as FCS 3.0 \citep{Anonymous:vr}.
 FCS 2.0 and FCS 3.0 are the current two main competing standards.
-FCS 2 is a logarithmically compressed format which does not allow negative intensities.  
+FCS 2.0 is a logarithmically compressed format which does not allow negative intensities.  
 Instead negative values reported by the instrument are arbitrarily assigned the minimum value.
 This leads to what is described as the log artefact: a pile up of intensities on the axes for low intensity values.
-FCS2 data are integers in the range $1$ to $10000$ (4 decades).
-FCS 3 on the other hand is closer to the raw data, covers a greater range and allows for negative values.
-FCS 3 leaves more flexibility to the choice of transform.
-FCS 3 are floating point numbers in the range $-211$ to $262143$ (8 decades)
-FCS 2 is more trivial to process as it requires practically no post processing except for a log transform.
-FCS 3 requires more careful thought as it leaves to us the compensation and the choice of a suitable transformation.
-For low intensity fluorescence, FCS 3 is the preferred format as the truncation at zero of intensity values for FCS 2 can lead
+FCS 2.0 data are integers in the range $1$ to $10000$ (4 decades).
+FCS 3.0 on the other hand is closer to the raw data, covers a greater range and allows for negative values.
+FCS 3.0 leaves more flexibility to the choice of transform.
+FCS 3.0 are floating point numbers in the range $-211$ to $262143$ (8 decades)
+FCS 2.0 requires practically no post processing except for a log transform.
+FCS 3.0 requires more careful thought as it leaves to us the compensation and the choice of a suitable transformation.
+For low intensity fluorescence, FCS 3.0 is the preferred format as the truncation at zero of intensity values for FCS 2.0 can lead
 to loss of information (\Cref{figure:fcs2-fcs3}).
 %In my work so far I have been using FCS 2 to facilitate comparison to the manual analysis but in the future I intend to use FCS 3 instead.  
 %FCS 2 has compensation pre-applied whereas in FCS 3 compensation matrix is stored as part of the data format and needs to be applied manually.
@@ -498,19 +504,19 @@ to loss of information (\Cref{figure:fcs2-fcs3}).
 \begin{subfigure}[b]{.4\textwidth}
     \centering
     \includegraphics[scale=.3]{figures/fcs2.pdf}
-    \caption{ FCS 2 }
+    \caption{ FCS 2.0 }
 \end{subfigure}
 ~
 \begin{subfigure}[b]{.4\textwidth}
     \centering
     \includegraphics[scale=.3]{figures/fcs3.pdf}
-    \caption{ FCS 3 }
+    \caption{ FCS 3.0 }
 \end{subfigure} 
 \mycaption{figure:fcs2-fcs3}
-  {The same data encoded in FCS2 (a) and FCS3 (b).}
+  {The same data encoded in FCS 2.0 (a) and FCS 3.0 (b).}
   {
     %FCS 2 truncates intensity values at zero while FCS 3 allows for negative intensities.
-    In FCS 2 (a), truncation at zero leads to loss of low intensity clusters as compared to FCS 3 (b).
+    In FCS 2.0 (a), truncation at zero leads to loss of low intensity clusters as compared to FCS 3.0 (b).
   }
 \end{figure}
 
@@ -521,9 +527,9 @@ As fluorescence intensity tends to scale multiplicatively, intensity data needs 
 Clustering algorithms based on variance (average distance to the mean) perform poorly on skewed data, and in general humans are more comfortable dealing
 with data on a linear scale.
 %Given a finite range (number of channels/bins), a logarithmic transform can be used to maximise the range of data that can be captured by a detector.
-Given FCS 2 data is strictly positive, a simple $\log_{10}$ transform is usually applied to linearise the data.
-As FCS 3 allows for negative values a different transform is required.
-Transforms which are closer to linear near zero are preferred, 
+Given FCS 2.0 data is strictly positive, a simple $\log_{10}$ transform is usually applied to linearise the data.
+As FCS 3.0 allows for negative values a different transform is required.
+Transforms that are closer to linear near zero are preferred, 
 since the logarithmic transform is distorting (\Cref{figure:log10-deform})
 for low intensity values \citep{Durbin:2002tj,Tung:2006uw}.
 \begin{figure}
@@ -540,12 +546,12 @@ for low intensity values \citep{Durbin:2002tj,Tung:2006uw}.
 }
 \end{figure}
 %this transform distorts the data: it shrinks the distance between points making clusters less distinguishable
-Some appropriate transformations for FCS 3 are the Generalized Arcsinh, the Logicle transform,
+Some appropriate transformations for FCS 3.0 are the Generalized Arcsinh, the Logicle transform,
 the LinLog and the Generalized BoxCox \citep{Bagwell:2005he,Parks:2006gaa,Finak:2010is}.
 Given the data, parameters for these transformations can be estimated using maximum likelihood assuming a multivariate Gaussian distribution of the data \citep{Finak:2010is}. 
-However as illustrated by \citet{Tung:2006uw}, care needs to be taken as the transforms can introduce spurious peaks in the intensity distribution around zero.
+However, as illustrated by \citet{Tung:2006uw}, care needs to be taken as the transforms can introduce spurious peaks in the intensity distribution around zero.
 The Logicle transform as defined by \citet{Parks:2006gaa},
-is the most widely used transform for FCS 3 data and is the one I will be using in this thesis.
+is the most widely used transform for FCS 3.0 data and is the one I used in this thesis.
 It takes as input the w parameter which influences the linearization width around zero in asymptotic decades.
 The influence of the w parameter on the shape of the transformed intensity distribution is illustrated in \Cref{figure:logicle-transform-w}.
 %\Cref{figure:logicle-transform}.
@@ -646,7 +652,7 @@ The influence of the w parameter on the shape of the transformed intensity distr
 
 
 \paragraph{Noise in flow cytometry} 
-Beside these data format and transformation intricacies, there are many sources of noise in flow cytometry which complicate sample comparison and impact reproducibility.  
+Beside these data format and transformation intricacies, there are many sources of noise in flow cytometry that complicate sample comparison and impact reproducibility:
 \begin{itemize}
   \item \textbf{Sample processing and storage conditions noise.}
     Certain surface markers are more fragile than others and may be shed when cells are frozen for storage.
@@ -658,17 +664,17 @@ Beside these data format and transformation intricacies, there are many sources 
     Antibodies have a tendency to be sticky and can bind to other targets in an erratic manner leading to spurious signal.
     The level of non-specific binding can be assessed with isotype antibodies.  
   \item \textbf{Noise linked to the instrument.}
-    The reliability of the lasers and detectors may wither with time.
+    The reliability of the lasers and detectors may decrease with time.
     Fluorescent beads can be used to detect and correct these variations.  
   \item \textbf{Noise due to the flow operator.}
     Sometimes the operator might decide to not collect all the events and for example apply a cutoff on the side and forward scatter.
 \end{itemize}
 All these sources of noise contribute to different patterns of staining and concentrations of debris
 which may lead to spurious cell populations or skew the analysis, complicating the analysis across samples and laboratories.
-Some of these issues are being addressed by the \gls{HIP} consortium standardisation efforts \citep{Maecker:2012gl}
+Some of these issues are being addressed by the \gls{HIP} consortium standardisation efforts \citep{Maecker:2012gl},
 which aims to enhance reproducibility of flow analysis results across laboratories,
 through the use of lyoplates, and agreement on experimental protocols and instrument configurations.
-However data analysis techniques such as normalisation are still necessary to deal with residual noise.
+However, data analysis techniques such as normalisation are still necessary to deal with residual noise.
 
 \section{Normalisation}
 %\section{Normalisation: why it is needed, methods, utility}
@@ -689,11 +695,11 @@ by using local features of the distribution or objects with known properties, su
 %These features can also be added to the sample, commonly known as spike-ins, or
 In microarray, since the number of data points is constant and the distributions are unimodal across samples,
 normalisation methods like quantile normalisation perform well \citep{Bolstad:2003ia}.
-However in flow cytometry, this type of normalisation is not appropriate because samples contain different number of events and 
+However, in flow cytometry, this type of normalisation is not appropriate because samples contain different number of events and 
 the distributions are typically multimodal, as commonly found in datasets containing mixtures of groups.
 %The modes of the distributions or peaks of the density function, represent the average protein quantity carried on the surface of different cell types.
 While in theory, the locations of these modes or peaks of the density function should remain fairly stable across samples provided experimental parameters are kept constant,
-in practise there is often variation attributed to factors which are beyond our control such as long-term instrument decalibration.
+in practise there is often variation attributed to factors that are beyond our control such as long-term instrument decalibration.
 On the other hand, the height of the peaks, the relative frequencies of the cell populations, are expected to change since they are
 are sensitive to sampling variation.
 %In the case of qPCR data, the groups are representative of the copy numbers.
@@ -839,8 +845,8 @@ in order to do the alignment.
 %\paragraph{Identifying Cell Populations with Manual Gating}
 \section{Manual clustering}
 
-Once the data has been made comparable thanks to normalisation, the next task is to identify clusters, which in the case of flow cytometry are groups of cells which share some similar properties,
-which can be matched across samples.  
+Once the data has been made comparable thanks to normalisation, the next task is to identify clusters, which in the case of flow cytometry are groups of cells that share
+some similar properties, which can be matched across samples.  
 
 Given a one, two or three dimensional projection of the data, clusters can in some cases, be identified by eye.
 %In the context of flow cytometry, clusters constitute cell populations identifiable by the concomitant expression of internal or surface markers.
@@ -894,7 +900,7 @@ number of clusters.
 \subsection{Model-based methods}
 
 Model-based methods stipulate that flow data can be explained by a mixture of multivariate distributions where each distribution is representative of a different type of cell.
-A nice property of these methods is that they can assign a probability of population membership to each cell which can be exploited in downstream statistical analysis to account for uncertainty in the clustering.
+A useful property of these methods is that they can assign a probability of population membership to each cell which can be exploited in downstream statistical analysis to account for uncertainty in the clustering.
 The first and simplest of these methods applied to flow cytometry data \citep{Chan:2008gq}, assumed cell populations could be represented by
 a \acrfull{GMM} of $K$ multivariate Gaussians:
 
@@ -1001,10 +1007,11 @@ because maximising the log-likelihood of a multivariate Gaussian is asymptotical
   As the variance of the two Gaussian components shrinks, the soft decision boundary approaches the hard K-means decision boundary, so that we go from
   a soft probabilistic assignment to a hard binary assignment. 
 }
+
 %However when spillover occurs the correlation has no biological meaning but the correlation can still be used to identify clusters.
 %The correlation within clusters is different than the overall correlation.
 %of tightly connected points.
-There are numerous clustering methods which rely on density estimation:
+There are numerous model-free clustering methods which rely on density estimation:
 \begin{itemize}
   \item Density Based Merging (DBM) uses a region growing density approach so that points of high density are linked \citep{Walther:2009gn}.
   \item Flow Clustering without K (FLOCK) relies on grid based density estimation in higher dimensions \citep{Qian:2010ep}.
@@ -1067,6 +1074,7 @@ This is the approach implemented by the \Rfunction{clara} (Clustering Large Appl
 %$N$ when $N$ is large.
 If subsamping is used only once to reduce the number of datapoints then 
 caution is required, since uniform downsampling runs the risk of discarding smaller clusters.
+%Sampling noise accentuates the differences in density between small and large clusters.
 One workaround is to account for local density so that most of the downsampling occurs in regions of high-density,
 thus conserving low density regions.
 Once the downsampling has sufficiently reduced the number of points so that distance matrix may be computed,
@@ -1079,7 +1087,7 @@ Unfortunately, this seeming flexibility can come at the price of poor interpreta
 and the parameters tend to be dataset specific.
 %These methods return a clustering of the data but do no estimate any parameters from the data.
 %They are also reliant on parameters tuned to a specific dataset, which complicates comparison of clustering results across datasets.
-Furthermore, these parameters do not necessarily have an intuitive interpretation or biological significance which makes setting their value hard to justify.
+Furthermore, these parameters do not necessarily have an intuitive interpretation or any biological relevance, which makes setting their value hard to justify.
 %Local parameters are hard to interpret, we prefer global parameters such as total number of clusters.
 %These methods run the risk of overfitting or tweaking the parameters till the results look ``right''.
 %Chosing an appropriate parameter relies on some heuristic and the choice of parameter is particular sensitive to the size and dimensions of the dataset.

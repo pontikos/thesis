@@ -119,7 +119,7 @@
 
 %my figure
 \newcommand{\myfigure}[4]{
-\begin{figure} [h]
+\begin{figure}[bh]
 \begin{center}
    \includegraphics[#1]{figures/#2.pdf}
 \end{center}
@@ -190,10 +190,11 @@
 \maketitle 
 \end{titlepage}
 
-%\input{misc/dedication}
+\input{misc/dedication}
 \input{misc/declaration}
-%\input{misc/acknowledgement}
-%\input{misc/abstract}
+\input{misc/acknowledgement}
+\input{misc/publications}
+\input{misc/abstract}
 
 
 % *********************** Adding TOC and List of Figures ***********************
@@ -212,12 +213,12 @@
  %(\ifthenelse{\DTLisSubString{#1}{\delimN}\OR\DTLisSubString{#1}{\delimR}}%
   %{pages #1}{page #1})}
 
-\printglossary[type=\acronymtype]
-\fancyhf{}
+\printglossary[title=Abbreviations,type=\acronymtype]
+%\fancyhf{}
 \printindex{genes}{Genes}
-\fancyhf{}
+%\fancyhf{}
 \printindex{snps}{SNPs}
-\fancyhf{}
+%\fancyhf{}
 \printindex{proteins}{Proteins}
 
 
