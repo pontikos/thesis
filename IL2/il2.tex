@@ -1025,14 +1025,41 @@ Hence I tried and compared the output of both approaches.
 
 \subsection{Binary recursive partitioning of pSTAT5 response with regression trees} 
 
-The previous approach uses the core markers to cluster the data, and then attempts to identify clusters which have a high pSTAT5 response.
+The previous approach uses the core markers to cluster the data across batches (aliquots of the same sample stimulated at different concentrations of proleukin),
+and then attempts to identify clusters which have a high pSTAT5 response.
+An alternative to clustering would be to partition a sample on the the core marker
+space into regions containing approximately the same number of events,
+then to apply the same partition scheme across samples in the same batch.
+This is usually done by splitting on the median of the marker with the highest variance,
+so that 50 percent of the datasets is assigned to each branch.
+The process is applied recursively to each subregion until
+a minimum size or maximum number of recursive steps is reached.
+Splitting the dataset in this way offers a number of benefits.
+It allows for fast retrieval of data points based on their coordinates.
+%This is a trick used in sorting algorithms to speed up the lookup of items.
+Also points can be approximated by the median of their closest bin so that the number
+of points in the dataset can be reduced.
+K dimensional trees use this approach to construct a balanced binary tree.
+The constructed tree is used to refine the search to the bin within which the point lies.
+This data structure can also be exploited to find the approximate nearest neighbour.
+The reason it is approximate is because the approximate nearest neighbours are assumed
+to lie within the same bin whereas points on the boundary are likely to within
+a neighbouring bin.
+Variants of this algorithm allow for a linear combination of more than one marker,
+or for more than one split at each level.
+However, while there are case where these variants are more appropriate,
+generally they tend to overpartition data so that the bins.
+
+
+Instead of using the variance of the core marker to guide the partitioning,
+the CART uses the variance of the functional marker to guide the partitioning.
 %This yields a baseline relative response per cell which provides additional information which can be used in the gating.  
 %Here I suggest another approach of identifying responsive cells by recursive partitioning on the core marker space with a \gls{CART} on the pSTAT5 response.
 Instead since I am looking to identify cell subsets which respond to proleukin,
 a natural solution would be to use \acrfull{CART} so that the variance in the pSTAT5 response is used to guide the clustering on the core markers.
 %Using the nearest neighbour joining approach described in the previous section, it is possible to assess the 
 The \gls{CART} proceeds by considering each core marker coordinate as a potential splitting point.
-The splitting point which minimises the deviance, the sum of the within branch variance of the response variable,
+The splitting point which minimises the sum of the within branch variance of the response variable,
 is selected and the data is split between the left and the right branch.
 This process is applied recursively until some minimum leaf node size is reached.
 The tree can then be pruned to a certain number of leaf nodes where each leaf node represents a partition obtained by applying the cuts
