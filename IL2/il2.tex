@@ -825,6 +825,9 @@ cell phenotypes in the four cell subsets considered.
 %However the relative difference in response between 10U and 1000U seems much more important in lymphocytes than in the whole sample
 %suggesting that the non-CD4\positive lymphocytes in the whole sample reach saturation at 0.1U.
 %Also since the resting sample sample displays a shoulder this suggests a mixture of resting and already semi-activated lymphocytes.
+Using the methods described in the previous section, I failed to significantly improve the reproducibility of this assay.
+This implies that this dataset is unlikely to be useful for association testing.
+However, it still contains useful biological information.
 
 DILT1D and other clinical trials of IL-2 have largely focused on lymphoyctes. %CD4\positive cells.
 However, biologists know that any cell which carries high levels of any of the trimeric components of the IL-2 receptor,
@@ -1025,7 +1028,8 @@ Hence I tried and compared the output of both approaches.
 
 \subsection{Binary recursive partitioning of pSTAT5 response with regression trees} 
 
-The previous approach uses the core markers to cluster the data across batches (aliquots of the same sample stimulated at different concentrations of proleukin),
+The previous approach uses the core markers to cluster the data across batches
+(aliquots of the same sample stimulated at different concentrations of proleukin),
 and then attempts to identify clusters which have a high pSTAT5 response.
 An alternative to clustering would be to partition a sample on the the core marker
 space into regions containing approximately the same number of events,
