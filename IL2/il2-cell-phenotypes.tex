@@ -1,0 +1,47 @@
+
+\subsection{pSTAT5 response cell phenotypes}
+
+The sensitivity of the response in the four manually gated cell subsets is confirmed by plotting proleukin dose against pSTAT5 MFI (\Cref{figure:pstat5-mfi-auc-celltypes}.a).
+It also illustrates that pSTAT5 saturation occurs in naive and memory regulatory T cells at 10 units of proleukin while naive effector cells do not reach
+saturation even at the highest dose of 1000 units.
+%Provided the pSTAT5 distribution is unimodal then a shift in the peak of the pSTAT5 density should correspond to a difference in the MFI,
+%however this does not hold if the distribution is not unimodal as seen for the naive effectors (\Cref{figure:dose-effect-pstat5-cellsubsets}).
+An alternative metric which captures the response of the whole distribution across all doses instead of single dose, 
+is the area between the pSTAT5 cumulative density functions in the resting and stimulated samples.
+This relates to the Kolmogorov-Smirnoff distance which is defined as the maximum vertical distance between cumulative density functions,
+but also captures the horizontal dimension.
+%The repeatability of these metrics was tested but I found none to be repeatable neither in the gated subsets nor any of the larger subsets.
+%(\Cref{XXX}).
+%Instead I decided to use the area under the pSTAT5 dose-response curve for each cell type (\Cref{figure:pstat5-auc-celltypes}).
+
+%The repeatability of pSTAT5 MFI at all doses in each cell subset was tested using the manual gating and my method which allowed for
+%the gates to move so as to recenter on the data (\Cref{figure:repeatability-gating}).
+%It was found that overall the pSTAT5 MFI was poorly repeatable using both gating approaches,
+%with the most sensitive cells to proleukin, showing the worse repeatabilty in pSTAT5 MFI.
+%To capture the response across all days, the sum of the pSTAT5 MFI was used.
+%and not just the portion which crosses the positivity treshold,
+%There are two established metrics for measuring the distance between distributions:
+%the Kullback-Leibler (KL) and Kolomogorov-Smirnoff (KS) distance.
+%the KL distance is not symmetric
+
+%The relative shift in the pSTAT5 distribution between resting and stimulated can be measured by computing the area between the cumulative density functions of the unstimulated and stimulated samples.
+% As the pSTAT5 signal increases in a stimulated sample it is expected that the CDF shifts right.
+% The resting provides the baseline.
+%The area between the pSTAT5 CDF in the resting sample and the pSTAT5 CDF in the stimulated sample is measure of the strength of the response.
+%Ten of these low responders from the Cambridge Bioresource were recalled for re-analysis to assess stability of this phenotype.
+%However this cell phenotype was not found to be reproducible.  
+%Using the automatically adjusted gates from manual gating, we assess the repeatability of the response in the four identified cell subsets.
+%Defining a threshold for pSTAT5 positivity is done using a similar approach as in \Cref{chapter:il2ra}.
+%The top percentile of the pSTAT5 distribution in the resting sample is used as a threshold as described in %\Cref{ }.  
+%Some individuals with a reduced pSTAT5 response consistent across studied cell types were identified by Tony, however there was no evidence of association with disease status.  
+%There are unsolved day to day variation issues, better to do in bulk from frozen once Foxp3 IC stain works
+%A question of potential interest with whether the low responders show any other immunological phenotype such as for example Th17, IL-21 production, Tfh proportion?
+
+%Normalisation can rely on peak alignment of the ungated sample but the peaks are often hard to reliably identify.
+%The fluorescent marker required for pSTAT5 is Alexa Fluor 488
+%Absolute MFI is a not a reliable way to assess pSTAT5.
+%We need to subtract the background mfi.
+%We can either do this on a cluster basis or use ann joining.
+%What is more repeatable?  
+
+

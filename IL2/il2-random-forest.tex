@@ -1,0 +1,39 @@
+
+\subsection{Prediction of pSTAT5 response with Random Forests} 
+Instead of trying to identify clusters, an alternative is to try to predict pSTAT5 response from only core marker information.
+I found that using methods like \gls{RF} and \gls{MARS},
+I could approximate the pSTAT5 response with a multivariate non-linear function within
+the CD4\positive lymphocytes.
+%This could be useful for predicting the pSTAT5 response from only core marker information.
+%and contain more than N points.
+%Need to give more weight to pSTAT5 in clustering.  
+%It has been hypothesised that certain lymphocyte subsets are less responsive to \cytokine{IL-2} stimulation in type 1 diabetics than in healthy controls.  
+%How many cell pops are they?
+\gls{RF} is ran with the default parameters which grows 500 trees up to x nodes.
+Each node in the tree is one the core markers which is used to split the data.
+Two important summary statistics of a RF are the \gls{RSS} and the IncNodePurity parameter, a measure of variable importance in the
+construction of the random forests, which are averaged over all trees in the forest.
+At a node the IncNodePurity is defined as the expected \gls{RSS} decrease before and afer the split.
+The IncNodePurity parameter of the RF is average overall all nodes in over all trees it the forest.
+The average variance explained was \pct{40} over all \gls{RF} with some \gls{RF} explaining between \pct{20} and \pct{55} of the variance.
+In \Cref{figure:IncNodePurity}, the IncNodePurity is normalised per forest so that it lies between 0 and 1, to make it comparable across forests.
+Interestingly, the CD45RA marker is more important at explaining the variation in pSTAT5 response than CD25.
+
+However, extracting a gating strategy from these models is not obvious.
+Here we seek an interpretable model which can be summarised as rules to identify groups of cells which are sensitive to proleukin.
+Ideally, we would like to identify cells types which are unimodal on pSTAT5 (like the naive and memory T regs) through proleukin doses,
+although these cells may not necessarily be unimodal on the other markers.
+%Also a RF applied on sample is not generalisable to another sample as it sensitive to small changes in the data, though less so than a CART.  
+\myfigure{scale=.5}
+{IncNodePurity}
+{
+  Distribution across all samples of the normalised IncNodePurity parameter from \acrfull{RF}
+}
+{
+  The IncNodePurity parameter is a measure of variable importance in the construction of the \acrfull{RF}.
+  Interestingly, the CD45RA marker is more important than the CD25 marker in the pSTAT5 response prediction.
+  This could because of the distinctly bimodal nature of the CD45RA distribution, which allows discrimination of memory cells which are high in CD25
+  from naive cells, which are lower in CD25.
+}
+
+
