@@ -84,27 +84,45 @@ Often clusters are not easily identifiable because of noise or insufficient numb
 %and become harder to call when the number of dimensions increases (they are not linearly separable in all dimensions).
 Knowing certain properties of the clustering can help, especially in identifying smaller groups.
 
+
 In \cref{chapter:kir}, I used prior information about the copy number of the \gene{KIR3DL1}/\gene{KIR3DS1} genes, obtained from qPCR,
 in order to identify clusters in the SNP dataset.
-The \gls{knn} was used to classify points unlabelled points from the vote of their K nearest labelled neighbours.
-Euclidean distance is used to defined the distance.
+The \gls{knn} was used to classify points unlabelled points (without qPCR data) from the vote of their K nearest labelled neighbours.
+Euclidean distance was used to define the distance.
 The optimal value of K was selected by minimsing the \gls{LOOCV}.
-Another source of prior information,
+Another source of prior information in actually labelling the samples with qPCR,
 could have been to use expected copy number group frequencies obtained from previous studies 
 \citet{Jiang:2012cf}, in order to identify copy number groups in the qPCR data.
 
-In the flow data, the manual gates can be used as prior information in order to guide the automatic gating.  
-Manual gates give good initial starting parameters but can, as is done in flowClust, be used to define the priors in the mixture model,
-so to guide the parameter estimation.
-If several samples have been manually gated then these can be incorporated in the definition of the prior on the parameters of the mixture model.
-FlowClust as opposed to Mclust offers the option of defining per component priors.
-Another way that manual gating can be used is to use the manual labelling of the data by converting the labelling in one sample to
-the mean and covariance of an ellipse which can then be applied to another sample.
-The parameters of the ellipse can then be influenced by the data.
+In the flow data, the manual gates contribute prior information to guide the automatic gating.  
+
+The established way in FlowJo is to use the gate coordinates and apply the same
+gate coordinates across samples.
+Manual gates can also provide initial starting parameters to a clustering algorithm,
+by calculating the mean and the covariance of the gated populations.
+%For example, the labelling in one sample to the mean and covariance of an ellipse which can then be applied to another sample.
+Using an EM style algorithm, the parameters of the ellipse can then be influenced by the data.
 I have let the mean of the ellipse be influenced by the data while the covariance was set as fixed.
 The Mahalanobis distance then allows us to go from a mean and covariance of an ellipse to a classification by defining a threshold
 above which points are excluded from the ellipse.
+
+If the manual gating is done in several samples then 
+they can be combined to define the priors in the mixture model,
+so to guide the parameter estimation.
+as is done in flowClust,
+If several samples have been manually gated then these can be incorporated in the definition of the prior on the parameters of the mixture model.
+%FlowClust as opposed to Mclust offers the option of defining per component priors.
 %This threshold can be defined by using a chi squared distribution in the one dimensional case.
+
+One outstanding problem remains with supervised clustering however,
+how to account for unlabelled data, or in the context of flow cytometry,
+nuisance clusters which are not part of the gating?
+While in manual gating these points are discarded, in automatic gating all points need
+to be accounted for and consequently these points influence the gating.
+One solution could be to define a background cluster but this is unlikely to work
+for multimodal distributions.  Another solution could be to allow for the creation of a
+large number of clusters.
+
 
 Supervised clustering can be really beneficial in trying to identify rare subsets.
 This is because rare subsets, by definition, may not always be visible in all samples.
@@ -268,23 +286,28 @@ Normalisation or meta-clustering is a necessary step when data is pooled across 
 \paragraph{Normalising before clustering: good for pooling to find identify rare populations}
 
 If applied before the clustering it enables data pooling to identify clusters across all samples.
-If the alignment isn’t perfect, the clustering results can be refined across all samples.
+Pooling may improve the coefficient of variation of populations but also facilitates
+matching clusters across samples, a step known as meta-clustering.
 Pooling is crucial for identifying rare groups which are difficult to identify within one sample.
+If the alignment isn’t perfect, the clustering results can be refined across all samples.
 
-Theoretically, if flow cytometry data was perfectly aligned across days then gates should not be moved.  
-Threshold gates should not move unless they are relative to some internal control.
-The cell phenotypes which are usually measured are the mean intensity of a particular channel, or the percentage of cells.
-Depending on the shape of the distribution these can be more or less sensitive to the position of the gate.
+Theoretically, if flow cytometry data was perfectly aligned across days then gates should not be moved, unless they are dependent on some internal control.  
+For example a threshold gate on a positive subset may be defined in relation to
+another population of cells.
+
+As discussed in \Cref{chapter:il2ra},
+the cell phenotypes usually measure, the mean intensity on a particular marker, or the percentage of cells can be more or less sensitive to the position of the gate,
+depending on the shape of the distribution.
 
 
 \paragraph{Conclusion}
 
-Normalisation is a necessary process for comparing across samples.
-However, normalisation before clustering should be avoided when possible because 
-it can easily over correct.
-Normalisation is meant to be a simpler preliminary step to simply the clustering, however, in flow cytometry,
-normalisation can be as challenging as performing the gating.
+Whilst normalisation is generally a necessary process for pooling data or comparing across samples, over correction can be detrimental to the analysis.
+Normalisation is meant to be a simpler preliminary step to simply the clustering,
+however, in flow cytometry, because of batch effects and unequal number of events per sample, normalisation can be as challenging as performing the gating.
 %generally relies makes big assumptions and leads to major changes in the data.
+
+However, when they are insufficient data points, pooling is necessary.
 Clustering sometimes relies on pooled samples when they are not sufficient data points
 to form clusters such as in the case of rare subsets like 3-0 in KIR or Tregs in flow cytometry data.
 In this situation some form of normalisation is usually necessary.
@@ -314,6 +337,7 @@ We have only considered the univariate density function here but identification 
 When applying a linear transform to multivariate data the correlation between the dimensions is preserved since the multiplicative factors cancel out.
 However the covariance changes.
 Applying a non-linear transform also changes the correlation.
+If the data is binned using flowBin or clustered using SPADE then a transform could be a mapping like Earth Moving to make both distributions of event proportions identifical across samples.
 
 \paragraph{Combining transforms with clustering}
 
@@ -327,11 +351,10 @@ However the parameters need to be transformed back, for allowing for a different
 This is an issue if comparing intensity data but obviously if comparing cell ratios then the transform is of little consequence.
 Nonetheless the transform can have an important effect on the clustering result.
 
-%Clustering is not an automatic task, but an iterative process of knowledge discovery (wikipedia).  
-Clustering is a method of discovery not a fully automated process
+Clustering is an iterative method of discovery not a fully automated process.
+%Some tuning is required
 It will often be necessary to modify data preprocessing and model parameters until the result achieves the desired properties.  
 Clustering can also be viewed as a latent variable problem where the cluster labels are considered to be the missing data.
-
 
 
 
@@ -345,6 +368,7 @@ Decomposing the variance into within sample and between variation
 Subset analysis is also very important because of a phenomenon known as Simpson’s paradox whereby a trend that is visible in a group may not hold in all subsets of the group and may even be reversed in certain subsets of that group.
 
 When a hierarchical gating approach is taken, errors at the top of the hierarchy propagate down the tree.
+%This approach is chosen for manual gating as it agrees with our very linear way of thinking.
 This complicates an automated approach to step by step gating since errors which occur in earlier steps of the gating may not be recovered from.
 
 In the same way wrongly gating samples can lead to outliers which can create false positive association due to their high leverage,
@@ -400,15 +424,16 @@ Clusters which exist in higher dimensions do not necessarily map to clusters in 
 This has motivated research into how to visualise high-dimensional data in two-dimensions with minimal loss of information.
 In \cref{chapter:il2}, I presented the SPADE which relies on a network visualisation of a dataset using a minimum spanning tree.
 While I agree that visualising high-dimensional data using network representations can be insightful,
-beyond a certain number of nodes these visualisations can quickly become uninformative.
+beyond a certain number of nodes, network visualisations quickly become uninformative.
 Certainly in the case of flow cytometry some clustering or data smoothing is required to reduce the number of points.  
 %There are many more which take more probabilistic approaches like stochastic neighbour embedding
 %My opinion is that this fascination for visualisation boils down to a distrust of computer vision
 %visualisation can also be misleading and lead to oversimplifications
 
 
-\paragraph{Experiment vs analysis: the great divide?}
+\paragraph{Experiment vs analysis: a communication problem}
 
+Analysing flow cytometry data has brought to light the many issues surrounding the generation and analysis of data.
 Perhaps the greatest obstacle to standardising analysis is our inherent dislike of standards.
 However, simple things like naming conventions waste precious man hours.
 To err is human,  which is why automation is necessary.
@@ -422,6 +447,7 @@ A great deal of time was also spent on seeing if clustering could be fully autom
 One approach is to select large K and then merge clusters together with flowMerge.
 My approach was generally to select a K that gave consistent clustering results across samples.
 
+While I am sure these observations are not only specific to flow cytometry, they are more apparent perhaps in flow given how much freedom flow cytometry offers both in terms of generation and analysis.
 
 
 \paragraph{ Incomplete experiments and small sample sizes}
@@ -457,7 +483,7 @@ Presently most flow experiments contain too few samples to do well-powered assoc
 \paragraph{ Stability of markers }
 
 Staining in flow cytometry is notoriously noisy.
-Even when using the same fluorochrome-antibody panel, the shape and location of clusters is not stable.
+Even when using the same fluorochrome-antibody panel and the same PMT voltage, the shape and location of clusters is not stable.
 The treatment of the cells can also lead very different scatter patterns (example Tony vs Marcin).
 While the scatter channels are very noisy because of debris, for a given panel and experimental protocol,
 the location of the clusters should not move much on the scatter channels because the morphological attributes of the cells should not be dependent on staining titration.
@@ -491,6 +517,7 @@ is to draw polygons in R and use the \Rfunction{in.polygon} to extract points in
 
 Time of flight cytometry (CyTOF) is a biotechnology which combines mass spectometry with cytometry.
 The throughput is not as high as fluorescence flow cytometry but the number of markers which can measure up to 34 markers.
+Also no side and forward scatter information is given.
 It cannot be used for sorting as the cells are destroyed when measured.
 Since it does not report side and forward scatter live/dead markers tend to be used instead to spot debris.
 
@@ -548,7 +575,7 @@ Both of these can be included as part of the clustering step.
 Logarithmic transform greatly influence the identification of lower intensity populations which overlap into the negative range.
 The wrong transform can introduce splits giving rise to spurious cell populations.
 This is why applying a straightforward arcinsh transform like is done in spade is wrong.
-In FlowJo, the transform is selecting visually, given the knowledge of what cell populations to expect.
+In FlowJo, the transform is selected visually, given the knowledge of what cell populations to expect.
 The only existing automated  methods of optimally selecting a transform that I am aware of are flowTrans and flowClust.
 FlowTrans assumes an underlying Gaussian distribution and used maximum likelihood to estimate the optimal transform parameter.
 But there is still the question of which transform function to apply?
@@ -568,8 +595,13 @@ there is a lot of noise between samples.
 % simulate small responsive population?
 
 No matter how sophisticated the method, there is no replacement for good data.
-Often this a judgment call which needs to be made with prior information which relies on havin seen a large number of samples and hence not available to the automated method.
+Being able to make this judgment call between good and bad data necessitates understanding of the experimental context.
+This prior knowledge is acquired through having seen a large number of samples and hence not encoded into an automated method.
 
+Processing in larger batches or perhaps reducing the human element in flow cytometry is a first step towards automation.
+%http://www.aber.ac.uk/en/cs/research/cb/projects/robotscientist/
+However as the number of samples grows so will the need for computational methods
+and the gap between the biological of computational way of thinking will become less striking.
 
 
 
