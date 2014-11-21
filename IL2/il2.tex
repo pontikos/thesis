@@ -25,13 +25,13 @@ the alpha chain of the trimeric \protein{IL-2} receptor, on memory \protein{CD4}
 also exhibit decreased sensitivity to \cytokine{IL-2} in terms of decreased MFI levels of
 phosphorylated signal transducer and activator of transcription 5 protein (p\protein{STAT5}),
 STAT5 dimerises or tetramerises on phosphorylation and acts as
-a transcription factor (\Cref{figure:jones-2000}),
+a transcription factor (\Cref{figure:IL2-pathway}),
 which also induces the transcription of \gene{FOXP3}, a transcription factor characteristic of regulatory T cells .
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.75]{IL2/figures/IL2-pathway.jpg}
-\mycaption{figure:jones-2000}
+\includegraphics[scale=0.75]{figures/IL2-pathway.jpg}
+\mycaption{figure:IL2-pathway}
 {Schematic of major IL-2 signaling pathway (taken from \citet{Liao:2013jt}).}
 {
 \protein{CD25} is \protein{IL2RA}, the $\alpha$ subunit of the trimeric \cytokine{IL-2} receptor.
@@ -144,7 +144,7 @@ After a set stimulation time, the samples were fixed, permeabilised and stained,
 on a set of core markers, not expected to be affected by short-term proleukin stimulation,
 CD4, CD25, CD45RA and FOXP3.
 These were used to delineate different cell types, and the functional marker, pSTAT5
-, a signalling protein of the IL-2 pathway phosphorylated on IL-2 stimulation (\Cref{figure:jones-2000}),
+, a signalling protein of the IL-2 pathway phosphorylated on IL-2 stimulation (\Cref{figure:IL2-pathway}),
 was used to measure IL-2 response.
 Samples were analysed individually with flow cytometry, with all \gls{T1D} samples except for two run in parallel with healthy controls
 to account for batch effects (\Cref{figure:IL2-sample-time}).
@@ -250,7 +250,7 @@ gated four CD4\positive lymphocyte subsets (\Cref{figure:tony-cd4-gating}):
 \end{itemise}
 %\begin{figure}[h]
     %\centering
-    %\includegraphics[scale=.75]{IL2/figures/tony-cd4-gating.pdf}
+    %\includegraphics[scale=.75]{figures/tony-cd4-gating.pdf}
     %\caption{  \label{figure:tony-cd4-gating} Manual gating conducted by \contributor{Tony Cutler} to identify:
     %conventional and regulatory naive and memory T cells as well as activated regulatory T cells.
     %}
@@ -262,19 +262,19 @@ gated four CD4\positive lymphocyte subsets (\Cref{figure:tony-cd4-gating}):
 %\includegraphics[scale=.5]{figures/manual-gating.pdf}
 %\begin{subfigure}[b]{.4\textwidth}
 %\includegraphics[scale=.25]{IL2/figures/manual-gating-CB00165D_0U_2012-11-29.pdf}
-  \includegraphics[scale=.75]{IL2/figures/CB00366X_2012-11-07.pdf}
+  \includegraphics[scale=.75]{figures/CB00366X_2012-11-07.pdf}
 %\caption{Resting sample.}
 %\end{subfigure}
 %\begin{subfigure}[b]{.4\textwidth}
-%\includegraphics[scale=.25]{IL2/figures/manual-gating-CB00165D_01U_2012-11-29.pdf}
+%\includegraphics[scale=.25]{figures/manual-gating-CB00165D_01U_2012-11-29.pdf}
 %\caption{Stimulated at 0.1 units of proleukin.}
 %\end{subfigure}
 %\begin{subfigure}[b]{.4\textwidth}
-%\includegraphics[scale=.25]{IL2/figures/manual-gating-CB00165D_10U_2012-11-29.pdf}
+%\includegraphics[scale=.25]{figures/manual-gating-CB00165D_10U_2012-11-29.pdf}
 %\caption{Stimulated at 10 units of proleukin.}
 %\end{subfigure}
 %\begin{subfigure}[b]{.4\textwidth}
-%\includegraphics[scale=.25]{IL2/figures/manual-gating-CB00165D_1000U_2012-11-29.pdf}
+%\includegraphics[scale=.25]{figures/manual-gating-CB00165D_1000U_2012-11-29.pdf}
 %\caption{Stimulated at 1000 units of proleukin.}
 %\end{subfigure}
 \mycaption{figure:tony-cd4-gating}
@@ -287,14 +287,14 @@ and memory effector (black ellipse) and regulatory T cells (red ellipse) (f).
 }
 \end{figure}
 Within each lymphocyte subset, the pSTAT5 distribution was measured, in each of the four samples stimulated at an increasing proleukin dose
-(\Cref{figure:dose-effect-pstat5-cellsubsets}).  
+(\Cref{figure:dose-effect-pstat5-cellsubsets-density}).  
 As expected, the pSTAT5 distribution shifts progressively right for higher doses of proleukin, as more STAT5 is phosphorylated.
-Of the four subsets, the most sensitive cells to proleukin are the smaller memory and naive regulatory T cell subsets (\Cref{figure:dose-effect-pstat5-cellsubsets} b and d),
-then the memory effectors (\Cref{figure:dose-effect-pstat5-cellsubsets} a) and finally the naive effectors (\Cref{figure:dose-effect-pstat5-cellsubsets} c).
+Of the four subsets, the most sensitive cells to proleukin are the smaller memory and naive regulatory T cell subsets (\Cref{figure:dose-effect-pstat5-cellsubsets-density} b and d),
+then the memory effectors (\Cref{figure:dose-effect-pstat5-cellsubsets-density} a) and finally the naive effectors (\Cref{figure:dose-effect-pstat5-cellsubsets-density} c).
 This correlates with the level of \protein{CD25} expressed by these cells.
 
-%\includegraphics[scale=.45]{IL2/figures/dose-effect-pstat5-cellsubsets-density.pdf}
-%\includegraphics[scale=.45]{IL2/figures/dose-effect-pstat5-cellsubsets-density-baseline.pdf}
+%\includegraphics[scale=.45]{figures/dose-effect-pstat5-cellsubsets-density.pdf}
+%\includegraphics[scale=.45]{figures/dose-effect-pstat5-cellsubsets-density-baseline.pdf}
 %\includegraphics[scale=.45]{figures/dose-effect-pstat5-cellsubsets-ecdf-joined.pdf}
 \myfigure{scale=.6}
 %individual g
@@ -444,8 +444,8 @@ did not adequately capture the short term variation in pSTAT5 (\Cref{figure:psta
 %This suggests that for this experiment, flurorescent beads do not explain the day to day variation in the pSTAT5 MFI.
 \begin{figure}[h]
     \centering
-    %\includegraphics[scale=.5]{IL2/figures/beads.pdf}
-    %\includegraphics[scale=.5]{IL2/figures/beads.pdf}
+    %\includegraphics[scale=.5]{figures/beads.pdf}
+    %\includegraphics[scale=.5]{figures/beads.pdf}
     %\includegraphics[scale=.75]{figures/alexa488-beads.pdf}
     \includegraphics[scale=.6]{figures/pstat5-beads.pdf}
     \mycaption{figure:pstat5-beads}
@@ -581,7 +581,7 @@ and the percent of pSTAT5\positive (\Cref{figure:pstat5-pos-cellsubsets-repeatab
 %\myfigure{scale=.5}{pstat5-auc-boxplots-celltypes.pdf} { Influence of normalisation method on pSTAT5 area under curve. } { In red the normalisation using the peak alignment in CD4\positive lymphocytes, in blue the normalisation using peak alignment in lymphocytes. }
 %\begin{figure}[h]
     %\centering
-    %\includegraphics[scale=.5]{IL2/figures/pstat5-auc-repeatability-celltypes.pdf}
+    %\includegraphics[scale=.5]{figures/pstat5-auc-repeatability-celltypes.pdf}
     %\mycaption{figure:pstat5-auc-repeatability-celltypes}
     %{ Influence of normalisation on the repeatability of the pSTAT5 area under the curve. }
     %{ In red the normalisation using the peak alignment in CD4\positive lymphocytes, in blue the normalisation using peak alignment in lymphocytes. }
@@ -628,7 +628,7 @@ No normalisation approach stands out as improving the repeatability.
 %\hspace{-2cm}
 %\begin{figure}[h]
 %\centering
-%\includegraphics[scale=.4]{IL2/figures/pstat5-response-cellsubsets-manualgates.pdf}
+%\includegraphics[scale=.4]{figures/pstat5-response-cellsubsets-manualgates.pdf}
 %\caption{ \label{figure:pstat5-response-cellsubsets-gate}
 %Fixed gates (a and b), magnetic gates (c and d).
 %The response is measured in terms of baseline relative pSTAT5 MFI.
@@ -650,19 +650,19 @@ No normalisation approach stands out as improving the repeatability.
 %\centering
 %%\includegraphics[scale=.5]{figures/manual-gating.pdf}
 %\begin{subfigure}[b]{.4\textwidth}
-  %\includegraphics[scale=.25]{IL2/figures/repeatability-pstat5-mfi-Memory-Eff.pdf}
+  %\includegraphics[scale=.25]{figures/repeatability-pstat5-mfi-Memory-Eff.pdf}
 %\caption{Memory Effector}
 %\end{subfigure}
 %\begin{subfigure}[b]{.4\textwidth}
-  %\includegraphics[scale=.25]{IL2/figures/repeatability-pstat5-mfi-Memory-Treg.pdf}
+  %\includegraphics[scale=.25]{figures/repeatability-pstat5-mfi-Memory-Treg.pdf}
 %\caption{Memory Treg}
 %\end{subfigure}
 %\begin{subfigure}[b]{.4\textwidth}
-  %\includegraphics[scale=.25]{IL2/figures/repeatability-pstat5-mfi-Naive-Eff.pdf}
+  %\includegraphics[scale=.25]{figures/repeatability-pstat5-mfi-Naive-Eff.pdf}
 %\caption{Naive Effector}
 %\end{subfigure}
 %\begin{subfigure}[b]{.4\textwidth}
-  %\includegraphics[scale=.25]{IL2/figures/repeatability-pstat5-mfi-Naive-Treg.pdf}
+  %\includegraphics[scale=.25]{figures/repeatability-pstat5-mfi-Naive-Treg.pdf}
 %\caption{Naive Treg}
 %\end{subfigure}
 %\caption{
@@ -803,8 +803,8 @@ cell phenotypes in the four cell subsets considered.
 
 %\begin{figure}[h]
     %\centering
-    %\includegraphics[scale=.5]{IL2/figures/ungated-dose-effect.pdf}
-    %\includegraphics[scale=.5]{IL2/figures/lymph-dose-effect.pdf}
+    %\includegraphics[scale=.5]{figures/ungated-dose-effect.pdf}
+    %\includegraphics[scale=.5]{figures/lymph-dose-effect.pdf}
     %\mycaption{figure:dose-effect}
     %{Dose effect.}
     %{
@@ -1025,50 +1025,136 @@ Hence I tried and compared the output of both approaches.
 
 \subsection{Binary recursive partitioning of pSTAT5 response with regression trees} 
 
-The previous approach uses the core markers to cluster the data across batches (aliquots of the same sample stimulated at different concentrations of proleukin),
-and then attempts to identify clusters which have a high pSTAT5 response.
-An alternative to clustering would be to partition a sample on the the core marker
-space into regions containing approximately the same number of events,
-then to apply the same partition scheme across samples in the same batch.
-This is usually done by splitting on the median of the marker with the highest variance,
-so that 50 percent of the datasets is assigned to each branch.
-The process is applied recursively to each subregion until
-a minimum size or maximum number of recursive steps is reached.
-Splitting the dataset in this way offers a number of benefits.
-It allows for fast retrieval of data points based on their coordinates.
-%This is a trick used in sorting algorithms to speed up the lookup of items.
-Also points can be approximated by the median of their closest bin so that the number
-of points in the dataset can be reduced.
-K dimensional trees use this approach to construct a balanced binary tree.
-The constructed tree is used to refine the search to the bin within which the point lies.
-This data structure can also be exploited to find the approximate nearest neighbour.
-The reason it is approximate is because the approximate nearest neighbours are assumed
-to lie within the same bin whereas points on the boundary are likely to within
-a neighbouring bin.
-Variants of this algorithm allow for a linear combination of more than one marker,
-or for more than one split at each level.
-However, while there are case where these variants are more appropriate,
-generally they tend to overpartition data so that the bins.
+The previous approach first clustered on the core markers across batches,
+%four aliquots of the same sample stimulated at different concentrations of proleukin,
+then built the \gls{MST} from these, allowing for visual identification of
+clusters with a high pSTAT5 response.
+The clustering relied on downsampling which aimed to make the density
+more uniform across the sample so that all points had an equal probability of being
+represented as part of a distinct cluster.
+
+\paragraph{Binary recursive partitioning on core markers}
+An alternative to clustering would be to partition one sample on the the core marker
+space into bins containing approximately the same number of events,
+then to apply the same partitioning scheme across samples within the same batch.
+This can be achieved by recursively splitting on the median of each marker,
+so that at each split, 50 percent of the dataset is assigned to each branch.
+The process is applied recursively to each bin until
+a minimum bin size or maximum number of recursive steps is reached.  
+Typically, the order in which the markers are selected is guided by picking the marker
+with the largest variance or range at each split.
+
+This method was first applied to flow cytometry datasets by Roederer et al (2001) as a method to translate
+a multivariate distribution into a univariate one in order to test statistical significant differences in event counts
+between individual bins or samples.
+%Roederer, M., Moore, W., Treister, A., Hardy, R. R., & Herzenberg, L. A. (2001). Probability binning comparison: a metric for quantitating multivariate distribution differences. Cytometry Part A, 45(1), 47–55. doi:10.1002/1097-0320(20010901)45:1<47::AID-CYTO1143>3.0.CO;2-A
+
+This process is illustrated on the side and forward scatter in \Cref{figure:scatter-rpart-127bin-var} using 127 bins
+each containing  $1/127^{h}$ of the events. Since each bin contains the same number of events, finer binning is applied
+to higher density regions and coarser binning in sparser regions.
+%
+\myfigure{scale=.75}{scatter-rpart-127bin-var}
+{Sample recursively partitioned into 127 bins on side and forward scatter.}
+{
+   The binning is determined in the resting sample (a) and then the same binning is applied across all samples (b, c and d).
+   While each each bin contains the same number of events in the resting sample (a), this does not necessarily hold in the
+   other samples (b, c and d).
+}
+%
+However, as the same binning is enforced across all samples, the relative proportion of events assigned to each bin varies between samples.
+In \Cref{figure:scatter-rpart-127bin-var-prop}, bins containing a lower proportion of events relative to the resting are highlighted in red
+whereas those containing a higher proportion are highlighted in green.
+In particular, bins highlighted in red in samples b, c and d of \Cref{figure:scatter-rpart-127bin-var-prop}
+coincide with high side scatter, low forward scatter, events which are only present in the unstimulated sample
+\Cref{figure:scatter-rpart-127bin-var}.  These events are likely to represent debris.
+%and more generally when comparing distributions,
+%
+\myfigure{scale=.75}{scatter-rpart-127bin-var-prop}
+{Proportion in sample recursively partitioned using 127 bins.}
+{The colour indicates wherever the proportion increases (green) or decreases (red) relative to the resting sample.}
+%
+Applying the binning from the resting sample across stimulated samples and colouring each bin by its pSTAT5 response, the
+response is visualised in \Cref{figure:scatter-rpart-127bin-var-pstat5}.
+%
+\myfigure{scale=.75}{scatter-rpart-127bin-var-pstat5}
+{pSTAT5 response in sample recursively partitioned into 127 bins on side and forward scatter.}
+{
+    The bins which first show  pSTAT5 response (b) are likely to be due to debris found in the resting sample (a)
+    but not in the stimulated samples (b, c and d).
+}
+% 
+Algorithms like flowFP apply recursive partitioning to all core markers.
+If the number of core markers is extended, the number of bins needs to also be increased.
+After having scaled the forward and side scatter so that they have a similar range to the fluorescent markers,
+I increased the number of bins to 1024.
+The two dimensional visualisation are no longer informative since for any two dimensional projection of the data,
+many bins will overlap. Instead a more informative means of visualising potentially interesting bins is to plot
+bin properties such as the pSTAT5 response in each bin against the total change in proportion for each bin across samples
+(\Cref{figure:rpart-1024bin-var}).
+This provides a visual means of identifying bins which may show a large pSTAT5 response simply
+because of larger changes in the underlying proportion of events between samples as were identified
+in \Cref{figure:scatter-rpart-127bin-var-propr}.
+In \Cref{figure:rpart-1024bin-var}, I have highlighted potentially interesting bins which show small changes in proportion across samples
+but large increase in pSTAT5 response.  Projecting these bins back onto side and forward, these bins include the lymphocytes but also
+cover a larger area which includes cells outside of the lymphocyte cluster with a lower forward scatter (\Cref{figure:rpart-1024bin-var})b.
+\myfigure{scale=.65}{rpart-1024bin-var}
+{ pSTAT5 fold change between resting and 1000U against change in proportion for recursive partitioning on all core markers (SSCA, FSCA, CD4, CD3, ) using 1024 bins. }
+{ The bins show the less change in proportion and the highest pSTAT5 response are highlighted in red (a) and plotted on side and forward scatter (b). }
+
+Since the order in which the markers are selected can vary between samples, the partitioning can differ significantly.
+This is the case if the distributions are significanlty different but may also be due to outliers inflating the variance across different samples.
+It may be worth first limiting the influence of outliers on the variance by first bounding the distributions
+or downweighting them by their influence.
+The other issue is that the mean and hence the variance is not representative of a multimodal distribution.
+Preserving the order of the splits while allowing for the bin locations to change complicates means that the bins
+may add too much variation.
+
+\paragraph{Binary recursive partitioning using regression tree on pSTAT5}
+
+The methods described so far have proceeded by first clustering or binning on the core markers across stimulation doses,
+and then visually identifying clusters or bins which show pSTAT5 response.
+
+Since I am looking to identify cell subsets which respond to proleukin, it is natural to include the pSTAT5 response
+into the clustering.
+This can be achieved by using \acrfull{CART} so that the variance in the pSTAT5 response is used to guide the recursive
+partitioning instead of the variance of the core markers.
+Here I will be using the regression part and not the classification part of the algorithm since the pSTAT5 response
+is a continuous variable.
+This approach however relies on knowing the pSTAT5 response at each point in the dataset.
+In order to obtain this I first join datasets on their nearest neighbour in terms of core markers.
+Since joining every event in one dataset to its closest neighbour is not computationally practical,
+I use the \gls{ANN} algorithm described in the previous section which uses recursive partitioning technique on the core markers
+to build a KD-tree structure of the dataset.
+%Another implementation of recursive partitioning is \gls{ANN} algorithm which relies on a K dimensional tree structure of the dataset.
+The K dimensional tree is a balanced binary tree which serves as an indexing data structure,
+allowing faster retrieval of data points based on their coordinates
+%by reducing the number of comparison necessary,
+by refining the search to the bin within which the point lies.
+This can be exploited to find the approximate nearest neighbours which lie within the same bin
+or neighbouring bis.
+%The reason it is approximate is because the approximate nearest neighbours are assumed
+%to lie within the same bin whereas points on the boundary are likely to within
+%a neighbouring bin.
+%This is a trick commonly used in sorting algorithms for speeding up lookup of items.
+%Furthermore, if a large number of bins is used, the number of distinct points in the data can be reduced by approximating
+%each point by the median of its assigned bin or the closest bin median.
+%Using the \gls{ANN}, I join
 
 
-Instead of using the variance of the core marker to guide the partitioning,
-the CART uses the variance of the functional marker to guide the partitioning.
 %This yields a baseline relative response per cell which provides additional information which can be used in the gating.  
 %Here I suggest another approach of identifying responsive cells by recursive partitioning on the core marker space with a \gls{CART} on the pSTAT5 response.
-Instead since I am looking to identify cell subsets which respond to proleukin,
-a natural solution would be to use \acrfull{CART} so that the variance in the pSTAT5 response is used to guide the clustering on the core markers.
 %Using the nearest neighbour joining approach described in the previous section, it is possible to assess the 
 The \gls{CART} proceeds by considering each core marker coordinate as a potential splitting point.
 The splitting point which minimises the sum of the within branch variance of the response variable,
 is selected and the data is split between the left and the right branch.
 This process is applied recursively until some minimum leaf node size is reached.
-The tree can then be pruned to a certain number of leaf nodes where each leaf node represents a partition obtained by applying the cuts
-defined along the branch.
+A leaf node represents a partition obtained by applying the cuts defined along the branch.
+The tree can then be pruned to the tree subset that minimises the cost-complexity measure, for a given number of leaf nodes.
 %The result is that a sample is recursively partitioned on its core marker space.
-On a given ungated sample, partitioning on side and forward scatter using pSTAT5 stimulated at 1000 units as the response,
+On a given ungated sample, partitioning on side and forward scatter using pSTAT5 response at 1000 units,
 I obtain the clustering in \Cref{figure:pstat5-response-decision-tree},
 when the tree is pruned to the best three subsets.
-This suggests that based on side and forward scatter the lymphocyte cluster is the most responsive cluster to proleukin.
+This confrims that based on side and forward scatter the lymphocyte cluster is the most responsive cluster to proleukin.
 However, if the pSTAT5 of the sample stimulated at 0.1 or even 10 units is used as the response, then the same algorithm
 fails to partition the data, since very few cells respond to lower doses of proleukin.
 \myfigure{scale=.45}{pstat5-response-decision-tree}
@@ -1122,6 +1208,8 @@ This illustrates a drawback of the CART which is prone to overfitting and conseq
 %
 %\end{figure}
 
+%%An ensemble version of the CART are random forests.
+
 
 \subsection{Identification of low-dose sensitive cells by recursively applying a two component mixture model on pSTAT5}
 
@@ -1130,7 +1218,8 @@ This approach discriminates, based on side and forward scatter, the lymphocytes 
 when stimulated at the highest 1000 unit dose of proleukin.
 Unfortunately, it is not sufficiently sensitive to detect the small proportion of cells which are responsive to lower doses of proleukin.
 
-In order to address this issue, I developed an approach based on the theory that by recursively subsetting responding cells at decreasing doses of proleukin,
+In order to address this issue, I developed an approach based on the theory that by recursively splitting cells
+into responding and non-responding subsets, at decreasing doses of proleukin,
 it should be possible to identify cells which respond to the lowest proleukin dose.
 %As at the highest dose of proleukin, 1000 units, the pSTAT5 distribution appears bimodal, while at lower doses the response peak is less discernable.
 %In the ungated sample the majority of cells are non-responsive even at the highest dose.
@@ -1165,7 +1254,7 @@ This approach could potentially be extended to identify cells which respond to l
 \hspace{-2cm}
 \begin{figure}[h]
 \centering
-\includegraphics[scale=.5]{IL2/figures/pstat5-rpart.pdf}
+\includegraphics[scale=.5]{figures/pstat5-rpart.pdf}
 \mycaption{figure:pstat5-rpart}
 { Recursive partitioning of pSTAT5 response into low (red) and high (green) populations to identify cells responsive to the lowest dose of proleukin. }
 {
@@ -1194,14 +1283,63 @@ cluster ones which are consistently high, these are the most sensitive cell popu
 }
 \end{figure}
 
+\paragraph{Discussion}
+
+\Cref{figure:scatter-rpart-127bin-var} illustrates how sensitive binning is to
+small changes in the the underlying data distribution 
+which often result from noise, here caused by debris for example,
+rather than being biological significant.
+
+When the number of bins is increased it becomes much harder to call statistically significant changes.
+
+
+%MARS
+In the "Elements of Statistical Learning" \cite{Anonymous:ikywRZeA},
+extensions of this algorithm are mentionned which allow for a linear combination of more than one marker at each split,
+or for more than one split at each level.
+MARS for example uses multiple additive regression splines
+MARS is an additive procedure for regression  which can be interpreted as a generalisation of stepwise linear regression
+or a modification of the CART method to improve its performance in the regression setting.
+Instead of approximating each bin by the pSTAT5 mean, the pSTAT5 function is piecewise linear with knots at core markers
+points t.
+MARS foregoes the tree structure.
+Unfortunately I found the R implementation to be very slow.
+%PRIM
+The Patient Rule Induction Method (PRIM) also known as the "bump hunting" algorithm
+introduced by Friedman and Fisher (1999)
+searches for a bounding boxes in the marker space in which the average response is high.
+No binary constraint is placed which can make the individual rules simpler.
+The main box construction method in PRIM works from the top down,
+starting with a box containing all the data.
+The box is compressed along one face by a msall amount, and the observations then failling oustide the box are peeled off.
+The face chose for compression is the one resulting the largest box mean, after the compression is performed.
+Then the process is repeated, stopping when the box contains some minimum amount of points.
+After the top-down sequence is computed, PRIM reverses the process expanding along any edge, if such an expansion
+increases the box mean. This is called pasting.  Since the top-down procedure is greedy at each step such an
+expansion is often possible.
+The result of these steps is a sequence of boxes, with different number of observations per box.
+%Cross-validation, combined with the jugement of the data analyst, is used to chose the optimal box size.
+An advantage of PRIM over CART is its patience.  Because of its binary splits, CART fragments the data quite quickly
+whereas PRIM is more progressive.
+This however comes at the cost of performance and I found the R implementation of this method to be too slow to run on
+my dataset.
+%
+How well these variants perform depends on the data but
+generally they tend to overpartition data so that the bins are uneven
+or the tree is unbalanced.
+
+
+
 
 
 
 \section{Discussion}
 
-\subsection{Comparison with previous studies}
+
+\subsection{Association of pSTAT5 with T1D}
+
+\paragraph{Comparison with previous studies}
 %\subsection{Repeatability of pSTAT5}
-%\subsection{Association of pSTAT5 with T1D}
 
 The Long et al study was in a small number of individuals 66 cases and 125 controls and the reproducibility of the phenotypes was not assessed.
 \contributor{Tony Cutler}, on the other hand, found that the response of the fluoresence intensity of pSTAT5 to stimulation was poorly reproducible in the various cell subsets
@@ -1241,7 +1379,7 @@ and this difference may explain the difference in response in the two studies.
 
 %Such cell are of great interest because current clinical trials which administer doses of IL-2 in the hope of increasing T-reg frequency
 
-\subsection{Normalisation of pSTAT5}
+\paragraph{Normalisation of pSTAT5}
 
 Several normalisation methods were attempted to make the pSTAT5 dose-response phenotype more reproducible.
 %Of which correcting for resting pSTAT5
@@ -1302,6 +1440,13 @@ Although other cell types which carry IL-2 receptors are candidates, the majorit
 %A manuscript is in preparation with the intention of submitting to Flow Cytometry Part A
 
 
+\paragraph{Tree structure}
+
+Methods which use a binary structure are easy to interpret as they conform to the manual gating strategy
+which provides rules on how to obtain the leaf subsets.
+However their construction can be very sensitive to the underlying data and errors propagate.
+This becomes more of an issue as more subsets are defined. 
+If no restriction are appied the rules can become over-complicated.
 
 
 
