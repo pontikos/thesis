@@ -20,7 +20,8 @@ In this chapter, I will apply normalisation and mixture model clustering to a mu
 
 \section{Background}
 
-\subsection{\Acrlongpl{KIR} and their interaction with \acrlong{HLA} molecules}
+%\subsection{\Acrlongpl{KIR} and their interaction with \acrlong{HLA} molecules}
+\subsection{Killer immunoglobulin receptors and their interaction with human leukocyte antigen molecules}
 
 The \gls{KIR} region, a 150 kb cluster of 17 identified genes located within the 1 Mb Leukocyte Receptor Complex on chr19q13.4,
 is an interesting candidate region in HLA-associated autoimmune diseases such as \gls{T1D}, due to the interaction between \gls{KIR} and \gls{HLA} molecules.
@@ -108,7 +109,7 @@ However, studies to date have been small, and evidence for its association has n
 %The reference human genome (in our case build36/hg18) is unfortunately still very incomplete for the KIR region,
 %in fact certain KIR genes such as \gene{KIR3DS1} are missing from the reference.
 %Since a lot of KIR genes are not yet properly mapped this makes SNP tagging difficult.
-%Despite ImmunoChip containing 100 SNPs in the KIR/LILR complex \citep{immunochip}, of which 30 fall in the KIR3DL1 region (14 Kb),
+%Despite ImmunoChip containing 100 SNPs in the LILR complex \citep{immunochip}, of which 30 fall in the KIR3DL1 region (14 Kb),
 %SNP probes designed for SNPs which lie in this region are not guaranteed to bind specifically and uniquely to KIR3DL1.
 %The result is that ImmunoChip signal clouds obtained from the 30 SNPs which lie in \gene{KIR3DL1} are occasionally very noisy making genotype calling problematic and as a result they fail QC and are dropped from the analysis (see Supplementary).
 %Instead of obtaining the three expected signal clouds distinguishing between homozygous recessive, heterezygous and homozygous dominant individuals,
@@ -217,7 +218,7 @@ The epitope classification of HLA-A and HLA-B alleles is given in \Cref{table:HL
 All 12,106 samples were genotyped using the ImmunoChip SNP array,
 according to the manufacturer's protocol, and processed at the University of Virginia in Charlottesville, USA.
 ImmunoChip is a custom Illumina 200K Infinium high-density SNP array \citep{Nikula:2005bh}, which
-contains 100 SNPs in the KIR/LILR complex, 30 of which fall in the 14 kb \gene{KIR3DL1} region (\Cref{Table-S4}).
+contains 100 SNPs in the LILR complex, 30 of which fall in the 14 kb \gene{KIR3DL1} region (\Cref{Table-S4}).
 
 %Since SNP arrays are not sufficient for assaying the complex haplotype and copy number diversity of the KIR region,
 %more specialised genotyping is required to complement the SNP data.
@@ -323,35 +324,35 @@ Following QC, 1474 unique individuals, 747 cases and 727 controls, were availabl
 \begin{figure}[!h]
     %
     \begin{subfigure}[b]{.4\textwidth}
-    \includegraphics[scale=.5] {KIR/figures/KIR3DS1-preQC.pdf}
+    \includegraphics[scale=.5] {figures/KIR3DS1-preQC.pdf}
     \caption{ \label{Figure-S1:a}
       Pre-QC \gene{KIR3DS1} $\Delta$Ct}
     \end{subfigure}
     \begin{subfigure}[b]{.4\textwidth}
-    \includegraphics[scale=.5] {KIR/figures/KIR3DL1-preQC.pdf}
+    \includegraphics[scale=.5] {figures/KIR3DL1-preQC.pdf}
     \caption{ \label{Figure-S1:b}
       Pre-QC \gene{KIR3DL1} $\Delta$Ct}
     \end{subfigure}
     %
     \begin{subfigure}[b]{.4\textwidth}
-    \includegraphics[scale=.5] {KIR/figures/KIR3DS1-postQC.pdf}
+    \includegraphics[scale=.5] {figures/KIR3DS1-postQC.pdf}
     \caption{Post-QC \gene{KIR3DS1} $\Delta$Ct}
     \label{}
     \end{subfigure}
     \begin{subfigure}[b]{.4\textwidth}
-    \includegraphics[scale=.5] {KIR/figures/KIR3DL1-postQC.pdf}
+    \includegraphics[scale=.5] {figures/KIR3DL1-postQC.pdf}
     \caption{Post-QC \gene{KIR3DL1} $\Delta$Ct}
     \label{}
     \end{subfigure}
     %
     \begin{subfigure}[b]{.4\textwidth}
-    \includegraphics[scale=.5] {KIR/figures/KIR3DS1-peaknormalised.pdf}
+    \includegraphics[scale=.5] {figures/KIR3DS1-peaknormalised.pdf}
     \caption{Peak normalised \gene{KIR3DS1} $\Delta$Ct}
     \label{}
     \end{subfigure}
     \hspace{3cm}
     \begin{subfigure}[b]{.4\textwidth}
-    \includegraphics[scale=.5] {KIR/figures/KIR3DL1-peaknormalised.pdf}
+    \includegraphics[scale=.5] {figures/KIR3DL1-peaknormalised.pdf}
     \caption{Peak normalised \gene{KIR3DL1} $\Delta$Ct}
     \label{Figure-S1:f}
     \end{subfigure}
@@ -371,21 +372,17 @@ Following QC, 1474 unique individuals, 747 cases and 727 controls, were availabl
 
 
 %% Figure 1
-\begin{figure}[h!]
-  \centering
-  \includegraphics[scale=.5]{KIR/figures/Figure-1.pdf}
-  \mycaption{Figure-1}
-  {Copy number calling of \gene{KIR3DL1}/\gene{KIR3DS1} from qPCR $\Delta$Ct.}
-  { On the left, the median normalised $\Delta$Ct values for \gene{KIR3DS1} and
-  \gene{KIR3DL1} are shown with the results of clustering into the eight
-  copy number groups coloured according to the group with the
-  highest posterior probability.  The three most common copy number groups are the
-  ones with a total copy number of two: \gene{KIR3DL1} 0-2 (dark green),
-  \gene{KIR3DL1}/\gene{KIR3DS1} 1-1 (pink) and \gene{KIR3DS1} 2-0 (dark
-  blue).  The ellipses delimit the $95^{th}$ percentile.  On the right, the
-  counts of the most probable copy number state are shown for cases and
-  controls.}
-\end{figure} 
+\myfigure{scale=.5}{Figure-1}
+{Copy number calling of \gene{KIR3DL1}/\gene{KIR3DS1} from qPCR $\Delta$Ct.}
+{ On the left, the median normalised $\Delta$Ct values for \gene{KIR3DS1} and
+\gene{KIR3DL1} are shown with the results of clustering into the eight
+copy number groups coloured according to the group with the
+highest posterior probability.  The three most common copy number groups are the
+ones with a total copy number of two: \gene{KIR3DL1} 0-2 (dark green),
+\gene{KIR3DL1}/\gene{KIR3DS1} 1-1 (pink) and \gene{KIR3DS1} 2-0 (dark
+blue).  The ellipses delimit the $95^{th}$ percentile.  On the right, the
+counts of the most probable copy number state are shown for cases and
+controls.}
 
 Samples which yielded one or less Ct reading for Fam-KIR3DL1 or
 Cy5-KIR3DS1, but all four Ct readings for the reference DFO-STAT6,
@@ -419,7 +416,7 @@ For example, this can be seen in plate 10, where noisy cases (\Cref{Figure-S1}.f
 
 \begin{figure}[h]
     \centering
-        \includegraphics[scale=.9] {KIR/figures/Figure-S2.pdf}
+        \includegraphics[scale=.9] {figures/Figure-S2.pdf}
     \mycaption{Figure-S2}
         {Post-QC cases (red) and controls (blue) are plotted separately for each qPCR plate.}
         { The samples with known \gene{KIR3DL1}/\gene{KIR3DS1} copy number are plotted in black.
@@ -433,12 +430,12 @@ For example, this can be seen in plate 10, where noisy cases (\Cref{Figure-S1}.f
 \begin{figure}[h]
     \centering
     \begin{subfigure}[b]{.4\textwidth}
-        \includegraphics[scale=.4] {KIR/figures/DL1-repeatability.pdf}
+        \includegraphics[scale=.4] {figures/DL1-repeatability.pdf}
         \caption{Repeatability of \gene{KIR3DL1} $\Delta$Ct post normalisation and QC ($r^{2}=0.961$).}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{.4\textwidth}
-        \includegraphics[scale=.4] {KIR/figures/DS1-repeatability.pdf}
+        \includegraphics[scale=.4] {figures/DS1-repeatability.pdf}
         \caption{Repeatability of \gene{KIR3DS1} $\Delta$Ct post normalisation and QC ($r^{2}=0.99)$.}
         \label{}
     \end{subfigure}
@@ -463,7 +460,7 @@ For example, this can be seen in plate 10, where noisy cases (\Cref{Figure-S1}.f
 %% Figure 2
 \begin{figure}[h!]
   \centering
-  \includegraphics[scale=.5]{KIR/figures/Figure-2.pdf}
+  \includegraphics[scale=.5]{figures/Figure-2.pdf}
   \mycaption{Figure-2}
   {Overlay of ImmunoChip and qPCR samples for $R$ and $\theta$ at SNP rs592645.}
   { Samples are coloured by the most likely \gene{KIR3DS1}-\gene{KIR3DL1} copy number
@@ -578,7 +575,7 @@ rs3826878               & 60069023 & [A/G] & ok          & 2.63E-05 & 3.55E-06 \
 %% Figure 
 \begin{figure}
 \centering
-  \includegraphics[scale=.8]{KIR/figures/all-snps.pdf}
+  \includegraphics[scale=.8]{figures/all-snps.pdf}
   \mycaption{all-snps}
   {Signal plots of ImmunoChip SNPs which fall in the \gene{KIR3DL1} region.}
   { Each of the 30 ImmunoChip SNPs from \Cref{Table-S4}, coloured by \gene{KIR3DL1}/\gene{KIR3DS1} copy number (see \Cref{Figure-2} for legend).
@@ -591,7 +588,7 @@ rs3826878               & 60069023 & [A/G] & ok          & 2.63E-05 & 3.55E-06 \
 %% Figure 3
 \begin{figure}[h!]
   \centering
-  \includegraphics[scale=.5]{KIR/figures/Figure-3.pdf}
+  \includegraphics[scale=.5]{figures/Figure-3.pdf}
   \mycaption{Figure-3}
   {Leave-one-out crossvalidation error rate for k-nearest neighbour (KNN) prediction.}
   {
@@ -609,7 +606,7 @@ rs3826878               & 60069023 & [A/G] & ok          & 2.63E-05 & 3.55E-06 \
 %% Figure 4
 \begin{figure}[h!]
   \centering
-  \includegraphics[scale=.5]{KIR/figures/Figure-4.pdf}
+  \includegraphics[scale=.5]{figures/Figure-4.pdf}
   \mycaption{Figure-4}
   {Error rate of k-nearest neighbour prediction from $R$ and $\theta$ of SNP \snp{rs592645} in random subset of samples.}
   { Each panel shows the LOOCV error rates of \gene{KIR3DL1}/\gene{KIR3DS1} copy number prediction
@@ -1142,7 +1139,7 @@ For example, the qPCR assays used here to target \gene{KIR3DL1} and \gene{KIR3DS
 %Further, qPCR derived data, despite careful design and multiplexing, remain subject to noise.
 %We ameliorated this by first normalising across plates, and then jointly clustering \gene{KIR3DL1} and \gene{KIR3DS1}, which has the advantage of exploiting the correlation between the $\Delta$Ct values.
 
-Our hybrid approach, the key steps of which are summarised in \Cref{Figure-S4}, allowed us to perform the largest study (twenty-fold)
+Our hybrid approach, the key steps of which are summarised in \Cref{method-flowchart}, allowed us to perform the largest study (twenty-fold)
 of \gene{KIR3DL1}/\gene{KIR3DS1} copy number in T1D to date.
 In 12,106 samples, we found no association of \gene{KIR3DS1}-\gene{KIR3DL1} copy number with T1D, alone or conditional on presence of the HLA-Bw4 epitope.
 Our results suggest that, despite the association of certain HLA-A and HLA-B alleles with T1D and the established biological interaction between HLA-Bw4 and \gene{KIR3DL1},
@@ -1205,10 +1202,7 @@ variation and sequence complexity as KIR, in order to leverage existing SNP data
 
 \clearpage
 
-\begin{figure}[h]
-    \centering
-        \includegraphics[scale=.5] {KIR/figures/method-flowchart.pdf}
-\mycaption{Figure-S4}
+\myfigure{scale=.5}{method-flowchart}
 {Flow chart summarising the key steps involved in the KNN imputation of \gene{KIR3DL1}/\gene{KIR3DS1} copy number in SNP data
 ($R$ and $\theta$ signal) from qPCR copy number predictions obtained from GMM clustering.}
 {
@@ -1224,7 +1218,6 @@ Multiple imputation involves the simulation of datasets (in this case, ten) from
 We find that the SNP \snp{rs592645} and k=8 minimises the \Gls{LOOCV} error rate.  
 Association tests are conducted on each imputed dataset and inference combined using methods in the \Rpackage{mice}.
 }
-\end{figure} 
 
 %The role of rare variants has become a focus in the search for association with complex traits.
 %Imputation is a powerful and cost-efficient tool to access variants that have not been directly typed,
