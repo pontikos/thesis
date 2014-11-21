@@ -7,8 +7,9 @@
 In \Cref{chapter:il2ra} and \Cref{chapter:il2}, I have identified and analysed cell populations in flow cytometry using normalisation and clustering methods.
 Of the clustering methods I have applied, mixture-model clustering proved to be particularly useful in dealing with noise.
 As discussed, one of the benefits of mixture-model approach are the posterior probabilities which can be used in downstream statistical analysis.
-So far, I have not made full use of this feature in the association tests, partly because the number of cells is large and so unlikely to have
-a significant effect on the association statistics.
+So far, I have not made full use of this feature in the association tests, partly because the number of cells is large
+and the fraction of cells which lie clearly within one cluster is an adequate measure for association testing.
+%and so unlikely to have a significant effect on the association statistics.
 %and so the posterior probability instead
 However, as we deal with smaller datasets, the uncertainty in clustering can have an important impact on the association statistics.
 %Hard clustering is more bias-prone
@@ -1163,7 +1164,7 @@ This explains the small but persistent misclassification error rate of \pct{2} s
 
 \subsection{Future work}
 
-We expect that, eventually, fully sequenced KIR haplotypes will be available in a large number of individuals.
+I expect that, eventually, fully sequenced KIR haplotypes will be available in a large number of individuals.
 %IPD Robinson:wr
 However long reads will be required for correct assembly, because of great sequence similarity in this region.
 According to our collaborator \contributor{James Traherne}, sequencing would require amplification of the the polymorphic exons
@@ -1179,14 +1180,29 @@ in a subset of samples, with SNP typing in a larger cohort, are likely to remain
 This method could also be applied to other allele typing techniques such as pyrosequencing \citep{Norman:2009fi} or sequence-specific oligo hybridisation \citep{Martin:2007ik}.
 %hybrid qPCR/SNP based alternatives, such as the one described in this chapter,
 %As they use readily available technology at our disposal for measuring copy number variation: quantitative Polymerase Chain Reaction (qPCR).
-Another alternative to using raw SNP signal would be to use tagging SNP as has been done in HLA imputation \citep{Leslie:2008dq,Dilthey:2013dn}.
+Another alternative to using raw SNP signal would be to use tagging SNP as has been done in HLA imputation by \citet{Leslie:2008dq,Dilthey:2013dn} at Oxford University.
 Here instead of correlating copy number with raw SNP signals like in my approach, copy number is correlated with the genotype of flanking SNPs.
 %in \Gls{LD}.
-We are aware, of at least one group at Oxford University, Gil McVean et al, working on imputing KIR genes from tagging SNPs in the region.  
-We believe that their intention is to extend this approach to all KIR genes, but we have not seen any publication from them yet.
-It is possible that this approach may prove complicated since, as I found, many SNPs in this region do not display the conventional three cloud genotype since
-they tag multiple KIR allele.
+However, from a recent (01/11/2014) seminar I attended, given by Stephen Leslie, now at the Murdoch Childrens Research Institute in Australia,
+it appears that the tagging approach, based on a Hidden Markov Model and using positional information, which was successfully applied to HLA imputation,
+is performs poorly for KIR imputation, most likely due to unreliable positional information and unknown patterns of SNP \gls{LD}.
+Instead, Stephen Leslie and Damjan Vukcevic, found that by taking 300 SNPs on either side of the KIR region, a \acrfull{RF} approach which does
+not use positional information, is better at predicting common KIR gene copy numbers.
+However, performance remains poor for rarer copy numbers or KIR alleles for which there is 
+insufficient training data available.
+Furthermore, because of the high degree of homology between certain genes,
+the ambiguity in their definition can lead to mislabelling of the training data in the reference panel.
+%and hence poor prediction performance.
+%the naming convention and distinction of these genes
+However Stephen Leslie did mention that perhaps using signal intensities instead of genotype calls could offer better performance,
+since the genotype calls are often highly unreliable, most failing \gls{HWE}.
+They intend to submit their manuscript in the coming months.
 
+%We are aware, of at least one group at Oxford University, Gil McVean et al, working on imputing KIR genes from tagging SNPs in the region.  
+%We believe that their intention is to extend this approach to all KIR genes, but we have not seen any publication from them yet.
+
+%It is possible that this approach may prove complicated since, as I found, many SNPs in this region do not display the conventional three cloud genotype since
+%they tag multiple KIR allele.
 %The idea is simple and, we found, can work remarkably well: first do qPCR in a subset of samples, then use supervised classification to link qPCR copy numbers to SNPs patterns.
 %The hybrid method we presented, leverages the information available from targeted qPCR assays in modest samples to the level of sample coverage required for modern, well powered genetic studies.
 
