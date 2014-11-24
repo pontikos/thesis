@@ -619,7 +619,7 @@ I consider two approaches of selecting a threshold, \texttt{pct.thresh} and \tex
 {
   The threshold which minimises the MSD is 88 for \texttt{pct.thresh} (a) and 89 for \texttt{post.thresh}.
   At that threshold, the \texttt{pct.thresh} (a) gate position matches better the manual than \texttt{post.thresh} (b).
-  For \texttt{pct.thresh}, the MSD is not defined for threshold larger than 89,
+  For \texttt{post.thresh}, the MSD is not defined for threshold larger than 89,
   because there are samples for which the posterior probability does not reach 89 percent (\Cref{figure:cd45ra-posterior-threshold-fail}e).
 }
 \end{figure}
@@ -976,7 +976,8 @@ Another metric of evaluating how well a model fits the data could be a cost func
 
 When outliers have been detected, we may want to exclude or down-weight them, or extend the gating method to account for these.
 One simple way of modifying the method, could be to use the gate positions in non-outlier samples to influence that in outliers.
-This could motivate borrowing information from other samples, using for example a hierarchical Bayesian framework as was recently developed by \citet{Cron:2013dh}.
+This could motivate borrowing information from other samples, using for example a hierarchical Bayesian framework as was recently developed by \citet{Cron:2013dh},
+designed specifically to deal with rare cell populations which might not consistently be detectable across all samples.
 
 However, one may argue that this approach, conceals rather than addresses the underlying problem of poor model fit.
 For example, as we see from the trimodal distribution in \Cref{figure:cd45ra-threshold-example},

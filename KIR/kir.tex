@@ -11,7 +11,7 @@ So far, I have not made full use of this feature in the association tests, partl
 and the fraction of cells which lie clearly within one cluster is an adequate measure for association testing.
 %and so unlikely to have a significant effect on the association statistics.
 %and so the posterior probability instead
-However, as we deal with smaller datasets, the uncertainty in clustering can have an important impact on the association statistics.
+However, as one deals with smaller datasets, the uncertainty in clustering can have an important impact on the association statistics.
 %Hard clustering is more bias-prone
 In this chapter, I will apply normalisation and mixture model clustering to a much smaller genetic dataset.
 %SNP arrays only target common variants ($MAF > 5\%$) and
@@ -303,7 +303,7 @@ Four plates were analysed in duplicate.
 The experiment files exported from the LightCycler gave us the
 crossingpoint (Ct) value for each dye-DNA conjugate.
 By subtracting from the Ct value of the reference dye-DNA conjugate,
-DFO-STAT6, we obtained the baseline relative $\Delta$Ct value for
+DFO-STAT6, I obtained the baseline relative $\Delta$Ct value for
 Fam-KIR3DL1 and Cy5-KIR3DS1.  Since \gene{STAT6} is known to have two
 copies, negative values of $\Delta$Ct should indicate two copies or less, and
 positive values, two copies or more. However, due to qPCR differences in efficiency this
@@ -409,7 +409,7 @@ After normalisation, samples repeated across different plates showed good reprod
 
 %Firstly, we obtained posterior probabilities by fitting bivariate Gaussian distributions to our normalised combined KIR3DS1 and KIR3DL1 $\Delta$Ct values.
 Jointly clustering on \gene{KIR3DL1} and \gene{KIR3DS1}, has the advantage of exploiting the correlation between the $\Delta$Ct values. 
-For example, this can be seen in plate 10, where noisy cases (\Cref{Figure-S1}.f) are difficult to assign as one or two copies based solely on their \gene{KIR3DL1} $\Delta$Ct, but are much more clearly distinguishable when we also consider their \gene{KIR3DS1} $\Delta$Ct value (\Cref{Figure-S2}).
+For example, this can be seen in plate 10, where noisy cases (\Cref{Figure-S1}.f) are difficult to assign as one or two copies based solely on their \gene{KIR3DL1} $\Delta$Ct, but are much more clearly distinguishable when I also consider their \gene{KIR3DS1} $\Delta$Ct value (\Cref{Figure-S2}).
 %For example, this can be seen in plate 10, where noisy cases (\Cref{Figure-S1}) are hard to assign as one or two copies based solely on their \gene{KIR3DL1} $\Delta$Ct, but are much more clearly distinguishable when we also consider their \gene{KIR3DS1} $\Delta$Ct value (\Cref{Figure-S2}).
 
 %We allowed for the limited uncertainty of copy number calling by means of multiple imputation.
@@ -465,7 +465,7 @@ For example, this can be seen in plate 10, where noisy cases (\Cref{Figure-S1}.f
   \mycaption{Figure-2}
   {Overlay of ImmunoChip and qPCR samples for $R$ and $\theta$ at SNP rs592645.}
   { Samples are coloured by the most likely \gene{KIR3DS1}-\gene{KIR3DL1} copy number
-  group according to the qPCR analysis (see \Cref{Figure-1}).  The
+  group according to the qPCR analysis (see \Cref{figure:Figure-1}).  The
   first and second row split the samples on the availability of qPCR data, and
   the third row is the overlay of the samples from the first and second row.
   The first and second column split the samples by case-control status and the
@@ -485,7 +485,7 @@ First, $\theta$ corresponds to the ratio of copies of \gene{KIR3DL1} to \gene{KI
 Second, some clusters overlap; without the qPCR data, the number of clusters and their boundaries would be difficult to define, particularly along the $R$ axis.
 Finally, the clusters are in slightly different positions in cases and controls, reflecting the known sensitivity of genotyping chips to subtle differences in DNA preparation and storage conditions.
 This has two implications: probabilistic clustering of the SNP data alone is likely to be poor in the combined sample, while unsupervised clustering of cases and controls separately when clusters are not clearly separated risks increasing type 1 error rates \citep{Plagnol:2007dw}.
-Instead, we used the qPCR copy numbers as training data to perform supervised clustering of the SNP signals.
+Instead, I used the qPCR copy numbers as training data to perform supervised clustering of the SNP signals.
 
 We first explored the validity of our imputation approach by means of \gls{LOOCV} in the samples with qPCR data.
 We examined using all nineteen predictive SNPs, or various subsets, and found optimal knn imputation was achieved with the single most predictive SNP,
@@ -564,7 +564,7 @@ rs3826878               & 60069023 & [A/G] & ok          & 2.63E-05 & 3.55E-06 \
     \gene{KIR3DS1} is missing from build36/h18.
     SNP \snp{rs592645} which has shown to be highly predictive of \gene{KIR3DL1}/\gene{KIR3DS1} copy number is
     highlighted in light red.
-    The QC column reports the GenCall quality control diagnosis: ok, low call rate, failure to meet Hardy Weinberg equilibrium or
+    The QC column reports the GenCall quality control diagnosis: ok, low call rate, failure to meet Hardy Weinberg equilibrium (hwe) or
     monomorphic SNP.
 % GenCall Score:
 %http://res.illumina.com/documents/products/technotes/technote_gencall_data_analysis_software.pdf
@@ -642,7 +642,7 @@ We allowed for statistical interaction with HLA-Bw4 by repeating the association
 We directly tested for interaction with a more powerful case-only $\chi^2$ test \citep{Yang:1999wk,Cordell:2009jb}.
 
 
-Finally, we attempted to correlate \gene{KIR3DL1}/\gene{KIR3DS1} copy number with T1D status.
+Finally, I attempted to correlate \gene{KIR3DL1}/\gene{KIR3DS1} copy number with T1D status.
 We performed an \Gls{ANOVA} $\chi^{2}_{7}$ test on the logistic model using the most likely copy number group,
 which yielded a p-value of $0.9776$ in the qPCR and $0.1739$ in the SNP dataset, thus showing no overall association.
 We also used multiple imputation to assess the effect of individual copy number groups while allowing for the uncertainty in copy number calling.
@@ -650,17 +650,17 @@ We found no significant evidence for association, in the qPCR
 data (747 cases and 727 controls) nor in the extended SNP data (6744
 cases and 5362 controls) (\Cref{Table-1}).
 By expanding to these large samples, which would be infeasible to genotype directly with
-qPCR, we are able to exclude odds ratios outside of the range
+qPCR, I am able to exclude odds ratios outside of the range
 [.92; 1.08] for the common copy number groups with \pct{95} certainty.
 
 We also repeated the association tests in the  subset of individuals
 carriers of the HLA-Bw4 epitope, and again detected no significant
 association  (\Cref{Table-2}).
-A disadvantage of subsetting by HLA-Bw4 is that we lose power by greatly reducing the sample size. 
+A disadvantage of subsetting by HLA-Bw4 is that power is lost by greatly reducing the sample size. 
 A more powerful test for interaction between unlinked genes is a case-only test \citep{Yang:1999wk}.
 If there were an interaction effect between \gene{KIR3DL1}/\gene{KIR3DS1} and HLA-Bw4 then this should be detectable
 as a difference in \gene{KIR3DL1}/\gene{KIR3DS1} copy number frequencies across HLA-Bw4 strata in the cases.
-However, we found no significant difference in either the qPCR or SNP data sets,
+However, I found no significant difference in either the qPCR or SNP data sets,
 before or after reducing the degrees of freedom by collapsing the KIR copy number to present/absent to
 increase power (\Cref{Table-3}). 
 
@@ -808,7 +808,7 @@ and HLA-Bw4, across the ten multiply imputed qPCR and SNP datasets.
 {
 Counts in each contingency table are derived from the most likely copy number assignment
 across the multiply imputed datasets. To reduce the degrees of freedom and
-improve power, we summarise copy numbers higher or equal to one by presence
+improve power, I summarise copy numbers higher or equal to one by presence
 (\texttt{+}) and zero by absence (\texttt{-}).  The pooled p-value of each
 $\chi^{2}$ test, across the multiply imputed datasets, is given in the last row
 of each contingency table. We find no significant association with HLA-Bw4,
@@ -829,7 +829,7 @@ Although presence/absence might have a stronger effect than copy number variatio
 %Whether KIR is implicated in T1D is still very much a matter of debate.
 
 %independent KIR effect
-From the studies we know of, as summarised in \Cref{table:kir-t1d-studies,table:kir-t1d-studies-caco},
+From the studies I know of, as summarised in \Cref{table:kir-t1d-studies,table:kir-t1d-studies-caco},
 only two have reported individual KIR genes to be associated with T1D independently of \gls{HLA}.
 First \citet{NikitinaZake:2004jv}, reported that \gene{KIR2DS2}/\gene{KIR2DL2} were both more frequent in cases ($n=98$) than in controls ($n=100$) in the Latvian population.
 Then \citet{PARK:2006km},  reported that \gene{KIR2DS2} and \gene{KIR2DL5} were both significantly associated in the South Korean population,
@@ -1142,7 +1142,7 @@ For example, the qPCR assays used here to target \gene{KIR3DL1} and \gene{KIR3DS
 
 Our hybrid approach, the key steps of which are summarised in \Cref{method-flowchart}, allowed us to perform the largest study (twenty-fold)
 of \gene{KIR3DL1}/\gene{KIR3DS1} copy number in T1D to date.
-In 12,106 samples, we found no association of \gene{KIR3DS1}-\gene{KIR3DL1} copy number with T1D, alone or conditional on presence of the HLA-Bw4 epitope.
+In 12,106 samples, I found no association of \gene{KIR3DS1}-\gene{KIR3DL1} copy number with T1D, alone or conditional on presence of the HLA-Bw4 epitope.
 Our results suggest that, despite the association of certain HLA-A and HLA-B alleles with T1D and the established biological interaction between HLA-Bw4 and \gene{KIR3DL1},
 copy number variation in \gene{KIR3DL1}/\gene{KIR3DS1} is unlikely to have a significant effect on the risk of developing T1D.
 
@@ -1152,10 +1152,11 @@ for \gene{KIR3DL1} and, \gene{KIR2DL5} (\pct{81}), \gene{KIR2DS5} (\pct{84}) and
 (\url{http://www.allelefrequencies.net/kir6010a.asp}).
 Thus, copy number variation in \gene{KIR3DL1}/\gene{KIR3DS1} or neighbouring genes is unlikely to be an important risk factor in T1D.
 
-In order to better understand why \snp{rs592645} is the best available SNP for predicting copy number variation in \gene{KIR3DL1}/\gene{KIR3DS1}, we used BLAT \citep{Kent:2002jd}
+In order to better understand why \snp{rs592645} is the best available SNP for predicting copy number variation in \gene{KIR3DL1}/\gene{KIR3DS1}, I used BLAT \citep{Kent:2002jd}
 to match the probe sequences of \snp{rs592645} on ImmunoChip against the allelic sequences of all KIR genes available from the Immuno Polymorphism Database \citep{Robinson:2010dy}.
-Interestingly, we found that the SNP probes do not target \gene{KIR3DL1}/\gene{KIR3DS1} but instead bind uniquely to \gene{KIR2DL4}, a neighbouring framework gene.
-Examining the \gene{KIR2DL4} alleles matched by the \snp{rs592645} probes, we discovered that the SNP probes are in fact picking up copy number variation of \gene{KIR2DL4*005},
+Interestingly, I found that the SNP probes do not target \gene{KIR3DL1}/\gene{KIR3DS1} but instead bind uniquely to \gene{KIR2DL4}, a neighbouring framework gene.
+Examining the \gene{KIR2DL4} alleles matched by the \snp{rs592645} probes, I discovered, thanks to \contributor{James Traherne}, that the SNP probes are
+in fact picking up copy number variation of \gene{KIR2DL4*005},
 an allele of \gene{KIR2DL4} that undergoes copy number variation along with \gene{KIR3DL1}/\gene{KIR3DS1} \citep{GomezLozano:2005hz}.  
 This explains the small but persistent misclassification error rate of \pct{2} since our imputation is based on linkage disequilibrium between \snp{rs592645} and \gene{KIR3DL1}/\gene{KIR3DS1} rather than on perfect discrimination between our target genes.
 
@@ -1177,23 +1178,25 @@ in a subset of samples, with SNP typing in a larger cohort, are likely to remain
 This method could also be applied to other allele typing techniques such as pyrosequencing \citep{Norman:2009fi} or sequence-specific oligo hybridisation \citep{Martin:2007ik}.
 %hybrid qPCR/SNP based alternatives, such as the one described in this chapter,
 %As they use readily available technology at our disposal for measuring copy number variation: quantitative Polymerase Chain Reaction (qPCR).
-Another alternative to using raw SNP signal would be to use tagging SNP as has been done in HLA imputation by \citet{Leslie:2008dq,Dilthey:2013dn} at Oxford University.
-Here instead of correlating copy number with raw SNP signals like in my approach, copy number is correlated with the genotype of flanking SNPs.
+Another alternative to using raw SNP signal would be to use tagging SNP as has been done in HLA imputation by \citet{Leslie:2008dq} and \cite{Dilthey:2013dn} at Oxford University.
+Here, instead of correlating copy number with raw SNP signals like in my approach, copy number is correlated with the genotype of flanking SNPs.
 %in \Gls{LD}.
-However, from a recent (01/11/2014) seminar I attended, given by Stephen Leslie, now at the Murdoch Childrens Research Institute in Australia,
-it appears that the tagging approach, based on a Hidden Markov Model and using positional information, which was successfully applied to HLA imputation,
-is performs poorly for KIR imputation, most likely due to unreliable positional information and unknown patterns of SNP \gls{LD}.
-Instead, Stephen Leslie and Damjan Vukcevic, found that by taking 300 SNPs on either side of the KIR region, a \acrfull{RF} approach which does
-not use positional information, is better at predicting common KIR gene copy numbers.
+However, from a recent seminar I attended on the 1st of November 2014, the speaker, the same Stephen Leslie of \citet{Leslie:2008dq}
+now at the Murdoch Childrens Research Institute in Australia,
+stated that the tagging approach, based on a Hidden Markov Model using positional information, that has successfully been applied to HLA imputation,
+performs poorly for KIR imputation.  He explained that this is likely due to the unreliable positional information and unknown patterns of SNP \gls{LD} in the region.
+Instead, Stephen Leslie and Damjan Vukcevic, found that
+training a \acrfull{RF} algorithm, which does not use positional information, on 300 SNPs taken on either side of the KIR region,
+performs better in the prediction of common KIR gene copy numbers.
 However, performance remains poor for rarer copy numbers or KIR alleles for which there is 
 insufficient training data available.
-Furthermore, because of the high degree of homology between certain genes,
+Furthermore, because of the high degree of homology between certain KIR genes,
 the ambiguity in their definition can lead to mislabelling of the training data in the reference panel.
 %and hence poor prediction performance.
 %the naming convention and distinction of these genes
-However Stephen Leslie did mention that perhaps using signal intensities instead of genotype calls could offer better performance,
+However Stephen Leslie did mention that perhaps the approach I have take of using signal intensities instead of genotype calls could improve on performance,
 since the genotype calls are often highly unreliable, most failing \gls{HWE}.
-They intend to submit their manuscript in the coming months.
+They intend to submit a manuscript in the coming months.
 
 %We are aware, of at least one group at Oxford University, Gil McVean et al, working on imputing KIR genes from tagging SNPs in the region.  
 %We believe that their intention is to extend this approach to all KIR genes, but we have not seen any publication from them yet.
@@ -1223,7 +1226,7 @@ variation and sequence complexity as KIR, in order to leverage existing SNP data
 ($R$ and $\theta$ signal) from qPCR copy number predictions obtained from GMM clustering.}
 {
 \Glspl{GMM} clustering of the qPCR data assigns to each sample a posterior probability of belonging to each \gls{CN} group.
-Using these probabilities we can allow for the uncertainty of the CN calling when testing for association with disease by using multiple imputation.
+Using these probabilities I can allow for the uncertainty of the CN calling when testing for association with disease by using multiple imputation.
 Multiple imputation involves the simulation of datasets (in this case, ten) from the probabilities returned by the GMM.
 %These datasets are combined in the disease association testing to obtain less biased estimates of effect size and variance.
 %However before we can run the KNN imputation to predict CN from SNP data, we need to discover the parameters, set of SNPs and value of k, which minimises the leave-one-out cross validation (LOOCV) error rate.
