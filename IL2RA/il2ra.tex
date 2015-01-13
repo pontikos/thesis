@@ -116,7 +116,7 @@ with between one and six samples analysed each day.
 %\end{figure}
 
 
-\myfigure{scale=.5}{il2ra-manual-gating}
+\myfigure{scale=.5}{il2ra-manual-gating-strategy}
 {Manual gating strategy followed by \citet{Dendrou:2009dv}.}
 {
 Manual gating strategy to extract memory T cells and CD25\positive naive T cells (green boxes).
@@ -186,7 +186,7 @@ need to be controlled for as they can have some bearing on the repeatability and
 %staining efficiency, 
 instrument variation over time and the subjectivity of manual gating.
 
-\myfigure{scale=0.6}{CD25-mfi-time-effect}
+\myfigure{scale=0.6}{memory-CD25-MFI-time-effect}
 {Effect of time on CD25 MFI in memory cells.}
 {
 \protein{CD25} MFI of memory cell population (manually gated) over time of experiment.
@@ -195,7 +195,7 @@ Samples analysed after July tend to have a lower CD25 MFI than those analysed be
 }
 
 Over the seven month period of the experiment during which samples were collected and analysed,
-instrument variation is detectable in the CD25 \gls{MFI} of the memory cell population (\Cref{figure:memory-CD25MFI-time-effect}).
+instrument variation is detectable in the CD25 \gls{MFI} of the memory cell population (\Cref{figure:memory-CD25-MFI-time-effect}).
 The influence of this time effect on repeatability was first discussed by \citet{Dendrou:2009bl}.  
 To correct for this, \citet{Dendrou:2009dv} run fluorescent six-peak beads daily in order to define a normalisation transform from \gls{MFI} to \gls{MEF}.
 Concretely, the transformation is defined by a linear regression
@@ -299,7 +299,7 @@ I use the K-medoids algorithm.
 The solution has been implemented in the \Rpackage{flowBeads}, available on BioConductor.
 Automatic gating shows near perfect agreement with manual gating (\Cref{figure:bead-agreement}).
 %and so is now the established method of analysing bead data in our lab.
-Applying the bead normalisation to the memory CD25 MFI from \Cref{figure:memory-CD25MFI-time-effect}, we improve on the repeatability of that 
+Applying the bead normalisation to the memory CD25 MFI from \Cref{figure:memory-CD25-MFI-time-effect}, we improve on the repeatability of that 
 cell phenotype from $r^2=0.972$ to $r^2=0.985$, where $r^2$ is the Pearson correlation squared (\Cref{figure:CD25-MFI-beads-normalised}).
 
 \begin{table} [hb]
@@ -416,8 +416,8 @@ It is used as a technique for assessing background APC fluorescence not resultin
 %adjusted using the daily bead data.
 This manual approach to setting the threshold, leads to a different gate position per sample per day (\Cref{figure:cd25pos-gates}).
 We notice that on some days there is greater variability in the positions of the gates.
-Also, the gate position moves down with time, reflecting the same downwards time-trend in the position of the gates observed in \Cref{figure:memory-CD25MFI-time-effect}.
-%which can be explained by position of the gates needing to be shifted down to account for this (\Cref{figure:memory-CD25MFI-time-effect}).
+Also, the gate position moves down with time, reflecting the same downwards time-trend in the position of the gates observed in \Cref{figure:memory-CD25-MFI-time-effect}.
+%which can be explained by position of the gates needing to be shifted down to account for this (\Cref{figure:memory-CD25-MFI-time-effect}).
 
 \begin{figure} [h]
 \centering
@@ -476,7 +476,7 @@ The automatic threshold selection method (\texttt{beads.thresh}) is therefore de
 \end{figure}
 
 Hence the CD25\positive threshold defined by my approach, \texttt{beads.thresh}, is set as the $86^{th}$ percentile of the automatically gated blank bead population on that day.
-As we only have one bead set per day, we have a single fixed CD25 gate for all samples on that day (\Cref{figure:memory-CD25MFI-time-effect}).
+As we only have one bead set per day, we have a single fixed CD25 gate for all samples on that day (\Cref{figure:memory-CD25-MFI-time-effect}).
 
 %In order to assess the dependency of the repeatability on the gates we chose the percentage phenotypes rather than the MEF.
 %The concept of repeatability is explained in Appendix~\Cref{repeatability}.
@@ -767,24 +767,24 @@ which is to be expected, given this cell phenotype is largely unchanged by the C
 \begin{tabular}{lrrr}
 \rowcolor{Gray}
 \snp{rs12722495} & effect & 95\%CI          & p-value\\
-manual           & -2.479  & [-5.422;0.463]  & 0.098145\\
-beads.thresh       & -1.509  & [-4.453;1.435]   & 0.31326\\
+manual           & -2.479 & [-5.422;0.463]  & 0.098145\\
+beads.thresh     & -1.509 & [-4.453;1.435]  & 0.31326\\
 \rowcolor{Gray}
 \snp{rs2104286}  & effect & 95\%CI          & p-value\\
-manual           & -4.714  & [-6.894;-2.534]  & \textcolor{red}{3.2017e-05}\\
-beads.thresh       & -4.39  & [-6.569;-2.212]   & \textcolor{red}{0.0001014}\\
+manual           & -4.714 & [-6.894;-2.534] & \textcolor{red}{3.2017e-05}\\
+beads.thresh     & -4.39  & [-6.569;-2.212] & \textcolor{red}{0.0001014}\\
 \rowcolor{Gray}
 \snp{rs11594656} & effect & 95\%CI          & p-value\\
-manual           & -1.459  & [-3.924;1.006]  & 0.2443\\
-beads.thresh       & -1.328  & [-3.774;1.118]   & 0.28531\\
+manual           & -1.459 & [-3.924;1.006]  & 0.2443\\
+beads.thresh     & -1.328 & [-3.774;1.118]  & 0.28531\\
 \rowcolor{Gray}
 Age              & effect & 95\%CI          & p-value\\
-manual           & 0.475  & [0.286;0.664]  & \textcolor{red}{1.6584e-06}\\
-beads.thresh       & 0.457  & [0.269;0.645]   & \textcolor{red}{3.514e-06}\\
+manual           & 0.475  & [0.286;0.664]   & \textcolor{red}{1.6584e-06}\\
+beads.thresh     & 0.457  & [0.269;0.645]   & \textcolor{red}{3.514e-06}\\
 \rowcolor{Gray}
 Sex              & effect & 95\%CI          & p-value\\
-manual           & -4.216  & [-7.856;-0.575]  & \textcolor{red}{0.023475}\\
-beads.thresh       & -4.327  & [-7.936;-0.718]   & \textcolor{red}{0.019046}\\
+manual           & -4.216 & [-7.856;-0.575] & \textcolor{red}{0.023475}\\
+beads.thresh     & -4.327 & [-7.936;-0.718] & \textcolor{red}{0.019046}\\
 \end{tabular}
 \mycaption{table:naive-cd25pos-association}
 {Genotype, age and sex effect sizes on percentage of \protein{CD25}\positive cells.}
