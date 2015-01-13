@@ -500,9 +500,8 @@ There are however a number of outstanding challenges, some technical, some more 
 
 Statisticians, biologists, we all like to visualise our data.
 We rely on visual inspection as a quality control check, learning about properties of the data like for example if the data
-is skewed or symmetrically distributed, looking for patterns, confirming clustering results, spotting outliers.
-While visualisation works well for up to three dimensional data,
-information is lost when higher dimensional datasets are decomposed into a series of two-dimensional projections.
+is skewed or symmetrically distributed, looking for patterns, gene lists appearing in pathways, confirming clustering results, spotting outliers.
+While visualisation works well for up to three dimensional data, information is lost when higher dimensional datasets are decomposed into a series of two-dimensional projections.
 Clusters which exist in higher dimensions do not necessarily map to clusters in two dimensions.
 %Clusters are not identifiable in two dimensions, in fact for clusters which are thus ignoring a large number of points.
 %In fact K points are only garanteed to be separable in at least K+1 dimensions.
@@ -525,31 +524,30 @@ Certainly in the case of flow cytometry some clustering or data smoothing is req
 
 Analysing flow cytometry data has brought to light the many issues surrounding the generation and analysis of data,
 and more generally with the division of labour.
-Perhaps the greatest obstacle to standardising analysis is our inherent dislike of rules and standards which we may
-find superfluous.
-However, simple things like naming conventions waste precious man hours for people analysing the data.
-Part of the solution is to involve the biologists so that they appreciate the implications,
-another part of the solution is to encourage automation of the more tedious tasks.
+Perhaps the greatest obstacle to standardising analysis is our inherent dislike of rules and standards which we may find superfluous and tedious.
+However, simple things like naming conventions waste precious man hours for the person analysing the data or even to you if you return to your data after a long while.
+Part of the solution is to involve the biologists, the person generating the data, so that they can appreciate the implications, another part of the solution is to encourage automation of these more tedious tasks, as is being done in certain labs which use robots to feed the flow cytometer.
 %At least automation is consistently and predictably wrong.
 
-On the other hand, perhaps us statisticians need to have an understanding of: the underlying technology, the purpose of the experiment.
+On the other hand, perhaps statisticians need to have an understanding of: the quality of the underlying technology and the purpose of the experiment.
 For example, in flow cytometry, a large number of events are debris of no biological interest.
 Similarly some patterns may be simply staining artefacts or from sample prepartion (permeabilisation).
 
-A great deal of time was also spent on seeing if clustering could be fully automated. 
+I spent a great deal of time on seeing if clustering can be fully automated, i.e truly non-parametric.
 One approach is to select large K and then merge clusters together with flowMerge.
 My approach was generally to select a K that gave consistent clustering results across samples.
 
-While I am sure these observations are not only specific to flow cytometry, they are more apparent perhaps in flow given how much freedom flow cytometry offers both in terms of generation and analysis.
+While I am sure these observations are not only specific to flow cytometry, they are more apparent perhaps in flow given how much freedom flow cytometry offers both in terms of generation and analysis,
+and how little is known of the underlying cell populations.
 
 
 \paragraph{ Incomplete experiments and small sample sizes}
 
-The majority of experiments undertaken in flow cytometry are pilot experiments or tubes ran to test and optimise panels.
+Often, experiments undertaken in flow cytometry are pilot experiments or tubes ran to test and optimise panels.
 Pilot experiments
 %may be motivated by a moment of inspiration and leads to the generation of flow data is often an adhoc thought process,
-are often implemented with varying degrees of thoroughness.
-Normalisation beads or controls are not consistently which complicates analysis.
+are often implemented with varying degrees of thoroughness and hence are generally poorly comparable.
+Furthermore, normalisation beads or controls are not consistently used which complicates analysis.
 While the FCS files are saved and analysed by the person who generated the data, the naming and documentation is incomplete
 making it hard to automate the analysis of these data.
 Since the FCS file does not contain sufficient metadata to understand the context of the experiment, the name of the FCS
