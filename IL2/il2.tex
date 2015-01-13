@@ -1905,12 +1905,10 @@ If the response comes from regions of low density in the core marker space, it m
 %\gls{SPADE} also contains an element of stochasticity as part of its downsampling step, so that running \gls{SPADE} twice on the same data does not yield generate exactly the same dataset.
 %An advantage of the SPADE and RPART approaches over \gls{CART}, \gls{PLS} and MMPART, is that they does not rely on joining samples on nearest-neighbour.
 One advantage of pooling over nearest-neighbour joining, is that the signal is averaged across samples instead of one sample serving as the template.
-If certain rarer subsets are not present across all samples or if the total number of events varies greatly between samples.
-nearest neighbour joining can map points to the wrong subset.
+If certain rarer subsets are not present across all samples or if the total number of events varies greatly between samples, nearest neighbour joining can map points to the wrong subset.
 In these scenarios, I would expect approaches which map groups of cells across samples would be more robust.
 %However if the location of cell subsets differs significantly then this can also lead to joining to the wrong subsets.
-One method for assessing whether samples are significantly different could be to use probability binning,
-or alternatively fixed cluster locations, to identify bin or clusters whose proportion varies significantly between samples.
+One method for assessing whether samples are significantly different could be to use probability binning, or alternatively fixed cluster locations, to identify bin or clusters whose proportion vary significantly between samples.
 %Fortunately, when pooling within batches this does not seem to be a major source of variation.
 %However when the number of bins is too large, we lose power to detect statistically significant changes, since we lose degrees of freedom.
 %Although \Cref{figure:scatter-rpart-128bin-var} illustrates how sensitive binning is to small changes in the underlying data distribution which often result from debris rather than real cell population differences.
