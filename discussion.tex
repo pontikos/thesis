@@ -143,26 +143,25 @@ This is because rare subsets, by definition, may not always be visible in all sa
 
 \paragraph{Advantages and disadvantages to a tree structure to gating}
 
-Some advantages of using a tree structure for gating are:
-\begin{itemize}
-\item fast, points can be eliminated at each step reducing the number of points that needs to be considered at each clustering step.
-\item Agrees with the established nomenclature facilitating comparison to manual gating and interpretability.
+The cellular hierarchical view is so deeply engrained in the minds of certain biologists that presenting clustering results in a different order could perturb them.
+
+The hierarchical view is attractive, and using a tree structure for gating presents a number of advantages.
+It is fast, since points can be eliminated at each step reducing the number of points that needs to be considered at each clustering step.
+It agrees with the established nomenclature facilitating comparison to manual gating and interpretability.
 Methods which use a binary structure are easy to interpret as they conform to the manual gating strategy which provides rules on how to obtain the leaf subsets.
-\item Reduces ambiguity.
-\end{itemize}
+Reduces ambiguity.
+
 
 Some disadvantages of using a tree structure for gating are:
-\begin{itemize}
-\item Bias, imposes an ordering on the markers and thus an an importance to the markers.
-It may be more ambiguous markers are gated on first.
-The RF gives us some idea of the importance of the markers.
+it easily misses populations and imposes a directionality in cell lineages which may not always be correct.
+In the same way that phylogenies change as new animal species are discovered, the cell lineages should also be influenced by the discovery of new cell subsets.
+
+The bias, since imposes an ordering on the markers and thus an an importance to the markers.  It may be more ambiguous markers are gated on first.  The RF gives us some idea of the importance of the markers.
 
 However their construction can be very sensitive to the underlying data and errors propagate.
 Errors may be mitigated by introducing conditional probabilities at each step.
 This becomes more of an issue as more subsets are defined. 
 If no restriction are appied the rules can become over-complicated.
-\end{itemize}
-
 
 
 %\section{ Distinguishing between outliers and rare subsets }
@@ -225,16 +224,14 @@ While certain outliers can be confidently called independently because their val
 others are less clear and should not be discarded completely because in light of new data they may be assigned to existing clusters or
 to new clusters.
 
-In particular distinguishing between rare subsets and outliers is hard as illustrated in \Cref{chapter:kir},
-where the 3-0 copy number group is rare and could have been regarded as outliers had not we not had strong prior evidence supporting its existence
-from previous studies.
-However having prior evidence supporting the existence of a cluster is not sufficient to identify the position of the cluster.
-Priors usually determine expected proportions but give little information about the exact position and shape of the cluster, which are usually experiment
-specific.
+In particular distinguishing between rare subsets and outliers is hard.
+As illustrated in \Cref{chapter:kir}, the 3-0 copy number group is rare and these points could have been regarded as outliers had we not had strong prior evidence supporting the existence
+of this group from previous studies.
+However, having prior evidence supporting the existence of a cluster is not sufficient to identify the position of the cluster.
+Priors usually determine expected proportions but give little information about the exact position and shape of the cluster, which are usually experiment specific.
 This can be due to the stability of the biological sample but also the stability of the instrumentation and sample preparation.
-In genotyping calling a genotype based on only a few samples is sometimes possible, since DNA is a very stable molecule and SNP arrays are highly standardised
-\citep{Di:2005uj,Giannoulatou:2008ty}.
-In flow cytometry, the MFI of cell populations is generally not directly comparable across staining panels but instead clusters can be defined in relation to one another.
+In genotyping calling a genotype based on only a few samples is sometimes possible, since DNA is a very stable molecule and SNP arrays are highly standardised \citep{Di:2005uj,Giannoulatou:2008ty}.
+In flow cytometry, the MFI of cell populations is generally not directly comparable across staining panels but instead clusters can be defined in relation to one another, for example memory cells are lower for \protein{CD45RA} than naive cells and so it is possible to label these populations as in \Cref{chapter:il2ra}).
 
 
 \section{Prioritising normalisation or clustering}
@@ -421,21 +418,15 @@ of small genetic effects.
 %a multitude of smalls effects which cumulatively explain
 %Most effects in biological variation are small, they therefore require large sample sizes and
 
-The most studied factor which influences the statistical power to detect such effects is sample size,
-and we have witnessed ever-increasing sample sizes which have greatly benefitted from dropping genotyping and sequencing costs.
+The most studied factor which influences the statistical power to detect such effects is sample size, and we are witnessing ever-increasing sample sizes thanks to dropping genotyping and sequencing costs.
 However, a less explored and harder to define factor is the accuracy with which traits are measured.
 For example in \gls{T1D}, depending on the stage at which the disease is diagnosed, the phenotype can be quite different.
 If the disease is diagnosed earlier then the associated phenotype may be recurrent auto-antibody positivity or if diagnosed late, high blood glucose.
-In most diseases, case heterogeneity is a confounder and one which needs addressing by collection
-of additional clinical covariates during the recruitment of cases.
+In most diseases, case heterogeneity is a confounder and one which needs addressing by collection of additional clinical covariates during the recruitment of cases.
 Since these disease status phenotypes are hard to define accurately and consistently,
 %as I have touched upon in \Cref{chapter:intro},
-this has motivated looking at better defined intermediate phenotypes (also known as endophenotypes), such as the 
-CD25 cell phenotypes of \Cref{chapter:il2ra}, or the pSTAT5 exvivo response cell phenotype of \Cref{chapter:il2},
-which might show stronger correlation with genotype as they are closer to the gene expression.
-Cell phenotypes such as relative cell frequency over its parent population or expression of surface markers
-can in theory be measured accurately with flow cytometry, but there are still factors
-which influence the accuracy at which these can be measured.
+this has motivated looking at better defined intermediate phenotypes (also known as endophenotypes), such as the CD25 cell phenotypes of \Cref{chapter:il2ra}, or the pSTAT5 exvivo response cell phenotype of \Cref{chapter:il2}, which might show stronger correlation with genotype as they are closer to the gene expression.
+Cell phenotypes such as relative cell frequency over parent cell population or expression of surface markers can in theory be measured accurately with flow cytometry, but there are still factors which influence the accuracy at which these can be measured.
 In particular in \Cref{chapter:il2ra} of this thesis, I have concentrated on how clustering can influence the relative frequency
 and MFIs of the cell populations under study.
 Other known factors are, staining batch effects as seen in \Cref{chapter:il2},
@@ -451,17 +442,15 @@ If the repeatability is good then the within-individual variance is small which 
 small differences.
 
 Consistency is an important factor in identifying clusters.
-Decomposing the variance into within sample and between variation
+Decomposing the variance into within sample and between sample variation.
 
-Subset analysis is also very important because of a phenomenon known as Simpson’s paradox whereby a trend that is visible
-in a group may not hold in all subsets of the group and may even be reversed in certain subsets of that group.
+Subset analysis is also very important because of the phenomenon known as Simpson’s paradox whereby a trend that is visible in the group as a whole will often not hold in all subsets of the group and may even be reversed in certain subsets of that group.
 
 When a hierarchical gating approach is taken, errors at the top of the hierarchy propagate down the tree.
 %This approach is chosen for manual gating as it agrees with our very linear way of thinking.
-This complicates an automated approach to step by step gating since errors which occur in earlier steps of the gating may not be recovered from.
+This complicates an automated approach to stepwise gating since errors which occur in earlier steps of the gating may not be recoverable.
 
-In the same way wrongly gating samples can lead to outliers which can create false positive association due to their high leverage,
-fixed gating can lead to all samples have the same profile.
+%In the same way wrongly gating samples can lead to outliers which can create false positive association due to their high leverage, fixed gating can lead to all samples having the same profile.
 
 %\subsection{Reproducibility}
 
@@ -557,8 +546,7 @@ For example the data as strored inside the FCS file did not match the date given
 In particular, FCS files do not contain sample identification information, which makes matching back to genotypes cumbersome and error-prone.
 %Some minor issues for example, when experiments are done over night the dates might mismatch
 
-Typically flow cytometry experiments do not have large number of samples because in most labs, sample preparation and running tubes on the flow
-cytometer are manual operations.
+Typically flow cytometry experiments do not have large number of samples because in most labs, sample preparation and running tubes on the flow cytometer are manual operations.
 %Futhermore the fluorochrome antibody mix used per tube costs in the order of \textsterling20
 %the method of operating flow cytometer is still quite manual in most labs.
 However there are labs where these processes have been automated with robotics
@@ -626,9 +614,9 @@ it is easy to fall into the trap of applying over complex analytical methods to 
 when in practice, simpler methods perform nearly as well and are much faster and easy to implement.
 Simple methods can also be combined to reach a consensus and this popular machine learning approach known as boosting increases performance but often at the expense of interpretability.
 
-Interpretability is perhaps one of the more important issues in order to encourage biologists to use these methods.
+Interpretability is perhaps one of the more important issues in order to encourage biologists to use these computational methods.
 While mixture modelling approaches are conceptually close to manual gating, probabilistic populations are not always intuitive to biologists,
-so their true power cannot be fully exploited as we end up having to apply hard cut-offs (see \Cref{chapter:il2ra}).
+so their true power cannot be fully exploited as we end up applying hard cut-offs (see \Cref{chapter:il2ra}).
 Biologists enjoy manual gating becomes it gives them the freedom to draw arbitrary exclusive gates whose contour can be made arbitrarily complex.
 This freedom however comes at the cost of exacerbating the disagreement in standards and definitions in immunology.
 While discrepancies in gate positions are unlikely to make much of an impact on the MFI and relative proportion of common cell populations,
@@ -637,11 +625,6 @@ they can make a big difference on rarer cell populations such as regulatory cell
 In order to encourage the use of more rigourous computational gating methods, biologist need to be lured in by incrementally habituating them to these tools.
 For example, a first step could be to use the manual gates but to allow them to move with the data.
 Completely removing the two dimensional visualisation for example might be too alienating to some.
-%limitation of trees
-Also the cellular hierarchical view is so deeply engrained in the minds of certain biologists that presenting them the clustering results
-in a different order could perturb them.  Although I do think the hierarchical view is attractive, it easily misses populations and imposes a directionality in cell lineages which may not always be correct.
-In the same way that phylogenies change as new animal species are discovered, the cell lineages should also be influenced by the discovery of new cell subsets.
-
 There is also a growing need for non-proprietary software which integrates well with the manual analysis.
 The openCyto BioConductor package currently being developed by Gottardo
 The automated methods need to complement the manual methods for now, so that the change from manual to automated happens gradually.
