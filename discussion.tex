@@ -522,10 +522,9 @@ Certainly in the case of flow cytometry some clustering or data smoothing is req
 
 \paragraph{Experiment vs analysis: a communication problem}
 
-Analysing flow cytometry data has brought to light the many issues surrounding the generation and analysis of data,
-and more generally with the division of labour.
+Analysing flow cytometry data has brought to light the many issues surrounding the generation and analysis of data, and more generally with the division of skill sets between generation and analysis of data.
 Perhaps the greatest obstacle to standardising analysis is our inherent dislike of rules and standards which we may find superfluous and tedious.
-However, simple things like naming conventions waste precious man hours for the person analysing the data or even to you if you return to your data after a long while.
+However, trivial things like naming conventions may waste precious man hours for the person analysing the data or even to you if you return to your data after a long while.
 Part of the solution is to involve the biologists, the person generating the data, so that they can appreciate the implications, another part of the solution is to encourage automation of these more tedious tasks, as is being done in certain labs which use robots to feed the flow cytometer.
 %At least automation is consistently and predictably wrong.
 
@@ -537,8 +536,7 @@ I spent a great deal of time on seeing if clustering can be fully automated, i.e
 One approach is to select large K and then merge clusters together with flowMerge.
 My approach was generally to select a K that gave consistent clustering results across samples.
 
-While I am sure these observations are not only specific to flow cytometry, they are more apparent perhaps in flow given how much freedom flow cytometry offers both in terms of generation and analysis,
-and how little is known of the underlying cell populations.
+While I am sure these observations are not only specific to flow cytometry analysis, I would argue they are more striking because of the freedom flow cytometry offers both in terms of generation and analysis, and how little is known of the underlying cell populations.
 
 
 \paragraph{ Incomplete experiments and small sample sizes}
@@ -575,9 +573,9 @@ Presently most flow experiments contain too few samples to do well-powered assoc
 
 Staining in flow cytometry is notoriously noisy.
 Even when using the same fluorochrome-antibody panel and the same PMT voltage, the shape and location of clusters is not stable.
-The treatment of the cells can also lead very different scatter patterns (example Tony vs Marcin).
-While the scatter channels are very noisy because of debris, for a given panel and experimental protocol,
+While the scatter channels can be very noisy due of debris, for a given panel and experimental protocol,
 the location of the clusters should not move much on the scatter channels because the morphological attributes of the cells should not be dependent on staining titration.
+However, the treatment of cells can also lead to very different scatter patterns (example Tony vs Marcin).
 
 
 \paragraph{ Flowjo interface with R}
@@ -603,58 +601,62 @@ However, it helps to know in which dimensions the gate was defined manually.
 Another solution to including manual gates in R without relying on their coordinates in FlowJo
 is to draw polygons in R and use the \Rfunction{in.polygon} to extract points in the polygon.
 
-All that said, there is definitely a gap in the market for a new piece of software which reconciles manual, supervised and unsupervised flow cytometry analysis,
-as well as provides further visualisation techniques.
+All that said, there is definitely a gap in the market for a new piece of software which reconciles manual, supervised and unsupervised flow cytometry analysis, as well as provides further visualisation techniques.
 
 
 %\paragraph{Inconsistencies in file naming} 
 \paragraph{Mass cytometry}
 
 Time of flight cytometry (CyTOF) is a biotechnology which combines mass spectometry with cytometry.
-The throughput is not as high as fluorescence flow cytometry but the number of markers which can measure up to 34 markers.
-Also no side and forward scatter information is given.
-It cannot be used for sorting as the cells are destroyed when measured.
-Since it does not report side and forward scatter live/dead markers tend to be used instead to spot debris.
+The throughput is not as high as fluorescence flow cytometry, but it pushes the number of markers which can measured up to 34 and the potential of going higher.
+However it cannot be used for sorting as the cells are destroyed when measured.
+Also, it does not report side and forward scatter live/dead markers tend to be used instead to spot debris.
+
 
 \section{Summary}
 
 Larger datasets have allowed us to see finer biological variation both in genotypes and cell subsets than previously possible.
-However sometimes taking a different view of the same dataset, by doing a different type of experiment, like qPCR, or adding parameters, for example additional markers in flow cytometry,
-can help uncover patterns which might not have been visible even at larger sample sizes.
+However sometimes taking a different view of the same dataset, by doing a different kind of experiment, for example qPCR, or adding parameters, for example additional markers in flow cytometry, can help uncover patterns which might not have been visible even at larger sample sizes.
 For example in \Cref{chapter:kir}, qPCR allowed us to discover a SNP predictive of KIR3DL1/3DS1 copy number.
-Furthermore, even without doing further experiments, analytical methods such as unsupervised clustering can reveal previously
-unknown features. For example in \Cref{chapter:il2}, unsupervised clustering algorithms analysing pSTAT5 response at different doses
-of proleukin uncovered responsive subset of cells we previously ignored.
-
+Furthermore, even without doing further experiments, analytical methods such as unsupervised clustering can reveal previously unknown features.
+For example in \Cref{chapter:il2}, unsupervised clustering algorithms analysing pSTAT5 response at different doses of proleukin uncovered responsive subset of cells we previously ignored.
 
 Although large datasets can support methods with larger number of parameters as they are less prone to overfitting,
-it is easy to fall into the trap of applying over complex methods to account for all the intricacies of the data,
-when in practice, simpler methods may perform as well and are much faster and easy to implement.
-Simple methods can also be combined to reach a consensus and this popular machine learning approach known as boosting
-may increase performance at the expense of interpretability.
+it is easy to fall into the trap of applying over complex analytical methods to account for all the intricacies of the data,
+when in practice, simpler methods perform nearly as well and are much faster and easy to implement.
+Simple methods can also be combined to reach a consensus and this popular machine learning approach known as boosting increases performance but often at the expense of interpretability.
 
 Interpretability is perhaps one of the more important issues in order to encourage biologists to use these methods.
-While mixture modelling approaches are conceptually close to manual gating, probabilistic populations are not intuitive to biologists,
-so their true power cannot be fully exploited.
-Biologists enjoy manual gating becomes it gives them the freedom to draw somewhat arbitrary exclusive gates.
+While mixture modelling approaches are conceptually close to manual gating, probabilistic populations are not always intuitive to biologists,
+so their true power cannot be fully exploited as we end up having to apply hard cut-offs (see \Cref{chapter:il2ra}).
+Biologists enjoy manual gating becomes it gives them the freedom to draw arbitrary exclusive gates whose contour can be made arbitrarily complex.
 This freedom however comes at the cost of exacerbating the disagreement in standards and definitions in immunology.
 While discrepancies in gate positions are unlikely to make much of an impact on the MFI and relative proportion of common cell populations,
-they can make a big difference on rarer cell populations such as regulatory cells.
+they can make a big difference on rarer cell populations such as regulatory cells where the effects are much smaller.
 
-In order to encourage the use of these methods, biologist need to be lured in by incrementally habituating them to these tools.
-Completely removing the two dimensional visualisation for example might be discouraging.
+In order to encourage the use of more rigourous computational gating methods, biologist need to be lured in by incrementally habituating them to these tools.
+For example, a first step could be to use the manual gates but to allow them to move with the data.
+Completely removing the two dimensional visualisation for example might be too alienating to some.
+%limitation of trees
 Also the cellular hierarchical view is so deeply engrained in the minds of certain biologists that presenting them the clustering results
-in a different order would perturb them.  Although attractive, this hierarchical model misses populations and imposes a directionality
-in cell lineages which may not always be correct.  In the same way that phylogenies change as new animal species are discovered,
-the cell lineage model should be influenced by the discovery of new cell subsets.
+in a different order could perturb them.  Although I do think the hierarchical view is attractive, it easily misses populations and imposes a directionality in cell lineages which may not always be correct.
+In the same way that phylogenies change as new animal species are discovered, the cell lineages should also be influenced by the discovery of new cell subsets.
 
-A first step is to use the manual gates but to allow them to move with the data.
+There is also a growing need for non-proprietary software which integrates well with the manual analysis.
+The openCyto BioConductor package currently being developed by Gottardo
+The automated methods need to complement the manual methods for now, so that the change from manual to automated happens gradually.
+On the other hand by continuously benchmarking automated analysis against manual,
+we are not exploiting the true power of automated algorithms which is to teach us new biology or to put back into question our hierarchical view of immunology.
+As an example I ran flowClust unsupervised with a large number of clusters and then picked the cluster which gave the best association with each SNP.
+This is the idea which was explored with flowMeans.  The issue however is the metaclustering step of matching clusters across samples is not trivial especially if
+there is a lot of noise between samples.
+
 %This can occasionally be achieved by centering the ellipse on the mean of the datapoints which fall within the gate.
 
-While in my opinion automated clustering need to be applied more widely in flow cytometry data analysis,
+While, in my opinion, automated clustering need to be applied more widely in flow cytometry data analysis,
 hence it is important that we continue developing these methods because biologists will need to resort to fully automated method once the number of parameters
 or number of samples becomes unmanageable.
-However, I recognise that these methods require some level of expertise and decent visualisation to guide (and reassure?) the user.
+However, I recognise that these methods require some level of expertise and decent visualisation to guide and reassure the user.
 Although, over-reliance on visualisation can mislead the analysis of high-dimensional because clustering is always projected back to two dimensions
 or linear combinations of dimensions.
 The automatic gating of flow cytometry community is strong with a lot of contributions to BioConductor and the GenePattern web interface from the Broad Institute.
@@ -667,7 +669,7 @@ are central in developing auto gating software and bring together the automatic 
 In Stanford, Gary Nolan lab are using mass cytometry to analyse cell heterogeneity in cancer.
 These high-dimensional datasets require visualisation and Dana Pe'er group at Columbia University have devised various tools to do so.
 
-I have also identified regions of flow cytometry which need more work such as normalisation and selection an optimal transform.
+I have also identified aspects of flow cytometry analysis which need more work such as normalisation and selection of an optimal transform.
 Both of these can be included as part of the clustering step.
 Logarithmic transform greatly influence the identification of lower intensity populations which overlap into the negative range.
 The wrong transform can introduce splits giving rise to spurious cell populations.
@@ -678,34 +680,23 @@ FlowTrans assumes an underlying Gaussian distribution and used maximum likelihoo
 But there is still the question of which transform function to apply?
 FlowClust applies a Box-Cox transform for which the lambda parameter is estimated as part of the ML estimation.
 
-There is also a growing need for non-proprietary software which integrates well with the manual analysis.
-The openCyto BioConductor package currently being developed by Gottardo
-The automated methods need to complement the manual methods for now, so that the change from manual to automated happens gradually.
-On the other hand by continuously benchmarking automated analysis against manual,
-we are not exploiting the true power of automated algorithms which is to teach us new biology or to put back into question our hierarchical view of immunology.
-As an example I ran flowClust unsupervised with a large number of clusters and then picked the cluster which gave the best association with each SNP.
-This is the idea which was explored with flowMeans.  The issue however is the metaclustering step of matching clusters across samples is not trivial especially if
-there is a lot of noise between samples.
-
 
 % I admit there has been a lack of simulations but flow data is hard to simulate.
 % it's not just simply labelled data that can be permuted and anyway the datasets are too large for this approach to be practical
 % simulate small responsive population?
 
-Sophisticated the methods are no replacement for good data.
-Being able to make this judgment call between good and bad data necessitates understanding of the experimental context.
-This prior knowledge is acquired through having seen a large number of samples and hence not encoded into an automated method.
+Data quality can be as important as the methods: sophisticated the methods are no replacement for good data.
+However, being able to make this judgment call between good and bad data necessitates understanding of the experimental context.
+This prior knowledge is acquired through the experience of having seen a large number of samples and hence not encoded into an automated method.
 
-Processing in larger batches or perhaps reducing the human element in flow cytometry is a first step towards automation.
+Processing in larger batches or perhaps reducing the human element in flow cytometry could be a first step towards automation.
 %http://www.aber.ac.uk/en/cs/research/cb/projects/robotscientist/
-However as the number of samples grows so will the need for computational methods
-and the gap between the biological of computational way of thinking will become less striking.
+However as the number of samples grows so will the need for computational methods and the gap between the biological of computational way of thinking will shrink.
 
-On a sufficiently large dataset methods all methods tend to be equivalent.
-As the datasets are growing larger, in a Bayesian setting the data will have a much stronger influence than the prior.
+On sufficiently large datasets, all methods tend to be equivalent.
+In a Bayesian setting, as the datasets are growing larger, the likelihood computed on the data will have a much stronger influence than the prior.
 
-In conclusion, fully unsupervised methods cannot be expected to deal with the level of noise possible in flow cytometry experiments,
-beyond a certain threshold of uncertainty, a sample is of little value.
+In conclusion, fully unsupervised methods cannot be expected to deal with the level of noise possible in flow cytometry experiments, beyond a certain threshold of uncertainty, a sample is of little value.
 Poor staining can make populations difficult to distinguish or can even make populations disappear.
 Spillover introduces artificial marker correlation and can increase or decrease the fluorescence intensity of cell populations.  
 With an in depth understanding of the patterns of noise, it is possible to develop more targeted approaches such as Adiyct but these run the danger of including outlying samples.
@@ -713,7 +704,8 @@ Ultimately deciding when or not to include an outlier sample is down to a judgem
 so in that regard some subjectivity can persist which can introduce bias.
 As was seen in \Cref{chapter:il2ra}, the 1D sequential top down gating strategy can easily be coded up as an algorithm using mixture models or bead-derived thresholds.  
 However poor staining or instrumental configuration can lead to unexpected distributions.
-In \Cref{chapter:il2}, the permeabilisation protocol makes the staining noisy.
+
+In \Cref{chapter:il2}, the permeabilisation protocol made the staining noisy, so that the MFIs were not reproducible.
 
 
 
