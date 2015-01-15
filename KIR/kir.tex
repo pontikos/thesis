@@ -396,7 +396,7 @@ dimensional normalised $\Delta$Ct values, allowing for eight
 \gene{KIR3DS1}/\gene{KIR3DL1} copy number groups: three common groups of two copy
 numbers (0-2, 1-1, 2-0) and five
 rarer groups of lower or higher copy numbers
-(\Cref{Figure-1}).  The mixture was fitted using
+(\Cref{figure:Figure-1}).  The mixture was fitted using
 an \gls{EM} algorithm \citep{Young:2009ty} with initial parameters
 calculated from the clusters returned by k-means with centers set to
 the eight expected locations of the copy number groups.
@@ -600,7 +600,7 @@ rs3826878               & 60069023 & [A/G] & ok          & 2.63E-05 & 3.55E-06 \
   of \gene{KIR3DL1}/\gene{KIR3DS1} copy numbers from the $R$ and $\theta$ signals of SNP \snp{rs592645}.
   Each point shows the proportion of samples for which the knn predicted copy number did not 
   match the qPCR call, averaged over ten multiply imputed qPCR call datasets
-  (using the posterior probabilities from \Cref{Figure-1}). 
+  (using the posterior probabilities from \Cref{figure:Figure-1}). 
   Error bars show the minimum and maximum error rates over the ten multiply imputed datasets.
   Knn was run in parallel for cases only, controls only and on all samples together.
   The minimum error rate is achieved for $k=8$ when the prediction uses both cases and controls.}
@@ -617,7 +617,7 @@ rs3826878               & 60069023 & [A/G] & ok          & 2.63E-05 & 3.55E-06 \
   when using a different size subset of the training data.
   The percentage of the complete training data set and the size of the subset is given in the title of each panel.
   Each point represents the LOOCV error rate averaged over ten multiply imputed qPCR call datasets
-  (using the posterior probabilities from \Cref{Figure-1}). 
+  (using the posterior probabilities from \Cref{figure:Figure-1}). 
   Smoothing lines show the average over 25 independent random subsets of training data.
   The black dashed line represent the observed error rate in the complete sample.
   As the size of the training dataset increases the error rate becomes less sensitive to the choice of the parameter k.
@@ -1142,7 +1142,7 @@ For example, the qPCR assays used here to target \gene{KIR3DL1} and \gene{KIR3DS
 %Further, qPCR derived data, despite careful design and multiplexing, remain subject to noise.
 %We ameliorated this by first normalising across plates, and then jointly clustering \gene{KIR3DL1} and \gene{KIR3DS1}, which has the advantage of exploiting the correlation between the $\Delta$Ct values.
 
-Our hybrid approach, the key steps of which are summarised in \Cref{method-flowchart}, allowed us to perform the largest study (twenty-fold)
+Our hybrid approach, the key steps of which are summarised in \Cref{figure:method-flowchart}, allowed us to perform the largest study (twenty-fold)
 of \gene{KIR3DL1}/\gene{KIR3DS1} copy number in T1D to date.
 In 12,106 samples, I found no association of \gene{KIR3DS1}-\gene{KIR3DL1} copy number with T1D, alone or conditional on presence of the HLA-Bw4 epitope.
 Our results suggest that, despite the association of certain HLA-A and HLA-B alleles with T1D and the established biological interaction between HLA-Bw4 and \gene{KIR3DL1},
