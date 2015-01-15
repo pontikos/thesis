@@ -27,13 +27,9 @@ In ungated flow cytometry, data matrices  contain over a million rows, so the co
 making these type of methods impractical.
 I found that distance matrix computation was only feasible in subsets of the order of $10,000$,
 like for example the CD4+ lymphocyte subset, or data downsampled using the SPADE or binning in \Cref{chapter:il2}.
-The data downsampling as performed by SPADE, relies on 
-first estimating the local density at each point
-and then preferentially thinning the data in regions of high density to even out the density 
-across the whole sample.
-The local density estimation step is computationally intensive as it needs to consider the distance from
-a single point to all other points in the sample to find the number of neighbours.
-I found this step could be greatly sped up using \gls{ANN} which uses the K dimensional trees (KD tree) lookup method.
+The data downsampling as performed by SPADE, relies on first estimating the local density at each point and then preferentially thinning the data in regions of high density to even out the density across the whole sample.
+The local density estimation step is computationally intensive as it needs to consider the distance from a single point to all other points in the sample to find the number of neighbours.
+I found this step could be greatly sped with \gls{ANN} which uses the K dimensional trees (KD tree) lookup method.
 KD-trees are a space-partitioning data structure for organising points in a k-dimensional space which makes for an efficient
 way of storing a high-dimensional dataset to lookup proximal datapoints.
 It can also be used for approximation to reduce the number of datapoints which need to be considered.
@@ -127,14 +123,10 @@ If several samples have been manually gated then these can be incorporated in th
 %FlowClust as opposed to Mclust offers the option of defining per component priors.
 %This threshold can be defined by using a chi squared distribution in the one dimensional case.
 
-One outstanding problem remains with supervised clustering however,
-how to account for unlabelled data, or in the context of flow cytometry,
-nuisance clusters which are not part of the gating?
-While in manual gating these points are discarded and not explained by the clustering,
-automatic methods need to consider all points in the dataset and consequently these points influence the gating.
-One solution is to define a background cluster but this is unlikely to work
-for multimodal distributions.  Another solution could be to allow for the creation of a
-large number of clusters to account for all the background clusters which are not part of the study.
+An outstanding problem which remains with supervised clustering however, is how to account for unlabelled data, or in the context of flow cytometry, nuisance clusters which are not part of the gating?
+While in manual gating these points are discarded and do influence the clustering, automatic methods may consider all points in the dataset and consequently these points will influence the gating.
+One solution is to define a background cluster but this is unlikely to work for multimodal distributions.
+Another solution would be to allow for the creation of a large number of clusters to account for all the background clusters which are not part of the study.
 
 Supervised clustering can be really beneficial in trying to identify rare subsets.
 This is because rare subsets, by definition, may not always be visible in all samples.
@@ -143,22 +135,24 @@ This is because rare subsets, by definition, may not always be visible in all sa
 
 \paragraph{Advantages and disadvantages to a tree structure to gating}
 
-The cellular hierarchical view is so deeply engrained in the minds of certain biologists that presenting clustering results in a different order could perturb them.
 
 The hierarchical view is attractive, and using a tree structure for gating presents a number of advantages.
-It is fast, since points can be eliminated at each step reducing the number of points that needs to be considered at each clustering step.
+From a pratical perspective it is efficient, since points are filtered at each step, reducing the dataset.
 It agrees with the established nomenclature facilitating comparison to manual gating and interpretability.
 Methods which use a binary structure are easy to interpret as they conform to the manual gating strategy which provides rules on how to obtain the leaf subsets.
 Reduces ambiguity.
 
+The cellular hierarchical view is so deeply engrained in the minds of certain biologists that presenting clustering results in a different order could perturb them.
 
-Some disadvantages of using a tree structure for gating are:
-it easily misses populations and imposes a directionality in cell lineages which may not always be correct.
-In the same way that phylogenies change as new animal species are discovered, the cell lineages should also be influenced by the discovery of new cell subsets.
+On the other hand, some disadvantages of using the tree structure to gating are that it can easily miss relevant cell populations and imposes a directionality in cell lineages which may not always be correct.
 
-The bias, since imposes an ordering on the markers and thus an an importance to the markers.  It may be more ambiguous markers are gated on first.  The RF gives us some idea of the importance of the markers.
+In the same way that phylogenies change as new animal species are discovered, cell lineages should also be influenced by the discovery of new cell subsets.
 
-However their construction can be very sensitive to the underlying data and errors propagate.
+A bias is also imposed on the ordering on the markers and thus their importance. 
+It may be more ambiguous markers are gated on first.
+The RF gives us some idea of the importance of the markers.
+
+The construction of tress can be very sensitive to the underlying data and errors propagate.
 Errors may be mitigated by introducing conditional probabilities at each step.
 This becomes more of an issue as more subsets are defined. 
 If no restriction are appied the rules can become over-complicated.
@@ -511,7 +505,7 @@ Certainly in the case of flow cytometry some clustering or data smoothing is req
 
 \paragraph{Experiment vs analysis: a communication problem}
 
-Analysing flow cytometry data has brought to light the many issues surrounding the generation and analysis of data, and more generally with the division of skill sets between generation and analysis of data.
+Analysing flow cytometry data has brought to light the many issues with the division of skill sets between generation and analysis of data.
 Perhaps the greatest obstacle to standardising analysis is our inherent dislike of rules and standards which we may find superfluous and tedious.
 However, trivial things like naming conventions may waste precious man hours for the person analysing the data or even to you if you return to your data after a long while.
 Part of the solution is to involve the biologists, the person generating the data, so that they can appreciate the implications, another part of the solution is to encourage automation of these more tedious tasks, as is being done in certain labs which use robots to feed the flow cytometer.
@@ -573,38 +567,36 @@ The unit of work in FlowJo is the workspace in which FCS files are first loaded 
 The workspace also saves the cell populations statistics which need to be updated when the gates move.
 
 Unfortunately, parsing FlowJo workspaces in order to extract manual gates is not straighforward.
-Although there are several BioConductor packages designed to import and parse flowJo workspaces, flowUtils gatingML, flowJo, flowWorkspace,
-I have found the R/FlowJo interface to not be very reliable, although the flowWorkspace was able to parse it returned the statistics calculated in FlowJo were wrong.
-This is probably why Vincent Plagnol developed his own XML parser to extract gates from flowWorkspace files but this approach is time-consuming as it requires in knowledge of the FlowJo XML schema which frequently changes on each new release of FlowJo.
+Although there are several BioConductor packages designed to import and parse flowJo workspaces, flowUtils gatingML, flowJo, flowWorkspace, I have found the R/FlowJo interface to not be very reliable, although the flowWorkspace parsed it without errors, the returned statistics calculated in FlowJo were wrong.
+This is probably why Vincent Plagnol developed his own XML parser to extract gates from flowWorkspace files but this approach is time-consuming as it requires in-depth knowledge of the FlowJo XML schema which can change on each new release of FlowJo.
 Furthermore the gate coordinates in FlowJo are often imprecise.
-In fact I found that just loading an FCS file into FlowJo and reexporting it changes the data!
-In the end I found the best solution was to export CLR files which are simply the classification results from FlowJo.
-Unfortunately, instead exporting these files in a compressed memory-efficient format binary format, FlowJo, in its unfathomable wisdom, exports them in text which results in very large files and makes exporting of all clustering results impractical.
-Hence I have often resorted to exporting only a few CLR files from which I can estimate the gate coordinates.
-One thing however that lacks from the CLR format is to retrieve the gate coordinates is the dimensions in which the gate is defined.
-One method of approximating gate coordinate is to calculate the mean and covariance of a CLR cluster and to use the Mahalanobis distance,
-hence approximating the cluster with an ellipse.
-However, it helps to know in which dimensions the gate was defined manually.
+In fact, I found a more serious bug in FlowJo: just loading an FCS file into FlowJo and reexporting it changes the data!
+In the end, I found the best solution was to export CLR files which are simply the classification results from FlowJo.
+Unfortunately, instead of exporting these files in a memory-efficient compressed binary format, FlowJo exports them as text which results in very large files and makes exporting of all clustering results impractical.  FlowJo crashed on numerous occasions when try to accomplish this task.
+Hence I resorted to exporting only a few CLR files from which I could estimate the gate coordinates.
+However, one ommission from the CLR format needed to retrieve the gate coordinates is the dimensions in which the gate is defined.
+One method of approximating gate coordinate is to calculate the mean and covariance of a CLR cluster and to use the Mahalanobis distance, hence approximating the cluster with an ellipse.
+However, it helps to know in which dimensions the gate was defined.
 
-Another solution to including manual gates in R without relying on their coordinates in FlowJo
-is to draw polygons in R and use the \Rfunction{in.polygon} to extract points in the polygon.
+Another solution to including manual gates in R without relying on their coordinates in FlowJo is to draw polygons on the R display and use the \Rfunction{in.polygon} to extract points in the polygon.
 
-All that said, there is definitely a gap in the market for a new piece of software which reconciles manual, supervised and unsupervised flow cytometry analysis, as well as provides further visualisation techniques.
+All in all, there is definitely a gap in the market for a new piece of software which reconciles manual, supervised and unsupervised flow cytometry analysis, and provides further multidimensional visualisation techniques.
 
 
 %\paragraph{Inconsistencies in file naming} 
 \paragraph{Mass cytometry}
 
 Time of flight cytometry (CyTOF) is a biotechnology which combines mass spectometry with cytometry.
-The throughput is not as high as fluorescence flow cytometry, but it pushes the number of markers which can measured up to 34 and the potential of going higher.
-However it cannot be used for sorting as the cells are destroyed when measured.
-Also, it does not report side and forward scatter live/dead markers tend to be used instead to spot debris.
+The throughput is not as high as fluorescence flow cytometry, but it pushes the number of markers which can measured up to 34 and potentially higher.
+However, it cannot be used for sorting as the cells are destroyed when measured.
+Also, as it does not report side and forward scatter, live/dead markers are used instead to spot debris.
+The anlaysis of the type of datasets generated by this technology benefits greatly from the multidimensional visualisation techniques such as SPADE\citep{Simonds:2011jha} and ViSNE\citep{Amir:2013dc}.
 
 
 \section{Summary}
 
 Larger datasets have allowed us to see finer biological variation both in genotypes and cell subsets than previously possible.
-However sometimes taking a different view of the same dataset, by doing a different kind of experiment, for example qPCR, or adding parameters, for example additional markers in flow cytometry, can help uncover patterns which might not have been visible even at larger sample sizes.
+However, sometimes taking a different view of the same dataset, by doing a different kind of experiment, for example qPCR, or adding parameters, for example additional markers in flow cytometry, can help uncover patterns which might not have been visible even at larger sample sizes.
 For example in \Cref{chapter:kir}, qPCR allowed us to discover a SNP predictive of KIR3DL1/3DS1 copy number.
 Furthermore, even without doing further experiments, analytical methods such as unsupervised clustering can reveal previously unknown features.
 For example in \Cref{chapter:il2}, unsupervised clustering algorithms analysing pSTAT5 response at different doses of proleukin uncovered responsive subset of cells we previously ignored.
@@ -636,21 +628,15 @@ there is a lot of noise between samples.
 
 %This can occasionally be achieved by centering the ellipse on the mean of the datapoints which fall within the gate.
 
-While, in my opinion, automated clustering need to be applied more widely in flow cytometry data analysis,
-hence it is important that we continue developing these methods because biologists will need to resort to fully automated method once the number of parameters
-or number of samples becomes unmanageable.
-However, I recognise that these methods require some level of expertise and decent visualisation to guide and reassure the user.
-Although, over-reliance on visualisation can mislead the analysis of high-dimensional because clustering is always projected back to two dimensions
-or linear combinations of dimensions.
+While, in my opinion, automated clustering ought to be applied more widely in flow cytometry data analysis, data analysis can still be done manually as the number of samples and parameters are still manageable.
+However, as the number of samples and parameters continue to grow, biologists will need to resort to fully automated method, hence itis important that we continue developing these methods.
+These methods will require some level of expertise and decent visualisation to guide and reassure the user.
+Although, over-reliance on visualisation can mislead the analysis of high-dimensional because clustering is always projected back to two dimensions or linear combinations of dimensions.
 The automatic gating of flow cytometry community is strong with a lot of contributions to BioConductor and the GenePattern web interface from the Broad Institute.
-In particular two labs,
-Raphael Gottardo at the Fred Hutchinson Cancer Research Center in the USA
-and
-Ryan Brinkman at the Terry Fox Laboratory in Canada,
-are central in developing auto gating software and bring together the automatic gating flow cytometry community as part of the FlowCAP challenge every year.
+In particular two labs, Raphael Gottardo at the Fred Hutchinson Cancer Research Center in the USA and Ryan Brinkman at the Terry Fox Laboratory in Canada, have been central in developing auto gating software and bring together the automatic gating flow cytometry community as part of the FlowCAP challenge every year.
 
-In Stanford, Gary Nolan lab are using mass cytometry to analyse cell heterogeneity in cancer.
-These high-dimensional datasets require visualisation and Dana Pe'er group at Columbia University have devised various tools to do so.
+In Stanford, Gary Nolan lab and at the CRI in the UK, mass cytometry is adopted to analyse cell heterogeneity in cancer.
+These high-dimensional datasets require visualisation and Dana Pe'er group at Columbia University has devised various tools to do so such as ViSNE \citep{Amir:2013dc}.
 
 I have also identified aspects of flow cytometry analysis which need more work such as normalisation and selection of an optimal transform.
 Both of these can be included as part of the clustering step.
@@ -668,7 +654,7 @@ FlowClust applies a Box-Cox transform for which the lambda parameter is estimate
 % it's not just simply labelled data that can be permuted and anyway the datasets are too large for this approach to be practical
 % simulate small responsive population?
 
-Data quality can be as important as the methods: sophisticated the methods are no replacement for good data.
+Data quality can be as important as the methods: sophisticated methods are no replacement for good data.
 However, being able to make this judgment call between good and bad data necessitates understanding of the experimental context.
 This prior knowledge is acquired through the experience of having seen a large number of samples and hence not encoded into an automated method.
 
@@ -682,14 +668,25 @@ In a Bayesian setting, as the datasets are growing larger, the likelihood comput
 In conclusion, fully unsupervised methods cannot be expected to deal with the level of noise possible in flow cytometry experiments, beyond a certain threshold of uncertainty, a sample is of little value.
 Poor staining can make populations difficult to distinguish or can even make populations disappear.
 Spillover introduces artificial marker correlation and can increase or decrease the fluorescence intensity of cell populations.  
-With an in depth understanding of the patterns of noise, it is possible to develop more targeted approaches such as Adiyct but these run the danger of including outlying samples.
-Ultimately deciding when or not to include an outlier sample is down to a judgement call from the person who generated the data,
-so in that regard some subjectivity can persist which can introduce bias.
-As was seen in \Cref{chapter:il2ra}, the 1D sequential top down gating strategy can easily be coded up as an algorithm using mixture models or bead-derived thresholds.  
+With an in depth understanding of the patterns of noise, it is possible to develop more targeted approaches such as Adiyct but these run the danger of including outlier samples.
+Ultimately deciding when or not to include an outlier sample is down to a judgement call, often by the person who generated the data, so in that regard subjectivity can persist and that can introduce bias.
+%For the sake of interpretability I would advocate simple methods on complex data
+
+%Methods should be simple but no simpler.
+%Our mission should not be to foreseee the future but to enable it.  
+
+How much we chose to automate really depends on the application and really comes down to a question of survival.
 However poor staining or instrumental configuration can lead to unexpected distributions.
-
 In \Cref{chapter:il2}, the permeabilisation protocol made the staining noisy, so that the MFIs were not reproducible.
+But different computational tools could be used to highlight different populations.
 
+The move from manual labour to automated manufacturing during the industrial revolution was partly driven by demand and since demand is forever increasing it is clear that we are moving towards automation until we reach the singularity.
+It was the ability to break down the complex process of assembly into a series of simple basic steps tasks 
+As was seen in \Cref{chapter:il2ra}, the 1D sequential top down gating strategy can easily be coded up as an algorithm using mixture models or bead-derived thresholds.  
+The main difference here however is in the industrial process we know what to expect a shoe but in this process we may expect anything.
+Philosophically that what still makes data analysis an art.
+We will only see the true fruits of automated analysis once the number of samples has grown considerably.
+but this might require earlier steps in the process such as the data generation to be further automated first.
 
 
 
