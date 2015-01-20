@@ -112,8 +112,8 @@ Using an EM style algorithm, the parameters of the ellipse can then be refined t
 This is the approach taken by X-Cyt \citep{Hu:2013bg} which uses manual gates as templates.
 Also FlowJo has a magnetic gate feature which is described as "gate is as moved to accomodate the maximum number of events".
 
-I have also tried this approach.
-I have let the mean of the ellipse be influenced by the data while the covariance was set as fixed.
+I have also tried this approach in \Cref{chapter:il2} when manual gates were not available for all samples.
+First, I let the mean of the ellipse be influenced by the data while the covariance was set as fixed.
 The Mahalanobis distance then allows us to go from a mean and covariance of an ellipse to a classification by defining a threshold
 above which points are excluded from the ellipse.
 
@@ -135,7 +135,6 @@ This is because rare subsets, by definition, may not always be visible in all sa
 
 \paragraph{Advantages and disadvantages to a tree structure to gating}
 
-
 The hierarchical view is attractive, and using a tree structure for gating presents a number of advantages.
 From a pratical perspective it is efficient, since points are filtered at each step, reducing the dataset.
 It agrees with the established nomenclature facilitating comparison to manual gating and interpretability.
@@ -153,6 +152,10 @@ It may be more ambiguous markers are gated on first.
 The RF gives us some idea of the importance of the markers.
 
 The construction of tress can be very sensitive to the underlying data and errors propagate.
+%When a hierarchical gating approach is taken, errors in earlier steps propagate.
+%This approach is chosen for manual gating as it agrees with our very linear way of thinking.
+%This complicates automated approaches since errors which occur in earlier steps of the gating are not recoverable from.
+
 Errors may be mitigated by introducing conditional probabilities at each step.
 This becomes more of an issue as more subsets are defined. 
 If no restriction are appied the rules can become over-complicated.
@@ -213,20 +216,17 @@ Boxplots are the typical visualisation tool for viewing univariate intensity dat
 SPICE presents an overview using pie charts of multiple samples \citep{Roederer:2011hy}.
 %An alternative visual representation are radarplots
 
-They are however obvious outliers and less obvious outliers, which is why I believe a confidence score is appropriate in calling outliers.
-While certain outliers can be confidently called independently because their values are at the extreme of the range of the instrument,
-others are less clear and should not be discarded completely because in light of new data they may be assigned to existing clusters or
-to new clusters.
+I believe a confidence score is appropriate to capture the uncertainty in calling outliers.
+While certain outliers can be confidently called independently because their values lie at the extremes of the range of the instrument, others are less clear and should not be discarded completely because in light of new data they may be assigned to existing clusters or to new clusters.
 
 In particular distinguishing between rare subsets and outliers is hard.
-As illustrated in \Cref{chapter:kir}, the 3-0 copy number group is rare and these points could have been regarded as outliers had we not had strong prior evidence supporting the existence
-of this group from previous studies.
-However, having prior evidence supporting the existence of a cluster is not sufficient to identify the position of the cluster.
-Priors usually determine expected proportions but give little information about the exact position and shape of the cluster, which are usually experiment specific.
-This can be due to the stability of the biological sample but also the stability of the instrumentation and sample preparation.
-In genotyping calling a genotype based on only a few samples is sometimes possible, since DNA is a very stable molecule and SNP arrays are highly standardised \citep{Di:2005uj,Giannoulatou:2008ty}.
-In flow cytometry, the MFI of cell populations is generally not directly comparable across staining panels but instead clusters can be defined in relation to one another, for example memory cells are lower for \protein{CD45RA} than naive cells and so it is possible to label these populations as in \Cref{chapter:il2ra}).
+As illustrated in \Cref{chapter:kir}, the 3-0 \gene{KIR3DS1}-\gene{KIR3DL1} copy number group is rare and these points could have been regarded as outliers if there no strong prior evidence supporting the existence of this copy number group from previous studies.
+However, prior evidence supporting the existence of a cluster yields information about its expected proportion but little about its exact position and shape, which are usually experiment specific.
+This can be due to the stability of the biological sample,  for example DNA variations changes can be seen over many human generations while variations in cell protein expression and cell populations may change daily, but also due to the reliability of the instrumentation and sample preparation.
 
+In genotyping, calling a genotype based on only a few samples is sometimes possible, since DNA is a fairly stable molecule, SNP arrays are highly standardised \citep{Di:2005uj,Giannoulatou:2008ty}, and the frequencies of many variants or variants in linkage have already been estimated in previous studies.
+In flow cytometry, the average protein expression, as measured by the \gls{MFI}, of cell populations is generally not directly comparable across staining panels but instead clusters can be defined in relation to one another, for example memory cells are lower for \protein{CD45RA} than naive cells and so it is possible to label these populations as in \Cref{chapter:il2ra}).
+The frequency of cell populations also differ widely between individuals and the ratio of cell populations, for example naive and memory, changes in the course of an individual's lifetime.
 
 \section{Prioritising normalisation or clustering}
 %\section{To move data or to move gate: normalisation vs clustering}
@@ -263,9 +263,9 @@ In certain situations,
 %If matching across samples involves find similar features
 the first part of normalisation is similar to clustering and can rely on related algorithms.
 For example normalisation by peak-alignment can use clustering of univariate data to identify peaks (with known k).
-This is the method I used in \Cref{chapter:il2ra} when gating bead data and the transform I defined to align the peaks of the bead data,
-was later applied to the biological data to do bead-normalisation.
-When K is unknown a sliding window approach can be used to estimate the number of modes peaks.
+This is the method I used in \Cref{chapter:il2ra} when gating bead data.
+The transform I defined to align the peaks of the bead data, was later applied to the biological data to do bead-normalisation.
+When K is unknown, a sliding window approach can be used to estimate the number of modes peaks.
 The highest peaks can then be selected across samples in the hope that these are the same across samples.
 Here normalisation is comparable to mode or bump hunting on the density function.
 The number of peaks returned is influenced by the span of the sliding window.
@@ -368,10 +368,10 @@ As we have seen, different normalisation approaches make different assumptions a
 The actual choice of normalisation depends on the characteristics of the data we wish to compare.
 
 The Bayesian question of relative weight of prior vs data is very relevant to gating.
-The position of the gates are the priors. Is it better to have an absolute definition/threshold or should the gates be relative to the data?
+The initial position of the gates are the priors.
+Is it better to have an absolute definition/threshold or should the gates be relative to the data?
  
-One issue with normalisation based on peak alignment is that the noise variation is greater than the biological variation between samples,
-so much so that in certain samples, the peaks are only identifiable after preliminary gating of lymphocytes.
+One issue with normalisation based on peak alignment is that the noise variation is greater than the biological variation between samples, so much so that in certain samples, the peaks are only identifiable after preliminary gating of lymphocytes.
 
 We have only considered the univariate density function here but identification can be extended to the multivariate case.
 
@@ -403,46 +403,43 @@ Clustering can also be viewed as a latent variable problem where the cluster lab
 
 
 %\section{ Method of determining phenotype affects power to detect genetic association }
-\section{ Influence of normalisation and clustering on statistical association test }
+\section{ Influence of normalisation, clustering and quality control on statistical association test }
 
-Ultimately the goal of normalisation and clustering is to allow for association testing of genetics with biological traits.
+Ultimately the goal of normalisation and clustering is to allow for statistical association testing of genetics with biological traits.
 %Decomposing the variance into tech
-In complex biological traits, a significant proportion of the variation is explained by the cumulation of a large number
-of small genetic effects.
+This is challenging because in most biological traits, a significant proportion of the variation is explained by the cumulation of a large number of small genetic effects.
 %a multitude of smalls effects which cumulatively explain
 %Most effects in biological variation are small, they therefore require large sample sizes and
 
 The most studied factor which influences the statistical power to detect such effects is sample size, and we are witnessing ever-increasing sample sizes thanks to dropping genotyping and sequencing costs.
+%This is because the standard deviation tends to shrink with the inverse of the sample size.
 However, a less explored and harder to define factor is the accuracy with which traits are measured.
 For example in \gls{T1D}, depending on the stage at which the disease is diagnosed, the phenotype can be quite different.
 If the disease is diagnosed earlier then the associated phenotype may be recurrent auto-antibody positivity or if diagnosed late, high blood glucose.
 In most diseases, case heterogeneity is a confounder and one which needs addressing by collection of additional clinical covariates during the recruitment of cases.
 Since these disease status phenotypes are hard to define accurately and consistently,
 %as I have touched upon in \Cref{chapter:intro},
-this has motivated looking at better defined intermediate phenotypes (also known as endophenotypes), such as the CD25 cell phenotypes of \Cref{chapter:il2ra}, or the pSTAT5 exvivo response cell phenotype of \Cref{chapter:il2}, which might show stronger correlation with genotype as they are closer to the gene expression.
-Cell phenotypes such as relative cell frequency over parent cell population or expression of surface markers can in theory be measured accurately with flow cytometry, but there are still factors which influence the accuracy at which these can be measured.
-In particular in \Cref{chapter:il2ra} of this thesis, I have concentrated on how clustering can influence the relative frequency
-and MFIs of the cell populations under study.
-Other known factors are, staining batch effects as seen in \Cref{chapter:il2},
-or long-term instrument sensitivity as seen in \Cref{chapter:il2ra},
-which influence the cell population \glspl{MFI},
-or sampling variation on each bleed which influences the cell frequency.
+this has motivated looking at better defined quantitative intermediate phenotypes, also known as endophenotypes.
+It is expected that these should have stronger correlation with genotype since they are closer to gene expression.
+Example of such endophenotypes in my thesis are cell phenotypes such as, protein the CD25 expression on T cell subsets (\Cref{chapter:il2ra}), pSTAT5 exvivo response in \glspl{PBMC} (\Cref{chapter:il2}) or the relative cell subset frequency over parent cell population.
+%or expression of surface markers 
 
-Using recalled individuals, I have assessed the repeatability of the cell phenotypes.
+%These endophenotypes are more quantitative, especially with high-throughput technologies such as flow cytometry, in practice there are still factors which influence the accuracy at which these can be measured.
+The methods by which these endophenotypes are quantified now become extremely relevant.
+For example in \Cref{chapter:il2ra} of this thesis, I illustrated how clustering can influence the relative frequency and MFIs of the cell populations under study.
+However whether outlier samples were included or excluded, was a more influential parameter.
+Some other known factors are, staining batch effects as seen in \Cref{chapter:il2}, or long-term instrument sensitivity as seen in \Cref{chapter:il2ra}, which influence the cell population \glspl{MFI}, or sampling variation on each bleed which influences the cell frequency.
+
+Using recalled individuals, I assessed the repeatability of the cell phenotypes.
 
 %Certain traits like height for example are not expected to change much after a person has reached a certain age
 %is improved with large sample sizes but also if the ratio within-group to between-group variance.
-If the repeatability is good then the within-individual variance is small which should increase our power to detect
-small differences.
+If the repeatability is good then the within-individual variance is small which should increase our power to detect small differences.
 
 Consistency is an important factor in identifying clusters.
 Decomposing the variance into within sample and between sample variation.
 
 Subset analysis is also very important because of the phenomenon known as Simpson’s paradox whereby a trend that is visible in the group as a whole will often not hold in all subsets of the group and may even be reversed in certain subsets of that group.
-
-When a hierarchical gating approach is taken, errors at the top of the hierarchy propagate down the tree.
-%This approach is chosen for manual gating as it agrees with our very linear way of thinking.
-This complicates an automated approach to stepwise gating since errors which occur in earlier steps of the gating may not be recoverable.
 
 %In the same way wrongly gating samples can lead to outliers which can create false positive association due to their high leverage, fixed gating can lead to all samples having the same profile.
 
@@ -477,7 +474,7 @@ Also mismatching of peaks in alignment is more detrimental to repeatability than
 \section{ The future }
 
 The methods discussed in this thesis suggests that there are many scenarios in which flow cytometry analysis can be automated.
-There are however a number of outstanding challenges, some technical, some more philosophical, in applying these methods.
+There are however a number of outstanding challenges, some technical, some more psychological, in applying these methods.
 
 \paragraph{Seeing is believing}
 
@@ -590,7 +587,7 @@ Time of flight cytometry (CyTOF) is a biotechnology which combines mass spectome
 The throughput is not as high as fluorescence flow cytometry, but it pushes the number of markers which can measured up to 34 and potentially higher.
 However, it cannot be used for sorting as the cells are destroyed when measured.
 Also, as it does not report side and forward scatter, live/dead markers are used instead to spot debris.
-The anlaysis of the type of datasets generated by this technology benefits greatly from the multidimensional visualisation techniques such as SPADEl \citep{Simonds:2011jh} and ViSNE \citep{Amir:2013jp}.
+The anlaysis of the type of datasets generated by this technology benefits greatly from the multidimensional visualisation techniques such as \gls{SPADE} \citep{Simonds:2011jh} and ViSNE \citep{Amir:2013jp}.
 
 
 \section{Summary}

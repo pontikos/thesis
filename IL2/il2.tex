@@ -1835,7 +1835,7 @@ for example \gls{PLS} with pSTAT5 as the response variable, as I have shown earl
 
 From the joined data, I have explored methods which use the pSTAT5 response to guide, the binary recursive partitioning of the core marker space using \gls{CART} or the estimation of the principal components using \gls{PLS}.
 Applying \gls{CART} to side and forward scatter, the lymphocyte population was consistently identified as the most responsive cell population in all samples stimulated at 1000 units.
-However, I found that applying this method on all markers across samples yielded different recursive partitioning schemes on different markers.
+However, I found that applying this method on all markers simultaneously across all samples yielded different partitioning schemes per sample.
 %Given the poor partitioning of the core markers using this CART implementation,
 %I repeated the analysis but this time with my method.
 %My method includes all markers and does not repeat markers in branches.
@@ -1843,17 +1843,22 @@ However, I found that applying this method on all markers across samples yielded
 %Since there a total of eight core markers each branch is of length eight,
 %which implies that there will be a maximum of $2^8$ partitions.
 %In figure are the trees obtained from my method.  
-It is a known drawback of recursive partitioning techniques that they are prone to overfitting and consequently very sensitive to batch effects.
-For example, when the same algorithm is applied to the lymphocyte subset in another sample,
-the returned partitioning is very different (\Cref{figure:two-sample-decision-tree}).  
-Another issue with the regression tree approach is that it doesn't exploit the bimodality of the pSTAT5 distribution at higher doses of proleukin.
+It is a known drawback that recursive partitioning techniques are prone to overfitting and consequently very sensitive to batch effects.
+As illustrated in (\Cref{figure:two-sample-decision-tree}), when the same algorithm is applied to the lymphocyte subset in another sample, the returned partitioning is very different.
+\myfigure{scale=.4}{two-sample-decision-tree}
+{ Lymphocytes: Partition tree obtained in two different sample from running CART on all core markers against pSTAT5 response at 1000U. }
+{
+  While both trees agree on the initial partitioning on CD25 and further partitioning on CD45RA in the first branch,
+  the partitioning in the second branch is done on different markers and so not comparable.
+} 
 
-This motivated the next approach the objective of which was to identify highly sensitive dose-responsive cells by instead of using the variance of the pSTAT5 response in the partitioning, fitting a bimodal distribution.  
+
+Another issue with the regression tree approach is that it doesn't exploit the bimodality of the pSTAT5 distribution at higher doses of proleukin.
+This motivated the next approach, the objective of which was to identify highly sensitive dose-responsive cells by fitting a bimodal distribution, instead of using the variance of the pSTAT5 response in the partitioning.
 By recursively splitting the bimodal pSTAT5 distribution in a sample at decreasing doses of proleukin, my hope was to identify cells which respond to low doses of proleukin.
 %The cells identified by this method should respond at the lowest dose 0.1 unit dose of proleukin in this experiment.
 Using this method, a subset of highly responsive cells was identified which overlap with the lymphocyte gate based on side and forward scatter.
-The disadvantage of this approach however is since the core markers do not feature in the identification of cell subsets,
-there is no guarantee that the identified dose-responsive cells represent a homogeneous subset.
+The disadvantage of this approach however is since the core markers do not feature in the identification of cell subsets, there is no guarantee that the identified dose-responsive cells represent a homogeneous subset.
 Ideally, post-clustering would be required, but in practice, the number of events within the subsets are too few for this to be feasible.
 If the response comes from regions of low density in the core marker space, it might be worth applying this methd on a dataset after the core marker density has been made more uniform.
 
@@ -1866,7 +1871,7 @@ Unfortunately, I found the existing \Rpackage{earth} to be too slow to run on my
 %PRIM
 Another extension is the \gls{PRIM} also known as the "bump hunting" algorithm introduced by \citet{Friedman:1999iy}.
 \gls{PRIM} searches for a bounding boxes in the marker space in which the average response is high.
-No binary constraint is placed which can make the individual rules simpler.
+Since no binary constraint is placed this reduces the complexity of the rules.
 The main box construction method in PRIM works from the top down, starting with a box containing all the data.
 The box is compressed along one face by a small amount, and the observations then falling outside the box are peeled off.
 The face chosen for compression is the one resulting in the largest box mean, after the compression is performed.
@@ -1877,17 +1882,12 @@ increases the box mean.
 Since the top-down procedure is greedy at each step such an expansion is often possible.
 The result of these steps is a sequence of boxes, with different number of observations per box.
 %Cross-validation, combined with the judgment of the data analyst, is used to chose the optimal box size.
-An advantage of PRIM over CART is its patience.  Because of its binary splits, CART fragments the data quite quickly whereas PRIM is more progressive.
+An advantage of PRIM over CART is its patience. 
+Because of its binary splits, CART fragments the data quite quickly whereas PRIM is more progressive.
 This however comes at the cost of performance and I found the \Rpackage{prim} implementation of this method to be too slow to run on my dataset.
 %
 How well these variants perform depends on the data but generally they tend to over-partition data so that the bins are uneven or the tree is unbalanced.
 %%An ensemble version of the CART are random forests.  
-\myfigure{scale=.4}{two-sample-decision-tree}
-{ Lymphocytes: Partition tree obtained in two different sample from running CART on all core markers against pSTAT5 response at 1000U. }
-{
-  While both trees agree on the initial partitioning on CD25 and further partitioning on CD45RA in the first branch,
-  the partitioning in the second branch is done on different markers and so not comparable.
-} 
 Another alternative to regression trees which avoids overfitting is \gls{RF} but would need reduction of the number of splits to be interpretable.
 Although recursive partitioning schemes are very sensitive to even small changes in the data and suffers from the biases of tree like data structures in which errors propagate because of the dependency of the splits on previous splits,
 I found them to be a useful non-parametric method of exploring a dataset, in line with the tree like nature of the manual gating approach.
@@ -1926,9 +1926,9 @@ whilst the \texttt{PLSR.1} subset is CD3\positive CD4\negative CD8\positive CD45
 Interestingly, the \texttt{RPART.1} population, which constitutes 3.36 of the lymphocytes, has the lowest CD25 but is more sensitive than the \texttt{PLSR.1} and \texttt{SPADE.1} populations to proleukin.  
 This \texttt{RPART.1} subset is CD3\negative CD4\negative CD8\negative CD45RA\positive CD56\positive.
 
-These  cells are likely to be NK cells although, the CD16 would need to be added to further confirm this.
+These  cells are likely to be NK cells although, the CD16 would need to be added to confirm this.
 \citet{Ortaldo:1992tr} report that these CD3\negative CD56\positive cells are producers of the pro-inflammatory cytokine, interferon gamma, on response to IL-2.
-Also CD56\positive cells may also induce elevated levels of granzyme B which is implicated in \gls{T1D} \citep{Thomas:2010cy}.
+Also CD56\positive cells can induce elevated levels of granzyme B which is implicated in \gls{T1D} \citep{Thomas:2010cy}.
 These pro-inflammatory molecules could be problematic for IL-2 treatment, however it would appear that these cells are relatively low responders in comparison with the memory and naive T cell subsets.
 The properties and function of this CD3\negative CD8\negative CD45\positive CD56\positive cell subset will be further investigated by \contributor{Charlie Bell} using RNAseq.
 
