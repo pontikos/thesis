@@ -29,12 +29,10 @@ way of storing a high-dimensional dataset to lookup proximal datapoints.
 This approach could also in theory be used to reduce the number of datapoints considered when applying mixture models \citep{McLachlan:2004uw}.
 
 \paragraph{Consistency and accuracy}
-Consistency can be defined as how often does a method return a comparable result.
-This obviously depends on how much the data has changed.
+Consistency can be defined as the variation in the method's result in relation to how much the data has changed.
 If a method is consistent, one would expect that small perturbations to the data should lead to small changes in the clustering outcome.
-However, algorithms which rely on initialisation using random starting positions like K-means may reach different clustering solutions, even on the same data!
-When running K-means, I therefore had to pick the initial clusters or run it with multiple restarts.
-Over all runs of K-means the solution which returns the lowest within-sum-of-squares is picked.
+However, algorithms which rely on initialisation using random starting positions like K-means can reach different clustering solutions, even on the same data!
+To guard against this when running K-means, I had to pick the initial clusters or run it with multiple restarts, and over all runs of K-means the solution which returns the lowest within-sum-of-squares is picked.
 The accuracy of a method is defined based on how frequently the methods assigns the correct label.
 Hence it relies on the existence of a test dataset, typically labelled using manual analysis or some other method.
 In \Cref{chapter:il2ra}, accuracy was assessed by comparing the cluster proportions and means with those obtained from manual gating.
@@ -75,8 +73,8 @@ Having gone through some of the practical aspects I had to consider when applyin
 %One compromise is that by adding more markers to delineate cell populations we are increasing the number of potential clusters and thus the tail of distribution of cluster sizes
 %Variation due to batch effects in the preparation or sample ascertainment,
 %or insufficient number of flow cytometric parameters
-Perhaps the biggest challenge in clustering of biological data, which greatly complicates consistent identification of clusters across multiple samples, is noise.
-Noise can be due to batch effects, for example staining discrepancies in flow cytometry, insufficient number of parameters to distinguish clusters, or because of sampling variation for clusters containing few elements.
+The biggest challenge in clustering of biological data, which greatly complicates consistent identification of clusters across multiple samples, is noise.
+Noise can be due to batch effects, for example staining discrepancies in flow cytometry, insufficient number of parameters to distinguish clusters, or because of sampling variation in small clusters.
 
 %and become harder to call when the number of dimensions increases (they are not linearly separable in all dimensions).
 In cases when certain characteristics of the data are known, these can greatly assist in the clustering especially with regards to identifying rarer subsets which may not be identifiable in all samples.
@@ -116,20 +114,19 @@ Alternative solutions which do not rely on hierarchical filtering, could be to d
 \section{Advantages and disadvantages to hierarchical gating}
 
 The hierarchical, tree-like approach, as introduced by manual gating, does present a number of advantages.
-From a practical perspective it is efficient, since points are filtered at each step, the dataset is reduced.
-It also agrees with the established hierarchical view of cell lineages which is deeply engrained in the minds of certain immunologists.
+From a practical perspective it is efficient because the dataset is reduced as points are filtered at each step.
+It also conforms to the established hierarchical view of cell lineages which is deeply engrained in the minds of certain immunologists.
 %Methods which use a binary structure are easy to interpret as they conform to the manual gating strategy which provides rules on how to obtain the leaf subsets.
 %Reduces ambiguity.
-On the other hand, a disadvantage is that this approach can easily miss relevant cell populations.
-Furthermore, the construction of tress tend to very sensitive to small perturbations in the underlying data and errors propagate, which becomes more of an issue as more subsets are defined. 
-Errors may be mitigated by introducing conditional probabilities at each step.
-Also the hierarchical approach imposes a directionality in cell lineages which may not always accurately reflect the biology.
-A bias is also imposed on the ordering on the markers and thus their importance. 
+On the other hand, a disadvantage is that this approach can easily miss important cell populations.
+Furthermore, the construction of tress tend to very sensitive to small perturbations in the underlying data and errors propagate at each step.
+These issues become more apparent as more subsets are defined. 
+Errors could be mitigated by introducing conditional probabilities at each step at the cost of having to consider all datapoints.
+Another shortcoming of the hierarchical approach is that it imposes a directionality on cell lineages which may not accurately reflect the biology, and an ordering on the influence of the markers on the gating.
 %It may be more ambiguous markers are gated on first.
-Instead, I would advocate a more unsupervised approach when sufficient data is available.
+Although this hierarchical approach does have advantages, I would advocate also trying more unsupervised approach when sufficient data is available, for example \gls{RF}, to get some idea of the relative importance of the markers.
 %in the same way that phylogenies change as new animal species are discovered, cell lineages should also be influenced by the discovery of new cell subsets.
-%The RF gives us some idea of the importance of the markers.
-However, if no restriction are applied the rules can become over-complicated.
+%However, if no restriction are applied the rules can become over-complicated.
 %When a hierarchical gating approach is taken, errors in earlier steps propagate.
 %This approach is chosen for manual gating as it agrees with our very linear way of thinking.
 %This complicates automated approaches since errors which occur in earlier steps of the gating are not recoverable from.
@@ -141,30 +138,29 @@ However, if no restriction are applied the rules can become over-complicated.
 Outliers have an important influence on the mean of the data.
 They lie far from cluster means, usually in a sparsely inhabited region of space.
 Thus clustering methods and statistical tests which rely on mean or covariance estimation are sensitive to outliers.
-Certain outliers may be clearly identifiable because their values lie at the extreme of the instrument range,
-far from the rest of the data.
+Certain outliers may be clearly identifiable because their values lie at the extreme of the instrument range, far from the rest of the data.
 %Very large intensity values are usually considered as noise, but low intensity values are harded to call with certainty.
 Others which lie within a more plausible range of values are harder to identify.
 Also in higher dimensions, data points can be outliers without being outliers in any single dimension.
 Generally in order to detect outliers, large sample sizes are required.
-Reducing the dimensionality makes outliers easier to identify.
+Also reducing the dimensionality can make outliers easier to identify.
 %There is a soft approach of dealing with outliers and a hard approach.
 
 Flow cytometry datasets contain millions of events and many events are discarded as part of the gating process.
-Some of them are real biological clusters which are ignored because they are not part of the cell populations under study:
+Some of them are real biological clusters that are ignored because they are not part of the cell populations under study:
 for example the first gate drawn is usually on the lymphocytes whereas the monocytes and granulocytes are often ignored.
 This is in part because they are no markers included in the experiment defined on these cell populations which would allow any further division.
 Other events are discarded because they are outliers. These outliers occur commonly in flow cytometry datasets caused by debris and cells clumping together.
 They can be found at the extremes of the value range on a given channel, but they may also be found with intermediate values and these are harder to spot and require large samples sizes to confidently call as outliers.
-Model-based methods can account for these by defining a background mixture with a covariance defined on the entire sample which essentially mops up all points
+Model-based methods can account for these by defining a background mixture with a covariance defined on the entire sample which essentially "mops" up all points
 which are not assigned with high posterior weight to any of the known components.
-Mclust allows to define a noise component for that purpose.
-On the other hand, flowClust  has an outliyingness parameter which is inversely proportional to the Mahalanobis distance from a point to a cluster.
+The \Rpackage{mclust} for example, allows to define a noise component for that purpose.
+On the other hand, the \Rpackage{flowClust} has an outliyingness parameter which is inversely proportional to the Mahalanobis distance from a point to a cluster.
 %\[
   %u_{ig} = \frac{v+p}{v+(\boldsymbol{x_i}-\boldsymbol{\mu_g})^{\top}\boldsymbol{\Sigma}_{g}^{-1}(\boldsymbol{x_i}-\boldsymbol{\mu_g})}
 %\]
 Another method which does not rely on a background component is to exclude low density points from belonging to any of the components.
-A metric for detecting outliers is the Mahalanobis distance, large distances imply a point is far from a cluster center:
+A metric for detecting outliers is the Mahalanobis distance.  Large distances imply a point is far from a cluster center:
 \[
 (\boldsymbol{x_i}-\boldsymbol{\mu})^{\top}\boldsymbol{\Sigma}^{-1}(\boldsymbol{x_i}-\boldsymbol{\mu})
 \]
@@ -177,13 +173,13 @@ Another outlier metric, commonly used in linear regression is Cook's distance, w
 D_i = \frac{ \sum_{j=1}^n (\hat Y_j\ - \hat Y_{j(i)})^2 }{p \ \mathrm{MSE}}
 \]
 
-In genetics, outliers may be harder to spot because of smaller sample sizes which also implies that we are also generally more reluctant to exclude samples.
+Individual outlying datapoints are harder to spot in smaller sample sizes and we are also generally more reluctant to exclude samples.
 In \Cref{chapter:kir}, a whole qPCR plate was excluded because the $\Delta$Ct distribution didn’t align well even after normalisation.
 Later I found that qPCR samples could have also been scored by considering their background Ct median and spread.
-This score would have been used to downweight these samples in the mixture model clustering which was used to assign them to copy number groups.
+This score would have been used to downweight these samples in the mixture model clustering which was used to assign them to copy number groups.  
+However in the case of systematic error, dropping individual samples could introduce bias.
 
-As well as techniques for visualising multiple dimensions.
-Tools are being developed for visualisation of summary statistics in multiple samples in order to spot outliers.
+As well as techniques for visualising multiple dimensions, tools are being developed for visualisation of summary statistics in multiple samples in order to spot outliers.
 Boxplots are the typical visualisation tool for viewing univariate intensity data but in flow cytometry where we typically have multivariate data,
 \gls{SPICE} presents an overview using pie charts of multiple samples \citep{Roederer:2011hy}.
 %An alternative visual representation are radarplots
@@ -656,9 +652,20 @@ Philosophically that what still makes data analysis an art, we haven't discovere
 If our benchmark is comparison to manual gating then we can never do better than manual gating.
 Here we have introduced a benchmark of the outcome which is repeatability.
 Perhaps a more general benchmark which can be used is: it useful?
-Is it useful for diagnosis or does it correlate strongly with genetics etc.
-We will only see the true fruits of automated analysis once the number of samples has grown considerably.
+Is it useful for diagnosis or does it correlate strongly with genetics or some other covariate under study.
+We will only reap the true fruits of automated analysis once the number of samples has grown considerably.
 but this might require earlier steps in the process such as the data generation to be further automated first.
+Finally, to conclude on a more philosophical tone from on my favourite french authors:
+
+
+\begin{center}
+\vspace*{\fill}
+{\fontfamily{frc}\selectfont \foreignlanguage{french} { Pour ce qui est de l'avenir, il ne s'agit pas de le prévoir mais de le rendre possible. }}
+\\
+{\fontfamily{frc}\selectfont \foreignlanguage{french} { Antoine de Saint-Exupéry }}
+\vspace*{\fill}
+\end{center}
+
 
 
 
