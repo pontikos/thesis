@@ -5,42 +5,35 @@
 
 Throughout my thesis I have considered methods of computationally analysing flow cytometry and genetic datasets.
 The key motivation was that these methods would be more efficient, consistent, objective and better at dealing with uncertainty, than manual analysis of the data.
-In the case of flow data, automating gating can also provide the added benefit of formalising manual gating, which remains to this day a very subjective process.
-The hope was that these methods would improve on the reproducibility of results, thus enabling more powerful association testing.
-Assessing how well computational methods perform is a matter of debate and it is safe to say very much data-dependent.
-However, I will attempt here to give an overview of the important practical and theoretical considerations of these methods, in the context of my thesis.
+In the case of flow data, automating gating can also provide the added benefit of formalising manual gating, which remains to this day a very subjective, ad-hoc, process.
+The hope was that these automatic methods would improve on the reproducibility of results, thus enabling more powerful association testing.
+However, assessing the performance of these computational methods is a matter of debate and it is safe to say very much data-dependent.
+Nonetheless, I will attempt here to give an overview of the important practical and theoretical considerations when implementing and running these methods, in the context of my thesis.
 
-\paragraph{Memory usage and running time}
-Two crucial practical properties are their memory usage and running time.
+\paragraph{Memory usage and running time} are two crucial practical properties.
 While the applications that have been studied in this thesis don’t require real-time analysis, there are still some practical limitations on the amount of memory and compute time demands.
 It is a well known fact in computer science that memory can often be traded for running time.
 For example, methods which rely on global knowledge of the data, such as computation of the complete pairwise distance matrix,
 have a large initial memory footprint ( data matrix of size $\frac{N \times (N-1)}{2}$ ), but only require one pass of the data.
 A solution to the clustering solution is reached within just a few computational steps, by for instance,
-selecting a distance cut threshold on the dendrogram generated from hierarchical clustering to define K clusters. 
-On the other hand, methods like K-means necessitate a much smaller memory footprint
-since they only compute the distance of every point to the K cluster means
-( data matrix of size $N \times K$), which is usually a much smaller number than the total number of points,
-but on the other hand, several updates of the matrix are required until the cluster centers are fixed.
+selecting a distance cut threshold on the dendrogram, built from hierarchical clustering, in order to define K clusters. 
+On the other hand, methods like K-means necessitate a much smaller memory footprint since they only compute the distance of every point to the K cluster means ( data matrix of size $N \times K$, where usually $K << N$), but on the other hand, several updates of the matrix are required until the cluster centers are fixed.
 The choice of which method to apply is very much data dependent.
-In ungated flow cytometry, data matrices  contain over a million rows, so the complete pairwise distance matrix is too large to fit in memory,
-making these type of methods impractical.
-I found that distance matrix computation was only feasible in subsets of the order of $10,000$,
-like for example the CD4+ lymphocyte subset, or data downsampled using the SPADE or binning in \Cref{chapter:il2}.
+For ungated flow cytometry, data matrices  contain over a million rows, so the complete pairwise distance matrix is too large to fit in memory.
+I found that for the default R implementation, the distance matrix computation was only feasible in subsets of the order of $10000$, like for example the CD4\positive lymphocyte subset, or data downsampled using the SPADE or RPART approaches in \Cref{chapter:il2}.
 The data downsampling as performed by SPADE, relies on first estimating the local density at each point and then preferentially thinning the data in regions of high density to even out the density across the whole sample.
-The local density estimation step is computationally intensive as it needs to consider the distance from a single point to all other points in the sample to find the number of neighbours.
-I found this step could be greatly sped with \gls{ANN} which uses the K dimensional trees (KD tree) lookup method.
+The local density estimation step is itself computationally intensive as it needs to consider the distance from a single point to all other points in the sample to find the number of points lying within a certain radius.
+I found this step could be greatly sped up with \gls{ANN} which uses the K dimensional trees (KD tree) lookup method.
 KD-trees are a space-partitioning data structure for organising points in a k-dimensional space which makes for an efficient
 way of storing a high-dimensional dataset to lookup proximal datapoints.
-It can also be used for approximation to reduce the number of datapoints which need to be considered.
-This approach can also be applied to mixture models \citep{McLachlan:2004uw}, but I haven’t had the opportunity of trying this. 
+This approach could also in theory be used to reduce the number of datapoints considered when applying mixture models \citep{McLachlan:2004uw}.
 
 \paragraph{Consistency and accuracy}
-Consistency can be defined as how often does a method return a similar result.
+Consistency can be defined as how often does a method return a comparable result.
 This obviously depends on how much the data has changed.
 If a method is consistent, one would expect that small perturbations to the data should lead to small changes in the clustering outcome.
 However, algorithms which rely on initialisation using random starting positions like K-means may reach different clustering solutions, even on the same data!
-When running K-means I therefore had to pick the initial clusters or run it with multiple restarts.
+When running K-means, I therefore had to pick the initial clusters or run it with multiple restarts.
 Over all runs of K-means the solution which returns the lowest within-sum-of-squares is picked.
 The accuracy of a method is defined based on how frequently the methods assigns the correct label.
 Hence it relies on the existence of a test dataset, typically labelled using manual analysis or some other method.
@@ -52,7 +45,7 @@ Also, in the context of flow cytometry, even when labelled data is available, th
 as it is merely comparing the relative agreement between methods rather than the objective truth.
 A sometimes more useful alternative is instead to assess the prediction accuracy with clinical outcome, case-control status or genotype.
 This is usually implicitly measured when doing an association test.
-The consistency-accuracy tradeoff is analogous to the variance-bias tradeoff in statistics.
+The consistency-accuracy tradeoff is analogous to the variance-bias trade-off in statistics.
 Consistency and accuracy are typically measured on simulated data.
 
 \paragraph{Interpretability}
@@ -76,33 +69,25 @@ Sometimes the additional information which is available from previous studies ca
 
 %\section{Clustering with prior knowledge}
 %\section{Challenges of computational methods}
-\section{Dealing with noise by using prior knowledge}
+\section{Dealing with noise using prior knowledge}
 
-Having gone through some of the practical aspects I had to consider when applying computational clustering methods,
-I will now address some of the more theoretical challenges.
+Having gone through some of the practical aspects I had to consider when applying computational clustering methods, I will now address some of the more theoretical challenges.
 %One compromise is that by adding more markers to delineate cell populations we are increasing the number of potential clusters and thus the tail of distribution of cluster sizes
 %Variation due to batch effects in the preparation or sample ascertainment,
 %or insufficient number of flow cytometric parameters
-Perhaps the biggest challenge in clustering of biological data which greatly complicates consistent identification of clusters across multiple samples is noise.
-Noise can be due to batch effects, for example staining discrepancies in flow cytometry,
-insufficient number of parameters to distinguish clusters,
-or because of sampling variation for clusters containing few elements.
+Perhaps the biggest challenge in clustering of biological data, which greatly complicates consistent identification of clusters across multiple samples, is noise.
+Noise can be due to batch effects, for example staining discrepancies in flow cytometry, insufficient number of parameters to distinguish clusters, or because of sampling variation for clusters containing few elements.
 
 %and become harder to call when the number of dimensions increases (they are not linearly separable in all dimensions).
-In cases when certain characteristics of the data are known, these can greatly assist in the clustering
-especially with regards to identifying smaller groups.
-For example, in \Cref{chapter:kir}, I used prior information about the copy number of the \gene{KIR3DL1}/\gene{KIR3DS1} genes, obtained from qPCR,
-in order to identify clusters in the SNP dataset.
-The \gls{knn} was used to classify unlabelled points (without qPCR data) from the vote of their K nearest labelled neighbours.
-The optimal value of K was selected by minimsing the \gls{LOOCV}.
-Another source of prior information in labelling the samples with qPCR,
-would have been to use expected copy number group frequencies obtained from previous studies 
-\citet{Jiang:2012cf} as prior group frequencies in the clustering of the copy number groups in the qPCR data.
+In cases when certain characteristics of the data are known, these can greatly assist in the clustering especially with regards to identifying rarer subsets which may not be identifiable in all samples.
+%Supervised clustering can be really beneficial in the identification of rare subsets, since they may not always be visible in all samples.
+For example, in \Cref{chapter:kir}, I used prior information about the copy number of the \gene{KIR3DL1}/\gene{KIR3DS1} genes, obtained from qPCR, in order to identify predictive clusters in the SNP dataset.
+The \gls{knn} was used to classify unlabelled points, for which qPCR data was unavailable, from the vote of their K nearest labelled neighbours.
+The optimal value of K was selected by minimising the \gls{LOOCV}.
+Another source of prior information in labelling the samples with qPCR, would have been to use expected copy number group frequencies obtained from previous studies \citep{Jiang:2012cf} as prior group frequencies to cluster the copy number groups in the qPCR data.
 
-In the flow data, the manual gates contribute prior information to guide the automatic gating.  
-They yield information about the expected relative frequency of the different types of cells and their 
-relative marker expression. Their absolute marker expression is generally not readily comparable across samples and
-requires normalisation.
+In the context of flow cytometry data, the manual gate hierarchy contributes prior information about the expected relative frequency of the different types of cells and their relative marker expression.
+Their absolute marker expression is generally not readily comparable across samples and requires normalisation as was shown in \Cref{chapter:il2ra}.
 The established manual gating method involves obtaining gate coordinates from drawing gates in FlowJo and applying these same
 gate coordinates across samples.
 Manual gates can also provide initial starting parameters to a clustering algorithm,
@@ -110,55 +95,44 @@ by calculating the mean and the covariance of the gated populations.
 %For example, the labelling in one sample to the mean and covariance of an ellipse which can then be applied to another sample.
 Using an EM style algorithm, the parameters of the ellipse can then be refined to better fit the data.
 This is the approach taken by X-Cyt \citep{Hu:2013bg} which uses manual gates as templates.
-Also FlowJo has a magnetic gate feature which is described as "gate is as moved to accomodate the maximum number of events".
+FlowJo also a basic version of that feature known as "magnetic gate" that moves gates to accommodate the maximum number of events.
 
-I have also tried this approach in \Cref{chapter:il2} when manual gates were not available for all samples.
+I also tried a similar approach in \Cref{chapter:il2} when manual gates were not available for all samples.
 First, I let the mean of the ellipse be influenced by the data while the covariance was set as fixed.
-The Mahalanobis distance then allows us to go from a mean and covariance of an ellipse to a classification by defining a threshold
-above which points are excluded from the ellipse.
+I then obtained a classification by defining a threshold on the Mahalanobis distance, obtained from the mean and covariance of the ellipse, above which points were excluded.
 
-If the manual gating is done in several samples then they can be combined to define the priors in the mixture model,
-so to guide the parameter estimation, as is done in flowClust.
-If several samples have been manually gated then these can be incorporated in the definition of the prior on the parameters of the mixture model.
+When several samples have been manually gated, these can be combined to define the priors in the mixture model, so to guide the parameter estimation, using flowClust for example.
+%If several samples have been manually gated then these can be incorporated in the definition of the prior on the parameters of the mixture model.
 %FlowClust as opposed to Mclust offers the option of defining per component priors.
 %This threshold can be defined by using a chi squared distribution in the one dimensional case.
 
-An outstanding problem which remains with supervised clustering however, is how to account for unlabelled data, or in the context of flow cytometry, nuisance clusters which are not part of the gating?
-While in manual gating these points are discarded and do influence the clustering, automatic methods may consider all points in the dataset and consequently these points will influence the gating.
-One solution is to define a background cluster but this is unlikely to work for multimodal distributions.
-Another solution would be to allow for the creation of a large number of clusters to account for all the background clusters which are not part of the study.
+An outstanding problem which remains with supervised clustering however, is how to account for unlabelled data, or in the context of flow cytometry, nuisance clusters which are not included in the gating strategy?
+While in manual hierarchical gating these points are filtered, non-hierarchical automatic methods consider all points in the dataset and consequently all points can influence the gating.
+Alternative solutions which do not rely on hierarchical filtering, could be to define a background cluster, but this is unlikely to work for multimodal distributions, or better, to allow for the creation of a large number of background clusters to account for all clusters which are not part of the study.
 
-Supervised clustering can be really beneficial in trying to identify rare subsets.
-This is because rare subsets, by definition, may not always be visible in all samples.
 %Futhermore another concern with clustering and statistics in general is distinguising rare subsets from outliers.
 
 
-\paragraph{Advantages and disadvantages to a tree structure to gating}
+\section{Advantages and disadvantages to hierarchical gating}
 
-The hierarchical view is attractive, and using a tree structure for gating presents a number of advantages.
-From a pratical perspective it is efficient, since points are filtered at each step, reducing the dataset.
-It agrees with the established nomenclature facilitating comparison to manual gating and interpretability.
-Methods which use a binary structure are easy to interpret as they conform to the manual gating strategy which provides rules on how to obtain the leaf subsets.
-Reduces ambiguity.
-
-The cellular hierarchical view is so deeply engrained in the minds of certain biologists that presenting clustering results in a different order could perturb them.
-
-On the other hand, some disadvantages of using the tree structure to gating are that it can easily miss relevant cell populations and imposes a directionality in cell lineages which may not always be correct.
-
-In the same way that phylogenies change as new animal species are discovered, cell lineages should also be influenced by the discovery of new cell subsets.
-
+The hierarchical, tree-like approach, as introduced by manual gating, does present a number of advantages.
+From a practical perspective it is efficient, since points are filtered at each step, the dataset is reduced.
+It also agrees with the established hierarchical view of cell lineages which is deeply engrained in the minds of certain immunologists.
+%Methods which use a binary structure are easy to interpret as they conform to the manual gating strategy which provides rules on how to obtain the leaf subsets.
+%Reduces ambiguity.
+On the other hand, a disadvantage is that this approach can easily miss relevant cell populations.
+Furthermore, the construction of tress tend to very sensitive to small perturbations in the underlying data and errors propagate, which becomes more of an issue as more subsets are defined. 
+Errors may be mitigated by introducing conditional probabilities at each step.
+Also the hierarchical approach imposes a directionality in cell lineages which may not always accurately reflect the biology.
 A bias is also imposed on the ordering on the markers and thus their importance. 
-It may be more ambiguous markers are gated on first.
-The RF gives us some idea of the importance of the markers.
-
-The construction of tress can be very sensitive to the underlying data and errors propagate.
+%It may be more ambiguous markers are gated on first.
+Instead, I would advocate a more unsupervised approach when sufficient data is available.
+%in the same way that phylogenies change as new animal species are discovered, cell lineages should also be influenced by the discovery of new cell subsets.
+%The RF gives us some idea of the importance of the markers.
+However, if no restriction are applied the rules can become over-complicated.
 %When a hierarchical gating approach is taken, errors in earlier steps propagate.
 %This approach is chosen for manual gating as it agrees with our very linear way of thinking.
 %This complicates automated approaches since errors which occur in earlier steps of the gating are not recoverable from.
-
-Errors may be mitigated by introducing conditional probabilities at each step.
-This becomes more of an issue as more subsets are defined. 
-If no restriction are appied the rules can become over-complicated.
 
 
 %\section{ Distinguishing between outliers and rare subsets }
@@ -179,7 +153,7 @@ Reducing the dimensionality makes outliers easier to identify.
 Flow cytometry datasets contain millions of events and many events are discarded as part of the gating process.
 Some of them are real biological clusters which are ignored because they are not part of the cell populations under study:
 for example the first gate drawn is usually on the lymphocytes whereas the monocytes and granulocytes are often ignored.
-This this in part because they are no markers included in the experiment defined on these cell populations which would allow any further division.
+This is in part because they are no markers included in the experiment defined on these cell populations which would allow any further division.
 Other events are discarded because they are outliers. These outliers occur commonly in flow cytometry datasets caused by debris and cells clumping together.
 They can be found at the extremes of the value range on a given channel, but they may also be found with intermediate values and these are harder to spot and require large samples sizes to confidently call as outliers.
 Model-based methods can account for these by defining a background mixture with a covariance defined on the entire sample which essentially mops up all points
@@ -197,23 +171,21 @@ A metric for detecting outliers is the Mahalanobis distance, large distances imp
 where $\boldsymbol{x_i}$ is the point, and $\boldsymbol{\mu}$ is the cluster mean and $\boldsymbol{\Sigma}$ is the cluster covariance.
 
 One issue however is that the outliers influences and greatly inflate the covariance matrix which is used in calculating the Mahalanobis distance.
-To address this, R packages like robustbase,
-use leave-one-out methods to identify outliers which have high leverage on the covariance estimation.
-Another outlier metric, commonly used in linear regression is Cook's distance,
-which returns the leverage of every data point $i$  on the estimation of $\hat Y$ when the point is left out:
+To address this, packages such as the \Rpackage{robustbase}, use \gls{LOO} methods to identify outliers which have high leverage on the covariance estimation.
+Another outlier metric, commonly used in linear regression is Cook's distance, which returns the leverage of every data point $i$  on the estimation of $\hat Y$ when the point is left out:
 \[
 D_i = \frac{ \sum_{j=1}^n (\hat Y_j\ - \hat Y_{j(i)})^2 }{p \ \mathrm{MSE}}
 \]
 
 In genetics, outliers may be harder to spot because of smaller sample sizes which also implies that we are also generally more reluctant to exclude samples.
 In \Cref{chapter:kir}, a whole qPCR plate was excluded because the $\Delta$Ct distribution didn’t align well even after normalisation.
-Later I found however that qPCR samples may possibly be scored independently of where they lie in relation to other samples by considering their background Ct median and spread.
-This score could have been used to downweight these samples in the mixture model clustering which was used to assign them to copy number groups.
+Later I found that qPCR samples could have also been scored by considering their background Ct median and spread.
+This score would have been used to downweight these samples in the mixture model clustering which was used to assign them to copy number groups.
 
 As well as techniques for visualising multiple dimensions.
-Tools are being developed for visualisation of summary statistics in mutliple samples in order to spot outliers.
+Tools are being developed for visualisation of summary statistics in multiple samples in order to spot outliers.
 Boxplots are the typical visualisation tool for viewing univariate intensity data but in flow cytometry where we typically have multivariate data,
-SPICE presents an overview using pie charts of multiple samples \citep{Roederer:2011hy}.
+\gls{SPICE} presents an overview using pie charts of multiple samples \citep{Roederer:2011hy}.
 %An alternative visual representation are radarplots
 
 I believe a confidence score is appropriate to capture the uncertainty in calling outliers.
@@ -300,9 +272,8 @@ On one hand in can facilitate the clustering so that the gate positions need not
 in \citet{Hahne:2009hl}.
 Or on the other it can allow for pooling of samples, which can be useful in order to identify rarer cell populations,
 to improve the signal-to-noise-ratio or to define a transform which can be used to align the data.
-However from my experience I have found that normalisation of flow cytometry is actually a harder problem than clustering
-because of the level of noise inherent in these data.  Univariate clustering in flow does not make use of the full information
-available. 
+However from my experience I have found that normalisation of flow cytometry is actually a harder problem than clustering because of the level of noise inherent in these data.
+Futhermore, univariate clustering in flow does not make use of the full information available. 
 In my thesis, I have used normalisation both before and after clustering.
 In \Cref{chapter:kir}, I have have applied normalisation to align copy number peaks in the $\Delta$Ct of qPCR plates before the clustering.
 On flow data in \Cref{chapter:il2ra}, I was able to improve the repeatability of CD25 MFI by correcting long-term
@@ -522,7 +493,7 @@ While I am sure these observations are not only specific to flow cytometry analy
 \paragraph{ Incomplete experiments and small sample sizes}
 
 Often, experiments undertaken in flow cytometry are pilot experiments or tubes ran to test and optimise panels.
-Pilot experiments
+Pilot experiments,
 %may be motivated by a moment of inspiration and leads to the generation of flow data is often an adhoc thought process,
 are often implemented with varying degrees of thoroughness and hence are generally poorly comparable.
 Furthermore, normalisation beads or controls are not consistently used which complicates analysis.
@@ -557,7 +528,7 @@ the location of the clusters should not move much on the scatter channels becaus
 However, the treatment of cells can also lead to very different scatter patterns (example Tony vs Marcin).
 
 
-\paragraph{ Flowjo interface with R}
+\paragraph{ FlowJo interface with R}
 
 FlowJo is the main tool used by immunologists for identifying groups of cells in flow cytometry.
 The unit of work in FlowJo is the workspace in which FCS files are first loaded and then gated.
@@ -672,7 +643,7 @@ Ultimately deciding when or not to include an outlier sample is down to a judgem
 %Methods should be simple but no simpler.
 %Our mission should not be to foreseee the future but to enable it.  
 
-How much we chose to automate really depends on the application and really comes down to a question of survival.
+How much we chose to automate really depends on the application and really comes down to a question of keeping up with the demand.
 However poor staining or instrumental configuration can lead to unexpected distributions.
 In \Cref{chapter:il2}, the permeabilisation protocol made the staining noisy, so that the MFIs were not reproducible.
 But different computational tools could be used to highlight different populations.

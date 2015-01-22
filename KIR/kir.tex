@@ -1183,21 +1183,14 @@ This method could also be applied to other allele typing techniques such as pyro
 Another alternative to using raw SNP signal would be to use tagging SNP as has been done in HLA imputation by \citet{Leslie:2008dq} and \cite{Dilthey:2013dn} at Oxford University.
 Here, instead of correlating copy number with raw SNP signals like in my approach, copy number is correlated with the genotype of flanking SNPs.
 %in \Gls{LD}.
-However, from a recent seminar I attended on the 1st of November 2014, the speaker, the same Stephen Leslie of \citet{Leslie:2008dq}
-now at the Murdoch Childrens Research Institute in Australia,
-stated that the tagging approach, based on a Hidden Markov Model using positional information, that has successfully been applied to HLA imputation,
-performs poorly for KIR imputation.  He explained that this is likely due to the unreliable positional information and unknown patterns of SNP \gls{LD} in the region.
-Instead, Stephen Leslie and Damjan Vukcevic, found that
-training a \acrfull{RF} algorithm, which does not use positional information, on 300 SNPs taken on either side of the KIR region,
-performs better in the prediction of common KIR gene copy numbers.
-However, performance remains poor for rarer copy numbers or KIR alleles for which there is 
-insufficient training data available.
-Furthermore, because of the high degree of homology between certain KIR genes,
-the ambiguity in their definition can lead to mislabelling of the training data in the reference panel.
+However, from a seminar I attended on the 1st of November 2014, the speaker, the same Stephen Leslie of \citet{Leslie:2008dq} now at the Murdoch Childrens Research Institute in Australia, stated that the tagging approach, based on a Hidden Markov Model using positional information, that has successfully been applied to HLA imputation, performs poorly for KIR imputation.
+He explained that this is likely due to the unreliable positional information and unknown patterns of SNP \gls{LD} in the region.
+Instead, Stephen Leslie and Damjan Vukcevic, found that training a \acrfull{RF} algorithm, which does not use positional information, on 300 SNPs taken on either side of the KIR region, performs better in the prediction of common KIR gene copy numbers.
+However, performance remains poor for rarer copy numbers or KIR alleles for which there is insufficient training data available.
+Furthermore, because of the high degree of homology between certain KIR genes, the ambiguity in their definition can lead to mislabelling of the training data in the reference panel.
 %and hence poor prediction performance.
 %the naming convention and distinction of these genes
-However Stephen Leslie did mention that perhaps the approach I have take of using signal intensities instead of genotype calls could improve on performance,
-since the genotype calls are often highly unreliable, most failing \gls{HWE}.
+However Stephen Leslie did mention that perhaps the approach I have taken of using signal intensities instead of genotype calls could improve on performance, since the genotype calls are often highly unreliable, most failing \gls{HWE}.
 They intend to submit a manuscript in the coming months.
 
 %We are aware, of at least one group at Oxford University, Gil McVean et al, working on imputing KIR genes from tagging SNPs in the region.  
@@ -1208,13 +1201,9 @@ They intend to submit a manuscript in the coming months.
 %The idea is simple and, we found, can work remarkably well: first do qPCR in a subset of samples, then use supervised classification to link qPCR copy numbers to SNPs patterns.
 %The hybrid method we presented, leverages the information available from targeted qPCR assays in modest samples to the level of sample coverage required for modern, well powered genetic studies.
 
-As discussed, hybrid qPCR/SNP approaches are particularly suited to the large case-control cohorts genotyped on ImmunoChip,
-since the platform contains numerous SNPs in the KIR region \citep{Nikula:2005bh}.
-In fact in our dataset, I have observed other SNPs in KIR with more than three clusters which may correlate with copy number of other KIR genes and,
-given the availability of qPCR data, could be imputable in a similar manner.
-One possible improvement to my method, in order to achieve better prediction rate at smaller samples sizes (as suggested in \Cref{Figure-4}),
-would be to preferentially select samples to qPCR from smaller SNP clouds, since these are more likely to correlate with rarer copy number groups
-(for example the 3-0 group in \Cref{Figure-2}).  
+As discussed, hybrid qPCR/SNP approaches are particularly suited to the large case-control cohorts genotyped on ImmunoChip, since the platform contains numerous SNPs in the KIR region \citep{Nikula:2005bh}.
+In fact in our dataset, I have observed other SNPs in KIR with more than three clusters which may correlate with copy number of other KIR genes and, given the availability of qPCR data, could be imputable in a similar manner.
+One possible improvement to my method, in order to achieve better prediction rate at smaller samples sizes (as suggested in \Cref{Figure-4}), would be to preferentially select samples to qPCR from smaller SNP clouds, since these are more likely to correlate with rarer copy number groups (for example the 3-0 group in \Cref{Figure-2}).  
 
 I would recommend that this approach be adopted in KIR association studies which have so far been hindered by small sample sizes (\Cref{table:kir-t1d-studies}).
 But it could also be applied more generally to other genes in non-genotypable chromosome regions of similar common copy number
