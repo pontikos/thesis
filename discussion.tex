@@ -254,14 +254,11 @@ In genotyping, normalisation is faciliated by having the same number of markers 
 Features are directly comparable.
 On the other hand, in flow cytometry, there is much variation in the count of cells per sample.
 
-In flow cytometry, we have much larger number of cell than markers per sample,
-so clustering tends to happen within a single sample in order to identify cell populations,
-which are then meta-clustered across samples.
+In flow cytometry, we have much larger number of cell than markers per sample, so clustering tends to happen within a single sample in order to identify cell populations, which are then meta-clustered across samples.
 Normalisation can be done after the clustering to match and align the MFIs across samples.
 However, while this transform is appropriate for bead data which is not expected to change,
 it is not obviously not appropriate if the MFI is expected to change with genetic differences or ex-vivo stimulation.
-It can nonetheless be useful as a means to match populations across samples when the relative cell proportion is the parameter
-under study.
+It can nonetheless be useful as a means to match populations across samples when the relative cell proportion is the parameter under study.
 %Which is why in \Cref{chapter:il2ra}, beads are used to correct the sample MFI.
 Normalisation can also be done before the clustering.
 On one hand in can facilitate the clustering so that the gate positions need not be moved betwen samples as is suggested
@@ -274,11 +271,7 @@ In my thesis, I have used normalisation both before and after clustering.
 In \Cref{chapter:kir}, I have have applied normalisation to align copy number peaks in the $\Delta$Ct of qPCR plates before the clustering.
 On flow data in \Cref{chapter:il2ra}, I was able to improve the repeatability of CD25 MFI by correcting long-term
 fluctuations thanks to bead normalisation.
-In \Cref{chapter:il2}, unfortunately the variation in pSTAT5 MFI was not adequately captured by beads,
-so instead I attempted various other normalisation approaches.
-Since pSTAT
-First I attempted to correct for background 
-
+In \Cref{chapter:il2}, unfortunately the variation in pSTAT5 MFI was not adequately captured by beads, so instead I attempted various other normalisation approaches.
 
 \paragraph{Normalising after clustering: good for matching cluster across samples}
 
@@ -302,27 +295,9 @@ Pooling is crucial for identifying rare groups which are difficult to identify w
 If the alignment isn’t perfect, the clustering results can be refined across all samples.
 
 Theoretically, if flow cytometry data was perfectly aligned across days then gates should not be moved, unless they are dependent on some internal control.  
-For example a threshold gate on a positive subset may be defined in relation to
-another population of cells.
+For example a threshold gate on a positive subset may be defined in relation to another population of cells.
 
-As discussed in \Cref{chapter:il2ra},
-the cell phenotypes usually measure, the mean intensity on a particular marker, or the percentage of cells can be more or less sensitive to the position of the gate,
-depending on the shape of the distribution.
-
-
-\paragraph{Conclusion}
-
-Whilst normalisation is generally a necessary process for pooling data or comparing across samples, over correction can be detrimental to the analysis.
-Normalisation is meant to be a simpler preliminary step to simply the clustering,
-however, in flow cytometry, because of batch effects and unequal number of events per sample, normalisation can be as challenging as performing the gating.
-%generally relies makes big assumptions and leads to major changes in the data.
-
-However, when they are insufficient data points, pooling is necessary.
-Clustering sometimes relies on pooled samples when they are not sufficient data points
-to form clusters such as in the case of rare subsets like 3-0 in KIR (\Cref{chapter:kir}) or Tregs in flow cytometry data.
-In this situation some form of normalisation is usually necessary.
-Unfortunately, multivariate normalisation is not always trivial and relies on defining linear transforms. 
-
+As discussed in \Cref{chapter:il2ra}, the cell phenotypes usually measure, the mean intensity on a particular marker, or the percentage of cells can be more or less sensitive to the position of the gate, depending on the shape of the distribution.
 
 
 \paragraph{Some issues with normalisation}
@@ -357,7 +332,7 @@ Transforms tend to be channel specific and sometimes even sometimes sample speci
 %Per sample transform required like flowClust but using the sliding window approach.
 %Some prior knowledge is required to know what makes a sensible density plot.
 %Care needs to be taken not to introduce spurious peaks.
-The FlowClust solution proposes estimating the Box-Cox parameter as part of the clustering using a numeric optimiser.
+The \Rpackage{flowClust} proposes estimating the Box-Cox power transform exponent as part of the clustering using a numeric optimiser.
 However the parameters need to be transformed back, for allowing for a different transform per sample.
 This is an issue if comparing intensity data but obviously if comparing cell ratios then the transform is of little consequence.
 Nonetheless the transform can have an important effect on the clustering result.
@@ -367,6 +342,18 @@ Clustering is an iterative method of discovery not a fully automated process.
 It will often be necessary to modify data preprocessing and model parameters until the result achieves the desired properties.  
 Clustering can also be viewed as a latent variable problem where the cluster labels are considered to be the missing data.
 
+\paragraph{Conclusion}
+
+Whilst normalisation is generally a necessary process for pooling data or comparing across samples, over correction can be detrimental to the analysis.
+Normalisation is meant to be a simpler preliminary step to simply the clustering,
+however, in flow cytometry, because of batch effects and unequal number of events per sample, normalisation can be as challenging as performing the gating.
+%generally relies makes big assumptions and leads to major changes in the data.
+
+However, when they are insufficient data points, pooling is necessary.
+Clustering sometimes relies on pooled samples when they are not sufficient data points
+to form clusters such as in the case of rare subsets like 3-0 in KIR (\Cref{chapter:kir}) or Tregs in flow cytometry data.
+In this situation some form of normalisation is usually necessary.
+Unfortunately, multivariate normalisation is not always trivial and relies on defining linear transforms. 
 
 
 %\section{ Method of determining phenotype affects power to detect genetic association }
@@ -621,7 +608,6 @@ But as I showed in \Cref{figure:logicle-transform-w}, it is not always clear wha
 Data quality is as important as the methods use to process the data: sophisticated methods are no replacement for good data.
 However, being able to make this judgment call between good and bad data necessitates understanding of the experimental context.
 This prior knowledge is acquired through the experience of having seen a large number of samples and difficult to encode in an automated method.
-
 Processing in larger batches or perhaps reducing the human element in flow cytometry could be a first step towards automation.
 %http://www.aber.ac.uk/en/cs/research/cb/projects/robotscientist/
 However as the number of samples grows so will the need for computational methods and the gap between the biological of computational way of thinking will shrink.
