@@ -463,7 +463,7 @@ For example, this can be seen in plate 10, where noisy cases (\Cref{Figure-S1}.f
 %% Figure 2
 \begin{figure}[h!]
   \centering
-  \includegraphics[scale=.5]{figures/Figure-2.pdf}
+  \includegraphics[scale=.6]{figures/Figure-2.pdf}
   \mycaption{Figure-2}
   {Overlay of ImmunoChip and qPCR samples for $R$ and $\theta$ at SNP rs592645.}
   { Samples are coloured by the most likely \gene{KIR3DS1}-\gene{KIR3DL1} copy number
@@ -609,7 +609,7 @@ rs3826878               & 60069023 & [A/G] & ok          & 2.63E-05 & 3.55E-06 \
 %% Figure 4
 \begin{figure}[h!]
   \centering
-  \includegraphics[scale=.5]{figures/Figure-4.pdf}
+  \includegraphics[scale=.6]{figures/Figure-4.pdf}
   \mycaption{Figure-4}
   {Error rate of k-nearest neighbour prediction from $R$ and $\theta$ of SNP \snp{rs592645} in random subset of samples.}
   { Each panel shows the LOOCV error rates of \gene{KIR3DL1}/\gene{KIR3DS1} copy number prediction
@@ -1166,9 +1166,10 @@ This explains the small but persistent misclassification error rate of \pct{2} s
 
 I expect that, eventually, fully sequenced KIR haplotypes will be available in a large number of individuals.
 %IPD Robinson:wr
-However long reads will be required for correct assembly, because of great sequence similarity in this region.
-According to our collaborator \contributor{James Traherne}, sequencing would require amplification of the the polymorphic exons
-using locus-specific primers and sequencing of the barcoded products.
+%However assembly of this region will prove difficult until the reference genome catalogues more exhaustively the common variation of this region.
+%In the current build (January 2014), build 38, \gene{KIR3DS1} is now part of the reference but only 35 distinct sequences for this region are listed.
+In order to improve our chances of correct assembly, long reads will be required to deal with the great sequence similarity in this region.
+According to a collaborator \contributor{James Traherne}, sequencing would require amplification of the the polymorphic exons using locus-specific primers and sequencing of the barcoded products.
 This would necessitate read lengths of at least 300 base pairs to span the exons.
 The cost of this using Roche 454 has been estimated to be of approximately \textsterling 30 per sample.
 
