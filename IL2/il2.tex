@@ -2,11 +2,13 @@
 %\chapter{ \label{chapter:il2} Effect of IL-2 Stimulation on Cell Phenotypes } 
 %\chapter{ \label{chapter:il2} A recursive partitioning approach of identifying cells responsive to ex-vivo stimulation in flow cytometry }
 
-In the previous chapter, I looked at normalisation of the MFI using beads and replicating two univariate gating steps with thresholding on CD25
-or with a mixture of two components on CD45RA.
-Here on a different dataset on which only preliminary manual analysis has been done, I will also consider normalisation methods and replicating all steps of the manual gating
-with an automatic procedure.
-Furthermore, I will also consider approaches of discovering biologically relevant subsets not reported by the manual gating.
+%\epigraph{ {\fontfamily{frc}\selectfont \foreignlanguage{french} { Le Petit Prince, qui assistait à l'installation d'un bouton énorme, sentait bien qu'il en sortirait une apparition miraculeuse, mais la fleur n'en finissait pas de se préparer à être belle, à l'abri de sa chambre verte. Elle choisissait avec soin ses couleurs. }} }
+\epigraph{ {\fontfamily{frc}\selectfont \foreignlanguage{french} { mais la fleur n'en finissait pas de se préparer à être belle, à l'abri de sa chambre verte. Elle choisissait avec soin ses couleurs. }} }
+
+%In the previous chapter, I considered normalisation of the \gls{MFI} using beads, and replaced two univariate gating steps on CD25 and CD45RA.
+Building on the work of the previous chapter, in which only two steps of the manual gating were replaced with an automatic algorithm, I will now consider a different dataset on which only preliminary manual analysis has been done.
+In this chapter, I will revisit the bead normalisation method as well as elaborate on further normalisation methods, and will this time, attempt to replace the entire manual gating with a computational process.
+In particular, I will develop approaches of discovering biologically relevant subsets not considered by the manual gating.
 
 \section{Background}
 
@@ -16,16 +18,16 @@ Genomewide association studies have implicated the \cytokine{IL-2} signalling as
 %So far associated regions have been reported close to IL2RA and PTPN2, a phosphatase, which both influence STAT5 transduction.
 %The protective rs12722495 haplotype was significantly associated with increase in CD25 expression on CD4 memory T cells measured in terms of MFI.
 %Howevever the protective combined rs2104286 genotype led to a decrease in the percentage of CD25 positive CD4 naive T cells.  
-As seen in \Cref{chapter:il2ra}, the protective T1D associated \gene{IL2RA} variant at \snp{rs12722495} in healthy individuals predicts an increase in expression of \protein{CD25},
+As seen in \Cref{chapter:il2ra}, the protective T1D associated \gene{IL2RA} variant, at \snp{rs12722495} in healthy individuals, predicts an increase in the expression of \protein{CD25},
 the alpha chain of the trimeric \protein{IL-2} receptor, on memory \protein{CD4}\positive T lymphocytes \citep{Dendrou:2008gc,Dendrou:2009dv}.
 %and high levels of IL-2 secretion by these cells
 %As supported by an increase in soluble CD25, this might be the consequence of preferential cleavage of the CD25 receptor \citet{Lowe:2007ij}.
 %As supported by a decerase in soluble CD25 \citet{Lowe:2007ij}.
-\citet{Garg:2012jr} found that regulatory and memory \protein{CD4}\positive T cells in healthy carriers of T1D risk associated \gene{IL2RA} variants,
-also exhibit decreased sensitivity to \cytokine{IL-2} in terms of decreased MFI levels of
-phosphorylated signal transducer and activator of transcription 5 protein (p\protein{STAT5}),
-STAT5 dimerises or tetramerises on phosphorylation and acts as a transcription factor (\Cref{figure:IL2-pathway}),
-which also induces the transcription of \gene{FOXP3}, a transcription factor characteristic of \glspl{Treg}.
+\citet{Garg:2012jr} found that regulatory and memory \protein{CD4}\positive T cells in healthy carriers of the T1D associated \snp{rs12722495} haplotype,
+%T1D risk associated \gene{IL2RA} variants,
+also exhibit decreased sensitivity to \cytokine{IL-2}.
+The decreased sensitiviy was measured in terms of lower MFI levels of phosphorylated STAT5 (pSTAT5).
+STAT5, the signal transducer and activator of transcription 5 protein, dimerises or tetramerises on phosphorylation and acts as a transcription factor that also induces the transcription of \gene{FOXP3}, one of the transcription factors characteristic of \glspl{Treg} (\Cref{figure:IL2-pathway}).
 
 \begin{figure}[h]
 \centering
@@ -47,17 +49,12 @@ STAT5 is phosphorylated to pSTAT5 and acts as a transcription factor.
 \citet{Long:2011hk} have reported that a \Gls{T1D} associated variant at \snp{rs1893217}
 of the protein tyrosine phosphatase N2 gene (\gene{PTPN2}),
 a negative regulator of the IL-2 pathway,
-also correlates with lower STAT5 phosphorylation.
+also correlates with lower pSTAT5.
 %show diminished ability to respond to \cytokine{IL-2}.
-Furthermore, it is suspected that \cytokine{IL-2} production might be diminished in T1D since disease associated \gene{IL2RA} variants 
-correlate with reduced CD25 levels 
-and reduced \cytokine{IL-2} production
-on activated CD69\positive CD4\positive memory T cells
-after antigen stimulation \citep{Dendrou:2009dv}.
+Furthermore, it is suspected that \cytokine{IL-2} production might be diminished in T1D, since disease associated \gene{IL2RA} variants correlate with reduced CD25 levels and reduced \cytokine{IL-2} production on activated CD69\positive CD4\positive memory T cells after antigen stimulation \citep{Dendrou:2009dv}.
 %with staphylococcal enterotoxin B 
 %really?
-Long-term reduced sensitivity to IL-2 also correlates with diminished maintenance 
-of FOXP3 expression in the CD4\positive CD25\positive regulatory T-cells of type 1 diabetic subjects \citep{Long:2010ej}.
+Long-term reduced sensitivity to IL-2 also correlates with diminished maintenance of FOXP3 expression in the CD4\positive CD25\positive regulatory T cells of \gls{T1D} subjects \citep{Long:2010ej}.
 %Defects in IL-2R signaling contribute to diminished maintenance 
 %IL-2 sensitivity drives IL-2 stimulation
 %Preliminary data also suggests that the sensitivity to IL-2, measured in terms of pSTAT5 activation, may be also be reduced in the regulatory CD4+ T cells of newly diagnosed T1D patients.
@@ -80,33 +77,26 @@ and to all researchers interested in low-dose IL-2 therapy to autoimmune disease
 However some concerns have been raised with these studies.
 One concern was that the Tregs discrimination was not particulary thorough.
 %nor consistent
-\citet{Long:2010ej} define Tregs based only on two markers CD4\positive CD25\positive whereas these cells are usually
-also defined on CD127 and FOXP3.
-Another a notable omission by \citet{Long:2010ej} was the lack of repeated samples to assess the within-individual variance
-or reliability of the assay.
+\citet{Long:2010ej} define Tregs based only on two markers CD4\positive and CD25\positive, whereas these cells are usually also defined on CD127 and FOXP3.
+Another a notable omission by \citet{Long:2010ej} was the lack of repeated samples to assess the within-individual variance or reliability of the assay.
 %Although \citet{Long:2011hk} do assess repeatability in 16 individuals, its not accounted for in the association test.
 %clinical trials which
 %treat type 1 diabetics with IL-2.
-Hence, \contributor{Tony Cutler}, in our lab, set to find if he could replicate some of these findings in an independent cohort
-using a more refined gating stategy by including the FOXP3 regulatory T cell marker,
+In order to assess the validity of these results, \contributor{Tony Cutler}, in our lab, set to find if he could replicate some of these findings in an independent cohort, using a more refined gating stategy by including the FOXP3 regulatory T cell marker.
 %T1D leads to decrease sensitivity to IL-2 in similar sample size with 
-as well as NK cell markers, CD3, CD8, and CD56,
+He also included the CD3 T cell marker as well more NK cell specific markers, CD8 and CD56,
 %and the naive cell marker CD31,
-to discover whether other potential cell subsets
-are also sensitive to IL-2 (\Cref{table:IL2-panels}).
+to discover other cell subsets which may potentially, also be sensitive to IL-2 (\Cref{table:IL2-panels}).
 %and using repeated samples.
 
 \paragraph{Samples and panels}
 
-He selected 22 long-standing diabetics (6 males and 16 females, mean age 29) and 28 controls (mean age 27) from the Cambridge Bioresource,
-as well as 30 newly diagnosed (20 males and 9 females, mean age 11.7) and 15 unaffected siblings (5 males and 12 females, mean age 12.3) from the \Gls{D-GAP} resource.  
+He selected 22 long-standing diabetics (6 males and 16 females, mean age 29) and 28 controls (mean age 27) from the Cambridge Bioresource, as well as 30 newly diagnosed (20 males and 9 females, mean age 11.7) and 15 unaffected siblings (5 males and 12 females, mean age 12.3) from the \Gls{D-GAP} resource.  
+These were matched on age and sex to 43 controls.
 %This was to determine if there was a difference between newly diagnosed and long-standing diabetics while controlling for age.
-To guard from false positive association and non-reproducible results, 
-it is important to ascertain the repeatability of these cell phenotypes before conducting any form of association study.
+%To guard from false positive association and non-reproducible results, it is important to ascertain the repeatability of these cell phenotypes before conducting any form of association study.
 %Before proceeding with association testing of these cell phenotypes with T1D status or other covariates,
-In order to test the repeatability, ten individuals were recalled for a second blood sample (\Cref{table:IL2-recalled-individuals}).
-Hence a total of 52 cases and 43 controls, of which, 10 individuals (5 cases and 5 controls) from the Cambridge Bioresource were recalled to assess reproducibility
-of the phenotypes.  
+In order to assess the reproducibility, ten individuals, five cases and five controls, were recalled for a second blood sample from the Cambridge Bioresource (\Cref{table:IL2-recalled-individuals}).
 
 \begin{table}[ht]
 \centering
@@ -140,17 +130,17 @@ Blood samples were prepared and analysed by flow cytometry on day of collection.
 Each sample was split into four aliquots of \SI{500}{\micro\litre}.
 The first aliquot was left unstimulated.
 The remaining three were stimulated ex-vivo for 30 minutes at four 100-fold increasing doses
-of proleukin (a polymer of \cytokine{IL-2}) at $0.1$, $10$ and \SI{1000}{\unit\per\milli\litre} respectively.
+of proleukin, a polymer of \cytokine{IL-2}, at $0.1$, $10$ and \SI{1000}{\unit\per\milli\litre} respectively.
 %\SI{1000}{\unit\per\micro\litre} respectively.
-After a set stimulation time, the samples were fixed, permeabilised and stained, with different panels (\Cref{table:IL2-panels}), 
+After the set stimulation time, the samples were fixed, permeabilised and stained, with different panels (\Cref{table:IL2-panels}), 
 on a set of core markers, not expected to be affected by short-term proleukin stimulation,
 CD4, CD25, CD45RA and FOXP3.
 These were used to delineate different cell types, and the functional marker, pSTAT5,
-a signalling protein of the IL-2 pathway phosphorylated on IL-2 stimulation (\Cref{figure:IL2-pathway}),
-was used to measure IL-2 response.
-Samples were analysed individually with flow cytometry, with all \gls{T1D} samples except for two run in parallel with healthy controls
-to account for batch effects (\Cref{figure:IL2-sample-time}).
-Samples were also matched for age and sex to allow for paired analysis.
+%a signalling protein of the IL-2 pathway phosphorylated on IL-2 stimulation (\Cref{figure:IL2-pathway}),
+was used to measure proleukin response.
+Finally, to control for batch, age or sex, \gls{T1D} samples were in general ran in parallel with an age and sex paired healthy control, although in practice, this was not always possible (\Cref{figure:IL2-sample-time}).
+Also for practical and financial reasons, not all samples were stained with every panel (\Cref{table:IL2-panels}).
+Hence the case-control statistical analysis was only conducted in samples stained with the CD4 T cell panel, which included all samples in the study.
 
 %We address the following research questions relating to the pSTAT5 response in these samples:
 %\begin{itemise}
@@ -238,12 +228,13 @@ The T/NK cell panel, which contains the most markers, was only ran on a subset o
   On two days, 2012-09-04 and 2012-10-25, no matching controls were ran.
 }
 
+\clearpage
 
-\section{Cell Phenotypes Identified by Manual Analysis}
+\section{Preliminary analysis by Tony Cutler}
 
-In the preliminary manual analysis using FlowJo, \contributor{Tony Cutler},
+In this section, I will describe the preliminary manual analysis using FlowJo that was conducted by \contributor{Tony Cutler}.
 %The pSTAT5 distribution was measured in effector and regulatory naive and memory T cell populations (Figure~\ref{figure:tony-cd4-gating}).
-gated four CD4\positive lymphocyte subsets (\Cref{figure:tony-cd4-gating}):
+Four CD4\positive lymphocyte subsets (\Cref{figure:tony-cd4-gating}) were gated manually using FlowJo:
 \begin{itemise}
     \item memory effector T cells (Teffs)
     \item memory regulatory T cells (Tregs)
@@ -292,7 +283,7 @@ and memory Teffs (black ellipse) and Tregs (red ellipse) (f).
 Within each lymphocyte subset, the pSTAT5 distribution was measured, in each of the four samples stimulated at an increasing proleukin dose
 (\Cref{figure:dose-effect-pstat5-cellsubsets-density}).  
 As expected, the pSTAT5 distribution shifts progressively right for higher doses of proleukin, as more STAT5 is phosphorylated.
-Of the four subsets, the most sensitive cells to proleukin are the smaller memory and naive Treg subsets (\Cref{figure:dose-effect-pstat5-cellsubsets-density} b and d),
+Of the four subsets, the most sensitive cells to proleukin are the rarer memory and naive Treg subsets (\Cref{figure:dose-effect-pstat5-cellsubsets-density} b and d),
 then the memory Teffs (\Cref{figure:dose-effect-pstat5-cellsubsets-density} a) and finally the naive Teffs (\Cref{figure:dose-effect-pstat5-cellsubsets-density} c).
 This correlates with the level of \protein{CD25} expressed by these cells.
 
@@ -310,10 +301,8 @@ The dashed vertical line represents the 99th percentile of the pSTAT5 distributi
 which is used to define the pSTAT5\positive threshold.
 }
 
-Next \contributor{Tony Cutler}, assessed the repeatability of the pSTAT5 response by measuring the pSTAT5 \gls{MFI}
-for each individual subset of lymphocytes tested.
-However, this cell phenotype was poorly reproducible, since the location of the peaks was not stable across days as illustrated
-by the sample shown in \Cref{figure:dose-effect-pstat5-cellsubsets-density-repeatability}.
+Next the repeatability of the pSTAT5 response was assessed by measuring the pSTAT5 \gls{MFI} in each of the four subsets.
+This pSTAT5 response cell phenotype was poorly reproducible, since the location of the peaks was not stable across days as illustrated by the sample shown in \Cref{figure:dose-effect-pstat5-cellsubsets-density-repeatability}.
 %Furthermore, the \gls{MFI} is not a representative metric for bimodal distributions 
 %However, one issue is that pSTAT5 MFI is not very representative for very bimodal or skewed distributions such
 %as the memory Teffs in \Cref{figure:dose-effect-pstat5-cellsubsets}.
@@ -330,7 +319,7 @@ In black, the pSTAT distribution on visit one and in red, on visit two.
 The thinner lines are from the resting sample whereas the thicker lines are from the sample stimulated at 1000 units.
 The vertical lines represent the pSTAT5\positive threshold set at the $99^{th}$ percentile of the pSTAT5 distribution in the resting sample.
 }
-This motivated \contributor{Tony Cutler} to instead use a threshold approach to define the ratio of cells which are pSTAT5\positive.
+This motivated a threshold approach to define the ratio of cells which are pSTAT5\positive.
 An idea similar to that applied in \Cref{chapter:il2ra} to define naive cells as CD25\positive.
 %but the threshold is defined using the unstimulated sample rather than beads. 
 %It is a good approach to use when the number of cells is small
@@ -346,11 +335,10 @@ and naive Tregs (\Cref{figure:tony-naive-treg}).
 For memory and naive Tregs (\Cref{figure:tony-memory-treg,figure:tony-naive-treg}), at the highest 1000 units dose,
 practically all memory and naive Tregs are pSTAT5\positive.
 However, these cell populations show a significant response already at the lowest 0.1 units dose of proleukin.
-Based on this observation, \contributor{Tony Cutler} selected the
-memory and naive Treg pSTAT5 cell phenotype to be the percentage of pSTAT5\positive cells at the 0.1 units dose.
-On the other hand, since memory Teffs are less reponsive, 10 units was chosen as the representative dose.
-For naive Teffs, the least reponsive of the four cell subsets considered, the repeatability was assessed at the 1000 unit dose.
-Tony assessed the repeatability with the coefficient of determination:
+Based on this observation, the memory and naive Treg pSTAT5 cell phenotype was selected to be the percentage of pSTAT5\positive cells at the 0.1 units dose.
+On the other hand, since memory Teffs are less responsive, 10 units was chosen as the representative dose.
+For naive Teffs, the least responsive of the four cell subsets considered, the repeatability was assessed at the 1000 unit dose.
+The repeatability was assessed with the coefficient of determination:
 %instead of using the square of the Pearson correlation: 
 \[
   R^2 = 1 - \frac{\sum_{i=1}^N (x_{i1}-x_{i2})^2}{\sum_{i=1}^N (x_{i1}-\overline{x_1})^2}
@@ -365,8 +353,7 @@ the overall reproducibility across the four cell subsets was still poor,
 with the more sensitive and smaller cell subsets,
 naive and memory Tregs showing the worst correlation ($R^2=-0.16$ and $R^2=-0.82$), memory Teffs showing slightly better correlation ($R^2=0.021$)
 and finally the less responsive naive Teffs showing good correlation ($R^2=0.7728$) (\Cref{figure:tony-repeatability}).
-Tony then went on to test association with type 1 diabetes using a two-tailed paired t-test of 20 cases matched with 20 controls analysed on the same
-day (\Cref{figure:tony-t1d-association}).
+The association with \gls{T1D} was tested using a two-tailed paired t-test of 20 cases matched with 20 controls analysed on the same day (\Cref{figure:tony-t1d-association}).
 %how did he deal with repeats?
 He also tested for association with \gene{IL2RA} SNP \snp{rs12722495}, and the
 \gene{PTPN2} SNPs \snp{rs45450798} and \snp{rs478582} (plots not shown).
@@ -428,7 +415,7 @@ but the measured response is not consistently repeatable (f, g). }
 %\subsection{Normalisation of pSTAT5 improves repeatability}
 \section{Reproducibility of pSTAT5 response within an individual}
 
-Tony's preliminary results in the six repeated individuals suggested that the pSTAT5 MFI and percent pSTAT5\positive were poorly reproducible
+\contributor{Tony Cutler}'s preliminary results in the six repeated individuals suggested that the pSTAT5 MFI and percent pSTAT5\positive were poorly reproducible
 cell phenotypes using the methodology and approach described, which consequently would give us little power to detect an association with disease status or genetics.
 This motivated me to see if I could improve the repeatability of these cell phenotypes using normalisation.
 %Furthermore, since these cell phenotypes were only defined at a single dose, I also defined new cell phenotypes to summarise the response across doses.
@@ -720,6 +707,7 @@ cell phenotypes in the four cell subsets considered.
 { Association test of pSTAT5 MFI with T1D. }
 {
   Samples are paired by day of analysis.
+  Since there are nine more cases than controls, certain cases are not paired.
 }
 \myfigure{scale=.7}{nn-pstat5-mfi-t1d-celltypes}
 { Association test of pSTAT5 MFI, after nearest-neighbour normalisation, with T1D. }
@@ -785,9 +773,10 @@ This explains the spurious correlation between CD45RA positive and FOXP3 positiv
 %Also since the resting sample sample displays a shoulder this suggests a mixture of resting and already semi-activated lymphocytes.
 
 Using the normalisation methods described in the previous section, I was unable to significantly improve the reproducibility of this assay.
-This implies that this dataset, as it stands, is not sufficiently reproducible to allow for successful association testing.
-However, it still contains useful biological information, and may be repurposed to answer another important question:
-beside the manually gated cells, are there other subsets which respond to proleukin within the \gls{PBMC}?
+My view, is that this dataset, as it stands, is not sufficiently reproducible to rigorously assess whether there is a difference in proleukin response between cases and controls in the cell subsets under study.
+Although our dataset is not amenable to this type of statistical analysis because of batch variation which is very difficult to correct, it may still contain useful biological information.
+As you may recall from \Cref{table:IL2-panels}, a subset of samples have been stained with a quite comprehensive panel, including CD3, CD56 and CD8, which we can use to address another clinically relevant question:
+beside the four manually gated cells, are there other subsets which respond to proleukin within the \gls{PBMC}?
 
 This question is extremely relevant for DILT1D and other clinical trials of IL-2 which have mostly focused on lymphocytes.  %CD4\positive cells.
 Biologists know that any cell which carries high levels of any of the trimeric components of the IL-2 receptor,
@@ -797,7 +786,7 @@ but due to low affinity of the CD122 antibody and the limitation on the possible
 %Also the gamma chain is expressed by all cells and so not specific
 This study of \emph{ex vivo} stimulated whole blood offers the opportunity to identify other, potentially new, cell subsets also responsive to IL-2.
 In order to increase my chances of characterising these subsets, I only analysed samples stained with the most comprehensive marker panel we had available, the one containing the additional fluorochromes for CD3, CD8 and CD56 (\Cref{table:IL2-panels}).
-Unfortunately, the staining using this panel was of poor quality in many samples, due to the permeabilisation protocol and to the larger number of markers used, which caused certain marker stains, such as CD56, to not work well across all batches.
+Unfortunately, the staining using this panel was of poor quality in many samples, due to the harsh nature of the permeabilisation protocol and to the larger number of markers used, which caused certain marker stains, such as CD56, to not work well across all batches.
 %Furthermore, in the FCS files some channels were labelled by  a fluorochrome which was not in fact included in the sample.
 This made between-batch analysis infeasible so instead, I focused on the analysis of a single batch for which the staining had worked. %within-batch analysis.
 Assessing the staining quality of a sample requires prior knowledge, and so \contributor{Marcin Pekalski}, an experienced
@@ -1120,16 +1109,14 @@ Typically, the order in which the markers are selected is guided by picking the 
 with the largest variance or range at each split.
 Since each bin contains approximately the same proportion of events,
 this implies that the binning is finer in regions of high density and coarser in regions of low density.
-Conceptually, this is another approach of reducing the number of events while preserving lower density regions,
-provided the number of bins is sufficiently large,
-%achieving a uniform density
-similar to the method of downsampling.
+Provided that the number of bins is sufficiently large, this is conceptually another approach of reducing the number of events while preserving lower density regions,%achieving a uniform density
+similar to the method of density-dependent downsampling.
 %but instead of thinning the data, the bin size changes
 Recursive partitioning was first introduced to flow cytometry by \citet{Roederer:2001tz},
 under the name of ``probabilty binning'', as a means of translating a multivariate distribution into a univariate one,
 in order to test statistical significant differences in event counts between individual bins or whole samples.
 The algorithm was later implemented in the \BioConductor{flowFP} as ``flow cytometric fingerprinting'' and has been
-applied to discriminating cell subsets which differ significantly in proportion between healthy controls and \gls{AML} patients
+applied to discriminating bins which differ significantly in proportion between healthy controls and \gls{AML} patients
 \citep{Rogers:2008ij,Rogers:2009jz}.
 % first came prob binning, then frequency difference gating and lastly fingerprinting
 %The approach was later extended to multiple dimensions with the ``flow cytometric fingerprinting'' method as implemented in
@@ -1713,11 +1700,12 @@ spread than the non-responding population.
 \paragraph{Comparison with previous studies}
 %\subsection{Repeatability of pSTAT5}
 
-The Long et al study was in a relatively small number of individuals 66 cases and 125 controls and the reproducibility of the phenotypes was not assessed.
-\contributor{Tony Cutler}, on the other hand, found that the response of the fluorescence intensity of pSTAT5 to stimulation was poorly reproducible in the various cell subsets
-examined.  I attempted to improve on the reproducibility of the fluorescence intensity by using single-cell background correction and peak normalisation.
-One reason why the pSTAT5 MFI is not reproducible in memory effector cells is because the pSTAT5 distribution is not unimodal.
-In naive and memory regulatory T cells, the pSTAT5 distribution is unimodal but the peak shift on stimulation is not reproducible.
+The \citet{Long:2010ej} study was in a relatively small number of individuals, 66 cases and 125 controls, and the reproducibility of the phenotypes was not assessed.
+Although \contributor{Tony Cutler}'s experiment was on an even smaller number of individuals, the reproducibility was assessed more thoroughly.
+Both Tony and I found that the response of the fluorescence intensity of pSTAT5 to stimulation was poorly reproducible in the various cell subsets examined.
+Although I attempted to improve on the reproducibility of the fluorescence intensity by using single-cell background correction and peak normalisation, I was unable to do so.
+One reason why I believe the pSTAT5 MFI is not reproducible in memory Teffs cells, is because the pSTAT5 distribution is not unimodal.
+In naive and memory Treg cells, the pSTAT5 distribution is unimodal but the peak shift on stimulation is not reproducible.
 \contributor{Tony Cutler} claims that this is because the titration is too fine and noisy so that there is a lot of uncontrolled variation in the proleukin doses.
 %Another reason is that the staining is unreliable.
 Instead of using MFI, this motivated counting the percent of cells whose pSTAT5 fluorescence is greater than the 99th percentile of the pSTAT5 distribution in the unstimulated sample.
@@ -1730,13 +1718,12 @@ Since this phenotype was found to be slightly more reproducible, it was used to 
 
 %No significant associations were found which puts back into question the results of the Long et al study.
 
-Also of concern is that the Long et al dose is too high for the studied cell subsets.
-Our dose range is from 0, 0.1, 10 and 1000 U/ml, whereas theirs was 100 U/ml.
+Another concern we had with the \citet{Long:2010ej} study was that the dose was too high for the studied cell subsets.
+Our doses are 0.1, 10 and 1000 U/ml, whereas theirs was 100 U/ml.
 We found that pSTAT5 Tregs are maximally stimulated by 10 U/ml and near maximum at 0.1 U/ml,
-which is in contrast to Long et al in which maximum stimulation was not achieved at 100 U/ml.
-On possible explanation is that the Long et al used frozen \gls{PBMC}, while we used fresh blood.
-\cite{Dendrou:2009dv} showed that the repeatability of a cell phenotype can be compromised with frozen samples
-and this difference could explain the difference in response in the two studies.
+which is in contrast to \citet{Long:2010ej} where maximum stimulation was not achieved at 100 U/ml.
+On possible explanation is that they used frozen \gls{PBMC}, while we used fresh blood.
+\cite{Dendrou:2009dv} showed that frozen samples generally had lower CD25 and this difference may explain the difference in response between the two studies.
 %We had the same unit measure of IL-2 i.e U/ml.
 %They also used Proleukin or equivalent.
 
@@ -1751,18 +1738,19 @@ and this difference could explain the difference in response in the two studies.
 
 \paragraph{Normalisation of pSTAT5}
 
-Several normalisation methods were attempted to make the pSTAT5 dose-response phenotype more reproducible.
-%Of which correcting for resting pSTAT5
-However none were able to substantially improve the repeatability.
-I can only conclude that the noise in this dataset is substantial and not systematic, which makes normalisation very challenging.
-Unsurprisingly, given the small dataset and the poor repeatability, no significant association was detected with dose-response
-and disease status.
-The conclusion is that this assay is not sufficiently reproducible for this sort of analyses.
+Several normalisation methods were attempted to make the pSTAT5 dose-response phenotype more reproducible,
+yet none were able to substantially improve the repeatability.
+From my experience, I can only conclude that the noise in this dataset is substantial and not systematic, which makes normalisation very challenging.
+Unsurprisingly, given the small dataset and the poor repeatability, no significant association was detectable with dose-response and disease status.
+My conclusion is that this assay is not sufficiently reproducible for across-batch analysis.
+This brought me instead to focus on within-batch analysis.
 
 
 \subsection{ Methods of identifying dose-responsive cell populations }
 
-I have attempted here a total of five different methods of identifying dose-responsive cell populations visually or semi-automatically:
+
+Since cross-batch comparisons proved difficult, I focused instead on identifying other, non-manually gated, dose-responsive cell subsets within a single sample, which I then tried to replicate in other batches.
+I attempted a total of five different methods for identifying dose-responsive cell populations visually or semi-automatically:
 \begin{itemize}
     \item SPADE
     \item RPART
@@ -1770,10 +1758,8 @@ I have attempted here a total of five different methods of identifying dose-resp
     \item PLSR
     \item MMPART
 \end{itemize}
-The first two methods, density normalisation with SPADE and recursive partitioning with RPART, used only the core markers in order to pool
-across samples.
-The other two methods, PLSR and CART, included the response variable pSTAT5 alongside with the core markers,
-and the final method, MMPART, used only information about the response variable.
+The first two methods, density normalisation with SPADE and recursive partitioning with RPART, used only the core markers in order to pool across samples within a batch.
+The other two methods, PLSR and CART, included the response variable pSTAT5 alongside with the core markers, and the final method, MMPART, used only information about the response variable.
 
 I have also tried the two main approaches of combining data across samples using either pooling or by joining.
 Given the large number of events per sample in flow cytometry, pooling necessitates a way of reducing the total number of events,
@@ -1791,27 +1777,24 @@ The joining was implemented using the nearest neighbour approximation in each sa
 containing the same number of events as in the base sample.
 %This resulted in a cross-sectiona dataset were each individual cell 
 
-From the pooled data, I was able to calculate multivariate dimensional scaled representations such the \gls{MST}.  
-Colour coding the \gls{MST} by pSTAT5 response I then identified new dose-responsive clusters of cells within lymphocytes and also within the non-lymphocyte cell population which were ignored by the manual gating.
-One drawback I found with considering core markers only was that each cluster and especially clusters in regions of high density, may contain both dose-responsive and non-responsive cells, which obfuscates the identification of specific cells types.
-The value of \gls{SPADE}, as applied to exploration of the dose-response in these datasets, lies in the downsampling and agglomerative clustering steps which allow for probing of the entire marker space by reducing the number of data points while aiming to preserve the structure of the data.
-Although \gls{SPADE} suggests the \gls{MST} as a visualisation tool, it is not necessarily the most useful representation of the data since
-This constitutes a general criticism of the \gls{MST} representation of the data, which while visually appealing, is hard to interpret.
+From the pooled data, I was able to calculate multidimensional scaled representations such the \gls{MST}.  
+Colour coding the \gls{MST} by pSTAT5 response, I then identified new dose-responsive clusters of cells within lymphocytes and non-lymphocyte cell populations which were ignored by the manual gating.
+%Howver some of the clusters I identified using the core markers only contained a mixture of both dose-responsive and non-responsive cells.
+The value of \gls{SPADE} here, lies in the downsampling and agglomerative clustering steps which allow for probing of the entire marker space by reducing the number of data points while preserving the structure of the data.
+Although \gls{SPADE} suggests the \gls{MST} as a visualisation tool, it is not necessarily the most useful representation of the data since it can be hard to interpret.
+%This constitutes a general criticism of the \gls{MST} representation of the data, which while visually appealing, is hard to interpret.
 %Furthermore, the \gls{MST} can be misleading since the layout is arbitrary and the branching is not always meaningful.
-The mapping of the manual gates to the MST is not necessarily intuitive, since as seen in \Cref{figure:spade-lymphocytes-celltypes},
-the manually gated cell types were spread across several nodes and branches of the tree.
-%do not necessarily cluster in the branches.
-There was also overlap with different manually gated cell types (\Cref{figure:spade-lymphocytes-celltypes}).
-This can make it difficult for biologists to interpret the \gls{MST}.  
+The mapping of the manual gates to the MST may not be intuitive, as seen in \Cref{figure:spade-lymphocytes-celltypes},
+where the manually gated cell types are spread across several branches of the tree and certain nodes contain more than one cell type (\Cref{figure:spade-lymphocytes-celltypes}).
+%This can make it difficult for biologists to interpret the \gls{MST}.  
 Hence the \gls{MST} requires some manual annotation in order to understand where the different cell types lie.
 One way of visualising the relationship between the value and location of a node in the tree is to colour the tree according to each marker individually.
-However this approach is clearly not practical for a large number of markers, nor does it yield an overview of the relationship between the various markers.
-It is also over reliant on coding information as colour patterns which is harder to represent and assimilate than spatial information.
+However this approach is not practical for a large number of markers, nor does it yield an overview of the relationship between the various markers.
+%Also, using colour for coding information is harder to assimilate than spatial information.
 %Also most people find it easier to work with positional pattern then colour patterns.
-Instead, a more useful alternative is to plot the tree node coordinates against the core marker node MFI, as illustrated in \Cref{figure:mst-marker-progression}.
-This approach not only provides some insight into the marker progression, at least along the main branch of the tree where the different cell types lie,
-but also into the relationship between the markers in the sample.
-However, using the absolute node coordinate is misleading since it is relative to the layout algorithm, hence this approach is better applied to following individual branch paths.
+Instead, a more useful alternative could be to plot the tree node coordinates against the core marker node MFI, as illustrated in \Cref{figure:mst-marker-progression}.
+This approach not only provides some insight into the marker progression, at least along the main branch of the tree where the different cell types lie, but also into the relationship between the markers in the sample.
+%However, using the absolute node coordinate is misleading since it is relative to the layout algorithm, hence this approach is probably better applied to following individual branch paths.
 Potentially, this approach could be repeated along each branch in the \gls{MST} to identify the different types of cells progression in the sample.
 This would rely on the definition of a root node, an idea which needs to be explored further.
 %This idea has already been explored by the Gemstone software Probability State Modelling
@@ -1853,13 +1836,13 @@ As illustrated in (\Cref{figure:two-sample-decision-tree}), when the same algori
 
 
 Another issue with the regression tree approach is that it doesn't exploit the bimodality of the pSTAT5 distribution at higher doses of proleukin.
-This motivated the next approach, the objective of which was to identify highly sensitive dose-responsive cells by fitting a bimodal distribution, instead of using the variance of the pSTAT5 response in the partitioning.
-By recursively splitting the bimodal pSTAT5 distribution in a sample at decreasing doses of proleukin, my hope was to identify cells which respond to low doses of proleukin.
+This motivated the next approach which aimed to identify highly sensitive dose-responsive cells by using the bimodality of the pSTAT5 response rather than the variance for the partitioning.
+By recursively splitting the bimodal pSTAT5 distribution in a sample at decreasing doses of proleukin, my hope was to isolate the subset of cells which respond to the lowest dose of proleukin.
 %The cells identified by this method should respond at the lowest dose 0.1 unit dose of proleukin in this experiment.
-Using this method, a subset of highly responsive cells was identified which overlap with the lymphocyte gate based on side and forward scatter.
-The disadvantage of this approach however is since the core markers do not feature in the identification of cell subsets, there is no guarantee that the identified dose-responsive cells represent a homogeneous subset.
-Ideally, post-clustering would be required, but in practice, the number of events within the subsets are too few for this to be feasible.
-If the response comes from regions of low density in the core marker space, it might be worth applying this methd on a dataset after the core marker density has been made more uniform.
+The subset of cells which was identified using this method, overlapped with the lymphocyte gate based on side and forward scatter.
+However, as expected, these cells constituted quite a heterogeneous cell population, since core markers are not included in the splitting decisions.
+Ideally, some further clustering would be required on this subset, but in practice, the number of events are too few for this to be feasible.
+%If the response comes from regions of low density in the core marker space, it might be worth applying this method on a dataset after the core marker density has been made more uniform.
 
 %\paragraph{Possible extensions to the regression trees methods}
 There are other possible extensions to the regression trees methods covered in the "Elements of Statistical Learning" textbook \citep{Anonymous:ikywRZeA}.
@@ -1870,13 +1853,12 @@ Unfortunately, I found the existing \Rpackage{earth} to be too slow to run on my
 %PRIM
 Another extension is the \gls{PRIM} also known as the "bump hunting" algorithm introduced by \citet{Friedman:1999iy}.
 \gls{PRIM} searches for a bounding boxes in the marker space in which the average response is high.
-Since no binary constraint is placed this reduces the complexity of the rules.
+Since there is no binary constraint this reduces the number of splits.
 The main box construction method in PRIM works from the top down, starting with a box containing all the data.
-The box is compressed along one face by a small amount, and the observations then falling outside the box are peeled off.
+The box is compressed along one face by a small amount, and the observations then falling outside the box are filtered out.
 The face chosen for compression is the one resulting in the largest box mean, after the compression is performed.
 Then the process is repeated, stopping when the box contains some minimum amount of points.
-After the top-down sequence is computed, PRIM reverses the process expanding along any edge, if such an expansion
-increases the box mean.
+After the top-down sequence is computed, PRIM reverses the process expanding along any edge, if such an expansion increases the box mean.
 %This is called pasting.
 Since the top-down procedure is greedy at each step such an expansion is often possible.
 The result of these steps is a sequence of boxes, with different number of observations per box.
@@ -1885,7 +1867,7 @@ An advantage of PRIM over CART is its patience.
 Because of its binary splits, CART fragments the data quite quickly whereas PRIM is more progressive.
 This however comes at the cost of performance and I found the \Rpackage{prim} implementation of this method to be too slow to run on my dataset.
 %
-How well these variants perform depends on the data but generally they tend to over-partition data so that the bins are uneven or the tree is unbalanced.
+The performance of these methods depends on the data, but generally, they tend to over-partition the data, resulting in bins which are uneven or an unbalanced tree.
 %%An ensemble version of the CART are random forests.  
 Another alternative to regression trees which avoids overfitting is \gls{RF} but would need reduction of the number of splits to be interpretable.
 Although recursive partitioning schemes are very sensitive to even small changes in the data and suffers from the biases of tree like data structures in which errors propagate because of the dependency of the splits on previous splits,
@@ -1895,7 +1877,7 @@ I found them to be a useful non-parametric method of exploring a dataset, in lin
 %\gls{SPADE} also contains an element of stochasticity as part of its downsampling step, so that running \gls{SPADE} twice on the same data does not yield generate exactly the same dataset.
 %An advantage of the SPADE and RPART approaches over \gls{CART}, \gls{PLS} and MMPART, is that they does not rely on joining samples on nearest-neighbour.
 One advantage of pooling over nearest-neighbour joining, is that the signal is averaged across samples instead of one sample serving as the template.
-If certain rarer subsets are not present across all samples or if the total number of events varies greatly between samples, nearest neighbour joining can map points to the wrong subset.
+Unfortunately, if certain rarer subsets are not present across all samples or if the total number of events varies greatly between samples, nearest neighbour joining can map points to the wrong subset.
 In these scenarios, I would expect approaches which map groups of cells across samples would be more robust.
 %However if the location of cell subsets differs significantly then this can also lead to joining to the wrong subsets.
 One method for assessing whether samples are significantly different could be to use probability binning, or alternatively fixed cluster locations, to identify bin or clusters whose proportion vary significantly between samples.
@@ -1906,8 +1888,7 @@ One method for assessing whether samples are significantly different could be to
 %A manuscript is in preparation with the intention of submitting to Flow Cytometry Part A 
 
 
-
-Finally, I will now summarise some of the subsets which were discovered with the various methods described in this chapter, in lymphocytes and non-lymphocytes subsets.
+Finally, I will now go over some of the subsets which were discovered with the various methods described in this chapter, in lymphocytes and non-lymphocytes subsets.
 
 \clearpage
 
@@ -2026,16 +2007,21 @@ MMPART.2    & 4.07 & 2.74 & 1.84 & 3    & 2.21 & 2.76   & 1.13 & 1.47 & 1.7   & 
 
 \clearpage
 
+\subsection{Are these cells present in other subsets?}
+
+In order to assess whether these identified subsets were real and not artefacts, I tried to identify them in other k samples analysed with the same panel.
+%The population
+
+\paragraph{Lymphocytes}
+
+\paragraph{Non-lymphocytes}
+
 
 \subsection{Conclusion}
 
-Using the methods described in this chapter and the most exhaustive staining panel available to me for these \gls{PBMC} samples, it would appear that
-although other cell types which carry IL-2 receptors are potential responders, the majority of the response comes from within the lymphocyte subset,
-with a smaller secondary response coming from the non-lymphocyte \texttt{SPADE.1}/\texttt{PLSR.1} cluster at 10 units.
+Using the methods described in this chapter on the most exhaustive staining panel at my disposal for these \gls{PBMC} samples, it would appear that, although other cell types carriers of IL-2 receptors are potential responders, the majority of the response comes from within the lymphocyte subset, with a smaller secondary response coming from the non-lymphocyte \texttt{SPADE.1}/\texttt{PLSR.1} cluster at 10 units of proleukin.
 %The methods explored in this chapter could be combined to identify dose-responsive cells in stimulation experiments.
-Within the lymphocytes, at the lowest 0.1 units dose, CD25 explains a significant proportion of the pSTAT5 response,
-however at higher, 10 and 1000 units, the other trimeric receptors, CD122 and CD132 are likely to become more influential,
-since the CD56\positive subset \texttt{RPART.1} shows response at 10 units in spite of having very low CD25 (\Cref{figure:final-lymphocytes-clusters}).
+Within the lymphocytes, at the lowest 0.1 units proleukin dose, CD25 explains a significant proportion of the pSTAT5 response, however at higher, 10 and 1000 units doses, the other trimeric receptors, CD122 and CD132 are likely to become more influential, since the CD56\positive subset \texttt{RPART.1} shows response at 10 units in spite of having very low CD25 (\Cref{figure:final-lymphocytes-clusters}).
 %Furthermore, the difference between a response at 0.1 units and a response at 10 unit occurs for small changes in CD25 expression.
 
 
