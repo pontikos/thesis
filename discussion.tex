@@ -1,5 +1,15 @@
 \chapter{Discussion}
 
+%\epigraph{ {\fontfamily{frc}\selectfont \foreignlanguage{french} { C'est le temps que tu as perdu pour ta rose qui rend ta rose importante. }} }
+%Tu te jugeras donc toi-même, lui répondit le roi. C'est le plus difficile. Il est bien plus difficile de se juger soi-même que de juger autrui. Si tu réussis à bien te juger, c'est que tu es un véritable sage.
+%\epigraph{ {\fontfamily{frc}\selectfont \foreignlanguage{french} { Il n'y a pas de citadelle indefendable, il n'y a que des citadelles mal defendues. }} }
+\epigraph{
+{\fontfamily{frc}\selectfont \foreignlanguage{french} {
+L'avenir n'est jamais que du présent à mettre en ordre, tu n'as pas à le prévoir, mais à le rendre possible.
+%Pour ce qui est de l'avenir, il ne s'agit pas de le prévoir mais de le rendre possible.
+}}}
+
+
 
 \section{ Important practical considerations with computational clustering methods }
 
@@ -116,7 +126,8 @@ Alternative solutions which do not rely on hierarchical filtering, could be to d
 
 The hierarchical, tree-like approach, as introduced by manual gating, does present a number of advantages.
 From a practical perspective it is efficient because the dataset is reduced as points are filtered at each step.
-It also conforms to the established hierarchical view of cell lineages built on a binary view of marker expression, which is deeply engrained in the minds of certain immunologists.
+%Also only considering a subset of markers at a time is easier to interpret.
+It also conforms to the established hierarchical model of cell lineages which is deeply engrained in the minds of certain immunologists.
 %Methods which use a binary structure are easy to interpret as they conform to the manual gating strategy which provides rules on how to obtain the leaf subsets.
 %Reduces ambiguity.
 On the other hand, a disadvantage is that this approach can easily miss important cell populations.
@@ -138,8 +149,8 @@ Although this hierarchical approach does have advantages, I would advocate also 
 \section{ Identifying outliers }
 
 Outliers have an important influence on the mean of the data.
-They lie far from cluster means, usually in a sparsely inhabited region of space.
-Thus clustering methods and statistical tests which rely on mean or covariance estimation are sensitive to outliers.
+They lie far from cluster means, usually in a sparser regions of marker space.
+Thus any clustering methods or statistical tests which rely use the mean can be sensitive to outliers.
 Certain outliers may be clearly identifiable because their values lie at the extreme of the instrument range, far from the rest of the data.
 %Very large intensity values are usually considered as noise, but low intensity values are harded to call with certainty.
 Others which lie within a more plausible range of values are harder to identify.
@@ -370,7 +381,7 @@ This is challenging because in most biological traits, a significant proportion 
 
 The most studied factor which influences the statistical power to detect such effects is sample size, and we are witnessing ever-increasing sample sizes thanks to dropping genotyping and sequencing costs.
 %This is because the standard deviation tends to shrink with the inverse of the sample size.
-However, a less explored and harder to define factor is the accuracy with which traits are measured.
+However, a less explored factors are reproducibility and the level of precision with which traits are reported.
 For example in \gls{T1D}, depending on the stage at which the disease is diagnosed, the phenotype can be quite different.
 If the disease is diagnosed earlier then the associated phenotype may be recurrent auto-antibody positivity or if diagnosed late, high blood glucose.
 In most diseases, case heterogeneity is a confounder and one which needs addressing by collection of additional clinical covariates during the recruitment of cases.
@@ -444,7 +455,7 @@ Clusters which exist in higher dimensions do not necessarily map to clusters in 
 %In fact K points are only garanteed to be separable in at least K+1 dimensions.
 %An upperbound on the number of clusters in the data is the product of the univariate modes,
 %whereas a lower bound is the maximum number of modes in one dimension.
-This has motivated research into how to visualise high-dimensional data in two-dimensions with minimal loss of information.
+This has motivated research into how best to visualise high-dimensional data in two-dimensions with minimal loss of information\citep{Amir:2013jp}.
 In \Cref{chapter:il2}, I presented one these approaches, \gls{SPADE} which relies on a network visualisation of a dataset using a minimum spanning tree.
 There are others which use more probabilistic approaches such stochastic neighbour embedding.
 While I agree that visualising high-dimensional data using network representations can be insightful, beyond a certain number of nodes, network visualisations quickly become uninformative.
@@ -507,7 +518,7 @@ Presently most flow experiments contain too few samples to do well-powered assoc
 
 Staining in flow cytometry is notoriously noisy.
 Even when using the same fluorochrome-antibody panel and the same PMT voltage, the shape and location of clusters is not stable.
-While the scatter channels can be very noisy due of debris, for a given panel and experimental protocol,
+While the scatter channels can be very noisy due to debris, for a given panel and experimental protocol,
 the location of the clusters should not move much on the scatter channels because the morphological attributes of the cells should not be dependent on staining titration.
 However, the treatment of cells can also lead to very different scatter patterns (example Tony vs Marcin).
 
@@ -520,7 +531,7 @@ The workspace also saves the cell populations statistics which need to be update
 
 Unfortunately, parsing FlowJo workspaces in order to extract manual gates is not straighforward.
 Although there are several BioConductor packages designed to import and parse flowJo workspaces, flowUtils gatingML, flowJo, flowWorkspace, I have found the R/FlowJo interface to not be very reliable, although the flowWorkspace parsed it without errors, the returned statistics calculated in FlowJo were wrong.
-This is probably why Vincent Plagnol developed his own XML parser to extract gates from flowWorkspace files but this approach is time-consuming as it requires in-depth knowledge of the FlowJo XML schema which can change on each new release of FlowJo.
+This is probably why \contributor{Vincent Plagnol} developed his own XML parser to extract gates from FlowJo workspace files but this approach is time-consuming as it requires in-depth knowledge of the FlowJo XML schema which can change on each new release of FlowJo.
 Furthermore the gate coordinates in FlowJo are often imprecise.
 In fact, I found a more serious bug in FlowJo: just loading an FCS file into FlowJo and reexporting it changes the data!
 In the end, I found the best solution was to export CLR files which are simply the classification results from FlowJo.
@@ -630,26 +641,34 @@ However poor staining or instrumental configuration can lead to unexpected distr
 In \Cref{chapter:il2}, the permeabilisation protocol made the staining noisy, so that the MFIs were not reproducible.
 But different computational tools could be used to highlight different populations.
 
-Automation can be achieved as long as we can break down the gating process into a series of basic steps. 
+In practice, the move to automation is likely to be incremental, for example by replacing the sequence of basic steps in the gating process.
 As was seen in \Cref{chapter:il2ra}, the 1D sequential top down gating strategy can easily be coded up as an algorithm using mixture models or bead-derived thresholds.  
 The problem remains, however, that we do not know exactly what the outcome of the process should be.
 %Philosophically this is perhaps what still makes data analysis an art, is that there is still some mystery since we haven't discovered all the rules yet.
 If our benchmark is comparison to manual gating then clearly no method can ever do better than manual gating.
 This is why independent benchmarks such as repeatability are important.
-Perhaps a more general benchmark could be is the result useful?
+Perhaps a more general benchmark could be the utility of the result.
 For example, is it predictive for diagnosis or does it correlate strongly with genetics or some other covariate under study.
-We will only reap the true fruits of automated analysis once the number of samples has grown considerably, although this might require earlier steps in the process such as the processing of samples to be furhter standardised and automated first.
+We will only reap the true fruits of automated analysis once the number of samples has grown considerably, although this might require earlier steps in the process such as the processing of samples to be further standardised and automated first.
+%We might even see Cytobank accumulate samples like ArrayExpress.
 %Finally, to conclude on a more philosophical tone from on my favourite french authors:
 
+Flow cytometry is much more messy than genotyping, and larger sample sizes will be necessary to overcome all kinds of unwanted batch effects from antibody stickiness, sample prep.
 
-\begin{center}
-\vspace*{\fill}
-{\fontfamily{frc}\selectfont \foreignlanguage{french} { Pour ce qui est de l'avenir, il ne s'agit pas de le prévoir mais de le rendre possible. }}
--
-{\fontfamily{frc}\selectfont \foreignlanguage{french} { Antoine de Saint-Exupéry }}
-\vspace*{\fill}
-\end{center}
 
+
+%\begin{center}
+%\vspace*{\fill}
+%{\fontfamily{frc}\selectfont \foreignlanguage{french} {
+%L'avenir n'est jamais que du présent à mettre en ordre, tu n'as pas à le prévoir, mais à le rendre possible.
+%%Pour ce qui est de l'avenir, il ne s'agit pas de le prévoir mais de le rendre possible.
+%}}
+%
+%-
+%{\fontfamily{frc}\selectfont \foreignlanguage{french} { Antoine de Saint-Exupéry }}
+%\vspace*{\fill}
+%\end{center}
+%
 
 
 

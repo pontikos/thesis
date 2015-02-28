@@ -3,6 +3,8 @@
 
 \chapter[Introduction]{ \label{chapter:intro} Introduction}
 
+\epigraph{ {\fontfamily{frc}\selectfont \foreignlanguage{french} { Il n'y a pas de citadelle inattaquable, il n'y a que des citadelles mal attaquées. }} }
+
 \section{Motivation}
 
 Over the last twenty years, the size and dimensionality of biological datasets has increased at a tremendous rate,
@@ -1000,7 +1002,7 @@ For example K-means, is a limiting case of spherical \glspl{GMM} when the covari
 because maximising the log-likelihood of a multivariate Gaussian is asymptotically equivalent to minimising the residual sum of squares (\Cref{figure:gmm-variance}).
 %The exponential weighted responsibility between 0 and 1 turns into a 0-1 assignment because as sigma -> 0 then expr( -x**2 / sigma ) 
 \myfigure{scale=0.6}{gmm-variance}
-{ Effect of shrinking variance in a two compnent \gls{GMM} on the decision boundary. }
+{ Effect of shrinking variance in a two component \gls{GMM}, with means fixed at $0$ and $2$, on the decision boundary. }
 {
   In this two component univariate \gls{GMM}, the y axis represents the posterior probability of being assigned to the first component and
   the x axis represent the value of the data points.
@@ -1168,7 +1170,7 @@ is very much dependent on the inherent noise in the data.
   the second (c and d) is simulated from the same model but with the covariance scaled 10-fold to $0.5$.
   While on the first dataset the optimal number of clusters according to the variance ratio criterion is correctly estimated as $5$ (a),
   on the second dataset it is overestimated as $7$ due to the increased noise (c).
-  b and d depict the clustering resulting from K-means with $K=5$ and $K=7$ respectively.
+  (b) and (d) depict the clustering resulting from K-means with $K=5$ and $K=7$ respectively.
 }
 
 

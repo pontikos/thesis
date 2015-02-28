@@ -1,6 +1,8 @@
 \chapter{ \label{chapter:il2ra} The influence of gating on repeatability and effect size estimation }
 %\chapter{ \label{chapter:il2ra} Effect of \emph{IL2RA} Genotype on Cell Phenotypes }
 
+\epigraph{ {\fontfamily{frc}\selectfont \foreignlanguage{french} { On va toujours, en fin de compte, vers où l'on pèse. }} }
+
 \section{Background}
 
 %\Glspl{GWAS} have found
@@ -116,12 +118,13 @@ with between one and six samples analysed each day.
 %\end{figure}
 
 
-\myfigure{scale=.5}{il2ra-manual-gating-strategy}
+%\myfigure{scale=.5}{il2ra-manual-gating-strategy}
+\myfigure{scale=.6}{il2ra-manual-gating-strategy3}
 {Manual gating strategy followed by \citet{Dendrou:2009dv}.}
 {
-Manual gating strategy to extract memory T cells and CD25\positive naive T cells (green boxes).
-Note that the CD45RA gates exclude cells which are considered to be neither memory nor naive.
-Our automated gating replaces the final stage of the manual gating on CD25 and CD45RA.
+Manual gating strategy to extract memory T cells and CD25\positive naive T cells (d).
+Note that the CD45RA gates in (d), excludes cells which are considered to be neither memory nor naive.
+The automated gating considered in this chapter, replaces the final stage of the manual gating on CD25 and CD45RA.
 }
 
 The cell phenotypes studied by \citet{Dendrou:2009dv}, were obtained using manual gating with the FlowJo software\footnote{\url{www.flowjo.com}}.
@@ -341,7 +344,7 @@ These types of plots are generated automatically by the \Rpackage{flowBeads}.
 \includegraphics[scale=0.6]{figures/manual-auto-mfi.pdf}
 \mycaption{figure:bead-agreement}
 { Comparison of bead population MFI using manual and \texttt{flowBeads} gating.  }
-{ There is good agreement of the APC MFIs of the six bead populations identified with manual and using the automatic approach. }
+{ There is near perfect agreement of the APC MFIs of the six bead populations identified with manual and using the automatic \texttt{flowBeads} approach. }
 \end{figure}
 
 
@@ -466,7 +469,7 @@ The automatic threshold selection method (\texttt{beads.thresh}) is therefore de
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=.5\textwidth]{figures/naive-cd25pos-beads-manual-agreement.pdf}
+\includegraphics[width=.6\textwidth]{figures/naive-cd25pos-beads-manual-agreement.pdf}
 \mycaption{figure:threshold-manual-agreement}
 { Agreement with manual of percentage of \protein{CD25}\positive naive cell phenotype. }
 {
@@ -880,22 +883,22 @@ Effect of \snp{rs12722495}, \snp{rs2104286}, \snp{rs11594656}, sex and age on me
 
 \begin{figure}[h]
 \centering
-\begin{subfigure}[b]{.4\textwidth}
+\begin{subfigure}[b]{.5\textwidth}
     \centering
-    \includegraphics[scale=.35]{figures/rs2104286-ratio.pdf}
+    \includegraphics[scale=.5]{figures/rs2104286-ratio.pdf}
     \caption{}
 \end{subfigure}
 ~
-\begin{subfigure}[b]{.4\textwidth}
+\begin{subfigure}[b]{.5\textwidth}
     \centering
-    \includegraphics[scale=.35]{figures/rs2104286-ratio-cooks-distance.pdf}
+    \includegraphics[scale=.5]{figures/rs2104286-ratio-cooks-distance.pdf}
     \caption{}
 \end{subfigure}
 \mycaption{figure:rs2104286-memory}
 {Effect of rs2104286 on percent memory gated by manual (black), \texttt{post.thresh} (green) and \texttt{pct.thresh} (red).}
 {
   In \Cref{table:memory-cell-pct-effect}, marginally significant association is detected with \snp{rs2104286}.
-  This is due to the leverage of individual d which stands out as an outlier (b).
+  This association is driven by the leverage of individual d which stands out as an outlier (b).
 }
 \end{figure}
 
