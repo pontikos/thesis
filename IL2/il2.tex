@@ -2027,23 +2027,38 @@ This cell population is consistently identified in the five samples analysed on 
 \myfigure{scale=1}{lymphocytes-newsamples-cd56bright-10U}
 { CD56\high cells at 10 units in four additional samples.  }
 {
-    Parallel plot showing bins obtained \texttt{RPART} on CD56, CD3, CD4 and CD25.
-    The subset of cells appears to exist in all samples and shows reponse at 10 units.
+    Parallel plot showing bins obtained by using \texttt{RPART} on CD56, CD3, CD4 and CD25.
+    The subset of CD56\high cells appears to exist in all samples and shows reponse at 10 units.
 }
 
 \paragraph{Non-lymphocytes}
 
-Outside of the lymphocyte cluster, I attempted to identify the subset of cells with slightly larger forward scatter, reported as \texttt{SPADE.1} in \Cref{figure:final-nonlymphocytes-clusters}.
-Since now we are interested in the forward and side scatter, I repeated the RPART plot from \Cref{figure:scatter-rpart-128bin-var-pstat5}.
-Howevever instead this time, I used the SPADE cluster to reduce the number of datapoints and homogenise the density.
-We see that the scatter cluster is consistently identified in all five addtional samples which suggests that it is a real subset of cells which are slightly larger than lymphocytes..
+\myfigure{scale=1}{nonlymphocytes-KM00782Z-2012-07-23}
+{ pSTAT5 MFI in on side and forward scatter in a single batch. } 
+{
+
+}
+
+\myfigure{scale=1}{nonlymphocytes-newsamples-scatter}
+{ pSTAT5 MFI in on side and forward scatter in four other samples. } 
+{
+    The same grid lines are drawn across all samples and points are assigned to their closest grid point.
+    At each grid point the pSTAT5 MFI is calculated
+}
+
+Outside of the lymphocyte cluster, I attempted to identify the subset of cells with slightly larger forward scatter, that I reported as \texttt{SPADE.1} in \Cref{figure:final-nonlymphocytes-clusters}.
+Since I am now only interested in forward and side scatter, instead of using RPART as in \Cref{figure:scatter-rpart-128bin-var-pstat5} or SPADE, I chose to use a fixed grid on forward and side scatter.
+Data points are  then assigned to their closest grid point and the pSTAT5 MFI at each grid point is calculated for each dose.
+%Howevever instead this time, I used the SPADE cluster to reduce the number of datapoints and homogenise the density.
+For one batch, the cluster that was identified can be distinguished since it shows reponse at 1000U (\Cref{figure:nonlymphocytes-KM00782Z-2012-07-23}).
+Considering the other four addtional samples in \Cref{figure:nonlymphocytes-newsamples-scatter}, this clusters appears consistently which suggests that it is not merely a one batch artefact and could possible be a real subset of cells which are slightly larger than lymphocytes.  However as I found out in x, the parameters or this population are quite heterogeneous.
 
 
 \subsection{Conclusion}
 
 Using the methods described in this chapter on the most exhaustive staining panel at my disposal for these \gls{PBMC} samples, it would appear that, although other cell types carriers of IL-2 receptors are potential responders, the majority of the response comes from within the lymphocyte subset, with a smaller secondary response coming from the non-lymphocyte \texttt{SPADE.1}/\texttt{PLSR.1} cluster at 10 units of proleukin.
 %The methods explored in this chapter could be combined to identify dose-responsive cells in stimulation experiments.
-Within the lymphocytes, at the lowest 0.1 units proleukin dose, CD25 explains a significant proportion of the pSTAT5 response, however at higher, 10 and 1000 units doses, the other trimeric receptors, CD122 and CD132 are likely to become more influential.
+Within the lymphocytes, at the lowest 0.1 units proleukin dose, CD25 explains a significant proportion of the pSTAT5 response, however at higher, 10 and 1000 units doses, the beta receptor, CD122 and common gamma receptor CD132 are likely to become more influential.
 For example, the CD56\high subset
 %\texttt{RPART.1}
 shows response at 10 units in spite of having relatively low CD25 (\Cref{figure:final-lymphocytes-clusters}).
