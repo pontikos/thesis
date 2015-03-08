@@ -1,3 +1,6 @@
+function compile() {
+    pdflatex thesis
+}
 
 function clean() {
 #annoying files created by GoogleDrive
@@ -42,7 +45,10 @@ rm *.acn *.alg *.acr
 }
 
 function copyPDFs() {
-    mv ~/thor/Thesis/figures/*.pdf ~/Thesis/figures/
+    #mv ~/thor/Thesis/figures/*.pdf ~/Thesis/figures/
+    #cp ~/dil/Thesis/figures/*.pdf ~/PhD/Thesis/figures/
+    #scp nikolas@stats0:~nikolas/Thesis/figures/*.pdf figures/
+    echo rsync nikolas@stats0:~nikolas/Thesis/figures/*.pdf figures/
 }
 
 function chapter() {
@@ -57,34 +63,33 @@ makeindex -s cdots.ist contributors
 }
 
 function build() {
-pdflatex thesis
+compile
 makeglossaries thesis
-pdflatex thesis
+compile
 bibtex thesis
-pdflatex thesis
+compile
 if [[ "$?" == "1" ]]
 then
     return
 fi
-pdflatex thesis
+compile
 makeindexes
-pdflatex thesis
+compile
 makeglossaries thesis
-pdflatex thesis
-pdflatex thesis
-pdflatex thesis
+compile
+compile
+compile
 makeindexes
-pdflatex thesis
-pdflatex thesis
+compile
+compile
 }
 
 function GoogleDriveLinks() {
-   echo ln -s ~/GoogleDrive/PhD/Thesis/figures  ~/Thesis/figures
-   ln -s ~/GoogleDrive/PhD/Thesis/figures  ~/Thesis/figures
+   echo ln -s ~/GoogleDrive/PhD/Thesis/figures  ~/PhD/Thesis/figures
+   ln -s ~/GoogleDrive/PhD/Thesis/figures  ~/PhD/Thesis/figures
    for x in IL2RA IL2 KIR Appendix flowdatasets introduction2
     do
-        echo ln -s ~/GoogleDrive/PhD/Thesis/$x/figures  ~/Thesis/$x/figures
-        ln -s ~/GoogleDrive/PhD/Thesis/$x/figures  ~/Thesis/$x/figures
+        ln -s ~/GoogleDrive/PhD/Thesis/$x/figures  ~/PhD/Thesis/$x/figures
     done
 }
 
@@ -93,12 +98,36 @@ function copyToGoogleDrive() {
 cp thesis.pdf ~/GoogleDrive/PhD/Thesis/
 }
 
+# 
+function gitPush() {
+git commit -m 'thesis' *.tex */*.tex *.bib
+git push
+}
 
 
+
+function all() {
 #GoogleDriveLinks
 clean
-copyPDFs
+#copyPDFs
 build
-#copyToGoogleDrive
+copyToGoogleDrive
+gitPush
+}
+
+modes=$#
+if [[ "$modes" == "" ]]
+then
+    echo all
+    all
+else
+    while (( "$modes" ))
+    do
+        echo $1
+        $1
+        shift
+        modes=$#
+    done
+fi
 
 

@@ -478,7 +478,7 @@ For example, this can be seen in plate 10, where noisy cases (\Cref{Figure-S1}.f
   third column is the overlay of the samples from the first and second column.}
 \end{figure}
 
-We extended our sample size by using the subset of samples common between the qPCR and SNP datasets, 747 cases and 727 controls, to train a k-nearest neighbour (knn) classifier to predict \gene{KIR3DL1}/\gene{KIR3DS1} copy number using the $R$ and $\theta$ signals from ImmunoChip SNPs.
+We extended our sample size by using the subset of samples common between the qPCR and SNP datasets, 747 cases and 727 controls, to train a k-nearest neighbour (KNN) classifier to predict \gene{KIR3DL1}/\gene{KIR3DS1} copy number using the $R$ and $\theta$ signals from ImmunoChip SNPs.
 
 Each of 30 SNPs lying within the \gene{KIR3DL1} (since \gene{KIR3DS1} is not on the reference genome) region were assessed for association with either \gene{KIR3DL1} or \gene{KIR3DS1} copy number in individual linear regression of copy number against $R$ and $\theta$ (\Cref{Table-S4}).
 %Nineteen SNPs were significantly associated (\Cref{Table-S4}), with rs592645 the most strongly predictive (\Cref{Figure-2}).
@@ -494,7 +494,7 @@ This has two implications: probabilistic clustering of the SNP data alone is lik
 Instead, I used the qPCR copy numbers as training data to perform supervised clustering of the SNP signals.
 
 We first explored the validity of our imputation approach by means of \gls{LOOCV} in the samples with qPCR data.
-We examined using all nineteen predictive SNPs, or various subsets, and found optimal knn imputation was achieved with the single most predictive SNP,
+We examined using all nineteen predictive SNPs, or various subsets, and found optimal \gls{knn} imputation was achieved with the single most predictive SNP,
 \snp{rs592645} with $k=8$, which minimised the mean \gls{LOOCV} error rate to \pct{2.0} across ten multiply imputed qPCR datasets (\Cref{Figure-3}).  
 
 We also explored the effect of varying the size of the training data set by setting KIR gene copy numbers to missing for a randomly chosen subset of samples and imputing them in the remaining samples.
@@ -589,33 +589,30 @@ rs3826878               & 60069023 & [A/G] & ok          & 2.63E-05 & 3.55E-06 \
   SNP \snp{rs592645} (red square) shows the best clustering by copy number.  }
 \end{figure}
 
-
-
-
 %% Figure 3
 \begin{figure}[h!]
   \centering
-  \includegraphics[scale=.5]{figures/Figure-3.pdf}
+  \includegraphics[scale=.75]{figures/Figure-3.pdf}
   \mycaption{Figure-3}
   {Leave-one-out crossvalidation error rate for k-nearest neighbour (KNN) prediction.}
   {
   Leave-one-out cross validation error rates
   obtained from \gls{knn} prediction
   of \gene{KIR3DL1}/\gene{KIR3DS1} copy numbers from the $R$ and $\theta$ signals of SNP \snp{rs592645}.
-  Each point shows the proportion of samples for which the knn predicted copy number did not 
+  Each point shows the proportion of samples for which the \gls{knn} predicted copy number did not 
   match the qPCR call, averaged over ten multiply imputed qPCR call datasets
   (using the posterior probabilities from \Cref{figure:Figure-1}). 
   Error bars show the minimum and maximum error rates over the ten multiply imputed datasets.
-  Knn was run in parallel for cases only, controls only and on all samples together.
+  KNN was run in parallel for cases only, controls only and on all samples together.
   The minimum error rate is achieved for $k=8$ when the prediction uses both cases and controls.}
 \end{figure}
 
 %% Figure 4
 \begin{figure}[h!]
   \centering
-  \includegraphics[scale=.6]{figures/Figure-4.pdf}
+  \includegraphics[scale=.75]{figures/Figure-4.pdf}
   \mycaption{Figure-4}
-  {Error rate of k-nearest neighbour prediction from $R$ and $\theta$ of SNP \snp{rs592645} in random subset of samples.}
+  {Error rate of k-nearest neighbour (KNN) prediction from $R$ and $\theta$ of SNP \snp{rs592645} in random subset of samples.}
   { Each panel shows the LOOCV error rates of \gene{KIR3DL1}/\gene{KIR3DS1} copy number prediction
   from $R$ and $\theta$ of \snp{rs592645} in the remaining unlabeled samples
   when using a different size subset of the training data.
