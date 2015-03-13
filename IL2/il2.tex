@@ -897,18 +897,18 @@ followed by naive Teffs at $1000$ units.
 
 \myfigure{scale=.7}{spade-lymphocytes-celltypes}
 { Lymphocytes:
-  (a) Mapping of cell types defined by manual gates onto the \gls{MST} obtained in \Cref{figure:spade-lymphocytes-pstat5mfi}.
-  (b) Manually identified subset of cells, \texttt{SPADE.1} (purple), which respond to 1000 units but lie far from the other manually gated cell subsets.
+(a) Mapping of cell types defined by manual gates onto the \gls{MST} obtained in \Cref{figure:spade-lymphocytes-pstat5mfi}.
+(b) Manually identified subset of cells, \texttt{SPADE.1} (purple), which respond to 1000 units but lie far from the other manually gated cell subsets.
 }
 {
-  (a)
-  The different manually gated cell types do not always segregate to different branches but can be spread across the tree.
-  For example, naive Teffs appear in different regions of the tree.
-  Furthermore, certain nodes of the tree can contain a mixture of cell types which complicates the interpretation.
-  In order to guard against this, the number of clusters in the agglomerative clustering needs to be set to a high number.
-  (b)
-  Manual identification of a 1000 units responsive subset of cells (blue line) which lies far from the manually gated cell populations.
-  The \gls{MST} was generated on the lymphocytes stimulated at 1000 units and coloured by the pSTAT5 MFI fold increase.
+(a)
+The different manually gated cell types do not always segregate to different branches but can be spread across the tree.
+For example, naive Teffs appear in different regions of the tree.
+Furthermore, certain nodes of the tree can contain a mixture of cell types which complicates the interpretation.
+In order to guard against this, the number of clusters in the agglomerative clustering needs to be set to a high number.
+(b)
+Manual identification of a 1000 units responsive subset of cells (blue line) which lies far from the manually gated cell populations.
+The \gls{MST} was generated on the lymphocytes stimulated at 1000 units and coloured by the pSTAT5 MFI fold increase.
 }
 
 In \Cref{figure:spade-lymphocytes-celltypes}b, a number of dose-responsive tree nodes which lie far on the main branch to the other studied subsets,
@@ -1342,12 +1342,6 @@ It is also CD45RA\positive indicating that it could include naive CD8 T cells.
 %and Effector memory CD8 T cells CD45RA positive (EMRA+)
 %http://www.nature.com/bmt/journal/v48/n1/fig_tab/bmt201299t2.html
 It constitutes a total of 16 percent of the lymphocytes in this sample.
-\myfigure{scale=.7}{plsr-lymphocytes}
-{ Lymphocytes: First two components of \gls{PLS} projection.  Clusters newly identified using \gls{PLS} in relation to known manually gated ones within lymphocytes. }
-{
-The known manually gated cell populations are naive Teffs (dark green), naive Tregs (dark blue), memory Teffs (black) and memory Tregs (red).
-Three other clusters have been identified manually in light blue, pink and purple.
-}
 
 \myfigure{scale=1}{plsr-lymphocytes-clusters}
 { Lymphocytes: The newly identified cluster using \gls{PLS} in \Cref{figure:plsr-lymphocytes} (purple) in relation to known manually gated ones within the lymphocytes. }
@@ -1358,14 +1352,34 @@ Three other clusters have been identified manually in light blue, pink and purpl
     A distinctive property of the purple cluster is that it is high for CD8 and low for CD4.
     It constitutes approximately 16 percent of the lymphocyte cells in this sample.
 }
-\myfigure{scale=.6}{plsr-lymphocytes-dose-response}
-{ Lymphocytes: Dose response. }
+
+\begin{figure}
+  \centering
+\begin{minipage}{.6\textwidth}
+  \includegraphics[width=\linewidth]{figures/plsr-lymphocytes.pdf}
+\end{minipage}
+\begin{minipage}{.3\textwidth}
+\mycaption{plsr-lymphocytes}{ Lymphocytes: First two components of \gls{PLS} projection.  Clusters newly identified using \gls{PLS} in relation to known manually gated ones within lymphocytes. }
+{
+The known manually gated cell populations are naive Teffs (dark green), naive Tregs (dark blue), memory Teffs (black) and memory Tregs (red).
+Three other clusters have been identified manually in light blue, pink and purple.
+} 
+\end{minipage}
+%
+\begin{minipage}{.6\textwidth}
+  \includegraphics[width=\linewidth]{figures/plsr-lymphocytes-dose-response.pdf}
+\end{minipage}
+\begin{minipage}{.3\textwidth}
+\mycaption{plsr-lymphocytes-dose-response}{ Lymphocytes: Dose response. }
 {
     The MFI of the pSTAT5 at each dose is shown, in the known cell subsets, memory Teffs, memory Tregs, naive Teffs
     and naive Tregs, as well as the newly identified cell subsets, light-blue, pink and purple (\Cref{figure:plsr-lymphocytes}).
     Of the newly identified cells subsets, only the purple subset shows signs of response.
     The pink and light-blue cluster do not respond even at the highest dose of 1000U.
 }
+\end{minipage}
+\end{figure}
+
 \clearpage
 
 
@@ -1377,18 +1391,39 @@ I further identified two less discernible cell populations, a subset of the lymp
 As can be seen in \Cref{figure:plsr-nonlymphocytes-dose-response}, of the newly identified cell subsets, only \texttt{PLSR.4} and \texttt{PLSR.5} show response from 10U.
 While this is to be expected of \texttt{PLSR.4} as it constitutes a subset of the lymphocytes, \texttt{PLSR.5} when plotted along with the lymphocytes in \Cref{figure:plsr-nonlymphocytes-clusters}, has higher side and forward scatter which suggests it constitutes an artefact or possibly another type of dose-responsive T cell, since it is CD3\positive.
 The \texttt{PLSR.5} cell subset however makes up a very small proportion of the whole sample at less that 1 percent, compared to the lymphocytes at 16 percent.  
-\myfigure{scale=.7}{plsr-nonlymphocytes}
-{ Non-lymphocytes: First two components of \gls{PLS} projection.  Clusters newly identified using \gls{PLS} in relation to lymphocytes. }
-{ } 
+
+
 \myfigure{scale=1}{plsr-nonlymphocytes-clusters}
 { Non-lymphocytes: First two components of \gls{PLS} projection.  Clusters newly identified using \gls{PLS} in relation to known manually gated ones within non-lymphocytes. }
 { } 
-\myfigure{scale=.6}{plsr-nonlymphocytes-dose-response}
+
+
+\begin{figure}
+  \centering
+\begin{minipage}{.6\textwidth}
+  \includegraphics[width=\linewidth]{figures/plsr-nonlymphocytes.pdf}
+\end{minipage}
+\begin{minipage}{.3\textwidth}
+\mycaption{plsr-nonlymphocytes}
+{ Non-lymphocytes: First two components of \gls{PLS} projection.  Clusters newly identified using \gls{PLS} in relation to lymphocytes. }
+{ } 
+\end{minipage}
+%
+\begin{minipage}{.6\textwidth}
+  \includegraphics[width=\linewidth]{figures/plsr-nonlymphocytes-dose-response.pdf}
+\end{minipage}
+\begin{minipage}{.3\textwidth}
+\mycaption{plsr-nonlymphocytes-dose-response}
 { Non-lymphocytes: Dose response of subsets identified with PLSR in relation to lymphocytes. }
 {
     Of the five newly identified cells (pink, light-blue, purple, yellow and orange) and lymphocytes (black), only
     the lymphocytes, yellow and orange subsets show response at 10U.
 } 
+\end{minipage}
+\end{figure}
+
+
+
 \clearpage
 
 
