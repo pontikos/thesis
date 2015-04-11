@@ -444,55 +444,41 @@ In flow cytometry, there is a much larger number of cells than markers per sampl
 %However, while this transform is appropriate for bead data which is not expected to change, it is obviously not appropriate when the MFI varies with genetic differences or ex-vivo stimulation.
 %It can nonetheless be useful as a means to match populations across samples when the relative cell proportion is the parameter under study.
 %Which is why in \Cref{chapter:il2ra}, beads are used to correct the sample MFI.
-However, normalisation using peak alignment can also be done to align samples before the clustering, so that the same gating can can be applied to all normalised samples, and allow for pooling of samples, to aid the identification of rarer cell populations \citep{Hahne:2009hl}.
-%, to improve the signal-to-noise-ratio or to define a transform which can be used to align the data.
+However, normalisation using peak alignment can also be done to align samples before the clustering, so that the same gating can be applied to all normalised samples, and allow for pooling of samples, to aid the identification of rarer cell populations \citep{Hahne:2009hl}.
 
 Stability of stains is a big challenge and biologists often have an intuition of which markers are stable, and objectively, it does appear that certain stains are much more stable than others, be it due to the antibody specificity, the staining protocol or the thoroughness of the lab technician.
 For example in \Cref{chapter:il2ra}, I was able to improve the repeatability of the CD25 MFI by correcting long-term fluctuations thanks to bead normalisation.
-On the other hand, in \Cref{chapter:il2}, the variation in pSTAT5 MFI was not adequately captured by beads, so I had to resort to various other normalisation approaches, none of which performed particularly well.
+On the other hand, in \Cref{chapter:il2}, the variation in pSTAT5 MFI was not adequately captured by beads, possibly due to titration issues, so I had to resort to various other normalisation approaches, none of which performed particularly well.
 
 %and become harder to call when the number of dimensions increases (they are not linearly separable in all dimensions).
 In the context of flow cytometry data, the manual gate hierarchy contributes prior information about the expected relative frequency of the different types of cells and their relative marker expression, but their absolute marker expression is generally not readily comparable across samples and requires normalisation as shown in \Cref{chapter:il2ra}.
 %This is why thresholds are often used to dichotomise the data into negative and positive subsets, however the problem remains of where to adjust the threshold per sample.
 
-
-%\section{ Method of determining phenotype affects power to detect genetic association }
-%Using recalled individuals, I assessed the repeatability of the cell phenotypes.
-%Certain traits like height for example are not expected to change much after a person has reached a certain age
-%is improved with large sample sizes but also if the ratio within-group to between-group variance.
-%If the repeatability is good then the within-individual variance is small which should increase our power to detect small differences.  
-%Consistency is an important factor in identifying clusters.
-%Decomposing the variance into within sample and between sample variation.  
-%Subset analysis is also very important because of the phenomenon known as Simpson’s paradox whereby a trend that is visible in the group as a whole will often not hold in all subsets of the group and may even be reversed in certain subsets of that group.
-%In the same way wrongly gating samples can lead to outliers which can create false positive association due to their high leverage, fixed gating can lead to all samples having the same profile.
-
-%\subsection{Reproducibility}
-
 From my experience, normalisation of raw flow cytometry data using peak identification is as hard a problem as clustering because of the multimodality and the level of noise in these data.
-In \Cref{chapter:il2}, I found that the peaks could not be identified reliably and choosing the right window-size parameter for peak finding algorithms is channel specific and not trivial.
-Also this type of univariate clustering of each flow marker independently cannot exploit the correlation which exists between markers.
-Mismatching of peaks in alignment is more detrimental to repeatability than not doing any normalisation as the wrong clusters will be aligned.
+In \Cref{chapter:il2}, I found that the peaks could not be identified reliably using a sliding window approach.
+%Choosing the right window-size parameter for peak finding algorithms is channel specific and not trivial.
+Also this type of univariate clustering of each flow marker independently does not exploit the correlation which exists between markers.
+Finally, mismatching of peaks in the alignment is more detrimental to repeatability than not doing any normalisation as the wrong clusters will be aligned.
 
-While in genetic data, the number of probes across arrays is constant and identifiable, flow cytometry data can contain very different number of events between samples.
+While in genetic data, the number of probes across arrays is constant and identifiable, flow cytometry data can contain very different number of events between samples and the distinction between cell population is often blurry.
 Normalisation methods applied to flow cytometry data must thus account for the sampling variation as well as staining discrepancies.
-Distinguishing staining noise from actual differences in cells biology requires a certain level of prior knowledge which is context dependent and difficult to implement algorithmically.
+Distinguishing between staining noise and actual differences in cells biology requires a certain level of prior knowledge which is context dependent and difficult to implement algorithmically.
 %Subsequently, a sample from the same individual taken and analysed on a different day, can have a very different profile.
 
 \subsection{ Small number of samples }
 
-Typically, immunostaining flow cytometry experiments do not contain a large number of samples because on one hand, samples are a limited resource and on the other, sample preparation and running tubes on the flow cytometer are an expensive and time-consuming processes.
+Typically, immunostaining flow cytometry experiments contain much smaller number of samples than case-control experiments because on one hand, samples are a limited resource and on the other, sample preparation and running tubes on the flow cytometer are an expensive and time-consuming process.
 Also, experiments undertaken in flow cytometry are often pilot experiments or tubes ran to test and optimise panels, so not always complete datasets.
 These pilot experiments, may be implemented with varying degrees of thoroughness and hence generally poorly comparable.
 
 When dealing with the relatively small numbers of samples available in flow cytometry, data quality is more influential than the methods used to process the data: sophisticated methods are no replacement for good data.
 However, being able to make the judgment call between good and bad data necessitates understanding of the experimental context and the underlying biology, for example what cell populations to expect and their relative position and frequency.
-In genotyping, calling a genotype based on only a few samples is sometimes possible, because the position of the signal clouds can be estimated thanks to the stability of the DNA molecule, the standardisation of DNA preparation protocols and of SNP arrays \citep{Di:2005uj,Giannoulatou:2008ty}.
+In genotyping, calling a genotype based on only a few samples is sometimes possible, because the absolute position of the signal clouds can be estimated thanks to the stability of the DNA molecule, the standardisation of DNA preparation protocols and of SNP arrays \citep{Di:2005uj,Giannoulatou:2008ty}.
 %Furthermore the population frequencies of many variants have been estimated in previous studies, providing some prior of what proportions of wild-type, heterozygous and homozygous, to expect in a new sample of unrelated individuals drawn from the same population.
 On the other hand, in flow cytometry, the average protein expression of cell populations, as measured by the \gls{MFI}, is generally not directly comparable across experiments, so it is difficult to predict where a cell population will fall.
 Instead, as is done when sorting cells, a few events need to be collected first to get some estimate of where to draw gates.
 Also, the frequency of cell populations can differ widely between individuals, and the ratio of cell populations, for example naive to memory, changes in the course of an individual's lifetime with exposure to environment. 
-However, clusters can be defined in relation to one another, for example memory cells are lower for \protein{CD45RA} than naive cells (\Cref{chapter:il2ra}).
-
+However, clusters can be defined in relation to one another, for example memory cells are lower for \protein{CD45RA} than naive cells but lower in CD25 (\Cref{chapter:il2ra}).
 
 This prior knowledge is acquired through the experience of having seen a large number of samples and difficult to encode in an automated method.
 Processing in larger batches or perhaps reducing the human element in flow cytometry could be a first step towards automation.
@@ -501,22 +487,22 @@ This will become a necessity as the number of samples grows.
 
 %Futhermore the fluorochrome antibody mix used per tube costs in the order of \textsterling20
 %the method of operating flow cytometer is still quite manual in most labs.
-However there are labs, for example at the Vaccine Research Center at the National Institute of Allergy and Infections Diseases, where these processes have been automated with robotics and consequently may run thousands of samples a day.
+However there are facilities, for example at the Vaccine Research Center at the National Institute of Allergy and Infections Diseases, where these processes have been automated with robotics and consequently may run hundreds of samples a day.
 Automatic methods are more pervasive in those labs since manual analysis is no longer a viable option.
 %Within our lab, samples from longitudinal experiments are more common and come in over a long period of time and need to be analysed on the day or frozen.
-Presently most flow datasets contain too few samples to do well-powered association testing with genetics.
-
-Furthermore, normalisation beads or controls are not consistently used which complicates analysis.
-
+Presently there are few flow datasets sufficiently well-powered to detect the effect sizes seen in complex diseases.
+%Furthermore, normalisation beads or controls are not consistently used which complicates analysis.
 
 
 \section{ A plan for moving from manual gating to automatic gating }
 
-Fully unsupervised methods may not  be able to deal with the level of noise possible in flow cytometry experiments, especially when small sample sizes are concerned.
-Poor staining in flow cytometry can make cell populations indistinguishable, and beyond a certain threshold of uncertainty, a sample is of little value.
-Spillover introduces artificial marker correlation and can increase or decrease the fluorescence intensity of cell populations.  
+Despite the clear advantages that automatic gating promises over manual gating, due to the level of noise possible in flow cytometry experiments and the small sample sizes, fully automated gating may not always perform well.
+%Various cell preparation or staining artefacts in flow cytometry can make cell populations indistinguishable, and beyond a certain threshold of uncertainty, a sample yields little information.
+%Spillover introduces artificial marker correlation and can increase or decrease the fluorescence intensity of cell populations.  
+Perhaps the immediate goal of automatic shouldn't be to supersede manual gating but instead to complement it.
+Until the number of samples is sufficiently large, these methods can benefit from the prior knowledge that manual analysis contributes.
+Here I will present steps to be taken towards using these more targeted approaches routinely.
 
-However armed with some prior knowledge, it is possible to develop more targeted approaches.
 %such as the \texttt{X-Cyt} method by \citet{Hu:2013bg}
 %Ultimately deciding whether or not to include a sample is down to a judgement call, often by the person who generated the data.
 %This process can introduce bias.
