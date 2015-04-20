@@ -117,6 +117,10 @@
 %figures and tables
 \newcommand{\mycaption}[3]{\caption[\textbf{#2}]{\label{#1} \textbf{#2} #3}}
 
+%\captionof{\textbf{#5}}{\label{#4} \textbf{#5} #6}
+\newcommand{\mycaptionof}[3]{\captionof{\textbf{#2}}{\label{#1} \textbf{#2} #3}}
+
+
 %my figure
 \newcommand{\myfigure}[4]{
 \begin{figure}[bh]
@@ -126,6 +130,33 @@
 \mycaption{figure:#2} { #3 } { #4 }
 \end{figure}
 }
+
+\newcommand{\myfigureh}[4]{
+\begin{figure}[!h]
+    \centering
+\includegraphics[#1]{figures/#2.pdf}
+\mycaption{figure:#2} { #3 } { #4 }
+\end{figure}
+}
+
+%my figure
+\newcommand{\twofigures}[6]{
+\begin{figure}
+   \centering
+   %
+   \begin{subfigure}{0.5\textwidth}
+   \includegraphics[width=\textwidth]{figures/#1.pdf}
+   \caption[\textbf{#2}]{\label{#1} \textbf{#2} #3}
+   \end{subfigure}
+    %
+   \begin{subfigure}{0.5\textwidth}
+   \includegraphics[width=\textwidth]{figures/#4.pdf}
+   \caption[\textbf{#5}]{\label{#4} \textbf{#5} #6}
+   \end{subfigure}
+\end{figure}
+}
+
+
 
 %
 \newcommand{\pct}[1]{\SI{#1}{\percent}}
@@ -264,6 +295,8 @@
 %\input{IL2RA/beads.tex} 
 %\chapter{\label{maths}{Maths}}
 %\input{Appendix/maths} 
+%\input{Appendix/il2-normalisation}
+\input{Appendix/il2-association}
 \end{appendices}
 
 

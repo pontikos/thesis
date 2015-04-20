@@ -972,6 +972,23 @@ may need to be estimated numerically using computationally expensive iterative m
 %\paragraph{Non-model based methods or non-parametric methods: low bias high variance methods}
 \subsection{Model-free methods}
 
+\begin{figure}
+\centering
+\begin{minipage}{.65\textwidth}
+\includegraphics[scale=.6]{figures/gmm-variance.pdf}
+\end{minipage}
+%\begin{minipage}{.3\textwidth}
+\mycaption{figure:gmm-variance}
+{ Effect of shrinking variance in a two component \gls{GMM}, with means fixed at $0$ and $2$, on the decision boundary. }
+{
+  In this two component univariate \gls{GMM}, the y axis represents the posterior probability of being assigned to the first component and
+  the x axis represent the value of the data points.
+  As the variance of the two Gaussian components shrinks, the soft decision boundary approaches the hard K-means decision boundary, so that we go from
+  a soft probabilistic assignment to a hard binary assignment. 
+}
+%\end{minipage}
+\end{figure}
+
 Model-free methods state no explicit assumptions about the shape of populations but instead
 %given an expected number of clusters K,
 attempt to minimise some loss function such as the total within-cluster sum of squares.
@@ -997,18 +1014,9 @@ Then for each iteration:
 The algorithm terminates when no cluster mean changes, or equivalently when the cluster assignment does not change.
 
 However, it can be shown that certain so called non-parametric methods turn out to be limiting cases of parametric methods.
-For example K-means, is a limiting case of spherical \glspl{GMM} when the covariance tends to zero
-%(see \Cref{appendix:clustering} for derivation),
+For example K-means, is a limiting case of spherical \glspl{GMM} when the covariance tends to zero %(see \Cref{appendix:clustering} for derivation),
 because maximising the log-likelihood of a multivariate Gaussian is asymptotically equivalent to minimising the residual sum of squares (\Cref{figure:gmm-variance}).
 %The exponential weighted responsibility between 0 and 1 turns into a 0-1 assignment because as sigma -> 0 then expr( -x**2 / sigma ) 
-\myfigure{scale=0.6}{gmm-variance}
-{ Effect of shrinking variance in a two component \gls{GMM}, with means fixed at $0$ and $2$, on the decision boundary. }
-{
-  In this two component univariate \gls{GMM}, the y axis represents the posterior probability of being assigned to the first component and
-  the x axis represent the value of the data points.
-  As the variance of the two Gaussian components shrinks, the soft decision boundary approaches the hard K-means decision boundary, so that we go from
-  a soft probabilistic assignment to a hard binary assignment. 
-}
 
 %However when spillover occurs the correlation has no biological meaning but the correlation can still be used to identify clusters.
 %The correlation within clusters is different than the overall correlation.

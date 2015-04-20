@@ -25,10 +25,13 @@ The experiment consisted of a total of $180$ individuals, fifteen of which were 
 %and split into to seven genotype groups.
 The distribution by age ($20$ to $50$ years old) and sex was split evenly across genotype groups (\Cref{table:subjects}).
 
+After lysis of the red blood cells, the samples were stained with the antibody panel specified in \Cref{table:IL2RA-panel}.  
+The running time of the whole experiment was seven months over which samples were analysed on $51$ days,
+between one and six samples per day (\Cref{figure:il2ra-samples-time}).  
 
-\begin{table}[h]
+\begin{table}
 \centering
-\begin{tabular}{lll}
+\begin{tabular}{llc}
   \hline
   Individual      &  pch           & number of days between visits \\
   \hline
@@ -58,10 +61,9 @@ pch is the plotting character used to refer to these individuals in plots later 
 %more than five standard deviations away from the mean, and so was excluded from the analysis (Dendrou et al).
 %Hence the repeatability could only be assessed in 15 individuals.
 }
-\end{table}
-
-\begin{table}[h]
-\centering
+%\end{table}
+\vspace{1em}
+%\begin{table}
 \begin{tabular}{llllll}
 \hline
 rs12722495 & rs2104286 & rs11594656 & F & M & mean age\\
@@ -78,16 +80,10 @@ GG & GG & TT & 9 & 12 & 38.4\\
 { Distribution of subjects in study, by genotype, age and sex.}
 {
 }
-\end{table}
-
-
-After lysis of the red blood cells, the samples were stained with the antibody panel specified in \Cref{table:IL2RA-panel}.  
-The running time of the whole experiment was seven months over which samples were analysed on $51$ days,
-between one and six samples per day (\Cref{figure:il2ra-samples-time}).  
-
-
-\begin{table}[h]
-\centering
+%\end{table}
+\vspace{1em}
+%\begin{table}[h]
+%\centering
 \begin{tabular}{lc}
 \rowcolor{Gray}
 Fluorochrome  & Antibody target\\
@@ -102,30 +98,6 @@ Pacific Blue & CD45RA\\
 { The fluorochrome-antibody panels with six markers used in the IL2RA dataset.  }
 { }
 \end{table}
-
-
-\myfigure{scale=.5}{il2ra-samples-time}
-%\begin{figure}[h]
-%\centering
-%\includegraphics[scale=.5] {flowdatasets/figures/il2ra-samples-time.pdf}
-%\mycaption{figure:IL2RA-sample-time} 
-{Number of samples analysed per day.}
-{
-A total of 195 (180 + 15 repeats) samples were analysed over seven months (from March to October).
-During that period, samples were analysed on $51$ days,
-with between one and six samples analysed each day.
-}
-%\end{figure}
-
-
-%\myfigure{scale=.5}{il2ra-manual-gating-strategy}
-\myfigure{scale=.6}{il2ra-manual-gating-strategy3}
-{Manual gating strategy followed by \citet{Dendrou:2009dv}.}
-{
-Manual gating strategy to extract memory T cells and CD25\positive naive T cells (d).
-Note that the CD45RA gates in (d), excludes cells which are considered to be neither memory nor naive.
-The automated gating considered in this chapter, replaces the final stage of the manual gating on CD25 and CD45RA.
-}
 
 The cell phenotypes studied by \citet{Dendrou:2009dv}, were obtained using manual gating with the FlowJo software\footnote{\url{www.flowjo.com}}.
 Manual gating follows the current state of knowledge of immune cell lineages and the gating strategy followed by \citet{Dendrou:2009dv} is described in \Cref{figure:il2ra-manual-gating-strategy}.  
@@ -150,7 +122,6 @@ A further difference between these subsets is that memory cells tend to have a h
 Since \protein{CD25} expression on the naive cells is low, with only a subset of the cells expressing substantial levels of the molecule,
 \citet{Dendrou:2009dv,Pekalski:2013ga} define a threshold above which naive cells are deemed positive for CD25.
 
-
 % Calli's results
 % cell phenotypes
 Following this manual gating strategy, two T cell phenotypes, percent of \protein{CD25}\positive naive cells over total naive cell count 
@@ -161,7 +132,53 @@ Repeatability is an important factor to take into consideration, because reduced
 The repeatability and association results, as reported by \citet{Dendrou:2009dv}, are summarised in \Cref{table:calli-results}.  
 
 
-\begin{table}[h]\footnotesize
+
+\begin{figure}
+\centering
+\begin{minipage}{.65\textwidth}
+\includegraphics[width=\linewidth]{figures/il2ra-samples-time}
+\end{minipage}
+\mycaption{figure:il2ra-samples-time}
+%\begin{figure}[h]
+%\centering
+%\includegraphics[scale=.5] {flowdatasets/figures/il2ra-samples-time.pdf}
+%\mycaption{figure:IL2RA-sample-time} 
+{Number of samples analysed per day.}
+{
+A total of 195 (180 + 15 repeats) samples were analysed over seven months (from March to October).
+During that period, samples were analysed on $51$ days,
+with between one and six samples analysed each day.
+}
+%\end{figure} 
+%\begin{figure}
+%\centering
+\begin{minipage}{.65\textwidth}
+\includegraphics[width=\linewidth]{figures/memory-CD25-MFI-time-effect}
+\end{minipage}
+\mycaption{figure:memory-CD25-MFI-time-effect}
+{Effect of time on CD25 MFI in memory cells.}
+{
+\protein{CD25} MFI of memory cell population (manually gated) over time of experiment.
+The black line represents the loess regression line.
+Samples analysed after July tend to have a lower CD25 MFI than those analysed before.
+}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{minipage}{.8\textwidth}
+\includegraphics[width=\linewidth]{figures/il2ra-manual-gating-strategy}
+\end{minipage}
+\mycaption{figure:il2ra-manual-gating-strategy}
+{Manual gating strategy followed by \citet{Dendrou:2009dv}.}
+{
+Manual gating strategy to extract memory T cells and CD25\positive naive T cells (d).
+Note that the CD45RA gates in (d), excludes cells which are considered to be neither memory nor naive.
+The automated gating considered in this chapter, replaces the final stage of the manual gating on CD25 and CD45RA.
+}
+\end{figure}
+
+\begin{table}\footnotesize
 \begin{tabularx} {\linewidth} {|XlcXXX|}
 \cline{1-6}
 \mbox{CD4\positive T Cell} Subset  & Phenotype  & Repeatability ($r^2$) & Genetic Effect                                                            & Age Effect                                & Sex Effect\\
@@ -189,21 +206,11 @@ need to be controlled for as they can have some bearing on the repeatability and
 %staining efficiency, 
 instrument variation over time and the subjectivity of manual gating.
 
-\myfigure{scale=0.6}{memory-CD25-MFI-time-effect}
-{Effect of time on CD25 MFI in memory cells.}
-{
-\protein{CD25} MFI of memory cell population (manually gated) over time of experiment.
-The black line represents the loess regression line.
-Samples analysed after July tend to have a lower CD25 MFI than those analysed before.
-}
-
 Over the seven month period of the experiment during which samples were collected and analysed,
 instrument variation is detectable in the CD25 \gls{MFI} of the memory cell population (\Cref{figure:memory-CD25-MFI-time-effect}).
 The influence of this time effect on repeatability was first discussed by \citet{Dendrou:2009bl}.  
 To correct for this, \citet{Dendrou:2009dv} run fluorescent six-peak beads daily in order to define a normalisation transform from \gls{MFI} to \gls{MEF}.
-Concretely, the transformation is defined by a linear regression
-of the observed \gls{MFI} of the six, manually gated, bead populations, against their
-expected \gls{MEF}, as specified by the bead manufacturer.
+Concretely, the transformation is defined by a linear regression of the observed \gls{MFI} of the six, manually gated, bead populations, against their expected \gls{MEF}, as specified by the bead manufacturer.
 In the first section of the chapter, I will show that this process can be automated by computationally gating beads using my \Rpackage{flowBeads}.
 
 %Next, I will move on to the harder task of algorithmic gating of some 
@@ -212,11 +219,9 @@ between gater variation \citep{Maecker:2005gm}.
 Although there is considerable interest in standardising and automating the gating process \citep{Aghaeepour:2013dg},
 some customisation is often necessary since some gating steps remains experiment and context specific.  
 %This is especially true when defining a positivity threshold on populations which are not clearly bimodal.
-For example, when deciding on the position of the CD25\positive gate on the naive cell subset (\Cref{figure:il2ra-manual-gating-strategy}d), the manual gater 
-may rely on fluorescent bead information but also on external experimental information, such as an isotype control.
+For example, when deciding on the position of the CD25\positive gate on the naive cell subset (\Cref{figure:il2ra-manual-gating-strategy}d), the manual gater may rely on fluorescent bead information but also on external experimental information, such as an isotype control.
 %a sample not stained with an anti-CD25 antibody but instead with a non-specific antibody conjugated to the same fluorochrome (APC (\Cref{table:IL2RA-panel})), used to assess the background fluorescence.
-Nonetheless, I will show, in the second section of this chapter,
-that bead data is sufficient in order to develop a computational method which can closely emulate the CD25\positive manual gating.
+Nonetheless, I will show, in the second section of this chapter, that bead data is sufficient in order to develop a computational method which can closely emulate the CD25\positive manual gating.
 %even in the absence of isotype controls, a computational method can closely match the CD25\positive manual gating by instead using automatically gated bead data.
 
 %%I will assess, whether I can replicate or improve on these results, with special attention given to repeatability,
@@ -231,24 +236,19 @@ From this gate, we obtain the percentage of memory cells and the CD25 MFI of mem
 As the CD45RA distribution is typically bimodal, the manual gating of CD45RA into negative (memory) and positive (naive) subsets,
 translates well into a clustering problem, which I will attempt to solve by fitting a two-component mixture model.
 
-
 For both the CD25 and CD45RA gating, I will assess their performance in terms of their repeatability.
 %replace the last two univariate manual gating steps (\Cref{figure:il2ra-manual-gating-strategy}d)
 %replacing the last two univariate manual gating steps (Figure 1.2d) with a computational method:
 %This method also improves on repeatability.
 Finally, in the fourth section of this chapter, I will test the association of the cell phenoytpes, percentage of CD25\positive naive cells, percentage of memory cells and CD25 MEF of memory cells, obtained using these computational methods, in order to assess the influence of these automatic gating approaches on effect size estimation.
 
-
-
 %Manual gating follows a step-by-step hierarchical process.
 %Ideally the entire manual gating process should be replaced by an automatic algorithm.
 %But in order to facilitate initial comparison with manual gating, in this chapter,
-%I will only automate the two last univariate gating steps (\Cref{figure:il2ra-manual-gating-strategy}d):
-
+%I will only automate the two last univariate gating steps (\Cref{figure:il2ra-manual-gating-strategy}d): 
 
 %adjusted depending on the MFI of the blank beads population on that day.
 %\protein{CD25} is known to be upregulated under inflammatory conditions
-
 
 %CD101,CD127,CD25_MA251+2A3,CD4,CD45RA,HLADR
 %CD127,CD25_MA251+2A3,CD4,CD45RA,ISO 
@@ -262,10 +262,8 @@ In flow cytometry, a method of normalising fluorescence intensity to account for
 measured on a population to \gls{MEF} \citep{Schwartz:1996jj,Dendrou:2009bl}.
 In order to apply this conversion, specially designed beads of known and (assumed) constant fluorescence defined in terms of \gls{MEF}, are used as a reference.
 The MEF property of these beads is deemed stable whereas the MFI of the bead population is dependent on the instrument and varies over time.
-
 The beads used here are specially manufactured so that they belong to six distinct populations of increasing MEF as shown in \Cref{table:fluorospheres}.
-Following the bead manufacturer's guidelines, plotting the $\log_{10}(MEF)$ of these six bead populations against
-the corresponding calculated $\log_{10}(MFI)$ from the gated bead populations, we fit the linear regression:
+Following the bead manufacturer's guidelines, plotting the $\log_{10}(MEF)$ of these six bead populations against the corresponding calculated $\log_{10}(MFI)$ from the gated bead populations, we fit the linear regression:
 
 \begin{equation}
     \log_{10}(\text{MEF})=\beta \times \log_{10}(\text{MFI}) + \alpha
@@ -278,34 +276,28 @@ The MEF is in fact a power transform of the MFI (only defined for strictly posit
     \text{MEF}= 10^\alpha \times \text{MFI}^\beta
 \]
 
-The original MEF transform used by \citet{Dendrou:2009bl} assumes that $\beta=1$,
-although I relax that assumption.
+The original MEF transform used by \citet{Dendrou:2009bl} assumes that $\beta=1$, although I relax that assumption.
 %which gives similar results given that I found that the $\beta$ term in \Cref{equ:MEF} turns out to be on average $0.96$.
-
 In calculating the slope $\beta$ and the intercept $\alpha$ parameters of the linear model,
 only the five brighest bead populations are used because the MEF of the blank beads is not specified by the manufacturer.
 %In fact extrapolating the MEF of the blank beads yields the detection threshold (\Cref{figure:flowBeads}) which we will see in the next section,
 However, as we will see in the next section, the blank beads can be used to define a threshold for positivity.
 %The MEF of the blank beads is always greater than the intercept $\alpha$  which represents the log offset (the zero channel value).
 %Below this threshold the intensity is meaningless as the blank beads contain by design no fluorochrome.
-
 Typically bead data are gated manually.
 Here, in order to obtain the parameters of the MEF transform, I will use an automatic process to gate the beads.
-
 Since all beads are manufactured to be of identical dimensions, we expect a single cluster in the scatter channels: the singlet bead population.
 Events which lie away from the singlet population are deemed to be beads clumped together or debris and so are discarded.
 Filtering of singlets can be achieved by fitting a bivariate normal distribution on forward and side scatter and only keeping
 points within the 95th percentile.
 Having gated the singlets, I subset the data and proceed to gate on the fluorescence channels to identify the six bead populations.
-Given that the number of bead populations is known, that the bead signal is sufficiently clear and that the number of events is small (in the order to 10,000),
-I use the K-medoids algorithm.
+Given that the number of bead populations is known, that the bead signal is sufficiently clear and that the number of events is small (in the order to 10,000), I use the K-medoids algorithm.
 The solution has been implemented in the \Rpackage{flowBeads}, available on BioConductor.
 Automatic gating shows near perfect agreement with manual gating (\Cref{figure:bead-agreement}).
 %and so is now the established method of analysing bead data in our lab.
-Applying the bead normalisation to the memory CD25 MFI from \Cref{figure:memory-CD25-MFI-time-effect}, we improve on the repeatability of that 
-cell phenotype from $r^2=0.972$ to $r^2=0.985$, where $r^2$ is the Pearson correlation squared (\Cref{figure:CD25-MFI-beads-normalised}).
+Applying the bead normalisation to the memory CD25 MFI from \Cref{figure:memory-CD25-MFI-time-effect}, we improve on the repeatability of that cell phenotype from $r^2=0.972$ to $r^2=0.985$, where $r^2$ is the Pearson correlation squared (\Cref{figure:CD25-MFI-beads-normalised}).
 
-\begin{table} [hb]
+\begin{table}[!h]\footnotesize
 \begin{center}
 \begin{tabular} {|c c c c c c|}
 \cline{1-6}
@@ -329,7 +321,12 @@ Of the six fluorochromes contained by each bead only APC is used in the experime
 }
 \end{table}
 
-\myfigure{scale=.5}{flowBeads}
+\begin{figure}
+\centering
+\begin{minipage}{.65\textwidth}
+\includegraphics[width=\linewidth]{figures/flowBeads}
+\end{minipage}
+\mycaption{figure:flowBeads}
 { Linear regression of bead APC MEF against the APC MFI as defined in \Cref{table:fluorospheres}.}
 {
 The six peaks represent the six bead populations.
@@ -337,19 +334,18 @@ The six peaks represent the six bead populations.
 %The red and green vertical lines define the range of memory CD25 MFI across all samples in \citet{Dendrou:2009dv}.
 These types of plots are generated automatically by the \Rpackage{flowBeads}.
 }
-
-
-\begin{figure}[hb]
-\centering
-\includegraphics[scale=0.6]{figures/manual-auto-mfi.pdf}
+%\end{figure}
+%\begin{figure}
+%\centering
+\begin{minipage}{.65\textwidth}
+\includegraphics[width=\linewidth]{figures/manual-auto-mfi.pdf}
+\end{minipage}
 \mycaption{figure:bead-agreement}
 { Comparison of bead population MFI using manual and \texttt{flowBeads} gating.  }
 { There is near perfect agreement of the APC MFIs of the six bead populations identified with manual and using the automatic \texttt{flowBeads} approach. }
 \end{figure}
 
-
-
-\begin{figure}[ht]
+\begin{figure}
 \centering
 \begin{subfigure}[b]{.4\textwidth}
     \centering
@@ -430,7 +426,7 @@ Also, the gate position moves down with time, reflecting the same downwards time
 {
 The black horizontal dashes are the positions of the manual CD25\positive gates for all 196 samples over the time course of the experiment (51 days).
 The vertical black lines represent the days and so define the range of the manual gate positions on a given day.
-The blue line represents our automatic CD25\positive gate which corresponds to the $86^{th}$ percentile of the blank bead population.
+The blue line represents our automatic CD25\positive gate which corresponds to the $86^{th}$ percentile of the blank bead population (see \Cref{figure:cd25pos-gate-agreement}).
 }
 \end{figure}
 
@@ -452,9 +448,11 @@ To find a suitable bead-derived threshold, I first gated the blank beads using m
 blank bead population which best agreed with the manual gate (\Cref{figure:cd25pos-gate-agreement}).
 I found that in this dataset, the $86^{th}$ percentile of the blank bead population, best matched the manual gate position.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
-  \includegraphics[width=.5\textwidth]{figures/cd25pos-gate-agreement.pdf}
+\begin{minipage}{.6\textwidth}
+\includegraphics[width=\linewidth]{figures/cd25pos-gate-agreement.pdf}
+\end{minipage}
 \mycaption{figure:cd25pos-gate-agreement}
 %{ Agreement of blank bead derived gate position with manual. }
 %{ Comparison of the blank bead derived gate position with the manual equivalent. }
@@ -465,11 +463,11 @@ On the y axis, the mean squared difference between the position of the manual ga
 The $86^{th}$ percentile yields the lowest mean squared difference hence the best agreement with the manual gating.
 The automatic threshold selection method (\texttt{beads.thresh}) is therefore defined as the APC $86^{th}$ percentile of the blank beads population.
 }
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=.6\textwidth]{figures/naive-cd25pos-beads-manual-agreement.pdf}
+%\end{figure}
+%\begin{figure}
+\begin{minipage}{.6\textwidth}
+\includegraphics[width=\linewidth]{figures/naive-cd25pos-beads-manual-agreement.pdf}
+\end{minipage}
 \mycaption{figure:threshold-manual-agreement}
 { Agreement with manual of percentage of \protein{CD25}\positive naive cell phenotype. }
 {
@@ -490,10 +488,11 @@ over manual (\Cref{figure:repeatability-cd25pos-naive}).
 %A skeptic could argue that  isotype controls might look a bit more variable but that is because they are capturing sample-specific difference, which the beads of course cannot do.
 %I'm not saying that I necessarily buy that argument are that you would need to do any further analysis, but I guess it is still a valid question to be aware of.
 
-
-\begin{figure}[h]
+\begin{figure}
 \centering
-\includegraphics[width=.5\textwidth]{figures/repeatability-cd25pos-naive.pdf}
+\begin{minipage}{.6\textwidth}
+\includegraphics[width=\linewidth]{figures/repeatability-cd25pos-naive.pdf}
+\end{minipage}
 \mycaption{figure:repeatability-cd25pos-naive}
 { Repeatability of percentage of naive \protein{CD25}\positive with manual (black) and \texttt{beads.thresh} (red). }
 {
@@ -505,7 +504,6 @@ The Pearson correlation squared is $r^2=0.458$ for manual and $r^2=0.76$ for \te
 }
 \end{figure}
 
-\clearpage
 
 %%% CD45RA
 \section{Univariate gating on CD45RA: fitting two-component mixtures on non-regulatory T cells}
@@ -516,7 +514,6 @@ In this section, we will model the CD45RA distribution by fitting a two componen
 Although we model both populations, we will only gate the memory (CD45RA\negative) cell population, which corresponds to the first component,
 since the naive (CD45RA\positive) cell population, the second component, is not a terminal gate as
 it is further divided into CD25 negative and positive subsets (see previous section).
-
 
 %First, I will try a two univariate Gaussian distributions, then I will try a more flexible mixture of two symmetric distributions.
 %To this purpose, I used the \Rpackage{mixtools}  which provides an implementation of the \Gls{EM} algorithm \citep{Dempster:1977ul}
@@ -557,10 +554,11 @@ Also with regards to repeatability, \texttt{mm} and \texttt{spmm}, yield worse r
 %than true biological variation.
 %\subsection{Improved Repeatability when Averaging Gate Positions}
 
-
-\begin{figure}[h]
+\begin{figure}
 \centering
-\includegraphics[scale=.5]{figures/memory-auto-manual-agreement-weights.pdf}
+\begin{minipage}{.7\textwidth}
+\includegraphics[width=\linewidth]{figures/memory-auto-manual-agreement-weights.pdf}
+\end{minipage}
 \mycaption{figure:agreement-memory-weights}
 {Agreement with manual of the percent memory cell phenotype obtained with \texttt{mm} (a) and \texttt{spmmm} (b).}
 {
@@ -570,12 +568,12 @@ Also with regards to repeatability, \texttt{mm} and \texttt{spmm}, yield worse r
   manual.  $r^2$ is the Pearson correlation squared.
 
 }
-\end{figure}
-
-
-\begin{figure}[h]
-\centering
-  \includegraphics[width=.5\textwidth]{figures/repeatability-memory-weights.pdf}
+%\end{figure}
+%\begin{figure}
+%\centering
+\begin{minipage}{.5\textwidth}
+\includegraphics[width=\linewidth]{figures/repeatability-memory-weights.pdf}
+\end{minipage}
 \mycaption{figure:repeatability-memory-weights}
 {Repeatability of the percent memory cell phenotype with manual (black), \texttt{mm} (red) and \texttt{spmm} (blue).}
 {
@@ -595,10 +593,11 @@ Here, I attempt to emulate manual gating by defining a threshold on the fitted t
 %later, I will consider using the mixture weights.  
 I consider two approaches of selecting a threshold, \texttt{pct.thresh} and \texttt{post.thresh}, both which are illustrated in \Cref{figure:cd45ra-threshold-example}.
 
-
-\begin{figure}[h]
+\begin{figure}
 \centering
-  \includegraphics[scale=.6]{figures/cd45ra-threshold-example.pdf}
+\begin{minipage}{.6\textwidth}
+  \includegraphics[width=\textwidth]{figures/cd45ra-threshold-example.pdf}
+\end{minipage}
 \mycaption{figure:cd45ra-threshold-example}
 { Example on individual d of the two approaches, \texttt{pct.thresh} (a and c) and \texttt{post.thresh} (b and d), of selecting a threshold. }
 {
@@ -612,11 +611,11 @@ I consider two approaches of selecting a threshold, \texttt{pct.thresh} and \tex
 }
 \end{figure}
 
-
-
 \begin{figure}[h]
 \centering
+\begin{minipage}{.6\textwidth}
   \includegraphics[width=\textwidth]{figures/cd45ra-gate-agreement.pdf}
+\end{minipage}
 \mycaption{figure:cd45ra-gate-agreement}
 { Mean square difference (MSD) of the position of the manual gate with that of \texttt{pct.thresh} (a) and \texttt{post.thresh} (b). }
 {
@@ -662,9 +661,11 @@ of belonging to the first component does not exceed $89\%$ (\Cref{figure:cd45ra-
 This is why in \Cref{figure:cd45ra-gate-agreement}, we do not obtain points beyond a threshold of 89, because gates are missing for certain samples.
 This can be due to poor model fit (\Cref{figure:cd45ra-posterior-threshold-fail}a) or too much overlap between the memory and naive cell populations.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
-  \includegraphics[scale=.6]{figures/cd45ra-posterior-threshold-fail.pdf}
+\begin{minipage}{.6\textwidth}
+  \includegraphics[width=\linewidth]{figures/cd45ra-posterior-threshold-fail.pdf}
+\end{minipage}
 \mycaption{figure:cd45ra-posterior-threshold-fail}
 {Samples for which the 99 maximum posterior probability is not reached.}
 {
@@ -677,7 +678,6 @@ This can be due to poor model fit (\Cref{figure:cd45ra-posterior-threshold-fail}
 }
 \end{figure}
 
-
 Using either approach, there is good agreement between the CD25 MEF values obtained for the memory population when gated using either the automated
 or the manual approach (\Cref{figure:memory-auto-manual-agreement-thresholds}).
 %Using either approach, the agreement with manual gating for the memory CD25 MEF is good (\Cref{figure:memory-auto-manual-agreement-thresholds}).
@@ -688,9 +688,11 @@ Hence, for this phenotype, this translates to similar repeatability to that obta
 On the other hand, the repeatability of the percentage of memory cells is very sensitive to the gate position.
 
 
-\begin{figure}[h]
+\begin{figure}
  \centering
- \includegraphics[scale=.6]{figures/memory-auto-manual-agreement-thresholds.pdf}
+\begin{minipage}{.8\textwidth}
+ \includegraphics[width=\linewidth]{figures/memory-auto-manual-agreement-thresholds.pdf}
+\end{minipage}
  %\caption{ Agreement of average daily gate positions of Gaussian mixture model method (day.thresh) with manual for MEF and for memory percentage.}
  \mycaption{figure:memory-auto-manual-agreement-thresholds}
  {Agreement of memory CD25 MEF (a and b) and percentage of memory cells (c and d), obtained from \texttt{pct.thresh} and \texttt{post.thresh} with manual.}
@@ -700,8 +702,11 @@ On the other hand, the repeatability of the percentage of memory cells is very s
 \end{figure} 
 
 %%
-\begin{figure}[h]
-  \includegraphics[width=\textwidth]{figures/cd45raneg-memory-gate-phenotype-sensitivity.pdf}
+\begin{figure}
+\centering
+\begin{minipage}{.6\textwidth}
+\includegraphics[width=\textwidth]{figures/cd45raneg-memory-gate-phenotype-sensitivity.pdf}
+\end{minipage}
 \mycaption{figure:cd45raneg-memory-cd25mfi}
 { Influence of threshold for \texttt{pct.thresh} and \texttt{post.thresh} on distribution of memory CD25 MEF and percent memory cell phenotypes. }
 {
@@ -710,11 +715,11 @@ On the other hand, the repeatability of the percentage of memory cells is very s
   On the other hand, the percent memory phenotype is more sensitive in particular when using the \texttt{pct.thresh} (c)
   method as opposed to the \texttt{post.thresh} (d).
 }
-\end{figure}
-
-\begin{figure}[h]
-\centering
-  \includegraphics[width=\textwidth]{figures/repeatability-memory-thresholds.pdf}
+%\end{figure}
+%\begin{figure}[h]
+\begin{minipage}{.7\textwidth}
+\includegraphics[width=\textwidth]{figures/repeatability-memory-thresholds.pdf}
+\end{minipage}
 \mycaption{figure:repeatability-memory-thresholds}
 {Repeatability of the memory cells phenotypes, CD25 MEF (a) and percentage (b), obtained from manual gating (black), \texttt{pct.thresh} (red) and \texttt{post.thresh} (blue).}
 {
@@ -756,16 +761,14 @@ However, on closer inspection, the association appears to be driven by the outly
 
 For the memory CD25 MEF cell phenotype, the association results between manual and automatic are virtually identical (\Cref{table:memory-cell-mef-effect}),
 which is to be expected, given this cell phenotype is largely unchanged by the CD45RA gate position (\Cref{figure:cd45raneg-memory-cd25mfi}).
-
 %Note that the original results from \citet{Dendrou:2009dv}, which are summarised in \Cref{table:calli-results},
 %do not match: the repeatability and the p-values are not exactly reproducible.
 %I believe this is largely due to technical discrepancies between the gating done in FlowJo and the
 %analysis done in R using the exported FCS and gate files.
 %However, the analysis I conducted in this chapter is consistent across all samples.
 
-
-
-\begin{table}[h]
+\begin{table}[!h]\footnotesize
+\vspace{1em}
 \centering
 \begin{tabular}{lrrr}
 \rowcolor{Gray}
@@ -795,10 +798,10 @@ beads.thresh     & -4.327 & [-7.936;-0.718] & \textcolor{red}{0.019046}\\
 Effect of \snp{rs12722495}, \snp{rs2104286}, \snp{rs11594656}, age and sex,
 on the percentage of \protein{CD25}\positive naive cells.
 }
-\end{table}
-
-\begin{table}[h]\footnotesize
-\centering
+%\end{table}
+\vspace{1em}
+%\begin{table}\footnotesize
+%\centering
 \begin{tabular}{lrrr}
 \rowcolor{Gray}
 \snp{rs12722495} & effect & 95\%CI         & p-value\\
@@ -833,8 +836,7 @@ Effect of \snp{rs12722495}, \snp{rs2104286}, \snp{rs11594656}, sex and age on me
 }
 \end{table}
 
-
-\begin{table}[h]\footnotesize
+\begin{table}\footnotesize
 \centering
 \begin{tabular}{lrrr}
 \rowcolor{Gray}

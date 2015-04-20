@@ -9,100 +9,90 @@ L'avenir n'est jamais que du présent à mettre en ordre, tu n'as pas à le pré
 %Pour ce qui est de l'avenir, il ne s'agit pas de le prévoir mais de le rendre possible.
 }}}
 
-
-\section{Value of clustering in flow cytometry}
-
 Throughout my thesis I have considered methods of computationally analysing flow cytometry and genetic datasets in order to characterise the immune cell types and the gene variants which could influence \gls{T1D} risk.
-These methods promise to be more efficient, formal, consistent, objective and better at dealing with uncertainty than manual analysis.
+These methods have the potential to be more efficient, formal, consistent, objective and better at dealing with uncertainty than manual analysis.
+This could lead to improved reproducibility and more powerful association testing.
 %In the case of flow cytometry data, automating gating can also provide the added benefit of formalising manual gating, which remains to this day a very subjective, ad-hoc, process.
-If these automatic methods can deliver this should lead to improved reproducibility and more powerful association testing.
 
-Ultimately the goal of normalisation and clustering is to allow for statistical association testing of genetics with biological traits.
+Ultimately the goal of normalisation and clustering is to allow for statistical association testing of genetic data with biological traits.
 %Decomposing the variance into tech
-This is challenging because most genetically inherited biological traits are complex, that is, a significant proportion of the variation is explained by the cumulation of a large number of small genetic effects.
+This is challenging as most genetically inherited biological traits are complex, with a significant proportion of the variation explained by the cumulation and interaction of a large number of small genetic effects.
 %a multitude of smalls effects which cumulatively explain
 %Most effects in biological variation are small, they therefore require large sample sizes and
 
-The most studied factor which influences the statistical power to detect such effects is sample size, and we are witnessing ever-increasing sample sizes thanks to dropping genotyping and sequencing costs.
+The most studied factor which improves the statistical power to detect such effects is sample size, and we are witnessing ever-increasing sample sizes as consequence of dropping genotyping and sequencing costs.
 %This is because the standard deviation tends to shrink with the inverse of the sample size.
 However, there is still much work to be done on phenotype reproducibility.
 Poor reproducibility is in part due to the heterogeneity of traits which might be classified as having the same phenotype.
 Disease phenotypes are known to differ depending on the individual and the stage of the disease.
 %If the disease is diagnosed earlier then the associated phenotype may be recurrent auto-antibody positivity or if diagnosed late, high blood glucose.
-In most diseases, case heterogeneity is a major confounder and one which needs addressing by collection of additional clinical covariates during recruitment.
+In most diseases, case heterogeneity is a major confounder and one which needs addressing by collection of additional clinical covariates during recruitment, to enable subgroup differentiation.
 
-Since these disease phenotypes are perhaps too coarse,
-%as I have touched upon in \Cref{chapter:intro},
-this has motivated looking at better defined quantitative intermediate phenotypes, also known as endophenotypes.
-It is expected that these should have stronger correlation with genotype since they are closer to gene expression.
-Endophenotypes which I have studied in my thesis are cell phenotypes such as, CD25 protein expression on T cell subsets (\Cref{chapter:il2ra}), pSTAT5 \textit{ex vivo} response in \glspl{PBMC} (\Cref{chapter:il2}) or the relative cell subset frequency over parent cell population.
-%or expression of surface markers 
-%For flow cytometry, genetic ananlysis just needs small samples containing the number of samples that can be collected
+These disease phenotypes have been found in many cases to be too coarse, motivating the study of better defined quantitative intermediate phenotypes, known as endophenotypes.
+It is expected that these should have stronger correlation with genotype, since they are closer to gene expression.
+In my thesis, I have studied cell endophenotypes such as, CD25 protein expression on T cell subsets (\Cref{chapter:il2ra}), pSTAT5 \textit{ex vivo} response in \glspl{PBMC} (\Cref{chapter:il2}) or the relative cell subset frequency over parent cell population.
 
 %These endophenotypes are more quantitative, especially with high-throughput technologies such as flow cytometry, in practice there are still factors which influence the accuracy at which these can be measured.
-The methods by which these endophenotypes are quantified now becomes extremely relevant.
-I will especially focus on flow cytometry analysis since these were the focus of my thesis and where they are the most challenging to apply.
+The methods by which these endophenotypes are quantified have become extremely relevant and I will focus next on their application to flow cytometry.
 
 %For example in \Cref{chapter:il2ra}, I illustrated how minor changes in the clustering can influence the relative frequency and MFIs of the cell populations under study and the strong effect of outliers on the results.
 %Some other influential factors were, staining batch effects as seen in \Cref{chapter:il2}, or long-term instrument sensitivity as seen in \Cref{chapter:il2ra}.
 
 
-
 %\section{ Pre-requisites }
 \section{ Challenges in automation of flow gating }
 
-The methods discussed in this thesis suggests that there are many scenarios in which flow cytometry analysis can be automated.
-There are however a number of outstanding challenges, some technical, some methodological and even philosophical, in applying these methods.
+The methods discussed in this thesis suggest that there are many scenarios in which flow cytometry analysis can be automated.
+There are, however, a number of outstanding challenges, some technical, some methodological and some even philosophical, in applying these methods.
 
-%However, assessing the performance of computational methods is a matter of debate and very much data-dependent.
 %Nonetheless, I will attempt here to give an overview of important practical and theoretical considerations when implementing and applying these methods, in the context of my thesis.
 
 \subsection{Performance: compute time and memory usage}
-While the applications that have been studied in this thesis don’t require real-time analysis (unless we were working on cell-sorting), there are still some practical limitations on the amount of memory and compute time demands.
-It is well in computer science that these resources are interchangeable.
-For example for clustering, methods which rely on global knowledge of the data, such as computation of the complete pairwise distance matrix, have a large initial memory footprint ( data matrix of size $\frac{N \times (N-1)}{2}$ ), but only require one pass of the data.
+While the applications that have been studied in this thesis don’t require real-time analysis, there are still some practical limitations on the amount of memory and compute time demands.
+It is well known in computer science that these resources are interchangeable.
+For clustering, methods which rely on global knowledge of the data, such as computation of the complete pairwise distance matrix, have a large initial memory footprint ( data matrix of size $\frac{N \times (N-1)}{2}$ ), but only require one pass of the data.
 A solution to the clustering solution is reached within just a few computational steps, by for instance,
 selecting a distance cut threshold on the dendrogram, built from hierarchical clustering, in order to define K clusters. 
-On the other hand, methods like K-means necessitate a much smaller memory footprint since they only compute the distance of every point to the K cluster means ( data matrix of size $N \times K$, where usually $K << N$), but on the other hand, several updates of the matrix are required until the cluster centers are fixed.
-The choice of which method to apply is very much data dependent.
+On the other hand, methods like K-means necessitate a much smaller memory footprint since they only compute the distance of every point to the K cluster means ( data matrix of size $N \times K$, where typically $K << N$), however, several updates of the matrix are required until the cluster centers are fixed.
+The choice of which method to apply is very much dependent on the dataset.
 For ungated flow cytometry, data matrices  contain over a million rows, so the complete pairwise distance matrix is too large to fit in memory.
-I found that for the default R implementation, the maximum allocatable vector size is 1672.4 Gb, hence the distance matrix computation was only feasible in subsets of the order of $10000$, like for example the CD4\positive lymphocyte subset, or data downsampled using the SPADE or RPART approaches in \Cref{chapter:il2}.
-The data downsampling as performed by SPADE, relies on first estimating the local density at each point and then preferentially thinning the data in regions of high density to even out the density across the whole sample.
-The local density estimation step is itself computationally intensive as it needs to consider the distance from a single point to all other points in the sample to find the number of points lying within a certain radius.
-I found this step could be greatly sped up with \gls{ANN} which uses the K dimensional trees (KD tree) lookup method.
-KD-trees are a space-partitioning data structure for organising points in a k-dimensional space which makes for an efficient
-way of storing a high-dimensional dataset to lookup proximal datapoints.
+I found that for the default R implementation, the maximum allocatable vector size is 1672.4 Gb, hence the distance matrix computation was only feasible in subsets of the order of $10000$, such as the CD4\positive lymphocyte subset, or data downsampled using the SPADE or RPART approaches in \Cref{chapter:il2}.
+The data downsampling performed by SPADE, relies on first estimating the local density at each point and then preferentially thinning the data in regions of high density in order to even out the density across the whole sample.
+The local density estimation step is itself computationally intensive since it needs to consider the distance from a single point to all other points in the sample to find the number of points lying within a certain radius.
+I found this step could be greatly sped up with \acrfull{ANN} which uses the K dimensional trees (KD tree) lookup method.
+KD-trees are a space-partitioning data structure for organising points in a k-dimensional space, making for an efficient way of storing a high-dimensional dataset to lookup proximal datapoints.
 This approach could also in theory be used to reduce the number of datapoints considered when applying mixture models \citep{McLachlan:2004uw}.
 
 \subsection{Consistency}
 Consistency can be defined as the variation in a method's output in relation to its input.
-If a clustering algorithm is consistent, one would expect that small perturbations to the data should lead to small changes in the clustering outcome.
-However, algorithms which rely on initialisation using random starting positions like K-means can reach different clustering solutions, even on the same data.
-To guard against this when running K-means, I usually specify the initial clusters or run it with a large number of multiple restarts in order to increase the chances of finding a globally optimal solution.
-As I will discuss later, a relatively small number of outlier events which occur commonly within a flow cytometry experiment, due to debris or cells clumping together, can also be detrimental to consistency and automated gating algorithms need to be robust to these.
+If a clustering algorithm is consistent, one would expect that small perturbations to the data would lead to small changes in the clustering outcome.
+However, algorithms which rely on initialisation using random starting positions, such as K-means, can reach different clustering solutions, even when rerun on the same data.
+To guard against this when running K-means, initial cluster centers can be specified or the algorithm can be run it with multiple restarts in order to increase the chances of finding a globally optimal solution.
+As I will discuss later, a relatively small number of outlier events which occur commonly within a flow cytometry experiment, due to cells clumping together or debris, can also be detrimental to consistency and automated gating algorithms need to be robust to these.
 
 \subsection{Accuracy}
 When labelled data is available, the accuracy of a method is defined based on how frequently a method assigns the correct label.
 Estimating accuracy relies on the existence of a test dataset, typically labelled using manual analysis or some other method.
-In \Cref{chapter:il2ra}, accuracy was assessed by comparing the cluster proportions and means with those obtained from manual gating.
+In \Cref{chapter:il2ra}, I assessed assessed accuracy by comparing the cluster proportions and means with those obtained from manual gating.
 %In \Cref{chapter:il2}, the accuracy was determined in terms of RSS of the pSTAT5 response.
 In \Cref{chapter:kir}, I used qPCR labelled data to assess the prediction accuracy of the \gls{knn} classifier.
-However, labelled data may not always be available especially in the case of flow cytometry data.
-Also, in the context of flow cytometry, even when labelled data is available, this approach may not always be ideal,
+However, labelled data may not always be available, especially in the case of flow cytometry data.
+In addition, in the context of flow cytometry, even when labelled data is available, this approach may not always be ideal,
 as it is merely comparing the relative agreement between methods rather than the objective truth.
 A more useful alternative may be is instead to assess the prediction accuracy with clinical outcome, case-control status or genotype.
-This is usually implicitly measured when doing an association test.
+%This is usually implicitly measured when doing an association test.
 %The consistency-accuracy tradeoff is analogous to the variance-bias trade-off in statistics.
 %Consistency and accuracy are typically measured on simulated data.
 
 \subsection{Interpretability}
-While a method might be accurate and consistent, it may be difficult to interpret the results, much like a black box.
+While a method might be accurate and consistent, it may be difficult to interpret the results.
+%, much like a black box.
 %In biology, we are often more interested in the process behind the result than in the result itself.
-Improving the accuracy of a model, by adding parameters can obfuscate the relationship between the input parameters and the clustering output.
+Improving the accuracy of a model by adding parameters can obfuscate the relationship between the input parameters and the clustering output.
 \Acrfull{RF} and neural networks are examples of methods from which it is difficult to extract an interpretable model to justify the result.
 This is an issue because
 %generally people (and especially inquisitive minds like scientists) are not comfortable with applying methods they don’t understand.
-as part of the iterative process of knowledge discovery, it is important to understand what combination of features make objects distinguishable, especially in biology.
+as part of the iterative process of knowledge discovery, it is important to understand which combination of features make objects distinguishable.
 %Since fully automated methods are hard to assess.
 %Sometimes additional information which is available from previous studies can be used to guide the clustering.
 
@@ -279,16 +269,16 @@ as part of the iterative process of knowledge discovery, it is important to unde
 
 \subsection{Choice of transformation}
 
-Flow cytometry and fluorescence data in general, tend to be highly positively skewed.
-This is problematic for most clustering algorithms which assume constant variance across the data range.
+Flow cytometry, and fluorescence data in general, tend to be highly positively skewed.
+This is problematic because most clustering algorithms assume constant variance across the data range.
 %rely on on variance decomposition.
-While the skewness can be reduced by the means of tranforms based on the logarithm function, care needs to be taken as these transforms influence the shape of lower intensity populations, especially those which overlap into the negative range as illustrated in \Cref{figure:logicle-transform-w}.
-Certain flow cytometry packages like the \Rpackage{curvHDR} erroneously apply an arcinsh transform, however such a function introduces a split in the data density around zero, giving rise to spurious cell populations.
+While the skewness can be reduced by the means of tranforms based on the logarithm function, care needs to be taken as these influence the modality of lower intensity populations, especially those which overlap into the negative range, as illustrated in \Cref{figure:logicle-transform-w}.
+Certain flow cytometry packages, such as the \Rpackage{curvHDR} erroneously apply an arcinsh transform, however such a function introduces a split in the data density around zero, giving rise to spurious cell populations.
 In FlowJo, the transform can be customised visually by the manual gater, given the knowledge of what cell populations to expect.
-The only existing automated  methods of optimally selecting a transform that I am aware of, are the \texttt{R} packages \textsf{flowTrans} and \textsf{flowClust} \citep{flowTrans,flowClust}.
+The only existing automated  methods of optimally selecting a transform that I am aware of are the \texttt{R} packages \textsf{flowTrans} and \textsf{flowClust} \citep{flowTrans,flowClust}.
 \textsf{flowTrans} assumes an underlying Gaussian distribution and uses \gls{ML} to estimate the optimal transform parameter.
-\textsf{flowClust} applies a Box-Cox transform for which the lambda parameter, the exponent of the transform, is estimated as part of the \gls{ML} estimation.
-Nonetheless as I discussed in \Cref{chapter:intro} and showed in \Cref{figure:logicle-transform-w}, it is not always clear what transform to apply and I would argue, aiming for a Gaussian distribution is a suboptimal criterion given the multimodality of the data.
+\textsf{flowClust} applies a Box-Cox transform for which the lambda parameter, the exponent of the transform, is estimated using \gls{ML}.
+Nonetheless, as I discussed in \Cref{chapter:intro} and showed in \Cref{figure:logicle-transform-w}, it is not always clear what transform to apply and, I would argue, aiming for a Gaussian distribution is a suboptimal criterion given the multimodality of the data.
 When the number of populations is unknown, one approach could be to estimate the transformation parameter as part of the clustering process.
 
 
@@ -300,12 +290,12 @@ Clusters which exist in higher dimensions do not necessarily map to clusters in 
 
 Open repositories such as Cytobank\footnote{\url{https://www.cytobank.org/}} and FlowRepository\footnote{\url{http://flowrepository.org/}} \citep{Spidlen:2012hk} are encouraging researchers to share their annotated flow cytometry experiments along with their publications.
 By combining data across experiments, both the number of samples and parameters measured are increasing.
-Also an upcoming biotechnology, time of flight cytometry (CyTOF), which combines mass spectometry with cytometry will push the number of markers which can measured by experiment up to $34$ and potentially higher.
+Also an upcoming biotechnology, time of flight cytometry (CyTOF), which combines mass spectometry with cytometry, will push the number of markers which can measured by experiment up to $34$ and potentially higher.
 %, although the throughput is not as high as fluorescence flow cytometry.
 %It cannot be used for sorting as the cells are destroyed when measured.
 %Also, as it does not report side and forward scatter, live/dead markers are used instead to spot debris.
 At the Gary Nolan lab in Stanford, and the CRI in the UK, mass cytometry is adopted to analyse cell heterogeneity in cancer.
-The analysis of the type of datasets generated by this technology benefits greatly from the multidimensional visualisation techniques such as \gls{SPADE} \citep{Simonds:2011jh} and \gls{viSNE} \citep{Amir:2013jp}.
+The analysis of datasets generated by this technology benefits greatly from the multidimensional visualisation techniques such as \gls{SPADE} \citep{Simonds:2011jh} and \gls{viSNE} \citep{Amir:2013jp}.
 %These high-dimensional datasets require some form of low-dimensional visualisation and Dana Pe'er group at Columbia University has devised various tools to do so such as viSNE \citep{Amir:2013jp}.
 %Clusters are not identifiable in two dimensions, in fact for clusters which are thus ignoring a large number of points.
 %In fact K points are only garanteed to be separable in at least K+1 dimensions.
@@ -324,33 +314,33 @@ In flow cytometry, some clustering or binning of the data is applied to reduce t
 \subsection{Ascertaining the number of clusters}
 
 
-Certain transformations can facilitate the clustering task, however the challenge remains of determining the number K of clusters in a particular dataset.
+Certain transformations can facilitate the clustering task, however the challenge remains to determine the number of clusters, K, in a particular dataset.
 
 In univariate data, a sliding window approach can be used to estimate the number of modes/peaks.
 The number of peaks returned is influenced by the span of the sliding window.
-A large window span will tend to oversmooth the data, leading to fewer peaks while with a smaller window more peaks will be called, but so will the chances of picking up spurious peaks.
-The number of clusters is controlled by the window span parameter, and the exact relationship between this parameter and the number of clusters returned is data dependent.
+A large window span will tend to oversmooth the data, leading to fewer peaks while with a smaller window the number peaks called will increaase, but so will the chances of picking up spurious peaks.
+The number of clusters is controlled by the window span parameter, however the exact relationship between this parameter and the number of clusters returned is data dependent.
 
 %Over the course of my PhD, I have spent a great deal of time assessing whether clustering can be fully automated, i.e made truly non-parametric.
-One approach to estimating K is to start with an upper bound for K and then merge clusters together with the \Rpackage{flowMerge}.
+One approach to estimating K is to start with an upper bound for K and then merge clusters together, as can be done with \Rpackage{flowMerge}.
 Another approach would be to select a K that gave consistent clustering results across samples.
-However, finding a consistent K across clusters is not always possible because of sampling variation.
-In particular, rare clusters may only be visible when a sample is sufficiently large, and hence not consistently identifiable across all samples.
+However, finding such a K across clusters is not always possible due to sampling variation.
+In particular, rare clusters may only be visible when a sample is sufficiently large, and so may not not consistently identifiable across all samples.
 %In cases when certain characteristics of the data are known, these can assist in the clustering especially with regards to identifying rarer subsets which 
 In genetics for example, when genotyping low minor allele frequency variants, large samples sizes are required for homozygous individuals to be included.
 %When distinguishing between rare subsets and noise can be hard.
 In order to distinguish such rare subsets from noise, strong supporting evidence is required.
-As illustrated in \Cref{chapter:kir} on qPCR data, prior evidence from \citet{Jiang:2012cf} supported existence of the rare 3-0 \gene{KIR3DS1}-\gene{KIR3DL1} copy number group at that sample size.
+As illustrated in \Cref{chapter:kir} on qPCR data, prior evidence from \citet{Jiang:2012cf} supports the existence of the rare 3-0 \gene{KIR3DS1}-\gene{KIR3DL1} copy number group at that sample size.
 In hindsight, the expected copy number group frequencies obtained from \citet{Jiang:2012cf} could have been used as prior group frequencies for all copy number groups in the clustering of the qPCR data.
 The prior information obtained from the qPCR dataset, was then used as training data in the next step of the analysis, in order to identify clusters predictive of \gene{KIR3DS1}-\gene{KIR3DL1} copy number in the SNP dataset.
 %The \gls{knn} algorithm was used to classify unlabelled points, for which qPCR data was unavailable, from the vote of their K nearest labelled neighbours.
 %The optimal value of K was selected by minimising the \gls{LOOCV}.
 
-However, prior evidence only yields information about a cluster's expected proportion but little about its exact position and shape, which are usually experiment specific.
-This can be due to the reliability of the instrumentation and sample preparation but also due to the stability of the biological sample, for example DNA variations changes can be seen over many human generations while variations in cell protein expression and cell populations fluctuate at a much shorter time scale.
+However, prior evidence yields information about a cluster's expected proportion but little about its exact position and shape, which are usually experiment specific.
+This can be due to the reliability of the instrumentation and sample preparation, but also due to the stability of the biological sample; DNA variations changes can be seen over many human generations, while variations in cell protein expression and cell populations fluctuate at a much shorter time scale.
 %Supervised clustering can be really beneficial in the identification of rare subsets, since they may not always be visible in all samples.
 
-Generally, in order for clusters to emerge, the number of events collected can be increased when possible, but this may also increase the within sample noise.
+Generally, in order for clusters to emerge, the number of events collected should be increased when possible, but this may also increase the within sample noise.
 
 
 \subsection{ Within sample noise }
@@ -360,14 +350,14 @@ In fact, there are many technical and biological artefacts, in flow cytometry, w
 This is a problem because any clustering method or statistical test which relies on the mean estimation is potentially sensitive to outliers.
 %An outstanding problem with supervised clustering for which I have not been able to find any satisfactory solution, is how to account for unlabelled data, or in the context of flow cytometry, nuisance clusters which are not included in the gating strategy.
 
-One approach is to filter out these datapoints as is done in top-down hierarchical manual gating.
+The approach taken in top-down hierarchical manual gating is to filter out these datapoints.
 Automatic filtering of outliers usually relies on density estimation in order to exclude low density points from belonging to any cluster, as implemented in methods such as SPADE \citep{Simonds:2011jh}.
 %and consequently all points can influence the gating.
 %However there are methods consider all points in the dataset.
 
-An alternative solution which does not rely on filtering, could be to define a background cluster, or since we are dealing with multimodal distributions, a sufficiently large number of background clusters to account for all clusters and then to filter out those which are not part of the study.
+An alternative solution, which does not rely on filtering, is to define, one or more, background clusters to account for data points which are not part of the study.
 Certain model-based methods do this already by defining a background mixture with a covariance defined on the entire sample which essentially "mops up" all points which are not assigned with high posterior weight to any of the known components.
-The \Rpackage{mclust} for example, allows one to define a noise component with an expected frequency.
+The \Rpackage{mclust}, allows one to define a noise component with an expected frequency.
 
 %\section{ Identifying outliers } 
 %While certain outliers may be clearly identifiable because they lie at the extreme of the instrument range, far from the rest of the data, other may be found with intermediate values and so are harder to spot.
@@ -382,8 +372,8 @@ The \Rpackage{mclust} for example, allows one to define a noise component with a
 %This is in part because they are no markers included in the experiment defined on these cell populations which would allow any further division.
 %Other events are discarded because they are outliers.
 
-Another approach to filtering outliers, as adopted by the \Rpackage{flowClust}, is to downweight the effect of outliers on the parameter estimation of the mixture model, by defining an outlyingness parameter which is inversely proportional to the Mahalanobis distance from a point to a cluster.  
-Since the Mahalanobis distance is scaled by the covariance matrix, the distance is lesser to wider clusters than to tighter clusters:
+Another approach to filtering outliers, as adopted by the \Rpackage{flowClust}, is to downweight the effect of outliers on the parameter estimation of the mixture model by defining an outlyingness parameter which is inversely proportional to the Mahalanobis distance from a point to a cluster.  
+Since the Mahalanobis distance from a point to a group of points is scaled by the covariance matrix, hence the distance is lesser to wider clusters than to tighter clusters:
 \begin{equation} \label{equation:Mahalanobis}
 (\boldsymbol{x_i}-\boldsymbol{\mu})^{\top}\boldsymbol{\Sigma}^{-1}(\boldsymbol{x_i}-\boldsymbol{\mu})
 \end{equation}
@@ -392,16 +382,17 @@ where $\boldsymbol{x_i}$ is the datapoint, $\boldsymbol{\mu}$ is the cluster mea
   %u_{ig} = \frac{v+p}{v+(\boldsymbol{x_i}-\boldsymbol{\mu_g})^{\top}\boldsymbol{\Sigma}_{g}^{-1}(\boldsymbol{x_i}-\boldsymbol{\mu_g})}
 %\]
 
-It is worth noting that one issue with the Mahalanobis distance metric in detecting outliers, is that the outliers influences and greatly inflate the covariance matrix which is used in calculating the Mahalanobis distance.
+It is worth noting that one issue with the Mahalanobis distance metric in detecting outliers, is that the outliers influences and greatly inflate the covariance matrix that is used in calculating the Mahalanobis distance.
 To address this, packages such as the \Rpackage{robustbase}, use \gls{LOO} methods to identify outliers which have high leverage on the covariance estimation.
 Another outlier metric, commonly used in linear regression is Cook's distance, which returns the leverage of every data point $i$  on the estimation of $\hat Y$ when the point is left out:
 \[
 D_i = \frac{ \sum_{j=1}^n (\hat Y_j\ - \hat Y_{j(i)})^2 }{p \ \mathrm{MSE}}
 \]
-where $p$ is the number of parameters in the model, $n$ is the number of datapoints, MSE is overall mean square error in the model, $ \hat Y_j $ is the predicted value for datapoint $j$ and $ \hat Y_{j(i)} $ is the predicted value when datapoint $i$ is left out of the model.
+where $p$ is the number of parameters in the model, $n$ is the number of datapoints, MSE is overall mean square error in the model, $ \hat Y_j $ is the predicted value for datapoint $j$ and $ \hat Y_{j(i)} $ is the predicted value when datapoint $i$ is excluded.
+%left out of the model.
 
-In higher dimensions, outliers are harder to identify as data tends to be sparse but also because they can be outliers without being outliers in any single dimension.
-Reducing the dimensionality, using for example \gls{PCA} or \gls{viSNE}, and increasing the sample size should facilitate outlier identification.
+In higher dimensions, outliers are harder to identify as data tends to be sparse, but also because they can be outliers without being outliers in any single dimension.
+Reducing the dimensionality, using for instance \gls{PCA} or \gls{viSNE}, and increasing the sample size can facilitate outlier detection.
 
 
 \subsection{Between samples noise}
@@ -409,32 +400,32 @@ Reducing the dimensionality, using for example \gls{PCA} or \gls{viSNE}, and inc
 
 %A big challenge to the analysis of biological data, which greatly complicates identifying, matching and comparing clusters across multiple samples, is between sample noise.
 Reproducibility is a big challenge in flow cytometry and biology in general.
-As seen in \Cref{chapter:il2ra}, within-individual variation, ascertained from biological replicates, greatly compromises statistical power in detecting between-individual effects.
-In flow cytometry for example, differences in cell treatment can lead to very different scatter patterns, as illustrated when comparing the scatter profile of the sample in \Cref{figure:il2ra-manual-gating-strategy} in \Cref{chapter:il2ra} to that of \Cref{figure:tony-cd4-gating} in \Cref{chapter:il2}.
+As seen in \Cref{chapter:il2ra}, within-individual variation, as ascertained from biological replicates, greatly compromises statistical power in detecting between-individual effects.
+In flow cytometry, differences in cell treatment can lead to very different scatter patterns, as illustrated when comparing the scatter profile of the sample in \Cref{figure:il2ra-manual-gating-strategy} in \Cref{chapter:il2ra} to that of \Cref{figure:tony-cd4-gating} in \Cref{chapter:il2}.
 %Staining in flow cytometry is notoriously noisy, so that
 However, even when experimental conditions are kept constant,
 %for example in flow cytometry using the same fluorochrome-antibody panel and the same \gls{PMT} voltage,
 the shape and location of clusters across experiments can change.
 %However, for a given panel and experimental protocol, one would not expect the clusters location to be comparable  to move much on the scatter channels since the morphological attributes of the cells are unlikely to be dependent on staining titration.
 %Noise can be due to batch effects, for example staining discrepancies in flow cytometry, insufficient number of parameters to distinguish clusters, or because of sampling variation in rarer clusters.
-Using normalisation, we can attempt to correct for these batch effects.
+We attempt to correct for these batch effects using normalisation.
 %Normalisation can facilitate this task by accounting for batch effects before clustering.
 
-Normalisation involves first matching certain features of the data across samples, then transforming the data so that samples are comparable in a biologically meaningful way.
-When identifying a fixed number of features across samples, such as modes in the density function, the first part of normalisation is similar to clustering and can rely on related algorithms.
+Normalisation involves first matching certain features of the data across samples, and then transforming the data such that samples are comparable in a biologically meaningful way.
+When identifying a fixed number of features across samples, such as modes in the density function, the first part of normalisation can rely on clustering algorithms such as K-means, K-medoids, \gls{GMM} or sliding window approaches.
 %If k is unknown, the highest peaks can be selected across samples in the hope that these are the same across samples.
 %Here normalisation is comparable to mode or bump hunting on the density function.
-Such a method was used successfully in \Cref{chapter:il2ra} when gating bead data from different days, and again in \Cref{chapter:kir} to qPCR data for pooling data across different plates.
+K-medoids was used successfully in \Cref{chapter:il2ra} when gating bead data from different days, and again in \Cref{chapter:kir} to qPCR data for pooling data across different plates.
 
-In \Cref{chapter:il2ra}, the linear transform applied to align the peaks of the bead data, was later applied to the identified clusters in the biological data, in order to make MFIs comparable across batches processed months apart.
+In \Cref{chapter:il2ra}, the linear transform applied to align the peaks of the bead data was later applied to the identified clusters in the biological data, in order to make \acrfullpl{MFI} comparable across batches processed months apart.
 %In \Cref{chapter:il2ra}, I showed that it possible to account for this time effect using beads.
 %However as seen in \Cref{chapter:il2}, beads did not capture variation on a shorter time scale like seen in surface staining and in particular intra-cellular staining.
 
 %Typically, normalisation is applied to univariate data, while clustering is applied to multivariate data.
 %Meta-clustering which involves matching clusters across samples can also be considered to be a form of normalisation/clustering.
-In \Cref{chapter:kir}, between sample normalisation was first applied to qPCR datasets to enable pooling, followed by joint calling.
+In \Cref{chapter:kir}, I applied between sample normalisation to qPCR datasets to enable pooling, followed by joint calling.
 I first identified the copy number peaks in the $\Delta$Ct of qPCR plates of the two most common groups.
-The peaks were then aligned with a linear transform across plates
+The peaks were then aligned with a linear transform across plates.
 Pooling permitted the identification of the 3-0 group in \Cref{figure:Figure-1}.
 In genotyping, normalisation is greatly facilitated by having matching probes across samples or spike-ins.
 %On the other hand, in flow cytometry, there is much variation in the count of cells per sample.
@@ -444,7 +435,8 @@ In flow cytometry, there is a much larger number of cells than markers per sampl
 %However, while this transform is appropriate for bead data which is not expected to change, it is obviously not appropriate when the MFI varies with genetic differences or ex-vivo stimulation.
 %It can nonetheless be useful as a means to match populations across samples when the relative cell proportion is the parameter under study.
 %Which is why in \Cref{chapter:il2ra}, beads are used to correct the sample MFI.
-However, normalisation using peak alignment can also be done to align samples before the clustering, so that the same gating can be applied to all normalised samples, and allow for pooling of samples, to aid the identification of rarer cell populations \citep{Hahne:2009hl}.
+However, normalisation using peak alignment can also be done to align samples before the clustering, so that the same gating can be applied to all normalised samples.
+This allows for pooling of samples, to aid the identification of rarer cell populations \citep{Hahne:2009hl}.
 
 Stability of stains is a big challenge and biologists often have an intuition of which markers are stable, and objectively, it does appear that certain stains are much more stable than others, be it due to the antibody specificity, the staining protocol or the thoroughness of the lab technician.
 For example in \Cref{chapter:il2ra}, I was able to improve the repeatability of the CD25 MFI by correcting long-term fluctuations thanks to bead normalisation.
@@ -454,64 +446,72 @@ On the other hand, in \Cref{chapter:il2}, the variation in pSTAT5 MFI was not ad
 In the context of flow cytometry data, the manual gate hierarchy contributes prior information about the expected relative frequency of the different types of cells and their relative marker expression, but their absolute marker expression is generally not readily comparable across samples and requires normalisation as shown in \Cref{chapter:il2ra}.
 %This is why thresholds are often used to dichotomise the data into negative and positive subsets, however the problem remains of where to adjust the threshold per sample.
 
-From my experience, normalisation of raw flow cytometry data using peak identification is as hard a problem as clustering because of the multimodality and the level of noise in these data.
-In \Cref{chapter:il2}, I found that the peaks could not be identified reliably using a sliding window approach.
+From my experience, normalisation of raw flow cytometry data using peak identification is as hard a problem as clustering due to the multimodality and the level of noise in these data.
+%In \Cref{chapter:il2}, I found that the peaks could not be identified reliably using a sliding window approach because of spurious peaks caused by debris.
 %Choosing the right window-size parameter for peak finding algorithms is channel specific and not trivial.
 Also this type of univariate clustering of each flow marker independently does not exploit the correlation which exists between markers.
-Finally, mismatching of peaks in the alignment is more detrimental to repeatability than not doing any normalisation as the wrong clusters will be aligned.
+Finally, mismatching of peaks in the alignment is more detrimental to repeatability than no normalisation, as the wrong clusters will be aligned.
 
 While in genetic data, the number of probes across arrays is constant and identifiable, flow cytometry data can contain very different number of events between samples and the distinction between cell population is often blurry.
 Normalisation methods applied to flow cytometry data must thus account for the sampling variation as well as staining discrepancies.
-Distinguishing between staining noise and actual differences in cells biology requires a certain level of prior knowledge which is context dependent and difficult to implement algorithmically.
+Distinguishing between staining noise and actual differences in cell biology requires a certain level of prior knowledge which is context dependent and difficult to implement algorithmically.
 %Subsequently, a sample from the same individual taken and analysed on a different day, can have a very different profile.
 
 \subsection{ Small number of samples }
 
-Typically, immunostaining flow cytometry experiments contain much smaller number of samples than case-control experiments because on one hand, samples are a limited resource and on the other, sample preparation and running tubes on the flow cytometer are an expensive and time-consuming process.
+Typically, immunostaining flow cytometry experiments contain much smaller number of samples than case-control experiments since, on one hand, samples are a limited resource and on the other, sample preparation and running tubes on the flow cytometer are an expensive and time-consuming process.
 Also, experiments undertaken in flow cytometry are often pilot experiments or tubes ran to test and optimise panels, so not always complete datasets.
-These pilot experiments, may be implemented with varying degrees of thoroughness and hence generally poorly comparable.
+These pilot experiments may be implemented with varying degrees of thoroughness and hence are generally poorly comparable.
 
 When dealing with the relatively small numbers of samples available in flow cytometry, data quality is more influential than the methods used to process the data: sophisticated methods are no replacement for good data.
-However, being able to make the judgment call between good and bad data necessitates understanding of the experimental context and the underlying biology, for example what cell populations to expect and their relative position and frequency.
-In genotyping, calling a genotype based on only a few samples is sometimes possible, because the absolute position of the signal clouds can be estimated thanks to the stability of the DNA molecule, the standardisation of DNA preparation protocols and of SNP arrays \citep{Di:2005uj,Giannoulatou:2008ty}.
+However, being able to make the judgment call between good and bad data necessitates understanding of the experimental context and the underlying biology; for example which cell populations to expect and their relative position and frequency.
+In genotyping, calling a genotype based on only a few samples is sometimes possible, since the absolute position of the signal clouds can be estimated due to the stability of the DNA molecule, the standardisation of DNA preparation protocols and of SNP arrays \citep{Di:2005uj,Giannoulatou:2008ty}.
 %Furthermore the population frequencies of many variants have been estimated in previous studies, providing some prior of what proportions of wild-type, heterozygous and homozygous, to expect in a new sample of unrelated individuals drawn from the same population.
 On the other hand, in flow cytometry, the average protein expression of cell populations, as measured by the \gls{MFI}, is generally not directly comparable across experiments, so it is difficult to predict where a cell population will fall.
-Instead, as is done when sorting cells, a few events need to be collected first to get some estimate of where to draw gates.
+Instead, as is done when sorting cells, a few events need to be collected first in order estimate where to draw gates.
 Also, the frequency of cell populations can differ widely between individuals, and the ratio of cell populations, for example naive to memory, changes in the course of an individual's lifetime with exposure to environment. 
 However, clusters can be defined in relation to one another, for example memory cells are lower for \protein{CD45RA} than naive cells but lower in CD25 (\Cref{chapter:il2ra}).
 
 This prior knowledge is acquired through the experience of having seen a large number of samples and difficult to encode in an automated method.
-Processing in larger batches or perhaps reducing the human element in flow cytometry could be a first step towards automation.
+Processing in larger batches, or perhaps reducing the human element in flow cytometry, could be a first step towards automation.
 %http://www.aber.ac.uk/en/cs/research/cb/projects/robotscientist/
 This will become a necessity as the number of samples grows.
 
 %Futhermore the fluorochrome antibody mix used per tube costs in the order of \textsterling20
 %the method of operating flow cytometer is still quite manual in most labs.
-However there are facilities, for example at the Vaccine Research Center at the National Institute of Allergy and Infections Diseases, where these processes have been automated with robotics and consequently may run hundreds of samples a day.
+However there are larger facilities, for example at the Vaccine Research Center at the National Institute of Allergy and Infections Diseases, where these processes have been automated with robotics and consequently may run hundreds of samples a day.
 Automatic methods are more pervasive in those labs since manual analysis is no longer a viable option.
 %Within our lab, samples from longitudinal experiments are more common and come in over a long period of time and need to be analysed on the day or frozen.
-Presently there are few flow datasets sufficiently well-powered to detect the effect sizes seen in complex diseases.
+Presently there are few flow datasets sufficiently well-powered to detect the effect sizes expected in complex diseases.
 %Furthermore, normalisation beads or controls are not consistently used which complicates analysis.
 
 
-\section{ A plan for moving from manual gating to automatic gating }
+\section{ Moving from manual gating to automatic gating }
 
-Despite the clear advantages that automatic gating promises over manual gating, due to the level of noise possible in flow cytometry experiments and the small sample sizes, fully automated gating may not always perform well.
+Despite the clear advantages that automatic gating promises over manual gating, fully automated gating may not always perform as well as hoped due to the level of noise and the small sample sizes in flow cytometry experiments.
 %Various cell preparation or staining artefacts in flow cytometry can make cell populations indistinguishable, and beyond a certain threshold of uncertainty, a sample yields little information.
 %Spillover introduces artificial marker correlation and can increase or decrease the fluorescence intensity of cell populations.  
-Perhaps the immediate goal of automatic shouldn't be to supersede manual gating but instead to complement it.
-Until the number of samples is sufficiently large, these methods can benefit from the prior knowledge that manual analysis contributes.
-Here I will present steps to be taken towards using these more targeted approaches routinely.
+Realistically, the move to automation is likely to be incremental, for example by replacing the sequence of univariate or bivariate gating steps in the process, by automatic methods.
+As was seen in \Cref{chapter:il2ra}, the one-dimensional sequential top-down gating strategy can easily be implemented as an algorithm using mixture models or bead-derived thresholds.  
+Perhaps the immediate goal of automatic gating shouldn't be to supersede manual gating but instead to complement it.
+Until the number of samples is sufficiently large, these methods can benefit from the prior knowledge that manual analysis contributes, while providing more objective analysis.
 
-\subsection{Standards}
+Analysing flow cytometry data has brought to light many issues surrounding the division of skill and the difference in thinking between data generation and data analysis.
+Here I will present steps to be taken towards adopting these more targeted approaches routinely.
 
-Standards are crucial to improving reproducibility.
-Since FCS files does not contain sufficient metadata to understand the context of the experiment, the name of the FCS file is typically used to map the sample back to the donor in order to retrieve covariates such as disease status, age, sex or genotype.
-When the naming and documentation is incomplete this makes it very hard to automate the analysis of these data.
-Some guidelines have been set out by \citet{Lee:2008ed} in an attempt to incorporate the minimum information about a flow cytometry experiment (MIFlowCyt).
-This involves the experiment overview, which includes the purpose of the experiment, the experiment variables, conclusions and the quality control.
-Also information about the sample, the source, the material used, the treatment of the cells and the reagents.
-Instrument details and configuration details.
+\subsection{Agreeing on standards}
+
+While we agree that standards are key to improving reproducibility, there is often disagreement about which to adhere to.
+However, inconsistencies as trivial as naming conventions may waste precious man hours for the person analysing the data, if they were not involved in the data generation.
+This is partly because the \acrfull{FCS} does not contain sufficient metadata to understand the context of the experiment.
+Instead the name of the FCS file is typically used to map the sample back to the donor in order to retrieve covariates such as disease status, age, sex or genotype.
+However, when the naming and documentation is incomplete, this makes it very hard to automate the analysis of these data.
+Some guidelines have been set out by \citet{Lee:2008ed} in an attempt to define the minimum information to be provided for a flow cytometry experiment (MIFlowCyt):
+\begin{itemise}
+\item The experiment overview, which includes the purpose of the experiment, the experiment variables, conclusions and the quality control.
+\item Information about the sample such as the source, the material used, the treatment of the cells and the reagents.
+\item Instrument configuration details.
+\end{itemise}
 %Instrument identification Fluidics configuration
 %Optical configuration
 %Electronic configuration
@@ -520,136 +520,122 @@ Instrument details and configuration details.
 %Compensation
 %Gating
 %Descriptive statistics
-Dealing with dealing with typos and inconsistencies in these file names, is in my experience very time-consuming and distracting from the analysis.
+Human errors such as typos and inconsistencies in FCS file names, are in my experience very time-consuming and distracting from the analysis.
 Also channel names as given in the FCS files are not always consistent across experiments.
 When the FCS file do contain metadata it does not always match the naming of the file.
-For example the data as stored inside the FCS file did not match the date given in the filename.
-In particular, FCS files do not contain sample identification information, which makes matching back to genotypes cumbersome and error-prone.
+For example, the data as stored inside the FCS file did not match the date given in the filename.
 %Some minor issues for example, when experiments are done over night the dates might mismatch
 
-
-\subsection{Finding common ground}
-
-Analysing flow cytometry data has brought to light the many issues surrounding the division of skill and difference in thinking between data generation and data analysis.
-One obstacle to standardising generation and analysis may be the disagreement on which protocol is the best to follow.
-However, inconsistencies as trivial as naming conventions may waste precious man hours for the person analysing the data or even to the person who generated the data returning to it after a long while.
-I believe, part of the solution is to involve the person generating the data in the analysis, so that they can appreciate the implications.
+I believe part of the solution is to involve the person generating the data in the analysis, so that they can appreciate the implications.
 Another part of the solution is to encourage automation of these more tedious tasks, as is being done in certain labs which use robots to feed the flow cytometer and barcoding to name the samples.
 %At least automation is consistently and predictably wrong.
+On the other hand, the data analyst also need to have an appreciation of the quality of the data and the purpose of the experiment.
+For example, in flow cytometry, it is crucial to be aware that a large number of events are debris of no biological interest and can be excluded based on side and forward scatter.
+Similarly artefacts can arise from staining, sample preparation (permeabilisation) or correlation of flow markers due to spillover.
 
-On the other hand, as as statistician I also need to have an appreciation of the quality of the underlying technology and the purpose of the experiment.
-For example, in flow cytometry, one needs to be aware that a large number of events are debris of no biological interest and can be excluded based on side and forward scatter.
-Similarly certain patterns may be simply from staining artefacts, sample preparation (permeabilisation) or correlation of flow markers due to spillover.
-%as was argued in chapter 3
+While these observations are not specific to flow cytometry analysis, I would argue these issues are more striking because of the flexibility flow cytometry offers both in terms of generation and analysis, and how little is known of the underlying cell populations.
+In flow cytometry, the standardisation of reagents and operating procedures between laboratories is therefore crucial \citep{Maecker:2012gl}.
 
-While I am sure these observations are not only specific to flow cytometry analysis, I would argue they are more striking because of the flexibility flow cytometry offers both in terms of generation and analysis, and how little is known of the underlying cell populations.
+\subsection{Extending manual analysis}
 
-In order to encourage the use of more rigorous computational gating methods, these tools need to be made more accessible to biologists and non-programmers.
-For example, a first step could be to use the manual gates but to allow them to move with the data.
-I think completely removing the two dimensional visualisation for example might be too alienating to some.
-There is also a growing need for non-proprietary software which integrates well with the manual analysis.
+In order to encourage the adoption of more rigorous computational gating methods, these tools need to be made more accessible to non-programmers.
+One way this can be achieved is by building on the FlowJo manual analysis.
 
+%I think completely removing the two dimensional visualisation for example might be too alienating given how long this type of visualisation has been used.
+%which remains the main tool used by immunologists for identifying groups of cells in flow cytometry.
+%There is also a growing need for non-proprietary software which integrates well with the manual analysis.
 
-Realistically, the move to automation is likely to be incremental, for example by replacing the sequence of univariate or bivariate gating steps in the process.
-As was seen in \Cref{chapter:il2ra}, the one-dimensional sequential top-down gating strategy can easily be coded up as an algorithm using mixture models or bead-derived thresholds.  
-
-
-One way this can be achieved is by extending FlowJo analysis.
-FlowJo is the main tool used by immunologists for identifying groups of cells in flow cytometry.
-The unit of work in FlowJo is the workspace in which FCS files are first loaded and then gated.
-The workspace also saves the cell populations statistics which need to be updated when the gates move.
-
-\subsection{Extending FlowJo analysis}
-
-Unfortunately, parsing FlowJo workspaces in order to extract manual gates is not straighforward because the format is poorly documented and not stable between releases.
-Although there are several BioConductor packages designed to import and parse FlowJo workspaces, \texttt{flowUtils}, \texttt{gatingML}, \texttt{flowJo}, \texttt{flowWorkspace}, I have generally found that the R/FlowJo interface was not very reliable: for example \texttt{flowWorkspace} parsed the workspace without errors but the returned statistics did not match the ones returned by FlowJo.
-%This is probably why \contributor{Vincent Plagnol}
-An alternative would be to develop a bespoke XML parser to extract gates from FlowJo workspace files, but this approach is laborious as it requires in-depth knowledge of the FlowJo XML schema which changes on each new release.
-%Additionally, I found the gate coordinates in FlowJo to be imprecise when plotted in R because FlowJo applies its own binning on the data.
-%In fact, I found a serious bug in FlowJo: just loading an FCS file into FlowJo and reexporting it changes the data as some sort of binning is applied.
-In the end, I found the best solution was to export CLR files which are simply the classification results from FlowJo.
-Unfortunately I was met with another FlowJo hindrance: instead of exporting these files in a memory-efficient compressed binary format, FlowJo exports them as text which results in very large files and makes exporting of all clustering results impractical. 
-FlowJo crashed or hanged on numerous occasions when trying to accomplish this simple task.
-Hence I resorted to exporting only a few CLR files from which I could estimate the gate coordinates.
-In order to obtain gate coordinates from the CLR format, the dimensions on which the gate is defined need to be stored as part of the column name.
-One method of approximating gate coordinate is to calculate the mean and covariance of a CLR cluster and to use the Mahalanobis distance, hence approximating the cluster with an ellipse.
-However, it does simplify the process to know in which dimensions the gate was defined.
-
-
-\subsection{Alternatives to FlowJo}
-
-An R only substitute to FlowJo for manual gating is to draw polygons on the R display using the \Rfunction{locator} and then using the \Rfunction{in.polygon} to extract points which fall within the polygon.
-This is an approach that I used in \Cref{chapter:il2} to emulate \contributor{Tony Cutler}'s gating.
-
-
-There also exists some commercial alternatives to FlowJo  such as \texttt{ADICyt}\footnote{\url{http://www.adinis.sk/en/products/bioinformatics-and-data-processing/adicyt.html}} and \texttt{Infinicyt}\footnote{\url{http://www.infinicyt.com/}}, but at the time of writing, these are not nearly as widely used as FlowJo.
-In spite of these commercial alternatives, I still believe there remains a gap in the market for a new open source and extensible piece of software which reconciles manual, supervised and unsupervised flow cytometry analysis, and provides further multidimensional visualisation techniques.
-
-The established manual gating method involves obtaining gate coordinates from drawing gates in FlowJo and applying these same gate coordinates across samples.
-Manual gates can also provide initial starting parameters to a clustering algorithm, by first calculating the mean and the covariance of the gated populations, and then applying an \gls{EM} algorithm, to refine the parameters to better fit the data.
+A first step could be to use the manual gates as a template but automatically adjust them per sample.
+FlowJo already provides a basic version of this feature, known as "magnetic gate", that moves gates to accommodate the maximum number of events.
+X-Cyt \citep{Hu:2013bg} takes this approach further by using the mean and the covariance of the manually gated populations as initial starting parameters to a clustering algorithm, and then applying an \gls{EM} algorithm to refine the parameters to better fit the data.
 %assuming an elliptical gate
-This is the approach taken by X-Cyt \citep{Hu:2013bg} which uses manual gates as templates.
-FlowJo also provides a basic version of this feature known as "magnetic gate" that moves gates to accommodate the maximum number of events.
 I also tried a similar approach in \Cref{chapter:il2} since manual gates were not available for all samples.
 First, I let the mean of the ellipse be influenced by the data while the covariance was set as fixed.
 I then obtained a classification by defining a threshold on the Mahalanobis distance (\Cref{equation:Mahalanobis}) above which points were excluded.
-This worked reasonably well unless there was too much overlap with another cluster, in which case the gate was pulled by the wrong cluster.
+This worked reasonably well unless there was too much overlap with another cluster, in which case the gate was pulled towards the wrong cluster.
 
-When several samples have been manually gated, the gate mean and covariance from each sample can be used to define the mean and covariance hyper parameters of the priors in the mixture model to guide the parameter estimation, as implemented in the \Rpackage{flowClust} for example.
-I found this approach worked quite well when gating CD4\positive lymphocytes on forward, side scatter and CD4.
+Implementing this approach relies on extracting gate coordinates from FlowJo workspaces files.
+%The unit of work in FlowJo is the workspace configuration from which FCS files are first loaded and then gated.
+%The workspace also saves the cell populations statistics which need to be updated when the gates move.
+Unfortunately, parsing FlowJo workspaces was not straightforward, since the format is poorly documented and not stable between releases.
+Although there are several BioConductor packages designed to import and parse FlowJo workspaces, \texttt{flowUtils}, \texttt{gatingML}, \texttt{flowJo}, \texttt{flowWorkspace}, I have generally found that the R/FlowJo interface was not very reliable: for example \texttt{flowWorkspace} parsed the workspace without errors but the calculated statistics did not match the ones returned by FlowJo.
+%This is probably why \contributor{Vincent Plagnol}
+An alternative would be to develop a bespoke XML parser to extract gates from FlowJo workspace files, but this approach is laborious as it requires in-depth knowledge of the FlowJo XML schema, which changes on each new release.
+%Additionally, I found the gate coordinates in FlowJo to be imprecise when plotted in R because FlowJo applies its own binning on the data.
+%In fact, I found a serious bug in FlowJo: just loading an FCS file into FlowJo and reexporting it changes the data as some sort of binning is applied.
+
+In the end, a simpler solution may be to use the CLR files which are simply the classification results from FlowJo.
+Unfortunately, the current FlowJo implementation exports these files as text, which results in very large files, making the exporting impractical. 
+In fact, FlowJo crashed or hanged on numerous occasions when trying to accomplish this simple task.
+In the end, I had to resort to exporting only a few CLR files, from which I could estimate the gate coordinates.
+One method of approximating gate coordinates is to calculate the mean and covariance of a CLR cluster and to use the Mahalanobis distance, hence approximating the cluster with an ellipse.
+It is worth noting that a column naming standard is needed for the CLR format so that the position of the gate in the hierarchy, as well as its dimensions, can be retrieved.
+However, it does simplify the process to know in which dimensions the gate was defined.
+
+Another interesting application of manual gates is to use them to define priors.
+Specifically, when several samples have been manually gated, the mean and covariance of the gate across samples can be used to define the mean and covariance hyper parameters of the priors in the mixture model to guide the parameter estimation, as implemented in the \Rpackage{flowClust}.
+I found this approach gave good agreement with manual when gating CD4\positive lymphocytes on forward, side scatter and CD4 on the dataset from \Cref{chapter:il2ra}.
 %If several samples have been manually gated then these can be incorporated in the definition of the prior on the parameters of the mixture model.
 %FlowClust as opposed to Mclust offers the option of defining per component priors.
 %This threshold can be defined by using a chi squared distribution in the one dimensional case.
 
-This is the motivation behind the \Rpackage{openCyto}.
-The automated methods need to complement the manual methods for now, so that the change from manual to automated happens gradually.
-On the other hand by continuously benchmarking automated analysis against manual, we are not exploiting the true power of automated algorithms which is to teach us new biology or to put back into question our hierarchical view of immunology.
-As an example I ran flowClust unsupervised with a large number of clusters and then picked the cluster which gave the best association with each SNP.
-This is an idea which was explored with flowMeans \citep{Aghaeepour:2010fv}.
-The issue however is the metaclustering step of matching clusters across samples is not trivial especially in the presence of batch effects.
+When FlowJo manual gating is not available, an alternative using R is to draw polygons on the R display using the \Rfunction{locator} and then using the \Rfunction{in.polygon} to extract points which fall within the polygon.
+This is an approach that I used in \Cref{chapter:il2} to emulate \contributor{Tony Cutler}'s gating.
+There also exist some commercial alternatives to FlowJo  such as \texttt{ADICyt}\footnote{\url{http://www.adinis.sk/en/products/bioinformatics-and-data-processing/adicyt.html}} and \texttt{Infinicyt}\footnote{\url{http://www.infinicyt.com/}}, but, at the time of writing, these are not nearly as widely used as FlowJo.
+In spite of these commercial alternatives, I still believe there remains a gap in the market for a new open source and extensible piece of software which reconciles manual, supervised and unsupervised flow cytometry analysis, and provides further multidimensional visualisation techniques.
+At the time of writing, a promising candidate is the \Rpackage{openCyto} which can integrate various gating algorithms to define a gating pipeline.
+However, it still necessitates some programming knowledge in order to be used successfully.
+
+
+%\subsection{Assessing performance}
+%
+%In order to ensure the quality control of these methods so that we exclude outlying samples.
+%Benchmarking automated analysis against manual, we are not exploiting the true power of automated algorithms which is to teach us new biology or to put back into question our hierarchical view of immunology.
+%As an exercise, I ran flowClust unsupervised with a large number of clusters and then picked the cluster which gave the best association with each SNP.
+%This is an idea which was explored with flowMeans \citep{Aghaeepour:2010fv}.
+%The issue however is the metaclustering step of matching clusters across samples is not trivial especially in the presence of batch effects.
 
 %Therefore clustering is not an automatic task, but an iterative process of knowledge discovery or interactive multi-objective optimization that involves trial and error.  
 %It will often be necessary to modify data preprocessing and model parameters until the result achieves the desired properties.  
 %Clustering can also be viewed as a latent variable problem where the cluster labels are considered to be the missing data.
 
-%Lessons learned
-%Things I have learned: philosophical discourse
 
 
 \section{Conclusion}
 
-Larger datasets have allowed us to see finer biological variation both in genotypes and cell subsets than previously possible.
-However, sometimes taking a different view of the same dataset, by doing a different kind of experiment, for example qPCR, or adding parameters, for example additional markers in flow cytometry, can help uncover patterns which might not have been visible even at larger sample sizes.
-For example in \Cref{chapter:kir}, qPCR allowed us to discover a SNP predictive of \gene{KIR3DS1}-\gene{KIR3DL1} copy number which we would have not found even at larger sample sizes.
+Larger datasets have allowed us to see finer biological variation, both in genotypes and cell subsets, than previously possible.
+However, sometimes taking a different view of the same dataset, by doing a different kind of experiment, such as qPCR, or by adding parameters, for example, additional markers in flow cytometry, can help uncover patterns which might not have been visible even at larger sample sizes.
+For example, in \Cref{chapter:kir}, qPCR allowed me to discover a SNP predictive of \gene{KIR3DS1}-\gene{KIR3DL1} copy number which we would have not found even at larger sample sizes.
 Furthermore, even without doing further experiments, analytical methods such as unsupervised clustering may discover new features.
-For example in \Cref{chapter:il2}, unsupervised clustering algorithms analysing pSTAT5 response at different doses of proleukin uncovered previously ignored responsive subset of cells.
+For example, in \Cref{chapter:il2}, unsupervised clustering algorithms analysing pSTAT5 response at different doses of proleukin uncovered previously ignored responsive subset of cells.
 
 Although large datasets can support methods with larger number of parameters as they are less prone to overfitting,
 it is easy to fall into the trap of applying over complex analytical methods to account for all the intricacies of the data,
-when in practice, simpler methods perform nearly as well and are much faster and easy to implement.
-Simple methods can also be combined to reach a consensus and this popular machine learning approach known as boosting increases performance, but often at the expense of interpretability.
+when, in practice, simpler methods perform nearly as well and are much faster and easy to implement.
+Simple methods can also be combined to reach a consensus; this popular machine learning approach, known as boosting, increases performance, although often at the expense of interpretability.
 
-Interpretability is perhaps one of the more important issues in order to encourage biologists to use these computational methods.
+Interpretability is perhaps one of the more important issues preventing biologists from using these computational methods.
 While mixture modelling approaches are conceptually close to manual gating, probabilistic cell types are not always intuitive to biologists, so their true power cannot be fully exploited as we end up applying hard cut-offs (see \Cref{chapter:il2ra}).
-Biologists enjoy manual gating becomes it gives them the freedom to draw arbitrary exclusive gates whose contour can be made arbitrarily complex.
-This freedom however comes at the cost of exacerbating the disagreement in standards and definitions in immunology.
-While discrepancies in gate positions are unlikely to make much of an impact on the MFI and relative proportion of common cell populations, they can make a big difference on rarer cell populations such as regulatory T cells were the effects are much smaller.
+Biologists prefer manual gating as it gives them the freedom to draw exclusive gates whose contours can be made arbitrarily complex.
+This freedom, however, comes at the cost of exacerbating the disagreement in standards and definitions in immunology.
+While discrepancies in gate positions are unlikely to make much of an impact on the MFI and relative proportion of common cell populations, they can make a big difference on rarer cell populations, such as regulatory T cells, where the effects are much smaller.
 
 %This can occasionally be achieved by centering the ellipse on the mean of the datapoints which fall within the gate.
 
-While, in my opinion, automated clustering ought to be applied more widely in flow cytometry data analysis, data analysis can still be done manually as the number of samples and parameters are still manageable.
-However, as the number of samples and parameters continue to grow, biologists will need to resort to fully automated method, hence it is important that we continue developing these methods.
-These methods will require some level of expertise and decent visualisation to guide and reassure the user.
-Although, over-reliance on visualisation can mislead the analysis of high-dimensional because clustering is always projected back to two dimensions or linear combinations of dimensions.
-The automatic gating of flow cytometry community is growing stronger with a lot of contributions to BioConductor and the GenePattern web interface from the Broad Institute.
-In particular two labs, Raphael Gottardo at the Fred Hutchinson Cancer Research Center in the USA and Ryan Brinkman at the Terry Fox Laboratory in Canada, have been central in developing automatic gating software and bring together the automatic gating flow cytometry community as part of the FlowCAP challenge every year \citep{Aghaeepour:2013dg}.
+While, in my opinion, automated clustering ought to be applied more widely to flow cytometry data, manual analysis is likely to continue being used where the number of samples and parameters permits it.
+However, as the number of samples and parameters continue to grow, biologists will have to resort to fully automated method.
+%Hence it is important to continue developing these methods.
+%These methods will require some level of expertise and decent visualisation to guide and reassure the user.
+%Over-reliance on visualisation can mislead the analysis of high-dimensional because clustering is always projected back to two dimensions or linear combinations of dimensions.
+
+The automatic gating community is growing stronger, with a lot of contributions to BioConductor, and the GenePattern web interface maintained by the Broad Institute.
+In particular, two labs, Raphael Gottardo at the Fred Hutchinson Cancer Research Center in the USA and Ryan Brinkman at the Terry Fox Laboratory in Canada, have been central in developing automatic gating software and bring together the automatic gating flow cytometry community as part of the FlowCAP challenge every year \citep{Aghaeepour:2013dg}.
 
 % I admit there has been a lack of simulations but flow data is hard to simulate.
 % it's not just simply labelled data that can be permuted and anyway the datasets are too large for this approach to be practical
 % simulate small responsive population?
 %On sufficiently large datasets, all methods tend to be equivalent.
 %In a Bayesian setting, as the datasets are growing larger, the likelihood computed on the data will have a much stronger influence than the prior.
-
 
 %Methods should be simple but no simpler.
 %Our mission should not be to foreseee the future but to enable it.  
@@ -659,23 +645,21 @@ In particular two labs, Raphael Gottardo at the Fred Hutchinson Cancer Research 
 %In \Cref{chapter:il2}, the permeabilisation protocol made the staining noisy, so that the MFIs were not reproducible.
 %But different computational tools could be used to highlight different populations.
 
-The benchmarking problem remains, however, since in science as opposed to engineering, we do not know exactly what the outcome of the process ought to be.
+However, the question of how to benchmark these methods remains.
 %Philosophically this is perhaps what still makes data analysis an art, is that there is still some mystery since we haven't discovered all the rules yet.
 If our benchmark is comparison to manual gating then clearly no method can ever outperform it.
-Independent benchmarks such as repeatability are fairer, but perhaps a more general benchmark could be the utility of the clustering outcome.
-For example, whether it is predictive for diagnosis or if it correlates strongly with genetics or some other covariate under study.
-Of course we will need to account for multiple testing given the large numbers of cell populations which can tested using this method \citep{Roederer:2015eu}.
+Independent benchmarks such as repeatability are fairer, but perhaps a more general benchmark could be the utility of the clustering outcome, for example, whether it is predictive for diagnosis or if it correlates strongly with genetics or some other covariate under study.
+Of course, we will need to account for multiple testing, given the large numbers of cell populations and phenotypes which will be tested using this method, and their correlation, given the interdependency between cell phenotypes \citep{Roederer:2015eu}.
 
-In my opinion, two aspects of flow cytometry analysis which are worthy of uther work are normalisation and selection of an optimal transform.
-Both of these could be included as part of the clustering step.
+%In my opinion, two aspects of flow cytometry analysis which are worthy of further work are normalisation and selection of an optimal transform.
+%Both of these could be included as part of the clustering step.
 
-Finally, my view is that we will only reap the true fruits of automated analysis once the number of samples has grown considerably, although this might require earlier steps in the process, such as the processing of samples, to be further standardised and automated first, so that the signal may rise above the noise.
+Finally, my view is that we will only reap the true fruits of automated analysis once the number of samples has grown considerably, although this might require earlier steps in the pipeline, such as sample processing, to be further standardised and automated first, so that the signal may rise above the noise.
 
 %We might even see Cytobank accumulate samples like ArrayExpress.
 %Finally, to conclude on a more philosophical tone from on my favourite french authors:
 
 %Despite huge technological advances flow cytometry is still a very noisy technology and while bespoke analysis methods can be developed, larger sample sizes may be necessary to overcome the multitude of unwanted batch effects ranging from antibody stickiness to sample preparation.
-
 
 
 %\begin{center}

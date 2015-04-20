@@ -15,10 +15,9 @@ So far, I have not made full use of this feature in the association tests, partl
 and the fraction of cells which lie clearly within one cluster is an adequate measure for association testing.
 %and so unlikely to have a significant effect on the association statistics.
 %and so the posterior probability instead
-However, as one deals with smaller datasets, the uncertainty in clustering can have an important impact on the association statistics.
+However, as one deals with smaller datasets, the uncertainty in clustering can have an important impact on association statistics.
 %Hard clustering is more bias-prone
-In this chapter, I will apply normalisation and mixture model clustering to a much smaller genetic dataset,
-and account for the clustering uncertainty in testing association disease.
+In this chapter, I will apply normalisation and mixture model clustering to a much smaller genetic dataset, and account for the clustering uncertainty in testing association with disease.
 %I will also use cross-validation to find an optimal parameter
 %SNP arrays only target common variants ($MAF > 5\%$) and
 %we know that many regions of the genome have been neglected by SNP arrays as they are poorly mapped on the reference genome.
@@ -578,9 +577,8 @@ rs3826878               & 60069023 & [A/G] & ok          & 2.63E-05 & 3.55E-06 \
     }
 \end{table}
 
-
 %% Figure 
-\begin{figure}
+\begin{figure}[!h]
 \centering
   \includegraphics[scale=.8]{figures/all-snps.pdf}
   \mycaption{all-snps}
