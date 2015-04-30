@@ -1,3 +1,8 @@
+Perhaps you should consider removing log files from the repository
+using a .gitignore file:
+
+http://git-scm.com/docs/gitignore
+
 This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.10.21)  26 SEP 2013 16:43
 entering extended mode
  restricted \write18 enabled.
