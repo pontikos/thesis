@@ -9,7 +9,7 @@ L'avenir n'est jamais que du présent à mettre en ordre, tu n'as pas à le pré
 %Pour ce qui est de l'avenir, il ne s'agit pas de le prévoir mais de le rendre possible.
 }}}
 
-Throughout my thesis I have considered methods of computationally analysing flow cytometry and genetic datasets in order to characterise the immune cell types and the gene variants which could influence \gls{T1D} risk.
+Throughout my thesis I have considered methods of computationally analysing flow cytometry and genetic datasets in order to characterise the immune cell types and the genetic variants which could influence \gls{T1D} risk.
 These methods have the potential to be more efficient, formal, consistent, objective and better at dealing with uncertainty than manual analysis.
 This could lead to improved reproducibility and more powerful association testing.
 %In the case of flow cytometry data, automating gating can also provide the added benefit of formalising manual gating, which remains to this day a very subjective, ad-hoc, process.
@@ -20,7 +20,7 @@ This is challenging as most genetically inherited biological traits are complex,
 %a multitude of smalls effects which cumulatively explain
 %Most effects in biological variation are small, they therefore require large sample sizes and
 
-The most studied factor which improves the statistical power to detect such effects is sample size, and we are witnessing ever-increasing sample sizes as consequence of dropping genotyping and sequencing costs.
+The most studied factor which improves the statistical power to detect such effects is sample size, and we are witnessing ever-increasing sample sizes as consequence of decreasing genotyping and sequencing costs.
 %This is because the standard deviation tends to shrink with the inverse of the sample size.
 However, there is still much work to be done on phenotype reproducibility.
 Poor reproducibility is in part due to the heterogeneity of traits which might be classified as having the same phenotype.
@@ -28,7 +28,7 @@ Disease phenotypes are known to differ depending on the individual and the stage
 %If the disease is diagnosed earlier then the associated phenotype may be recurrent auto-antibody positivity or if diagnosed late, high blood glucose.
 In most diseases, case heterogeneity is a major confounder and one which needs addressing by collection of additional clinical covariates during recruitment, to enable subgroup differentiation.
 
-These disease phenotypes have been found in many cases to be too coarse, motivating the study of better defined quantitative intermediate phenotypes, known as endophenotypes.
+This binary case/control classification of disease phenotypes is often too coarse, motivating the study of better defined quantitative intermediate phenotypes, known as endophenotypes.
 It is expected that these should have stronger correlation with genotype, since they are closer to gene expression.
 In my thesis, I have studied cell endophenotypes such as, CD25 protein expression on T cell subsets (\Cref{chapter:il2ra}), pSTAT5 \textit{ex vivo} response in \glspl{PBMC} (\Cref{chapter:il2}) or the relative cell subset frequency over parent cell population.
 
@@ -472,7 +472,7 @@ Instead, as is done when sorting cells, a few events need to be collected first 
 Also, the frequency of cell populations can differ widely between individuals, and the ratio of cell populations, for example naive to memory, changes in the course of an individual's lifetime with exposure to environment. 
 However, clusters can be defined in relation to one another, for example memory cells are lower for \protein{CD45RA} than naive cells but lower in CD25 (\Cref{chapter:il2ra}).
 
-This prior knowledge is acquired through the experience of having seen a large number of samples and difficult to encode in an automated method.
+This prior knowledge is acquired through the experience of having seen a large number of samples and is difficult to encode in an automated method.
 Processing in larger batches, or perhaps reducing the human element in flow cytometry, could be a first step towards automation.
 %http://www.aber.ac.uk/en/cs/research/cb/projects/robotscientist/
 This will become a necessity as the number of samples grows.
@@ -570,11 +570,10 @@ In fact, FlowJo crashed or hanged on numerous occasions when trying to accomplis
 In the end, I had to resort to exporting only a few CLR files, from which I could estimate the gate coordinates.
 One method of approximating gate coordinates is to calculate the mean and covariance of a CLR cluster and to use the Mahalanobis distance, hence approximating the cluster with an ellipse.
 It is worth noting that a column naming standard is needed for the CLR format so that the position of the gate in the hierarchy, as well as its dimensions, can be retrieved.
-However, it does simplify the process to know in which dimensions the gate was defined.
 
 Another interesting application of manual gates is to use them to define priors.
 Specifically, when several samples have been manually gated, the mean and covariance of the gate across samples can be used to define the mean and covariance hyper parameters of the priors in the mixture model to guide the parameter estimation, as implemented in the \Rpackage{flowClust}.
-I found this approach gave good agreement with manual when gating CD4\positive lymphocytes on forward, side scatter and CD4 on the dataset from \Cref{chapter:il2ra}.
+I found this approach gave good agreement with manual gating for CD4\positive lymphocytes on forward, side scatter and CD4 on the dataset from \Cref{chapter:il2ra}.
 %If several samples have been manually gated then these can be incorporated in the definition of the prior on the parameters of the mixture model.
 %FlowClust as opposed to Mclust offers the option of defining per component priors.
 %This threshold can be defined by using a chi squared distribution in the one dimensional case.
@@ -583,9 +582,15 @@ When FlowJo manual gating is not available, an alternative using R is to draw po
 This is an approach that I used in \Cref{chapter:il2} to emulate \contributor{Tony Cutler}'s gating.
 There also exist some commercial alternatives to FlowJo  such as \texttt{ADICyt}\footnote{\url{http://www.adinis.sk/en/products/bioinformatics-and-data-processing/adicyt.html}} and \texttt{Infinicyt}\footnote{\url{http://www.infinicyt.com/}}, but, at the time of writing, these are not nearly as widely used as FlowJo.
 In spite of these commercial alternatives, I still believe there remains a gap in the market for a new open source and extensible piece of software which reconciles manual, supervised and unsupervised flow cytometry analysis, and provides further multidimensional visualisation techniques.
-At the time of writing, a promising candidate is the \Rpackage{openCyto} which can integrate various gating algorithms to define a gating pipeline.
-However, it still necessitates some programming knowledge in order to be used successfully.
-
+At the time of writing, a promising candidate is the \Rpackage{openCyto} which integrates various other R packages, such as \textsf{flowClust} and \textsf{flowDensity}, in order to offer access to a core library of automated gating approaches.
+%to implement a unified approach to automated gating.
+%can integrate various gating algorithms to define a gating pipeline.
+%Niclas Thomas:
+%However, it still necessitates some programming knowledge in order to be used successfully.
+Although some programming knowledge is required for creating user-defined extensions, much of the programming requirements are removed by using spreadsheets to define the sequential gating process, known as gating templates.
+%Gating templates are then parsed to R via one simple command, limiting the depth of programming knowledge required by the user.
+Once gating has been completed, summary statistics and plots are easily obtained, and the raw fluorescence measurements can also be extracted for further analysis.
+While the number of studies that have adopted \textsf{openCyto} is low at the time of writing, I envisage a large increase in its use in the near future.
 
 %\subsection{Assessing performance}
 %
@@ -603,14 +608,18 @@ However, it still necessitates some programming knowledge in order to be used su
 
 \section{Conclusion}
 
+%Niclas Thomas:
+%Becher:2014
+%one main point on conclusion - you mention automated analysis will come into its own with larger samples and/or parameters, but don't go into much more detail - I think you really should mention that Cytof is redefining traditional flow cytometry, allowing unprecedented numbers of parameters (e.g. 38 http://www.nature.com/ni/journal/v15/n12/abs/ni.3006.html) and so the advent of automated gating may not be too far off
+
 Larger datasets have allowed us to see finer biological variation, both in genotypes and cell subsets, than previously possible.
 However, sometimes taking a different view of the same dataset, by doing a different kind of experiment, such as qPCR, or by adding parameters, for example, additional markers in flow cytometry, can help uncover patterns which might not have been visible even at larger sample sizes.
 For example, in \Cref{chapter:kir}, qPCR allowed me to discover a SNP predictive of \gene{KIR3DS1}-\gene{KIR3DL1} copy number which we would have not found even at larger sample sizes.
 Furthermore, even without doing further experiments, analytical methods such as unsupervised clustering may discover new features.
-For example, in \Cref{chapter:il2}, unsupervised clustering algorithms analysing pSTAT5 response at different doses of proleukin uncovered previously ignored responsive subset of cells.
+For example, in \Cref{chapter:il2}, unsupervised clustering algorithms analysing pSTAT5 response at different doses of proleukin uncovered previously overlooked responsive subset of cells.
 
 Although large datasets can support methods with larger number of parameters as they are less prone to overfitting,
-it is easy to fall into the trap of applying over complex analytical methods to account for all the intricacies of the data,
+it is easy to fall into the trap of applying overly complex analytical methods to account for all the intricacies of the data,
 when, in practice, simpler methods perform nearly as well and are much faster and easy to implement.
 Simple methods can also be combined to reach a consensus; this popular machine learning approach, known as boosting, increases performance, although often at the expense of interpretability.
 
