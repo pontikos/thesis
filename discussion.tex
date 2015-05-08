@@ -612,33 +612,30 @@ While the number of studies that have adopted \textsf{openCyto} is low at the ti
 %Becher:2014
 %one main point on conclusion - you mention automated analysis will come into its own with larger samples and/or parameters, but don't go into much more detail - I think you really should mention that Cytof is redefining traditional flow cytometry, allowing unprecedented numbers of parameters (e.g. 38 http://www.nature.com/ni/journal/v15/n12/abs/ni.3006.html) and so the advent of automated gating may not be too far off
 
-Larger datasets have allowed us to see finer biological variation, both in genotypes and cell subsets, than previously possible.
-However, sometimes taking a different view of the same dataset, by doing a different kind of experiment, such as qPCR, or by adding parameters, for example, additional markers in flow cytometry, can help uncover patterns which might not have been visible even at larger sample sizes.
-For example, in \Cref{chapter:kir}, qPCR allowed me to discover a SNP predictive of \gene{KIR3DS1}-\gene{KIR3DL1} copy number which we would have not found even at larger sample sizes.
-Furthermore, even without doing further experiments, analytical methods such as unsupervised clustering may discover new features.
-For example, in \Cref{chapter:il2}, unsupervised clustering algorithms analysing pSTAT5 response at different doses of proleukin uncovered previously overlooked responsive subset of cells.
+Larger datasets have allowed us to see finer biological variation, both in genetics and cell subsets, than previously possible.
+Also, increasing the number of dimensions, by combining different kind of experiments, for example qPCR coupled with genotyping (\Cref{chapter:kir}), have helped uncover patterns which might not have been visible even at larger sample sizes.
+%or inreasing the number of measured parameters, such as markers in flow cytometry,
+%allowed me to discover a SNP predictive of \gene{KIR3DS1}-\gene{KIR3DL1} copy number which would have not found even at larger sample sizes.
+These large datasets lend themselves to more sophisticated analytical methods, as was illustrated in \Cref{chapter:il2}, where unsupervised clustering on pSTAT5 dose-response, helped uncover previously overlooked responsive cell subsets.
+In theory, these large datasets can be analysed using sophisticated models with large number of parameters to account for all the intricacies of the data, as they are less prone to overfitting, but often in practise, simpler methods yield similar performance and are much more efficient.
+Such methods can also be combined to reach a consensus, and this popular machine learning approach, known as boosting, increases performance at the expense of interpretability.
 
-Although large datasets can support methods with larger number of parameters as they are less prone to overfitting,
-it is easy to fall into the trap of applying overly complex analytical methods to account for all the intricacies of the data,
-when, in practice, simpler methods perform nearly as well and are much faster and easy to implement.
-Simple methods can also be combined to reach a consensus; this popular machine learning approach, known as boosting, increases performance, although often at the expense of interpretability.
-
-Interpretability is perhaps one of the more important issues preventing biologists from using these computational methods.
-While mixture modelling approaches are conceptually close to manual gating, probabilistic cell types are not always intuitive to biologists, so their true power cannot be fully exploited as we end up applying hard cut-offs (see \Cref{chapter:il2ra}).
+Interpretability is one of the important issues preventing biologists of making better use of these computational methods.
+For example, while mixture modelling approaches are conceptually close to manual gating, probabilistic cell types are not always intuitive to biologists, so their true power is not fully exploited as hard cut-offs are applied early in the analysis process (see \Cref{chapter:il2ra}).
 Biologists prefer manual gating as it gives them the freedom to draw exclusive gates whose contours can be made arbitrarily complex.
-This freedom, however, comes at the cost of exacerbating the disagreement in standards and definitions in immunology.
-While discrepancies in gate positions are unlikely to make much of an impact on the MFI and relative proportion of common cell populations, they can make a big difference on rarer cell populations, such as regulatory T cells, where the effects are much smaller.
+This freedom, however, exarcebates the disagreement in standards and definitions in immunology, and reproducibility of results.
+Discrepancies in gate positions are unlikely to make much of an impact on the MFI and relative proportion of common cell populations, but these can make a big difference on rarer cell populations, such as regulatory T cells, where the effects are much smaller.
 
 %This can occasionally be achieved by centering the ellipse on the mean of the datapoints which fall within the gate.
-
 While, in my opinion, automated clustering ought to be applied more widely to flow cytometry data, manual analysis is likely to continue being used where the number of samples and parameters permits it.
-However, as the number of samples and parameters continue to grow, biologists will have to resort to fully automated method.
+However, as the number of samples and parameters continue to grow, and new biotechnologies such as CyTOF \citep{Becher:2014} become widespread, biologists will have to relinquish more control to the computer.
 %Hence it is important to continue developing these methods.
 %These methods will require some level of expertise and decent visualisation to guide and reassure the user.
 %Over-reliance on visualisation can mislead the analysis of high-dimensional because clustering is always projected back to two dimensions or linear combinations of dimensions.
 
-The automatic gating community is growing stronger, with a lot of contributions to BioConductor, and the GenePattern web interface maintained by the Broad Institute.
+The automatic gating community is growing stronger, with a lot of contributions to BioConductor, and the GenePattern web interface maintained by the Broad Institute \citep{Kvistborg:2015}.
 In particular, two labs, Raphael Gottardo at the Fred Hutchinson Cancer Research Center in the USA and Ryan Brinkman at the Terry Fox Laboratory in Canada, have been central in developing automatic gating software and bring together the automatic gating flow cytometry community as part of the FlowCAP challenge every year \citep{Aghaeepour:2013dg}.
+
 
 % I admit there has been a lack of simulations but flow data is hard to simulate.
 % it's not just simply labelled data that can be permuted and anyway the datasets are too large for this approach to be practical
@@ -654,7 +651,7 @@ In particular, two labs, Raphael Gottardo at the Fred Hutchinson Cancer Research
 %In \Cref{chapter:il2}, the permeabilisation protocol made the staining noisy, so that the MFIs were not reproducible.
 %But different computational tools could be used to highlight different populations.
 
-However, the question of how to benchmark these methods remains.
+One of the key questions that this community is addressing is how we should benchmark these methods.
 %Philosophically this is perhaps what still makes data analysis an art, is that there is still some mystery since we haven't discovered all the rules yet.
 If our benchmark is comparison to manual gating then clearly no method can ever outperform it.
 Independent benchmarks such as repeatability are fairer, but perhaps a more general benchmark could be the utility of the clustering outcome, for example, whether it is predictive for diagnosis or if it correlates strongly with genetics or some other covariate under study.
@@ -663,7 +660,7 @@ Of course, we will need to account for multiple testing, given the large numbers
 %In my opinion, two aspects of flow cytometry analysis which are worthy of further work are normalisation and selection of an optimal transform.
 %Both of these could be included as part of the clustering step.
 
-Finally, my view is that we will only reap the true fruits of automated analysis once the number of samples has grown considerably, although this might require earlier steps in the pipeline, such as sample processing, to be further standardised and automated first, so that the signal may rise above the noise.
+Finally, my view is, that in the context of flow cytometry, we will only reap the true fruits of automated analysis once the number of samples has grown considerably, although this might require earlier steps in the pipeline, such as sample processing, to be further standardised and automated first, so that the signal may rise above the noise.
 
 %We might even see Cytobank accumulate samples like ArrayExpress.
 %Finally, to conclude on a more philosophical tone from on my favourite french authors:
