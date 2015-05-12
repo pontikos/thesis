@@ -854,11 +854,8 @@ Given a one, two or three dimensional projection of the data, clusters may be vi
 %a manual or supervised (semi automatic) approach can be used.
 %In the context of flow cytometry, clusters constitute cell populations identifiable by the concomitant expression of internal or surface markers.
 In flow cytometry data, this approach, known as manual gating, is a step-by-step method where we consider and plot one or two channels at a time and delineate a region, called a gate, such that cells which lie outside the gate are filtered out.
-%This step is repeated for a required number of iterations.
 The result is that a population is defined as an intersection of multiple one or two dimensional gates.
 
-%leaves room for improvement due to poor scaling 
-%hence the number of dimensions in the data
 %The inability to cluster in more than three dimensions at a time also
 %since information is lost at each clustering step
 %Only methods which are capable of clustering all dimensions at the same time can exploit the full information available in the dataset.
@@ -875,11 +872,9 @@ For this, unsupervised computational methods, which do not rely on visualisation
 
 \section{Automatic methods for identifying clusters}
 
-Automatic flow data analysis methods have been reviewed by \citet{Bashashati:2009em}, \citet{Lugli:2010ki},
-and, more recently, by \citet{Aghaeepour:2013dg}.
+Unsupervised flow data analysis methods have been reviewed by \citet{Bashashati:2009em}, \citet{Lugli:2010ki}, and, more recently, by \citet{Aghaeepour:2013dg}.
 %\citeauthor{Lugli:2010ki} suggest looking at NMF.
-They are benchmarked annually by the \gls{FlowCAP} 
-group and broadly fall in two camps:
+They are benchmarked annually by the \gls{FlowCAP} group and broadly fall in two camps:
 %The outcome of FlowCAP is that ensemble methods (boosting approaches) might be the way forward.  
 %cell population identification methods
 unsupervised methods which have have unlabelled data
@@ -888,12 +883,11 @@ and
 supervised methods which require manual training by giving approximate starting gates.
 
 Clustering methods which make explicit assumptions about the shapes of populations are model-based or parametric.
-Methods which do not are said to be model-free or non-parametric,
+Methods which do not, are said to be model-free or non-parametric,
 although the latter can be limiting cases of parametric models.
 %(\Cref{appendix:clustering}).
-Here I will mostly review unsupervised methods where training data is not provided,
-and focus on those which require specification of only some parameters such as the expected
-number of clusters.
+Here I will mostly focus on unsupervised methods where training data is not provided.
+%, and for which only few parameters such as the expected number of clusters, need to specified.
 
 %\paragraph{Model based methods: low variance high bias methods}
 \subsection{Model-based methods}
@@ -945,22 +939,15 @@ Regularisation can be achieved using a prior probability density function on the
 and the \BioConductor{flowClust}.
 
 
-One drawback of the \gls{GMM} is that it tends to overestimate the number of multivariate Gaussians which best models the data since outliers
-which are in the tails of the distributions
-are explained by new low mixture distributions, increasing the number of reported cell populations.
-To account for this, Flowclust replaces Gaussians by
-%more robust heavy tailed 
-t-distributions which have more weight in the tails \citep{Lo:2008it}.
-Even so, t-distributions are symmetric and so cannot model skewed populations commonly found in stimulation experiments or more generally when cells are in a transitional state from one cell type to another.
+When $K$ is unknown, one drawback of the \gls{GMM} is that it tends to overestimate the number of multivariate Gaussians which best models the data since outliers which are in the tails of the distributions are explained by new low mixture distributions.
+%, increasing the number of reported cell populations.
+To account for this, Flowclust replaces Gaussians by t-distributions which have more weight in the tails \citep{Lo:2008it}.
+Even so, t-distributions are symmetric and so cannot model skewed populations commonly found in stimulation experiments or, more generally, when cells are in a transitional state from one cell type to another.
 \citet{Pyne:2009hl} addressed this issue with FLAME (Flow Analysis with Automated Multivariate Estimation) by employing skewed t-distributions instead.
 Yet a remaining issue is that these distributions are convex by nature and so a concave population which can arise in transitional cell populations undergoing progressive change on more than one marker may only be represented by the merging of several convex populations.
 This merging step can be accomplished using FlowMerge \citep{Finak:2009fk}.
-By adding more parameters to these distributions we can make model-based methods more flexible,
-but this comes at the price of reducing the degrees of freedom and having to estimate more parameters which 
-can potentially be computationally expensive and risks overfitting.
-For certain parameters such as mean and covariance, closed-form solutions exist or can efficiently be estimated with  an \gls{EM} algorithm \citep{Dempster:1977ul},
-but others, such as the skewness factor and degrees of freedom of the t-distributions,
-may need to be estimated numerically using computationally expensive iterative methods.
+By adding more parameters to these distributions we can make model-based methods more flexible, but this comes at the price of reducing the degrees of freedom and having to estimate more parameters which can potentially be computationally expensive and risks overfitting.
+For certain parameters such as mean and covariance, closed-form solutions exist or can efficiently be estimated with  an \gls{EM} algorithm \citep{Dempster:1977ul}, but others, such as the skewness factor and degrees of freedom of the t-distributions, may need to be estimated numerically using computationally expensive iterative methods.
 %like \gls{MCMC} which sample from the parameter space and consequently scale poorly with increasing dimensionality.
 %as they rely on inversion of large matrices
 %and are sensitive to starting conditions.

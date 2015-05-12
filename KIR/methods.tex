@@ -126,7 +126,7 @@ three common groups of two copy numbers (major homozygote, heterozygote, minor h
 The initial mixing and covariance parameters for the mixture of bivariate Gaussian distributions were calculated from the clusters returned by k-means
 with centers set to the eight copy number groups.
 %the initial mixing parameters could be the expected frequencies as derived from Trowsdale KIR haplotype paper
-The parameters were then further refined using an EM algorithm \citep{Young:2009ty}.
+The parameters were then further refined using an EM algorithm \citep{mixtools}.
 After fitting the mixture model each sample is assigned a posterior probability of belonging to each of the eight genotype groups which allows for uncertainty in genotype calling.
 %These posterior probabilities were taken into account in downstream statistical analysis.
 
