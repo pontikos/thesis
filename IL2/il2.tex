@@ -18,8 +18,7 @@ Genomewide association studies have implicated the \cytokine{IL-2} signalling as
 %So far associated regions have been reported close to IL2RA and PTPN2, a phosphatase, which both influence STAT5 transduction.
 %The protective rs12722495 haplotype was significantly associated with increase in CD25 expression on CD4 memory T cells measured in terms of MFI.
 %Howevever the protective combined rs2104286 genotype led to a decrease in the percentage of CD25 positive CD4 naive T cells.  
-As seen in \Cref{chapter:il2ra}, the protective T1D associated \gene{IL2RA} variant, at \snp{rs12722495} in healthy individuals, predicts an increase in the expression of \protein{CD25},
-the alpha chain of the trimeric \protein{IL-2} receptor, on memory \protein{CD4}\positive T lymphocytes \citep{Dendrou:2008gc,Dendrou:2009dv}.
+As seen in \Cref{chapter:il2ra}, the protective T1D associated \gene{IL2RA} variant, at \snp{rs12722495} in healthy individuals, predicts an increase in the expression of \protein{CD25}, the $\alpha$ chain of the trimeric \protein{IL-2} receptor, on memory \protein{CD4}\positive T lymphocytes \citep{Dendrou:2008gc,Dendrou:2009dv}.
 %and high levels of IL-2 secretion by these cells
 %As supported by an increase in soluble CD25, this might be the consequence of preferential cleavage of the CD25 receptor \citet{Lowe:2007ij}.
 %As supported by a decerase in soluble CD25 \citet{Lowe:2007ij}.
@@ -39,10 +38,15 @@ STAT5, the signal transducer and activator of transcription 5 protein, dimerises
     The trimeric \cytokine{IL-2} receptor (IL2R) is constituted of: the $\alpha$ chain \protein{IL2RA} (\protein{CD25}), the $\beta$ chain \protein{IL2RB} (\protein{CD122})
     and the $\gamma$ chain \protein{IL2RG} (\protein{CD132}).
     On binding of an \cytokine{IL-2} molecule to the receptor, a signalling cascade is initialised in which STAT5 is phosphorylated to pSTAT5, which then dimerises or tetramerises into a transcription factor.
+    Only the $\beta$ and $\gamma$ chains have signalling motifs.
+    The $\alpha$ chain supplies an increase in affinity but does not signal.
     Cells express variable proportions of each of the components of the trimeric receptor with CD132 being the most commonly expressed.
-    The pSTAT5 response to IL-2 is correlated with the relative expression of the three subunits.
-    The pSTAT5 response is at its strongest when all three markers are highly expressed, intermediate when only CD25 and CD122 are expressed, and lower when only CD25 is present.
-    Hence there is generally strong correlation between the \protein{CD25} MFI and the pSTAT5 MFI.
+    The pSTAT5 response to IL-2 is correlated with the relative expression of the three subunits and there is generally strong correlation between the \protein{CD25} MFI and the pSTAT5 MFI.
+    %The pSTAT5 response is at its strongest when all three markers are highly expressed, intermediate when only CD122 and CD132 are expressed, and at its lowest when only CD25 is present.
+%Linda: The intermediate affinity receptor is CD122 beta and CD132 gamma, not CD25 alpha and CD122 beta.
+%This needs to be corrected wherever you discuss the receptor in your thesis  when only CD25 is present.  
+%There is no signalling when CD25 is only present -- just some weak binding.
+
 %IL2RB and \protein{IL2RA} makes up the intermediate affinity dimeric receptor, while IL2RA, IL2RB and IL2G make up the high affinity trimeric receptor.
 %Schematic of Major IL-2 Signaling Pathways
 %Shown is the activation of PI 3-K-AKT, JAK-STAT, and SHC-RAS-MAPK signaling pathways.
@@ -134,8 +138,9 @@ pch is the plotting character used to refer to these individuals in plots later 
 Blood samples were prepared and analysed by flow cytometry on day of collection.
 Each sample was split into four aliquots of \SI{500}{\micro\litre}.
 The first aliquot was left unstimulated.
-The remaining three were stimulated ex-vivo for 30 minutes at three 100-fold increasing doses
-of proleukin, a polymer of \cytokine{IL-2}, at $0.1$, $10$ and \SI{1000}{\unit\per\milli\litre} respectively.
+The remaining three were stimulated ex-vivo for 30 minutes at three increasing doses of proleukin, a recombinant \cytokine{IL-2 molecule}, at $0.1$, $10$ and \SI{1000}{\unit\per\milli\litre} respectively.
+%Linda: Proleukin is not a polymer, it is a loose aggregate of molecules formulated this way to increase stability and bioavailability.
+
 %\SI{1000}{\unit\per\micro\litre} respectively.
 After the set stimulation time, the samples were fixed, permeabilised and stained, with different panels (\Cref{table:IL2-panels}), 
 on a set of core markers, not expected to be affected by short-term proleukin stimulation,
@@ -143,7 +148,7 @@ CD4, CD25, CD45RA and FOXP3.
 These were used to delineate different cell types, and the functional marker, pSTAT5,
 %a signalling protein of the IL-2 pathway phosphorylated on IL-2 stimulation (\Cref{figure:IL2-pathway}),
 was used to measure proleukin response.
-In order to control for batch, age or sex, \gls{T1D} samples were, when possible, ran in parallel with an age and sex paired healthy control, although in practice, this was not always possible (\Cref{figure:IL2-sample-time}).
+In order to control for batch, age or sex, \gls{T1D} samples were, when possible, run in parallel with an age and sex paired healthy control, although in practice, this was not always possible (\Cref{figure:IL2-sample-time}).
 Also for practical and financial reasons, not all samples were stained with every panel (\Cref{table:IL2-panels}).
 Hence the case-control statistical analysis was only conducted in samples stained with the CD4 T cell panel, which included all samples in the study.
 
@@ -185,7 +190,7 @@ Number of samples &  5              & 95               \\
 The fluorochrome-antibody panels used in IL-2 stimulation.
 The panel used on the majority of samples was the CD4 T cell panel, used to disriminate
 effector and regulatory naive and memory T cells.
-The T/NK cell panel, which contains the most markers, was only ran on a subset of 5 samples.
+The T/NK cell panel, which contains the most markers, was only run on a subset of 5 samples.
 }
 \end{table}
 
@@ -315,8 +320,7 @@ This correlates with the level of \protein{CD25} expressed by these cells.
 {
 The thickness of the lines is representative of the four increasing doses of proleukin (0, 0.1, 10 and 1000 units).
 The dose-response is most striking in the smaller Treg subsets with higher CD25 (b and d).
-The dashed vertical line represents the 99th percentile of the pSTAT5 distribution in the resting sample,
-which is used to define the pSTAT5\positive threshold.
+%The dashed vertical line represents the 99th percentile of the pSTAT5 distribution in the resting sample, which is used to define the pSTAT5\positive threshold.
 }
 
 Next the repeatability of the pSTAT5 response was assessed by measuring the pSTAT5 \gls{MFI} in each of the four subsets.
@@ -345,7 +349,7 @@ An idea similar to that applied in \Cref{chapter:il2ra} to define naive cells as
 %and is commonly used in populations with high CV.
 However, here an internal threshold was used, namely the threshold was defined to be the 99th percentile of the pSTAT5 distribution in the resting cell subset per sample.
 Thus each each sample and cell subset had its own pSTAT5\positive threshold.
-He presented his results in six of the ten repeated individuals for the four stimulated cell subsets, memory Teffs (\Cref{figure:tony-memory-eff}), memory Tregs (\Cref{figure:tony-memory-treg}), naive Teffs (\Cref{figure:tony-naive-eff}) and naive Tregs (\Cref{figure:tony-naive-treg}).
+\contributor{Tony Cutler} presented his results in six of the ten repeated individuals for the four stimulated cell subsets, memory Teffs (\Cref{figure:tony-memory-eff}), memory Tregs (\Cref{figure:tony-memory-treg}), naive Teffs (\Cref{figure:tony-naive-eff}) and naive Tregs (\Cref{figure:tony-naive-treg}).
 At the highest 1000 units proleukin dose, most memory and naive Tregs are pSTAT5\positive, however, as these cell populations already show a significant response at the lowest 0.1 unit dose, the percentage of pSTAT5\positive cells at the 0.1 units dose was selected to be the relevant cell phenotype for memory and naive Treg pSTAT5 cells (\Cref{figure:tony-memory-treg,figure:tony-naive-treg}).
 For the less responsive memory Teffs, 10 units was chosen as the representative dose, while for naive Teffs, the least responsive of the four cell subsets considered, the repeatability was assessed at the 1000 unit dose.
 The repeatability was assessed with the coefficient of determination:
@@ -563,7 +567,7 @@ This could help identify cells which would have been missed from only examining 
 \end{minipage}
 \begin{minipage}{\textwidth}
 \mycaption{figure:pstat5-baseline-relative}
-{ pSTAT5 intensity across the four proleukin doses, before (a) and after (b) per-cell baseline pSTAT5 subtraction in the ungated sample.}
+{ pSTAT5 intensity across the three proleukin doses, before (a) and after (b) per-cell baseline pSTAT5 subtraction in the ungated sample.}
 {
   An important proportion of cells are already saturated for pSTAT5 (high baseline) in the resting sample (a).
   Correcting for the per cell pSTAT5 baseline, shows the true proportion of cells which responds to proleukin within this sample (b).
@@ -791,11 +795,13 @@ As described in \Cref{table:IL2-panels}, a subset of samples stained with a quit
 beside the four manually gated cell subsets, are there other subsets which respond to proleukin within the \gls{PBMC}?
 
 This question is extremely relevant for DILT1D\footnote{\url{http://www.clinical-trials-type1-diabetes.com}} and other clinical trials of IL-2 which have mostly focused on lymphocytes.  %CD4\positive cells.
-Biologists know that any cell which carries high levels of any of the trimeric components of the IL-2 receptor,
-alpha (\protein{CD25}), beta (\protein{CD122}) or gamma (\protein{CD132}), should respond to IL-2,
-but due to low affinity of the CD122 antibody and the limitation on the possible number of fluorochromes per tube, these cannot all be included as part of every flow experiment.  
+Biologists know that any cell which carries high levels of the three subcomponents of the IL-2 receptor, $\alpha$ (\protein{CD25}), $\beta$ (\protein{CD122}) or $\gamma$ (\protein{CD132}), should respond to IL-2, but due
+%to low affinity of the CD122 antibody and
+%Linda: The CD122 antibody does not have low affinity.  When methanol is used for a staining procedure, many epitopes, antibodies recognize, are destroyed (almost all are compromised as evidenced by reduced fluorescence for nearly all markers examined).  Companies are trying to optimize staining of the phosphorylated STAT5 proteins by developing antibodies to epitopes on a variety of key molecules that are retained.  Staining buffers are also being optimized.
+to the limitation on the possible number of fluorochromes per tube, these are not all included as part of every flow experiment.  
 %Plus at low doses of IL-2 the CD25 chain is the most important
 %Also the gamma chain is expressed by all cells and so not specific
+%Linda: High levels of CD25 alone -- there is no signalling with IL-2.  High levels of beta alone or gamma alone -- I'm not sure if IL-2 could drive signalling with these isolated chains, maybe at very high doses--this sentence needs to be modified.  The functional signalling receptors are the trimeric (high affinity) and dimeric (Intermediate affinity -- beta/gamma) forms.  The alpha chain just increases affinity.
 This study of \emph{ex vivo} stimulated whole blood offers the opportunity to identify other, potentially new, cell subsets also responsive to IL-2.
 In order to increase my chances of characterising these subsets, I only analysed samples stained with the most comprehensive marker panel we had available, the one containing the additional fluorochromes for CD3, CD8 and CD56 (\Cref{table:IL2-panels}).
 Unfortunately, the staining using this panel was of poor quality in many samples, due to the harsh nature of the permeabilisation protocol and to the larger number of markers used, which caused certain marker stains, such as CD56, to not work well across all batches.
@@ -896,7 +902,7 @@ in the agglomerative clustering step.
 
 I first ran \gls{SPADE} on the manually gated lymphocyte subset (excluding doublets),
 in the resting and stimulated samples from an individual.
-The algorithm was ran on the core surface markers, CD25, CD3, CD4, CD45RA, CD56, CD8 and FOXP3,
+The algorithm was run on the core surface markers, CD25, CD3, CD4, CD45RA, CD56, CD8 and FOXP3,
 which are expected to be stable across within-batch stimulation doses.
 The number of events in each sample was reduced by a factor of 90 percent.
 The desired number of cluster in the agglomerative step was set to 1000.
@@ -989,7 +995,7 @@ The \gls{MST} was generated on the lymphocytes stimulated at 1000 units and colo
 \mycaption{figure:spade-lymphocytes-dose-response}
 { Lymphocytes pSTAT5 MFI dose-response: \texttt{SPADE.1} }
 {
-In purple, the newly identified cell subsets \texttt{SPADE.1} in \Cref{figure:spade-lymphocytes-celltypes} only shows response at 1000 units of proleukin. 
+In purple, the newly identified cell subset \texttt{SPADE.1} in \Cref{figure:spade-lymphocytes-celltypes} only shows response at 1000 units of proleukin. 
 }
 \end{minipage}
 \end{figure}
@@ -1035,14 +1041,15 @@ While the larger population, \texttt{SPADE.2b} (pink), also tends to aggregate a
   %While the 10 unit responsive cells cluster mostly around the lymphocyte gate, the 1000 unit responsive cells also appear to cluster within a secondary scatter cluster (purple polygon).
 }
 
-Following further investigation of this subset of cells on other core markers in \Cref{figure:spade-nonlymphocytes-clusters}, and after filtering of doublets on side scatter width and height, while they appeared mostly CD3\positive, CD4\positive and CD56\negative therefore likely to be T cells or NKT cells, they also contained a small fraction of CD3\negative cells, hence likely to be a heterogeneous subset that may contain some monocytes.
+Following further investigation of this subset of cells on other core markers in \Cref{figure:spade-nonlymphocytes-clusters}, and after filtering of doublets on side scatter width and height, while they appeared mostly CD3\positive, CD4\positive and CD56\negative therefore likely to be T cells, they also contained a small fraction of CD3\negative cells, hence likely to be a heterogeneous subset that may contain some monocytes or B cells.
+%Linda: NKT cells are CD56+ so this statement isn't correct--NKT cells should be removed.
 
 %They contain both CD8\negative and CD8\positive cells.
 As they are bigger on forward and side scatter than lymphocytes, they could be bigger T cell blasts, and as they are mostly CD45RA\positive,
 possibly activated T cells.
 %what about CD56?
 However, they may well result from a technical artefact of the fixation protocol.
-Further markers, possibly monoycte markers such as CD19, are needed to better define this cell type and ascertain its clinical relevance.
+Further markers, possibly B cell markers such as CD19, are needed to better define this cell type and ascertain its clinical relevance.
 
 \begin{figure}
   \centering
@@ -1262,7 +1269,7 @@ However at 1000 units, bins which overlap with the lymphocyte cluster show clear
 
 \paragraph{Lymphocytes} 
 Extending recursive partitioning to all core markers, I aimed to identify dose-responsive cells not assigned to any manual gate within the lymphocyte subset.
-The number of bins was increased to 1024 and the recursive partitioning was ran on the core markers CD25, CD3, CD4, CD45RA, CD56, CD8 and FOXP3, on the lymphocyte subset, after excluding doublets.
+The number of bins was increased to 1024 and the recursive partitioning was run on the core markers CD25, CD3, CD4, CD45RA, CD56, CD8 and FOXP3, on the lymphocyte subset, after excluding doublets.
 I also excluded cells which were assigned to the manually gated subsets, both memory and naive, Teffs and Tregs, in order to focus on potentially unidentified cell subsets.
 %%the size of the bins should be bigger though since points are sparser as we add dimensions
 Since for any two dimensional projection of the data, many bins overlap, I used the same \gls{MST} visualisation as described in the previous section, where each node this time represents the core marker median of one of the 1024 bins (\Cref{figure:rpart-lymphocytes-mst-1024bin}).
@@ -1465,7 +1472,7 @@ As can be appreciated in \Cref{figure:plsr-lymphocytes}, the known cell populati
 This is likely the consequence of the pSTAT5 response reaching saturation at 1000 units.
 Plotting the dose response in \Cref{figure:plsr-lymphocytes-dose-response} shows that of the three new subsets, only \texttt{PLSR.1} (purple) is responsive at 1000 units while \texttt{PLSR.2} (pink) and \texttt{PLSR.3} (light-blue) conserve baseline pSTAT5 even at the highest dose.
 \texttt{PLSR.2} and \texttt{PLSR.3} are therefore not of interest here and so only \texttt{PLSR.1} is considered for further study.
-In \Cref{figure:plsr-lymphocytes-clusters}, \texttt{PLSR.1} is plotted in relation to the know subset on all core markers.
+In \Cref{figure:plsr-lymphocytes-clusters}, \texttt{PLSR.1} is plotted in relation to the known subset on all core markers.
 Its main distinguishing features are that it is CD8\positive and CD4\negative.
 It is also CD45RA\positive indicating that it could include naive CD8 T cells.
 %and Effector memory CD8 T cells CD45RA positive (EMRA+)
@@ -1614,7 +1621,7 @@ the black and green clusters are less responsive (b).
 \paragraph{Lymphocytes} 
 I first ran CART on lymphocytes, excluding all manually gated CD4\positive cells, in order to see if any dose-responsive
 non-manually gated cell subsets were identified.
-The CART was ran without pruning on the ANN joined dataset using the pSTAT5 response at each of the stimulation doses.
+The CART was run without pruning on the ANN joined dataset using the pSTAT5 response at each of the stimulation doses.
 In \Cref{figure:cart-lymphocytes-trees-pstat5} are the trees obtained from 0.1 (a), 10 (b)
 and 1000 units (c).
 
@@ -1806,7 +1813,7 @@ I identified two subsets of cells \texttt{MMPART.1} and \texttt{MMPART.2} respon
 Looking at the core markers (\Cref{figure:mmpart-nonlymphocytes-clusters}), the forward and side scatter of these subsets appears similar to the lymphocyte population.
 However, \texttt{MMPART.1} also contains a subset of cells at the top of the scatter range which are likely to be debris.
 Both \texttt{MMPART.1} and \texttt{MMPART.2} appear to be CD3\positive, thus T cells.
-They also appear primarily CD45RA\negative, so not activated.
+They also appear primarily CD45RA\negative, so naive.
 %I found that, while many of the cells identified using this approach fall within the CD4 gate,
 %certain highly-sensitive cells cluster in other subsets \Cref{figure:mmpart-nonlymphocytes-clusters}.
 %Excluding doublets on the basis of side scatter width,
@@ -1883,8 +1890,11 @@ Although I attempted to improve on the reproducibility of the fluorescence inten
 I was unable to do so.
 One reason why I believe the pSTAT5 MFI is not reproducible in memory Teffs cells, is because the pSTAT5 distribution is not unimodal.
 In naive and memory Treg cells, the pSTAT5 distribution is unimodal but the peak shift on stimulation is not reproducible.
-\contributor{Tony Cutler} claims that this is because the titration of proleukin required is too fine to be performed with high accuracy so that there is a lot of uncontrolled variation in the proleukin doses.
-%Another reason is that the staining is unreliable.
+%\contributor{Tony Cutler} suggests that this is because the titration of proleukin required is too fine to be performed with high accuracy so that there is a lot of uncontrolled variation in the proleukin doses.
+\contributor{Tony Cutler} suggests that this is because of technical aspects of performing the proleukin stimulation experiment.
+Since the proleukin must be stored at a very high concentration to maintain its stability, each experiment requires that the IL-2 stock be extensively diluted on the day of the experiment.
+%Experiments done in the lab have shown when multiple aliquots of frozen stock are diluted independently on the same day, there is a variation of up to 20 pct in the measured pSTAT5 response when testing the IL-2 at limiting concentrations for a particular cell type.
+Additional variation is caused by the varying efficiency of intracellular staining.
 Instead of using MFI, this motivated counting the percent of cells whose pSTAT5 fluorescence is greater than the 99th percentile of the pSTAT5 distribution in the unstimulated sample.
 Since this phenotype was found to be slightly more reproducible, it was used to test the association with T1D in the four cell subsets, memory, naive, Teffs and Tregs.
 
@@ -1983,16 +1993,14 @@ Sometimes from the MST it may be difficult to delineate the cluster of cells whi
 \myfigure{scale=.5}{mst-marker-progression}
 { The progression of the marker MFI along the horizontal coordinate of the \gls{MST} nodes in lymphocytes (a) and non-lymphocytes (b). }
 {
-  The lowess smoothed progression of the marker MFI along the horizontal coordinate of the \gls{MST}.
-  For the \gls{MST} constructed on the lymphocytes (a), the markers which show the clearest progression are markers, CD45RA
-  CD56 which increase from left to right,
+  The LOWESS\citep{Cleveland:1981} progression of the marker MFI along the horizontal coordinate of the \gls{MST}.
+  For the \gls{MST} constructed on the lymphocytes (a), the markers which show the clearest progression are markers, CD45RA CD56 which increase from left to right,
   and markers CD4 and CD25 which decrease.
   For the \gls{MST} constructed on the non-lymphocytes (b), the progression of the markers is not monotonic.
 }
 
 
-In fact, the downsampled data used to create the \gls{MST} visualisation can been used to represent the data in a number of ways using established
-for example \gls{PLS} with pSTAT5 as the response variable, as I have shown earlier, or other \gls{MDS} style methods which rely on the distance matrix computation.  
+In fact, the downsampled data used to create the \gls{MST} visualisation can been used to represent the data in a number of ways using established for example \gls{PLS} with pSTAT5 as the response variable, as I have shown earlier, or other \gls{MDS} style methods which rely on the distance matrix computation.  
 
 From the joined data, I have explored methods which use the pSTAT5 response to guide, the binary recursive partitioning of the core marker space using \gls{CART} or the estimation of the principal components using \gls{PLS}.
 Applying \gls{CART} to side and forward scatter, the lymphocyte population was consistently identified as the most responsive cell population in all samples stimulated at 1000 units.
@@ -2026,8 +2034,8 @@ Ideally, some further clustering would be required on this subset, but in practi
 %\paragraph{Possible extensions to the regression trees methods}
 There are other possible extensions to the regression trees methods covered in the "Elements of Statistical Learning" textbook \citep{Anonymous:ikywRZeA}.
 These extensions allow for a linear combination of more than one marker at each split, or for more than one split at each level.
-\gls{MARS} for example uses multiple additive regression splines as a generalisation of stepwise linear regression or a modification of the CART method to improve its performance in the regression setting.
-\gls{MARS} foregoes the tree structure and instead of approximating each bin by the pSTAT5 mean, the pSTAT5 function is approximated by a piecewise linear function with knots at core markers points.
+\Gls{MARS} for example uses multiple additive regression splines as a generalisation of stepwise linear regression or a modification of the CART method to improve its performance in the regression setting.
+\Gls{MARS} foregoes the tree structure and instead of approximating each bin by the pSTAT5 mean, the pSTAT5 function is approximated by a piecewise linear function with knots at core markers points.
 Unfortunately, I found the existing \Rpackage{earth} to be too slow to run on my datasets.
 %PRIM
 Another extension is the \gls{PRIM} also known as the "bump hunting" algorithm introduced by \citet{Friedman:1999iy}.
@@ -2040,7 +2048,7 @@ Then the process is repeated, stopping when the box contains some minimum amount
 After the top-down sequence is computed, PRIM reverses the process expanding along any edge, if such an expansion increases the box mean.
 %This is called pasting.
 Since the top-down procedure is greedy at each step such an expansion is often possible.
-The result of these steps is a sequence of boxes, with different number of observations per box.
+The result of these steps is a sequence of boxes, with a different number of observations per box.
 %Cross-validation, combined with the judgment of the data analyst, is used to chose the optimal box size.
 An advantage of PRIM over CART is its patience, since CART tends to fragment the data quite quickly, but this comes at the cost of performance and I found the \Rpackage{prim} implementation of this method to be too slow to run on my dataset.
 %
@@ -2083,7 +2091,7 @@ whilst the \texttt{PLSR.1} subset is CD3\positive CD4\negative CD8\positive CD45
 Interestingly, the \texttt{RPART.1} population, which constitutes 3.36 percent of the lymphocytes, has the lowest CD25 but is more sensitive than the \texttt{PLSR.1} and \texttt{SPADE.1} populations to proleukin.  
 This \texttt{RPART.1} subset is CD3\negative CD4\negative CD8\negative CD45RA\positive CD56\positive.
 
-These cells are likely to be NK cells although, \protein{CD16} would need to be measured to confirm that these cells are \protein{CD16}\positive.
+These cells are likely to be NK cells, although, \protein{CD16} would need to be measured to confirm that these cells are \protein{CD16}\positive.
 \citet{Ortaldo:1992tr} report that these CD3\negative CD56\positive cells are producers of the pro-inflammatory cytokine, interferon gamma, on stimulation with IL-2.
 Also CD56\positive cells can induce elevated levels of granzyme B which is implicated in \gls{T1D} \citep{Thomas:2010cy}.
 These pro-inflammatory molecules could be problematic for IL-2 treatment, however it would appear that these cells are relatively low responders in comparison with the memory and naive T cell subsets.
@@ -2224,7 +2232,7 @@ I again applied the recursive partitioning method discussed in \Cref{RPART} to o
 However, instead of using the \gls{MST} visualisation, I used the parallel plot representation, where dimensions are represented as parallel axes and each point is represented by a line segment between dimensions (\Cref{figure:lymphocytes-KM00782Z-2012-07-23}).
 This representation is easier to interpret than the \gls{MST} representation to highlight a known subset.
 Each line in the parallel plot represents one of the 1024 bins and is colour coded by pSTAT5 MFI.
-The width of the lines are also increased for cells with a CD56 MFI higher than $1.2$ to better highlight the CD56 bright cells.
+The width of the lines is also increased for cells with a CD56 MFI higher than $1.2$ to better highlight the CD56 bright cells.
 While, as expected, the majority of lymphocytes are CD56 low, the CD56 bright populations clearly stand out and in particular, one line/bin shows particularly high activation.
 This cell population is consistently identified in four additional samples, stained with the same panel and analysed on different days, suggesting that this is likely to be a real population and not only the consequence of a batch effect (\Cref{figure:lymphocytes-newsamples-cd56bright-10 units}).
 
@@ -2274,7 +2282,7 @@ All plots can be viewed at \url{http://goo.gl/eeRYkE}.
 %\url{http://goo.gl/PqJGTy}.
 
 Upon closer investigation, this cell population contained doublets which were excluded by using side-scatter width and height.
-After this filtering, the remaining cells which responded to IL-2 were primarily CD4\positive CD3\positive, hence T cells, and CD45RA\positive, hence naive, as can be seen in the parallel plot representation in \Cref{figure:nonlymphocytes-singlets-KM00782Z-2012-07-23}.
+After this filtering, the remaining cells which responded to proleukin were primarily CD4\positive CD3\positive, hence T cells, and CD45RA\positive, hence naive, as can be seen in the parallel plot representation in \Cref{figure:nonlymphocytes-singlets-KM00782Z-2012-07-23}.
 Whether these cells are actually a distinct cell population of larger naive T cells or simply an artefact of the protocol it still not entirely clear.
 On one hand, this cell population does appear consistently in most samples stained for pSTAT5, but on the other it is not as clearly distinguishable, based on side and forward scatter in samples which did not undergo permeabilisation for pSTAT5 staining, as can be seen in \Cref{figure:il2ra-manual-gating-strategy}.
 
@@ -2323,7 +2331,7 @@ On one hand, this cell population does appear consistently in most samples stain
 {
 Each line represents a single cell from the subset identified in \Cref{figure:nonlymphocytes-KM00782Z-2012-07-23} after doublet-exclusion.
 The number of cells has been normalised using the \gls{ANN} method described in \Cref{paragraph:ANN}.
-At 1000 units, the cell which respond are primarily CD3\positive CD4\positive, hence T cells, and CD45RA\positive, hence naive.
+At 1000 units, the cells which respond are primarily CD3\positive CD4\positive, hence T cells, and CD45RA\positive, hence naive.
 }
 \end{minipage}
 \end{figure}
