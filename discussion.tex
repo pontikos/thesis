@@ -9,31 +9,32 @@ L'avenir n'est jamais que du présent à mettre en ordre, tu n'as pas à le pré
 %Pour ce qui est de l'avenir, il ne s'agit pas de le prévoir mais de le rendre possible.
 }}}
 
-Throughout my thesis I have considered methods of computationally analysing flow cytometry and genetic datasets in order to characterise the immune cell types and the genetic variants which could influence \gls{T1D} risk.
+Throughout my thesis I have considered, normalisation and clustering methods for computationally analysing flow cytometry and genetic datasets in order to characterise the immune cell types and the genetic variants which could influence \gls{T1D} risk.
 These methods have the potential to be more efficient, formal, consistent, objective and better at dealing with uncertainty than manual analysis.
-This could lead to improved reproducibility and more powerful association testing.
+Consequently they could lead to more powerful statistical association testing.
 %In the case of flow cytometry data, automating gating can also provide the added benefit of formalising manual gating, which remains to this day a very subjective, ad-hoc, process.
 
-Ultimately the goal of normalisation and clustering is to increase power for statistical association testing.
+%Ultimately the goal of normalisation and clustering is to increase power for statistical association testing.
 %Decomposing the variance into tech
-This is challenging as most genetically inherited biological traits are complex, with a significant proportion of the variation explained by the cumulation and interaction of a large number of small genetic effects.
+%This is challenging as most genetically inherited biological traits are complex, with a significant proportion of the variation explained by the cumulation and interaction of a large number of small genetic effects.
 %a multitude of smalls effects which cumulatively explain
 %Most effects in biological variation are small, they therefore require large sample sizes and
 
-The most studied factor which improves the statistical power to detect such effects is sample size, and we are witnessing ever-increasing sample sizes as consequence of decreasing genotyping and sequencing costs.
+%The most studied factor which improves the statistical power to detect such effects is sample size, and we are witnessing ever-increasing sample sizes as consequence of decreasing genotyping and sequencing costs.
 %This is because the standard deviation tends to shrink with the inverse of the sample size.
-However, there is still much work to be done on phenotype reproducibility.
-Poor reproducibility is in part due to the heterogeneity underlying the same phenotype.
-Disease phenotypes are known to differ depending on the individual and the stage of the disease.
-%If the disease is diagnosed earlier then the associated phenotype may be recurrent auto-antibody positivity or if diagnosed late, high blood glucose.
-In most diseases, case heterogeneity is a major confounder and one which needs addressing by collection of additional clinical covariates during recruitment, to enable subgroup differentiation.
+%However, there is still much work to be done on how reproducibility.
 
-This binary case/control classification of disease phenotypes can be too coarse, especially for late onset diseases, motivating the study of better defined quantitative intermediate phenotypes, known as endophenotypes.
-It is expected that these should have stronger correlation with genotype, since they are closer to gene expression.
-In my thesis, I have studied cell endophenotypes such as, CD25 protein expression on T cell subsets (\Cref{chapter:il2ra}), pSTAT5 \textit{ex vivo} response in \glspl{PBMC} (\Cref{chapter:il2}) or the relative cell subset frequency over parent cell population.
+%Poor reproducibility is in part due to phenotype heterogeneity.
+%The severity of the disease phenotype are known to differ depending on the individual and the stage of the disease.
+%If the disease is diagnosed earlier then the associated phenotype may be recurrent auto-antibody positivity or if diagnosed late, high blood glucose.
+%In many disease, case heterogeneity is a major confounder and one which needs addressing by collection of additional clinical covariates during recruitment, to enable subgroup differentiation \citep{Traylor:2013}.
+
+%This binary case/control classification of disease phenotypes can be too coarse, especially for late onset diseases, motivating the study of better defined quantitative intermediate phenotypes, known as endophenotypes.
+%It is expected that these should have stronger correlation with genotype, since they are closer to gene expression.
+%In my thesis, I have studied the such as, CD25 protein expression on T cell subsets (\Cref{chapter:il2ra}), pSTAT5 \textit{ex vivo} response in \glspl{PBMC} (\Cref{chapter:il2}) or the relative cell subset frequency over parent cell population.
 
 %These endophenotypes are more quantitative, especially with high-throughput technologies such as flow cytometry, in practice there are still factors which influence the accuracy at which these can be measured.
-The methods by which these endophenotypes are quantified have become extremely relevant and I will focus next on their application to flow cytometry.
+%The methods by which these endophenotypes are quantified have become extremely relevant and I will focus next on their application to flow cytometry.
 
 %For example in \Cref{chapter:il2ra}, I illustrated how minor changes in the clustering can influence the relative frequency and MFIs of the cell populations under study and the strong effect of outliers on the results.
 %Some other influential factors were, staining batch effects as seen in \Cref{chapter:il2}, or long-term instrument sensitivity as seen in \Cref{chapter:il2ra}.
@@ -73,7 +74,7 @@ As I will discuss later, a relatively small number of outlier events which occur
 \subsection{Accuracy}
 When labelled data is available, the accuracy of a method is defined based on how frequently a method assigns the correct label.
 Estimating accuracy relies on the existence of a test dataset, typically labelled using manual analysis or some other method.
-In \Cref{chapter:il2ra}, I assessed assessed accuracy by comparing the cluster proportions and means with those obtained from manual gating.
+In \Cref{chapter:il2ra}, I assessed accuracy by comparing the cluster proportions and means with those obtained from manual gating.
 %In \Cref{chapter:il2}, the accuracy was determined in terms of RSS of the pSTAT5 response.
 In \Cref{chapter:kir}, I used qPCR labelled data to assess the prediction accuracy of the \gls{knn} classifier.
 However, labelled data may not always be available, especially in the case of flow cytometry data.
@@ -439,9 +440,11 @@ In flow cytometry, there is a much larger number of cells than markers per sampl
 However, normalisation using peak alignment can also be done to align samples before the clustering, so that the same gating can be applied to all normalised samples.
 This allows for pooling of samples, to aid the identification of rarer cell populations \citep{Hahne:2009hl}.
 
-Stability of stains is a big challenge and biologists often have an intuition of which markers are stable, and objectively, it does appear that certain stains are much more stable than others, be it due to the antibody specificity, the staining protocol or the thoroughness of the lab technician.
-For example in \Cref{chapter:il2ra}, I was able to improve the repeatability of the CD25 MFI by correcting long-term fluctuations thanks to bead normalisation.
-On the other hand, in \Cref{chapter:il2}, the variation in pSTAT5 MFI was not adequately captured by beads, possibly due to titration issues, so I had to resort to various other normalisation approaches, none of which performed particularly well.
+Stability of stains is a big challenge and biologists often have an intuition of which markers are stable, and objectively, it does appear that certain stains are much more stable than others, be it due to the antibody specificity, the chemical stability of the fluorochrome, the staining protocol or the thoroughness of the lab technician.
+In \Cref{chapter:il2ra}, I was able to improve the repeatability of the CD25 MFI by correcting long-term fluctuations thanks to bead normalisation.
+In \Cref{chapter:il2}, the variation in pSTAT5 MFI was not adequately captured by beads, possibly due to titration issues, so I had to resort to various other normalisation approaches, none of which performed particularly well.
+
+
 
 %and become harder to call when the number of dimensions increases (they are not linearly separable in all dimensions).
 In the context of flow cytometry data, the manual gate hierarchy contributes prior information about the expected relative frequency of the different types of cells and their relative marker expression, but their absolute marker expression is generally not readily comparable across samples and requires normalisation as shown in \Cref{chapter:il2ra}.
@@ -460,8 +463,9 @@ Distinguishing between staining noise and actual differences in cell biology req
 
 \subsection{ Small number of samples }
 
-Typically, immunostaining flow cytometry experiments contain much smaller number of samples than genetic case-control experiments since, on one hand, samples are a limited resource and on the other, sample preparation and running tubes on the flow cytometer are an expensive and time-consuming process, while genotyping has become highly automated with an associated decrease in costs over the last decade.
-Also, experiments undertaken in flow cytometry are often pilot experiments or tubes ran to test and optimise panels, so not always complete datasets.
+%Typically, immunostaining flow cytometry experiments contain much smaller number of samples than genetic case-control experiments since, on one hand, samples are a limited resource and on the other, sample preparation and running tubes on the flow cytometer are an expensive and time-consuming process, while genotyping has become highly automated with an associated decrease in costs over the last decade.
+Typically, immunostaining flow cytometry experiments contain much smaller numbers of samples than case-control genetic experiments since blood and \gls{PBMC} samples are a limited resource and sample preparation and running tubes on the flow cytometer are an expensive and time-consuming process.
+Also, experiments undertaken in flow cytometry are often pilot experiments or tubes run to test and optimise panels, so not always complete datasets.
 These pilot experiments may be implemented with varying degrees of thoroughness and hence are generally poorly comparable.
 
 When dealing with the relatively small numbers of samples available in flow cytometry, I believe data quality is more influential than the methods used to process the data: sophisticated methods are no replacement for good data.
@@ -471,10 +475,10 @@ In genotyping, calling a genotype based on only a few samples is sometimes possi
 On the other hand, in flow cytometry, the average protein expression of cell populations, as measured by the \gls{MFI}, is generally not directly comparable across experiments, so it is difficult to predict where a cell population will fall.
 Instead, as is done when sorting cells, a few events need to be collected first in order estimate where to draw gates.
 Also, the frequency of cell populations can differ widely between individuals, and the ratio of cell populations, for example naive to memory, may change in the course of an individual's lifetime with exposure to environment. 
-However, clusters can be defined in relation to one another, for example memory cells are lower for \protein{CD45RA} but higher in CD25 than naive cells (\Cref{chapter:il2ra}).
+However, clusters can be defined in relation to one another, for example memory cells are lower for \protein{CD45RA} and higher for \protein{CD25} than naive cells (\Cref{chapter:il2ra}).
 
 This prior knowledge is acquired through the experience of having seen a large number of samples and is difficult to encode in an automated method.
-Processing in larger batches, or perhaps reducing the human element in flow cytometry, could be a first step towards automation.
+Processing in larger batches, or perhaps reducing the human involvment in flow cytometry, could be a first step towards automation.
 %http://www.aber.ac.uk/en/cs/research/cb/projects/robotscientist/
 This will become a necessity as the number of samples grows.
 
@@ -628,7 +632,7 @@ Discrepancies in gate positions are unlikely to make much of an impact on the MF
 
 %This can occasionally be achieved by centering the ellipse on the mean of the datapoints which fall within the gate.
 While, in my opinion, automated clustering ought to be applied more widely to flow cytometry data, manual analysis is likely to continue being used where the number of samples and parameters permits it.
-However, as the number of samples and parameters continue to grow, and new biotechnologies such as CyTOF \citep{Becher:2014} become widespread, biologists will have to relinquish more control to the computer.
+However, as the number of samples and parameters continue to grow, and new single-cell biotechnologies such as CyTOF \citep{Becher:2014} and Drop-seq \citep{Macosko:2015} become widespread, biologists will have to relinquish more control to the computer.
 %Hence it is important to continue developing these methods.
 %These methods will require some level of expertise and decent visualisation to guide and reassure the user.
 %Over-reliance on visualisation can mislead the analysis of high-dimensional because clustering is always projected back to two dimensions or linear combinations of dimensions.
