@@ -1,0 +1,66 @@
+Declaration
+
+ - 'fewer' than 60 000 words/150 figures?
+ 
+ 
+Abstract
+p1
+ - Final sentence - technical or within batch variation may undermine - delete comma (separates subject and verb)
+p2
+p3
+ - define qPCR before using abbreviation
+Final paragraph
+ - I would leave out 'where they remain under-utilised' - it makes the sentence a bit too long and is self-evident.
+ 
+
+Contributors 
+ - messy - fix formatting re Tony
+ - line spacing is inconsistent
+
+Abbreviations
+ - capitalisation seems arbitrary: ie 'Information Criterion' but 'analysis of variance'. This should be consistent
+ - line spacing is inconsistent
+ - you probably do not need page references here; they are not usually included with abbreviations. I think a tidier way to do it would be to left-justify the abbreviation and right-justify the definition, with all relevant words capitalised ie Analysis of Variance
+ 
+Genes
+ - line spacing is inconsistent
+ - maybe not italicised? (http://en.wikipedia.org/wiki/Gene_nomenclature)
+ 
+Proteins
+ - line spacing is inconsistent
+ - should these be italicised?
+
+
+Introduction
+
+1.1
+ - maybe start a new paragraph at 'SNP arrays have been...' - it is a new topic and the previous sentence concludes the previous topic. Also this paragraph is very long.
+ - "big biology", is flow cytometry - delete comma
+ - New paragraph at 'While clustering' - it is a new topic.
+ - 'One reason' ? -> 'A major reason'?: either way, 'reason for this is ...'
+ - 'In Genetics' is too broad; say 'in SNP calling. Also I would link these sentences; ie 
+ 
+ - 'In Chapter 3 .... in certain cell types between ' - delete comma
+ - 'In Chapter 4 ... . Instead, I' - it is not clear what you have done this instead of. Maybe just 'I use prior information..'
+ - 'Finally, I will conclude' - delete 'will', you have already done it. Also in 'I will discuss' -> 'I discuss'. Probably be more specific than just 'in genetics'.
+ 
+1.2
+ - Polyuria and glycosuria only really occur in critical untreated disease; I would point out that this is a symptom at onset, as it is not a symptom in treated disease.
+ - I would delete 'persistently' - it occurs because blood glucose conc rises above the renal tubule threshold (which is why you get glycosuria) and because of the osmotic action of the glucose on the blood (which is why you get polyuria). Persistence of high blood glucose leads to separate problems, but polyuria and glycosuria can also be a consequence of transient high blood glucose or hyperosmolality.
+ - high-glucose - delete hyphen
+ 
+Some thoughts on your introduction to the disease.
+ - I would be cautious about mentioning cardiac complications as a result of hyperglycaemia.
+ Although they are a major part of the disease burden of T2D, untreated T1D cases do not live long enough to get them.
+ Indeed, untreated T1D was pretty much universally fatal within a few years until the advent of insulin therapy.
+ - I would make a distinction between the symptoms of untreated T1D - that is, polyuria and glycosuria, diabetic ketoacidosis, and body mass wasting.
+ I would also say it was universally fatal until the absence of insulin (John may correct me on this) with diabetic ketoacidosis a common acute cause of death.
+
+  - THEN I would say that, although we have insulin therapy, it is necessary for T1D patients to maintain their blood glucose at a level higher than that attained by homeostatic control in healthy individuals.
+  This leads to complications similar to those of type 2 diabetes; namely macrovascular complications (increased risk of cardiac and thromboembolic events) and microvascular complications (ocular and renal complications, peripheral vascular disease, and amputation) and a reduced life expectancy
+  
+  - Thus, even when treated, T1D represents a significant burden both to the individual and to the healthcare system, so ... it would be desirable to treat it early.
+  
+  - the autoimmune destruction of beta cells was known long before 2010; perhaps this should have its own reference as in this paragraph it looks like you are saying John discovered it.
+
+ 
