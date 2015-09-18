@@ -100,7 +100,7 @@ to discover other cell subsets which may potentially, also be sensitive to IL-2 
 
 \paragraph{Samples and panels}
 
-He selected 22 long-standing diabetics (6 males and 16 females, mean age 29) and 28 controls (mean age 27) from the Cambridge Bioresource, as well as 30 newly diagnosed (20 males and 9 females, mean age 11.7) and 15 unaffected siblings of type 1 diabetics (5 males and 12 females, mean age 12.3) from the \Gls{D-GAP} resource.  
+He selected 22 long-standing diabetics (6 males and 16 females, mean age 29) and 28 controls (mean age 27) from the Cambridge Bioresource, as well as 29 newly diagnosed (20 males and 9 females, mean age 11.7) and 17 unaffected siblings of type 1 diabetics (5 males and 12 females, mean age 12.3) from the \Gls{D-GAP} resource.  
 These were matched on age and sex to 43 controls.
 %This was to determine if there was a difference between newly diagnosed and long-standing diabetics while controlling for age.
 %To guard from false positive association and non-reproducible results, it is important to ascertain the repeatability of these cell phenotypes before conducting any form of association study.
@@ -791,7 +791,7 @@ My view is that this dataset, as it stands, is not sufficiently reproducible to 
 %In the total study, yes. But the paired collection strategy allows comparison on intraday samples.
 %Although our dataset is not amenable to this type of statistical analysis because of batch variation which is very difficult to correct
 However, it may still contain useful biological information.
-As described in \Cref{table:IL2-panels}, a subset of samples stained with a quite comprehensive panel, including CD3, CD56 and CD8, we can be used to address another clinically relevant question:
+As described in \Cref{table:IL2-panels}, a subset of samples stained with a quite comprehensive panel, including CD3, CD56 and CD8, can be used to address another clinically relevant question:
 beside the four manually gated cell subsets, are there other subsets which respond to proleukin within the \gls{PBMC}?
 
 This question is extremely relevant for DILT1D\footnote{\url{http://www.clinical-trials-type1-diabetes.com}} and other clinical trials of IL-2 which have mostly focused on lymphocytes.  %CD4\positive cells.
@@ -930,7 +930,7 @@ In \Cref{figure:spade-lymphocytes-celltypes}b, a number of dose-responsive tree 
 Thus, I could visualise where these cells lay in relation to the known subsets (\Cref{figure:spade-lymphocytes-clusters}).
 These cells constitute approximately one percent of the cells in the lymphocyte subset.
 As depicted in \Cref{figure:spade-lymphocytes-clusters}, some properties of these cells distinguishes them from naive and memory subsets.
-They are CD56\high, CD3\negative, CD4\negative, CD8\positive and express moderate levels of CD25.
+They are CD56\high, CD3\negative, CD4\negative, CD8\positive and express low levels of CD25.
 %These cells could include CD56 bright cells,
 %a cell subset currently under investigation by \contributor{Charlie Bell} using RNAseq,
 %which are known to express high levels of CD122 (the beta chain of the IL2 receptor),
@@ -985,7 +985,7 @@ The \gls{MST} was generated on the lymphocytes stimulated at 1000 units and colo
 \end{minipage}
 \mycaption{figure:spade-lymphocytes-clusters}
 { Lymphocytes core markers: \texttt{SPADE.1}.  }
-{ The subset of cells, \texttt{SPADE.1} (purple), manually identified in \Cref{figure:spade-lymphocytes-celltypes}, is distinct from the manually gated cell subsets memory Teffs, memory Tregs, naive Teffs and naive Tregs. Its discriminating features are that it is CD4\negative, high for CD8 and CD56, while expressing moderate levels of CD25.
+{ The subset of cells, \texttt{SPADE.1} (purple), manually identified in \Cref{figure:spade-lymphocytes-celltypes}, is distinct from the manually gated cell subsets memory Teffs, memory Tregs, naive Teffs and naive Tregs. Its discriminating features are that it is CD4\negative, high for CD8 and CD56, while expressing low levels of CD25.
 } 
 %
 \begin{minipage}{.5\textwidth}
@@ -1284,6 +1284,7 @@ On the other hand, the cell subset \texttt{RPART.1} (purple) appeared to be CD3\
 These cells were also low in CD25, with the same level of expression as naive Teffs, which explains their limited response at lower doses.
 They constitute around $1.66$ percent of the total lymphocyte population within this sample.
 These CD56 bright cells include CD3\negative cells so could belong to a cell subset currently under investigation by \contributor{Charlie Bell} in our lab using RNAseq, which are known to express high levels of CD122, the beta chain of the IL-2 receptor.
+%Linda: RPART.1 responds at 1000 U/ml--the CD56^high cells Charlie is studying respond between 1 and 10 U/ml and there is CD25 expression on a portion of the cells (at least in surface staining).  
 
 \begin{figure}
 \centering
@@ -1306,7 +1307,8 @@ A subset of cells delineated in purple, \texttt{RPART.1}, shows pSTAT5 response 
 {
  Two subset of cells, a 10 unit responsive subset, \texttt{RPART.2}, and a 1000 unit responsive subset, \texttt{RPART.1}, manually identified in the MST of \Cref{figure:rpart-lymphocytes-mst-1024bin}, which are distinct from the manually gated cell subsets memory Teffs (black), memory Tregs (red), naive Teffs (green) and naive Tregs (dark blue), are projected back to core marker space.
  \texttt{RPART.2} overlaps with the manually identified cell subsets.
- Its discriminating features are that it is CD3\negative, CD4\negative and high in CD56, while expressing low levels of CD25.
+ The discriminating features of \texttt{RPART.1} are that it is CD3\negative, CD4\negative and high in CD56, while expressing low levels of CD25.
+ %Linda: I would not say RPART.1 cells have high levels of CD56.
   %clusters in one of the branches which does not overlap with any of the manual gates as seen in \Cref{figure:spade-celltypes}b.
 %Projecting these cells back to intensity space it surfaces that they are CD4\negative which explains why they were not included in the manual gating.
 %They are also CD45RA\negative and high for CD25 which explains why they respond to proleukin.
@@ -2002,7 +2004,7 @@ Sometimes from the MST it may be difficult to delineate the cluster of cells whi
 
 In fact, the downsampled data used to create the \gls{MST} visualisation can been used to represent the data in a number of ways using established for example \gls{PLS} with pSTAT5 as the response variable, as I have shown earlier, or other \gls{MDS} style methods which rely on the distance matrix computation.  
 
-From the joined data, I have explored methods which use the pSTAT5 response to guide, the binary recursive partitioning of the core marker space using \gls{CART} or the estimation of the principal components using \gls{PLS}.
+From the joined data, I have explored methods which use the pSTAT5 response to guide the binary recursive partitioning of the core marker space using \gls{CART} or the estimation of the principal components using \gls{PLS}.
 Applying \gls{CART} to side and forward scatter, the lymphocyte population was consistently identified as the most responsive cell population in all samples stimulated at 1000 units.
 However, I found that applying this method on all markers simultaneously across all samples yielded different partitioning schemes per sample.
 %Given the poor partitioning of the core markers using this CART implementation,
@@ -2032,7 +2034,7 @@ Ideally, some further clustering would be required on this subset, but in practi
 %If the response comes from regions of low density in the core marker space, it might be worth applying this method on a dataset after the core marker density has been made more uniform.
 
 %\paragraph{Possible extensions to the regression trees methods}
-There are other possible extensions to the regression trees methods covered in the "Elements of Statistical Learning" textbook \citep{Anonymous:ikywRZeA}.
+There are other possible extensions to the regression tree methods covered in the "Elements of Statistical Learning" textbook \citep{Anonymous:ikywRZeA}.
 These extensions allow for a linear combination of more than one marker at each split, or for more than one split at each level.
 \Gls{MARS} for example uses multiple additive regression splines as a generalisation of stepwise linear regression or a modification of the CART method to improve its performance in the regression setting.
 \Gls{MARS} foregoes the tree structure and instead of approximating each bin by the pSTAT5 mean, the pSTAT5 function is approximated by a piecewise linear function with knots at core markers points.
@@ -2042,7 +2044,7 @@ Another extension is the \gls{PRIM} also known as the "bump hunting" algorithm i
 \gls{PRIM} searches for a bounding boxes in the marker space in which the average response is high.
 Since there is no binary constraint this reduces the number of splits.
 The main box construction method in PRIM works from the top down, starting with a box containing all the data.
-The box is compressed along one face by a small amount, and the observations then falling outside the box are filtered out.
+The box is compressed along one face by a small amount, and the observations that fall outside the box are filtered out.
 The face chosen for compression is the one resulting in the largest box mean, after the compression is performed.
 Then the process is repeated, stopping when the box contains some minimum amount of points.
 After the top-down sequence is computed, PRIM reverses the process expanding along any edge, if such an expansion increases the box mean.
@@ -2050,7 +2052,7 @@ After the top-down sequence is computed, PRIM reverses the process expanding alo
 Since the top-down procedure is greedy at each step such an expansion is often possible.
 The result of these steps is a sequence of boxes, with a different number of observations per box.
 %Cross-validation, combined with the judgment of the data analyst, is used to chose the optimal box size.
-An advantage of PRIM over CART is its patience, since CART tends to fragment the data quite quickly, but this comes at the cost of performance and I found the \Rpackage{prim} implementation of this method to be too slow to run on my dataset.
+An advantage of PRIM over CART is its patience, since CART tends to fragment the data rather quickly, but this comes at the cost of performance and I found the \Rpackage{prim} implementation of this method too slow to run on my dataset.
 %
 %The performance of these methods depends on the data, but generally, they tend to over-partition the data, resulting in bins which are uneven or an unbalanced tree.
 %%An ensemble version of the CART are random forests.  
@@ -2085,17 +2087,17 @@ In \Cref{figure:final-lymphocytes-clusters}, the lymphocyte cell populations are
 
 The \texttt{SPADE.1} and the \texttt{PLSR.1} population, constituting $1.14$ and $15.08$ percent of the lymphocytes, appear to have similar dose-response profiles.
 However, the \texttt{PLSR.1} population is CD56\negative and has slightly higher CD45RA (and so higher FOXP3 because of the spillover).
-The \texttt{SPADE.1} subset is CD3\positive CD4\negative CD8\positive CD45RA\positive CD56\positive
-whilst the \texttt{PLSR.1} subset is CD3\positive CD4\negative CD8\positive CD45RA\high CD56\negative.
-%The \texttt{PRPART.2} subset which constitutes $4$ percent of the lymphocytes is CD3\positive CD4\high CD25\high CD8\negative CD45RA\negative CD56\negative.  
+The \texttt{SPADE.1} subset is CD3\positive CD4\negative CD8\positive CD45RA\positive CD56\positive whilst the \texttt{PLSR.1} subset is CD3\positive CD4\negative CD8\positive CD45RA\high CD56\negative.
+The \texttt{PRPART.2} subset which constitutes $4.05$ percent of the lymphocytes is CD3\positive CD4\high CD25\high CD8\negative CD45RA\negative CD56\negative, appears to be a combination of the memory CD4\positive Treg and Teff populations.
 Interestingly, the \texttt{RPART.1} population, which constitutes 3.36 percent of the lymphocytes, has the lowest CD25 but is more sensitive than the \texttt{PLSR.1} and \texttt{SPADE.1} populations to proleukin.  
 This \texttt{RPART.1} subset is CD3\negative CD4\negative CD8\negative CD45RA\positive CD56\positive.
+
 
 These cells are likely to be NK cells, although, \protein{CD16} would need to be measured to confirm that these cells are \protein{CD16}\positive.
 \citet{Ortaldo:1992tr} report that these CD3\negative CD56\positive cells are producers of the pro-inflammatory cytokine, interferon gamma, on stimulation with IL-2.
 Also CD56\positive cells can induce elevated levels of granzyme B which is implicated in \gls{T1D} \citep{Thomas:2010cy}.
 These pro-inflammatory molecules could be problematic for IL-2 treatment, however it would appear that these cells are relatively low responders in comparison with the memory and naive T cell subsets.
-The properties and function of this CD3\negative CD8\negative CD45\positive CD56\positive cell subset will be further investigated in our lab by \contributor{Charlie Bell} using RNAseq.
+The properties and function of this CD3\negative CD8\negative CD45RA\positive CD56\positive cell subset will be further investigated in our lab by \contributor{Charlie Bell} using RNAseq.
 
 %The consensus cluster (purple) is shown in relation to the known cell subsets (naive, memory, Teffs and TRregs)
 %in \Cref{figure:final-lymphocytes-clusters-consensus}, on all core markers, as well as the dose-repsonse,
@@ -2185,7 +2187,10 @@ MMPART.2    & 4.07 & 2.74 & 1.84 & 3    & 2.21 & 2.76   & 1.13 & 1.47 & 1.7   & 
 \end{tabular}
 \mycaption{table:final-nonlymphocytes}
 { Non-lymphocytes: Cell phenotypes. }
-{ The frequency of the subsets (\%) is relative to the whole sample. }
+{
+    The frequency of the subsets (\%) is relative to the whole sample (including debris).
+    %Linda: Table 3.4--in regard to the Freq listed in the table, has the debris been eliminated from the "whole sample" denominator?
+}
 \end{table}
 
 
@@ -2338,7 +2343,8 @@ At 1000 units, the cells which respond are primarily CD3\positive CD4\positive, 
 
 \subsection{Conclusion}
 
-Using the methods described in this chapter on the most complete staining panel at my disposal for these \gls{PBMC} samples, it would appear that, although other cell types carriers of IL-2 receptors are potential responders, the majority of the response comes from within the lymphocyte subset, with a smaller secondary response coming from the non-lymphocyte \texttt{SPADE.1}/\texttt{PLSR.1} cluster at 1000 units of proleukin.
+Using the methods described in this chapter on the most complete staining panel at my disposal for these \gls{PBMC} samples, it would appear that, although other cell types carriers of IL-2 receptors are potential responders, the majority of the response comes from within the convential lymphocyte subset, with a smaller secondary response coming from the \texttt{SPADE.1}/\texttt{PLSR.1} cluster at 1000 units of proleukin.
+%Linda: The SPADE.1/PLSR.1 cluster is CD3+ (figure 3.56) so these cells have to be lymphocytes -- they are falling outside of the lymphocyte light scatter gate either because they are activated or because there is a staining artefact from the intracellular protocol.  (Have doublets been removed from this analysis?)
 %The methods explored in this chapter could be combined to identify dose-responsive cells in stimulation experiments.
 Another observation is that, within the lymphocytes, at the lowest 0.1 units proleukin dose, CD25 explains a significant proportion of the pSTAT5 response, however at higher, 10 and 1000 units doses, the beta receptor, CD122, and common gamma receptor, CD132, are likely to become more influential \citep{Pekalski:2013ga}.
 For example, the CD56\high subset
