@@ -840,7 +840,7 @@ The result is that a population is defined as an intersection of multiple one or
 %since information is lost at each clustering step
 %Only methods which are capable of clustering all dimensions at the same time can exploit the full information available in the dataset.
 
-However, manual gating suffers from a a number of drawbacks.
+However, manual gating suffers from a number of drawbacks.
 Firstly, manual gating introduces technical variation since the position and ordering of the gates on the same data can differ between gaters \citep{Maecker:2010fg}.
 %This provides motivation for considering more efficient and unbiased alternative methods of doing the gating.
 It suffers from strong bias as it tends to force data to fit a model (the gater's expectation).
@@ -943,12 +943,10 @@ For certain parameters such as mean and covariance, closed-form solutions exist 
 \end{minipage}
 %\begin{minipage}{.3\textwidth}
 \mycaption{figure:gmm-variance}
-{ Effect of shrinking variance in a two component \gls{GMM}, with means fixed at $0$ and $2$, on the decision boundary. }
+{ Effect of shrinking variance in a two-component \gls{GMM}, with means fixed at $0$ and $2$, on the decision boundary. }
 {
-  In this two component univariate \gls{GMM}, the y axis represents the posterior probability of being assigned to the first component and
-  the x axis represents the value of the data points.
-  As the variance of the two Gaussian components shrinks, the soft decision boundary approaches the hard K-means decision boundary, so that we go from
-  a soft probabilistic assignment to a hard binary assignment. 
+  In this two-component univariate \gls{GMM}, the y axis represents the posterior probability of being assigned to the first component and the x axis represents the value of the data points.
+  As the variance of the two Gaussian components shrinks, the soft decision boundary approaches the hard K-means decision boundary, so that we go from a soft probabilistic assignment to a hard binary assignment. 
 }
 %\end{minipage}
 \end{figure}
@@ -1122,7 +1120,7 @@ where $SS_{t}$ is the total sum-of-squares:
   SS_{t} = \sum_{i=i}^{n} ( \mathbf x_i - \boldsymbol\mu )^2 ; \quad \boldsymbol\mu=\text{E}(x_i)
 \]
 
-\citeauthor{Calinski:1974bt}  note that the variance-ratio criterion relates to
+\citeauthor{Calinski:1974bt}  note that the variance-ratio criterion relates
 %the $R^2$ ratio in 
 to the \gls{ANOVA} F-test.
 %since the between-cluster variance is the variance explained by the model and the within-cluster variance is the remaining variance.
@@ -1138,11 +1136,11 @@ is very much dependent on the inherent noise in the data.
 {Variance ratio criterion used to estimate the number of clusters with K-means.}
 {
   Two simulated datasets are used to illustrate the variance criterion ratio on K-means.
-  The first dataset (a and b) is simulated from a five component mixture of bivariate spherical Gaussians with covariance of $0.05$,
+  The first dataset (a and b) is simulated from a five-component mixture of bivariate spherical Gaussians with covariance of $0.05$,
   the second (c and d) is simulated from the same model but with the covariance scaled 10-fold to $0.5$.
   While on the first dataset the optimal number of clusters according to the variance ratio criterion is correctly estimated as $5$ (a),
   on the second dataset it is overestimated as $7$ due to the increased noise (c).
-  (b) and (d) depict the clustering resulting from K-means with $K=5$ and $K=7$ respectively.
+  The clustering resulting from K-means with $K=5$ and $K=7$ is depicted in (b) and (d) respectively.
 }
 
 

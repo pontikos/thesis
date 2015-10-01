@@ -348,7 +348,7 @@ An idea similar to that applied in \Cref{chapter:il2ra} to define naive cells as
 %It is a good approach to use when the number of cells is small
 %and is commonly used in populations with high CV.
 However, here an internal threshold was used, namely the threshold was defined to be the 99th percentile of the pSTAT5 distribution in the resting cell subset per sample.
-Thus each each sample and cell subset had its own pSTAT5\positive threshold.
+Thus each sample and cell subset had its own pSTAT5\positive threshold.
 \contributor{Tony Cutler} presented his results in six of the ten repeated individuals for the four stimulated cell subsets, memory Teffs (\Cref{figure:tony-memory-eff}), memory Tregs (\Cref{figure:tony-memory-treg}), naive Teffs (\Cref{figure:tony-naive-eff}) and naive Tregs (\Cref{figure:tony-naive-treg}).
 At the highest 1000 units proleukin dose, most memory and naive Tregs are pSTAT5\positive, however, as these cell populations already show a significant response at the lowest 0.1 unit dose, the percentage of pSTAT5\positive cells at the 0.1 units dose was selected to be the relevant cell phenotype for memory and naive Treg pSTAT5 cells (\Cref{figure:tony-memory-treg,figure:tony-naive-treg}).
 For the less responsive memory Teffs, 10 units was chosen as the representative dose, while for naive Teffs, the least responsive of the four cell subsets considered, the repeatability was assessed at the 1000 unit dose.
@@ -360,7 +360,7 @@ The repeatability was assessed with the coefficient of determination:
 where $x_{i1}$ is the phenotype of $i^{th}$ individual on the first day and $x_{i2}$
 is the phenotype of the $i^{th}$ individual on the second day.
 The coefficient of determination can take negative values if the correlation between $x_{i1}$ and $x_{i2}$ is very low.
-Contrary to the Pearson correlation, used in the previous chapter, the coefficient of determination is sensitive to linear transforms.
+Contrary to the Pearson correlation used in the previous chapter, the coefficient of determination is sensitive to linear transforms.
 %this is not correct because it's not symmetric
 In \Cref{figure:tony-repeatability}, even when using the percent of pSTAT5\positive cell phenotype, the overall reproducibility across the four cell subsets was still poor, with the more sensitive and smaller cell subsets, naive and memory Tregs showing the worst correlation ($R^2=-0.16$ and $R^2=-0.82$), memory Teffs showing slightly better correlation ($R^2=0.021$) and the less responsive naive Teffs showing good correlation ($R^2=0.7728$).
 The association with \gls{T1D} was tested using a two-tailed paired t-test of 20 cases matched with 20 controls analysed on the same day (\Cref{figure:tony-t1d-association}).
@@ -820,7 +820,7 @@ Here I first explored approaches to visualise the pSTAT5 dose-response in the wh
 I also considered more automated methods which use the pSTAT5 response to guide the identification of these cell subsets.
 One of the challenges faced in identifying new cell types is how to reconcile the two different kinds of flow cytometric data, scatter and fluorescence, since these represent quite different physical properties and are measured on a linear and logarithmic scale respectively.
 Typically scatter gating takes precedence over fluorescence gating, and the standard protocol is to first use scatter to discriminate live cells from debris.
-In the next section, I followed this protocol, by first gating on side and forward scatter in order to distinguish lymphocytes from non-lymphocytes, then conducting separate analysis on the lymphocyte subset using fluorescent markers only, and to the non-lymphocyte subset, using both fluorescent and scatter markers.
+In the next section, I followed this protocol, by first gating on side and forward scatter in order to distinguish lymphocytes from non-lymphocytes, then conducting separate analyses on the lymphocyte subset using fluorescent markers only, and to the non-lymphocyte subset, using both fluorescent and scatter markers.
 %While the manual gating inspired approach is the established method, it suffers from a major drawback:
 %it relies on prior knowledge of the number of cell populations and consequently misses the pSTAT5 response in uncharacterised cell subsets.
 
@@ -844,8 +844,7 @@ However, the structure in the data may be poorly represented by the principal co
 Therefore, there is considerable interest in developing methods that capture both the local and global structure of the data, so that points which lie close in higher-dimensional space tend to lie close in two-dimensional space.
 %\gls{ISOMAP} \citep{Tenenbaum:2000jp}.
 %SPADE is a methods which was developed with this objective.
-In flow cytometry, one such method is \acrfull{SPADE} which yields a \acrfull{MST} representation,
-where each node in the tree represent a multi-dimensional cluster in flow marker space \citep{Simonds:2011jh}.
+In flow cytometry, one such method is \acrfull{SPADE} which yields a \acrfull{MST} representation, where each node in the tree represents a multi-dimensional cluster in flow marker space \citep{Simonds:2011jh}.
 The \gls{MST} is defined as the shortest path that connects all points in a network.
 %The visualisation requires requires downsampling.
 %A soft approach to downsampling, is to downweight points in high-density regions
@@ -872,7 +871,7 @@ In order for all existing regions of the marker space to be equally represented 
 \mycaption{figure:downsample}{ Example of density-dependent downsampling on bivariate 50,0000 point dataset on CD45RA and CD25. }
 {
 Effect of density-dependent downsampling from 50,000 to 200 datapoints (a), and density-dependent downsampling to 50 datapoints (b). 
-The size of the green points represent the density.
+The size of the green points represents the density.
 The small top-right cloud of points is preserved after density dependent down-sampling.
 }
 \end{figure}
@@ -1187,14 +1186,14 @@ Since each bin should contain approximately $\dfrac{1}{128^{th}}$ of the events,
 {Sample recursively partitioned into 128 bins on side and forward scatter.}
 {
    The binning is determined in the resting sample (a) and then the same binning is applied across all samples (b, c and d).
-   While each each bin contains the same number of events in the resting sample (a), this does not necessarily hold in the
+   While each bin contains the same number of events in the resting sample (a), this does not necessarily hold in the
    other samples (b, c and d).
 }
 \end{figure}
 
 Applying the same binning across the four samples, the relative proportion of events assigned to each bin varies between samples (\Cref{figure:scatter-rpart-128bin-var-prop}).
 %This is a potential shortcoming of the binning method, namely finding a binning scheme which minimises the between
-If the number of bins is increased each bin represents a smaller proportion of the sample so consequently the variations between samples should also become smaller.
+If the number of bins is increased, each bin represents a smaller proportion of the sample so consequently the variations between samples should also become smaller.
 %In particular, bins highlighted in red in samples b, c and d of \Cref{figure:scatter-rpart-128bin-var-prop}
 %coincide with high side scatter, low forward scatter, events which are only present in the unstimulated sample
 %\Cref{figure:scatter-rpart-128bin-var}.  These events are likely to represent debris.
@@ -1730,7 +1729,7 @@ defined in \Cref{figure:spade-nonlymphocytes-pstat5mfi}.
 %\clearpage
 
 
-\subsection{MMPART: identification of low-dose sensitive cells by recursive application of a two component mixture model on pSTAT5}
+\subsection{MMPART: identification of low-dose sensitive cells by recursive application of a two-component mixture model on pSTAT5}
 
 The CART approach, described previously, seeks the core marker split point which minimises the deviance of the response variable.
 This approach successfully discriminates, based on side and forward scatter, the lymphocytes as the most responsive cluster
@@ -1775,7 +1774,7 @@ The three newly identified cell subsets are not homogeneous for the other core m
     In the top plot (a), the 1000 units pSTAT5 distribution is divided into negative (red) and positive (green) subsets by fitting a two-component \gls{GMM}.
     The low and high subsets from (a) are then further subdivided in (b) and (c) respectively, by again fitting a two-component \glspl{GMM},
     but this time to the 10 units pSTAT5 distribution.
-    This process is recursively applied to the low and high subsets obtained from (b) and (c) by fitting two-component \glspl{GMM} to the 0.1 units pSTAT5 distribution, in order
+    This process is recursively applied to the low and high subsets obtained from (b) and (c) by fitting a two-component \glspl{GMM} to the 0.1 units pSTAT5 distribution, in order
     to obtain (d) and (e), and (f) and (g).
     The plots with green borders represent the positive subsets (c, e, and g) whereas the plots with red borders represent the negative subsets (b, d and f).
     Three subsets are identified, \texttt{MMPART.1}, \texttt{MMPART.2} and \texttt{MMPART.3}, which respond at 0.1 units (g), 10 units (c) and 1000 units (a) respectively.
