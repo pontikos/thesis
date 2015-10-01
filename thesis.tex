@@ -74,7 +74,7 @@
 % the document class. 
 
 %\documentclass[a4paper,12pt,table,chapter]{common/PhDThesisPSnPDF}
-\documentclass[a4paper,12pt,table]{common/PhDThesisPSnPDF}
+\documentclass[a4paper,12pt,table,hidelinks]{common/PhDThesisPSnPDF}
 %\documentclass[12pt,a4paper,table,twoside]{report}
 
 
@@ -170,6 +170,8 @@
   %{\usebibmacro{postnote}}
 
 %make indexes
+%\usepackage{makeidx}
+\usepackage[columns=1]{idxlayout}
 \makeindex{contributors}
 \makeindex{genes}
 \makeindex{proteins}

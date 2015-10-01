@@ -34,25 +34,19 @@ They concurrently probe several hundred thousand of \glspl{SNP} within an indivi
 has been parallelised so that a single experiment can assay thousands of individuals.
 Each SNP probe is fluorescently labelled so that at a given genomic locus, the intensity values can be clustered across individuals, 
 after normalisation.
-Genotypes at a given loci can be called by individual, depending on the cluster in the pooled dataset to which the individual is assigned.
+Genotypes at a given locus can be called by individual, depending on the cluster in the pooled dataset to which the individual is assigned.
 Common genotypes form larger clusters whereas rarer genotypes form smaller clusters.
 %In cases, when clusters overlap too much or individuals lie too far from cluster centers, it is not possible to call a genotype with certainty.
-An equally influential technology which has brought cell biology into the sphere of ``big biology'', is flow cytometry,
-a high-throughput technique for measuring up to twenty cell parameters in millions of cells.
+An equally influential technology which has brought cell biology into the sphere of quantitative biology, is flow cytometry, a high-throughput technique for measuring up to twenty cell parameters in millions of cells.
 In flow cytometry, clustering is performed to group similar cell measurements to identify cell types within a sample.
 Typically, the relative size of these clusters and their means are of biological interest and are compared between samples after normalisation.
 %Alternatively, normalisation can also be applied before the clustering to enable pooling to aid identification of rarer cell types.
 %Normalisation is typically applied as a meta-clustering step for matching and comparing properties of these cell types in samples analysed across days or batches,
 %but can also be applied before the clustering to enable pooling to aid identification of rarer cell types.
 %In the future, high througput sequencing and mass cytometry will generate even larger numbers of parameters at possibly higher rates.
-While clustering applied to \gls{SNP} calling can be fully automated,
-clustering in flow cytometry is still reliant on manual inspection.
-One reason is that
-clustering of cell types is more uncertain than clustering of genotypes because the number of cell types is unknown and
-cells are often in intermediate states between cell types.
-In genetics, in the absence of copy number variation,
-the expected number of clusters at a given loci is typically known
-since there are only a finite number of possible genotypes at a \gls{SNP}.
+While clustering applied to \gls{SNP} calling has been successfully automated, clustering in flow cytometry is still done manually.
+One reason is that clustering of cell populations is a harder problem than clustering of genotypes because on one hand, the number of different types of cell populations is unknown, and on the other, cells are often in an intermediate state between cell types.
+%In genetics, in the absence of copy number variation, the expected number of clusters at a given locus is typically known since there are only a finite number of possible genotypes at a \gls{SNP}.
 %, namely homozygote recessive, heterozygote or homozygote dominant.
 %However, we will see that there are regions of copy number variation in the genome which do not fit this model.
 
@@ -63,8 +57,7 @@ since there are only a finite number of possible genotypes at a \gls{SNP}.
 %As in all statistcal anlyses, some prior knowledge is required explicitly or implicitly defined.
 The choice of normalisation and clustering methods can have an important impact on reproducibility and association statistics \citep{Plagnol:2007dw}.
 %One of the key questions of this thesis will be how influential are these clustering on downstream data analysis.
-The influence of clustering on reproducibility and association testing will be the focus of \Cref{chapter:il2ra}, where I revisit a large,
-long-running flow cytometry experiment designed to measure genotype-phenotype correlation in hundreds of individuals.
+This will be the focus of \Cref{chapter:il2ra}, where I revisit a large, long-running flow cytometry experiment designed to measure genotype-phenotype correlation in hundreds of individuals.
 %In this dataset, time-effect linked to instrument variation are non-negligeable and will need to be addressed by normalisation, using fluorescent beads as an external control.
 The cell type clustering was initially conducted manually by drawing gates to delineate populations of cells.
 I assess the influence of clustering method on association testing,
@@ -84,8 +77,7 @@ The clusters applied in qPCR are used to identify the SNP patterns which are pre
 %Using normalisation and clustering, joining datasets from different experiments, qPCR and SNP, to discover new patterns.
 
 Finally, I will conclude with what I have learned about normalisation and clustering in general, and the specifics of their application to these datasets.
-I will discuss how these methods could be further applied and refined, especially with regards to flow cytometry,
-where they are not yet as commonly used as in genetics.  
+I will discuss how these methods could be further applied and refined, especially with respect to flow cytometry, where they are not yet as widespread as in genetics.  
 
 \section{Biology of type 1 diabetes}
 
@@ -98,13 +90,10 @@ what we know about the disease and the technologies we are using to gain new ins
 \Gls{T1D} (OMIM:222100), also known as insulin dependent diabetes mellitus (diabetes - \foreignlanguage{greek}{diab\'hths},
 a passer through, and mellitus - \foreignlanguage{greek}{m\'eli}, honey), is a disease reported as early as $1500$ BC \citep{Poretsky:2010wr}.
 It holds its name from the characteristic symptom of excessive discharge of high-glucose urine (glycosuria or hyperglycemia-induced osmotic diuresis polyuria).
-It has since been established that this symptom is the consequence of persistently high levels of glucose (hyperglycemia) in the blood due to an insufficiency in insulin,
-the hormone responsible for glucose regulation.
+It has since been established that this symptom is the consequence of persistently high levels of glucose (hyperglycemia) in the blood due to an insufficiency in insulin, the hormone responsible for glucose regulation.
 Long term high-glucose levels lead to dehydration, drowsiness, cardio-vascular complications, increased chances of morbidity and death.  
 If left untreated T1D is a debilitating and life-threatening disease.
-From post-mortem analysis of pancreatic samples and animal models,
-it is widely accepted that the cause of the insulin deficiency in \gls{T1D} is an autoimmune reaction
-in which insulin and insulin-producing $\beta$-cells of the pancreatic islets
+From post-mortem analysis of pancreatic samples and animal models, it is widely accepted that the cause of the insulin deficiency in \gls{T1D} is an autoimmune reaction in which insulin and insulin-producing $\beta$-cells of the pancreatic islets
 are progressively destroyed primarily through auto-reactive T cells \citep{Todd:2010bl}.  
 %, a hormone essential in regulating blood glucose levels, which causes the clinical symptoms associated with T1D:
 
@@ -137,7 +126,7 @@ in newly diagnosed \gls{T1D} patients (\url{http://www.clinical-trials-type1-dia
 Patterns of familial clustering suggest that a portion of T1D risk is inherited.
 %The sibling relative risk which is the ratio of the sibling recurrence risk and the overall disease prevalence,
 A measure of heritability used by geneticists is the sibling recurrence risk $\lambda_s$, which is defined as
-the ratio of the probability that a sibling of an affected individual has the disease over the probability of a random individual in the population
+the ratio of the probability that a sibling of an affected individual has the disease to the probability of a random individual in the population
 having the disease.
 For \gls{T1D}, $\lambda_s$ has been estimated to be close to 15 \citep{Risch:1987wm},
 %based on the \citet{Spielman:1980vv} and \citet{Wagener:1982up} studies,
@@ -188,12 +177,9 @@ although \citet{Clayton:2009kf} suggested that this might be an overestimate and
 %However since related individuals also tend to share environment, it is difficult to decouple the genetic from the environmental effect.
 
 %\subsection{Genetic architecture}
-Regardless of the exact estimate of $\lambda_s$, some genetic predisposition to \gls{T1D} is indisputable
-and researchers have long been interested in identifying likely causal variants in our genetic code
-that might lead to some insights into the mechanism of the disease.
+Regardless of the exact estimate of $\lambda_s$, some genetic predisposition to \gls{T1D} is indisputable and researchers have long been interested in identifying likely causal variants in our genetic code that could lead to some insights into the mechanism of the disease.
 %We are interesting in discovering how many genes have an effect
-Linkage studies based on the recombination of multiallelic genetic markers in families affected by \gls{T1D},
-first mapped a genetic risk factor to the \gls{HLA} region on chromosome 6 \citep{Singal:1973tg,Cudworth:1974ve,Nerup:1974ui}.
+Linkage studies based on the recombination of multiallelic genetic markers in families affected by \gls{T1D} first mapped a genetic risk factor to the \gls{HLA} region on chromosome 6 \citep{Singal:1973tg,Cudworth:1974ve,Nerup:1974ui}.
 As insulin is a target of the autoimmune response in T1D, the insulin gene (\gene{INS}), on chromosome 11, was tested as a strong candidate region
 and was also found to associate with the disease \citep{Bell:1984uw,Permutt:1984wt}.
 %Furthermore, \citet{Metcalfe:2001} found that within 40 \gls{MZ} twin pairs concordant for T1D, $87.5\%$ carried the high risk \gene{INS} variant (Hph I), compared to $59.5\%$ in 47 discordant MZ twins.
@@ -205,10 +191,10 @@ and was also found to associate with the disease \citep{Bell:1984uw,Permutt:1984
 %so it is clear that T1D must involve smaller effect size risk variants that are only detectable at sample sizes larger than those achievable by linkage studies.
 In \citeyear{Davies:1994gu}, \citeauthor{Davies:1994gu}, using a linkage map of 290 marker loci in 96 sibling pairs,
 confirmed the association with the HLA and insulin gene regions, and further 
-reported a number of new chromosome regions showing some potential evidence of linkage to \gls{T1D}.
-The study confirmed that \gls{T1D} is a polygenic disease and that furthermore, there were unlikely to exist other loci with as strong an effect as HLA.
+reported a number of new chromosome regions showing some evidence of linkage to \gls{T1D}.
+The study confirmed that \gls{T1D} is a polygenic disease and that, there were unlikely to exist other loci with as strong an effect as HLA.
 
-More recently, \Glspl{GWAS} using high density \gls{SNP} arrays,
+More recently, \Glspl{GWAS} using high density \gls{SNP} arrays
 %, such as the GeneChip 500K Mapping Array Set (Affymetrix chip),
 %to test the association of hundreds of thousands of loci across the genome in thousands of unrelated cases and controls,  
 have confirmed strong association of T1D within the \gls{HLA} (chromosome 6p21) and \gene{INS} (chromosome 11p15) loci,
@@ -290,22 +276,22 @@ If this mechanism is not sufficient to clear the pathogen, then antigen presenti
 %An important type of leukocyte in the adaptive immune response are T lymphocytes also known as T cells.
 After having undergone central selection in the thymus, T cells in the peripheral blood have an affinity for foreign antigens but are tolerant to self.
 Initally these cells are in a naive state (naive T cells) until presented with an antigen, at which point they mainly differentiate into effector T cells, capable of mounting an immediate response, but also into longer-lived memory T cells, capable of mounting a stronger and faster response in the future thus resulting in long lasting immunity against this pathogen (acquired immunity).
-In order to moderate the scale of the immune response and preserve self-tolerance, some T cells also have a regulatory function on the immune response mediated using small signalling molecules known as cytokines.
+In order to moderate the scale of the immune response and preserve self-tolerance, some T cells also have a regulatory function on the immune response mediated by small signalling molecules known as cytokines.
 % (for example \acrfull{IL-2}).
 %Tony:
 % Tregs use cytokines such as IL-10 and TGF-beta, inhibitory molecules such as CTLA4 or cAMP generation to suppress.
 % They may also regulate T cell effector growth & function by consuming local IL-2.
 These regulatory T cells are important in preventing autoimmunity and hence are the object of thorough study in T1D.
-Hence adaptive immunity is antigen specific and depends on the generation of high-affinity T cell receptors which leads to immunological memory.
-he whole process takes much longer (approximately 7 days), but some residual memory persists after the pathogen is cleared, which makes secondary reactions much more efficient.
+%Adaptive immunity is therefore antigen specific and depends on the generation of high-affinity T cell receptors which leads to immunological memory.
+%The whole process takes much longer (approximately 7 days), but some residual memory persists after the pathogen is cleared, which makes secondary reactions much more efficient.
 %The drawback of the adaptive immunity is that it can lead to autoimmunity, given the virtually limitless possibility of generating T cell receptor combinations.
 
-Some insight into the aetiology of T1D may be gained by seeing how T1D-associated genetic variants correlate with quantitative cell phenotypes such as, ratios of different cell types or mean expression of surface proteins.
+Some insight into the aetiology of T1D may be gained by assessing the correlation of T1D-associated genetic variants with quantitative cell phenotypes such as, ratios of different cell types or mean expression of surface proteins.
 For example, \citet{Dendrou:2009dv} showed that protective T1D risk variants in proximity of the protein coding gene \gene{IL2RA}, correlate with increased mean expression of CD25 on the surface of memory T cells.
 %This could be the mechanism by which T1D risk is increased since lower CD25 on memory T cells could reduce the immune tolerance.
 %Understanding the influence of these genetic variants on intermediate cell phenotypes can shed light on the cell mechansism which lead to T1D.
 %Genetic association works on quite coarse and fuzzy clinical classification which does not account for the biological heterogeneity within cases.
-CD4\positive memory cells with higher CD25 levels are likely more responsive to IL-2 and TCR-mediated activation, which in turn leads to increased production of IL-2, suggesting a mechanism by which self-tolerance may be boosted.
+Since CD4\positive memory cells with higher CD25 levels are likely more responsive to IL-2 and TCR-mediated activation, which in turn leads to increased production of IL-2, this suggests a mechanism by which self-tolerance may be boosted.
 %by anti-self effector T cells activation-induced cell death.
 
 %reduced CD25 on naive cells leads to reduced likelihood of activation, while in contrast,
@@ -364,8 +350,7 @@ CD4\positive memory cells with higher CD25 levels are likely more responsive to 
 %Confocal Laser Scanning Microscopy for instance is a technique which can examine different layers in the cell at different confocal lenghts.
 
 The established method for measuring immune cell phenotypes is flow cytometry.
-By labelling cells with fluorescent probes conjugated to antibodies, it is possible to distinguish a wealth of distinct cell
-subsets which concomitantly express specific molecules.
+By labelling cells with fluorescent probes conjugated to antibodies, it is possible to distinguish a wealth of distinct cell subsets which concomitantly express specific molecules.
 Flow cytometry allows us to identify and quantify different types of cells, through individual cell measurements.
 
 \paragraph{The flow cytometer}
@@ -373,12 +358,12 @@ Fluorescence intensity is measured accurately using photosensitive detectors, no
 or digital (photon counting) electronic signal which is translated into a digital number indicating the intensity of the fluorescence \citep{Shapiro:2003vq,Snow:2004ci}.
 For a fluorochrome to emit fluorescent light, it needs to have absorbed high energy light of a given wavelength from an illumination source, usually from a laser, which it can then release at a lower energy, longer wavelength, resulting in a so-called Stokes shift.
 The wavelength spectrum at which a given fluorochrome most efficiently absorbs and emits light and Stokes shift are known and depend on the physico-chemical properties of that molecule.
-To enable optical illumination, separation and collection of various fluorochromes with different emission and excitation spectra, a flow cytometer is usually equipped with several lasers which emit at different wavelengths and specially configured optical mirror, filters and photosensitive detectors which are sensitive to light at distinct frequency ranges \citep{Shapiro:2003vq}.
+To enable optical illumination, separation and collection of various fluorochromes with different emission and excitation spectra, a flow cytometer is usually equipped with several lasers which emit at different wavelengths and specially configured optical mirrors, filters and photosensitive detectors which are sensitive to light at distinct frequency ranges \citep{Shapiro:2003vq}.
 
 %\paragraph{Preparing and running a sample on the flow cytometer}
 \paragraph{Sample staining} 
 When staining a sample, fluorochromes are conjugated with antibodies with an affinity for the target polypeptide we wish to quantify.
-The target can be external, for example a cell receptor, or internal, for example a transcription factor or a cytokine.
+The target can be external, such as a cell receptor, or internal, such as a transcription factor or a cytokine.
 If the target is internal, the cells have to undergo permeabilisation that can deteriorate the general quality of the staining.
 Fluorochromes should be selected to minimise overlapping of their emission spectra.
 Spectral overlap, also known as spillover, leads to a convoluted signal reaching the detectors.
@@ -452,7 +437,7 @@ Each entry is the percentage of the emitted fluorochrome signal (row) picked up 
 The rows represent the fluorochomes and the columns are the PMT detectors.
 Each detector is tuned to capture the intensity of a single fluorochrome (diagonal entries).
 Spillover occurs when certain fluorochromes are detectable by more than one detector (non-zero terms off the diagonal).
-Notice that there is non-negligeable spillover (\SI{30}{\percent}) of APC into PMT 5, the detector meant for Alexa-700.
+Notice that there is an appreciable spillover (\SI{30}{\percent}) of APC into PMT 5, the detector meant for Alexa-700.
 }
 \end{table}
 
@@ -488,7 +473,7 @@ The standard was later updated in 1990 as FCS 2.0 \citep{Anon:1990ce} and again 
 FCS 2.0 and FCS 3.0 are the current two main competing standards.
 FCS 2.0 is a logarithmically compressed format which does not allow negative intensities.  
 Instead negative values reported by the instrument are arbitrarily assigned the minimum value.
-This leads to what is described as the log artefact: a pile up of intensities on the axes for low intensity values.
+This leads to what is described as the log artefact: a pile-up of intensities on the axes for low intensity values.
 FCS 2.0 data are integers in the range $1$ to $10000$ (4 decades).
 FCS 3.0 on the other hand is closer to the raw data, covers a greater range and allows for negative values.
 FCS 3.0 leaves more flexibility to the choice of transform.
@@ -669,7 +654,7 @@ Beside these data format and transformation intricacies, there are many sources 
     The reliability of the lasers and detectors may decrease with time.
     Fluorescent beads can be used to detect and correct these variations.  
   \item \textbf{Noise due to the flow operator.}
-    Sometimes the operator might decide to not collect all the events and for example apply a cutoff on the side and forward scatter.
+    Sometimes the operator might decide to not collect all the events and may apply a cutoff on the side and forward scatter.
 \end{itemize}
 All these sources of noise contribute to different patterns of staining and concentrations of debris
 which may lead to spurious cell populations or skew the analysis, complicating the analysis across samples and laboratories.
@@ -695,27 +680,22 @@ It is also possible to use reference points to normalise across samples
 %without making global distributional assumptions,
 by using local features of the distribution or objects with known properties, such as beads in flow cytometry or reference probes in microarrays.
 %These features can also be added to the sample, commonly known as spike-ins, or
-In microarray, since the number of data points is constant and the distributions are unimodal across samples,
-normalisation methods like quantile normalisation perform well \citep{Bolstad:2003ia}.
+In microarray, since the number of data points is constant and the distributions are unimodal across samples, normalisation methods like quantile normalisation perform well \citep{Bolstad:2003ia}.
 However, in flow cytometry, this type of normalisation is not appropriate because samples contain different number of events and 
 the distributions are typically multimodal, as commonly found in datasets containing mixtures of groups.
 %The modes of the distributions or peaks of the density function, represent the average protein quantity carried on the surface of different cell types.
-While in theory, the locations of these modes or peaks of the density function should remain fairly stable across samples provided experimental parameters are kept constant,
-in practise there is often variation attributed to factors that are beyond our control such as long-term instrument decalibration.
-On the other hand, the height of the peaks, the relative frequencies of the cell populations, are expected to change since they are
-are sensitive to sampling variation.
+While in theory, the locations of these modes or peaks of the density function should remain fairly stable across samples provided experimental parameters are kept constant, in practise there is often variation attributed to factors that are beyond our control such as long-term instrument decalibration.
+On the other hand, the height of the peaks, the relative frequencies of the cell populations, are expected to change since they are sensitive to sampling variation.
 %In the case of qPCR data, the groups are representative of the copy numbers.
 %and cells cannot be matched across samples in the way microarray probes are.  
 %If the features are modes in the data, then normalisation is equivalent to doing clustering, in order to identify modes, followed by meta-clustering to match the modes across samples.
 %While these methods have been successfully applied to microarray data, they are not generally applicable to multimodal univariate distributions commonly found in datasets containing mixtures of groups.
-These observations motivate a normalisation method which aligns the peaks of the distributions so that cell populations are centered
-in a similar location across samples even when their relative proportions changes.
+These observations motivate a normalisation method which aligns the peaks of the distributions so that cell populations are centered in a similar location across samples even when their relative proportions change.
 The implementation of this normalisation method then depends on the technique used to identify and match the peaks across samples.
 %The ideal scenario is when the number of peaks is known and constant across samples.
 %More flexible peak searching algorithms are required to allow for this per sample-variation.
 One method of identifying peaks of the density function is with a sliding window approach.
-The sliding window records the point with the highest density estimate in the current window and
-returns a list of highest density points of which the top K may be chosen.
+The sliding window records the point with the highest density estimate in the current window and returns a list of highest density points of which the top K may be chosen.
 This is one of the approaches implemented in the \BioConductor{flowStats}.
 \Cref{figure:normalisation-peaks} illustrates this method on real flow data where two common groups stand out and are reasonably well separated.
 Unfortunately, peaks are not always consistently identifiable across samples.
@@ -854,7 +834,7 @@ Given a one, two or three dimensional projection of the data, clusters may be vi
 %a manual or supervised (semi automatic) approach can be used.
 %In the context of flow cytometry, clusters constitute cell populations identifiable by the concomitant expression of internal or surface markers.
 In flow cytometry data, this approach, known as manual gating, is a step-by-step method where we consider and plot one or two channels at a time and delineate a region, called a gate, such that cells which lie outside the gate are filtered out.
-The result is that a population is defined as an intersection of multiple one or two dimensional gates.
+The result is that a population is defined as an intersection of multiple one or two-dimensional gates.
 
 %The inability to cluster in more than three dimensions at a time also
 %since information is lost at each clustering step
@@ -942,11 +922,11 @@ and the \BioConductor{flowClust}.
 When $K$ is unknown, one drawback of the \gls{GMM} is that it tends to overestimate the number of multivariate Gaussians which best models the data since outliers which are in the tails of the distributions are explained by new low mixture distributions.
 %, increasing the number of reported cell populations.
 To account for this, Flowclust replaces Gaussians by t-distributions which have more weight in the tails \citep{Lo:2008it}.
-Even so, t-distributions are symmetric and so cannot model skewed populations commonly found in stimulation experiments or, more generally, when cells are in a transitional state from one cell type to another.
+Even so, t-distributions are symmetric and so cannot model skewed populations, commonly found in stimulation experiments or, more generally, when cells are in a transitional state from one cell type to another.
 \citet{Pyne:2009hl} addressed this issue with FLAME (Flow Analysis with Automated Multivariate Estimation) by employing skewed t-distributions instead.
 Yet a remaining issue is that these distributions are convex by nature and so a concave population which can arise in transitional cell populations undergoing progressive change on more than one marker may only be represented by the merging of several convex populations.
 This merging step can be accomplished using FlowMerge \citep{Finak:2009fk}.
-By adding more parameters to these distributions we can make model-based methods more flexible, but this comes at the price of reducing the degrees of freedom and having to estimate more parameters which can potentially be computationally expensive and risks overfitting.
+By adding more parameters to these distributions we can make model-based methods more flexible, but this comes at the price of reducing the degrees of freedom and having to estimate more parameters which can be computationally expensive and risks overfitting.
 For certain parameters such as mean and covariance, closed-form solutions exist or can efficiently be estimated with  an \gls{EM} algorithm \citep{Dempster:1977ul}, but others, such as the skewness factor and degrees of freedom of the t-distributions, may need to be estimated numerically using computationally expensive iterative methods.
 %like \gls{MCMC} which sample from the parameter space and consequently scale poorly with increasing dimensionality.
 %as they rely on inversion of large matrices
@@ -966,7 +946,7 @@ For certain parameters such as mean and covariance, closed-form solutions exist 
 { Effect of shrinking variance in a two component \gls{GMM}, with means fixed at $0$ and $2$, on the decision boundary. }
 {
   In this two component univariate \gls{GMM}, the y axis represents the posterior probability of being assigned to the first component and
-  the x axis represent the value of the data points.
+  the x axis represents the value of the data points.
   As the variance of the two Gaussian components shrinks, the soft decision boundary approaches the hard K-means decision boundary, so that we go from
   a soft probabilistic assignment to a hard binary assignment. 
 }
@@ -1009,7 +989,7 @@ There are numerous model-free clustering methods which rely on density estimatio
 \begin{itemize}
   \item Density Based Merging (DBM) uses a region growing density approach so that points of high density are linked \citep{Walther:2009gn}.
   \item Flow Clustering without K (FLOCK) relies on grid based density estimation in higher dimensions \citep{Qian:2010ep}.
-  \item Misty Mountain takes decreasing cross sections of the two dimensional density histogram so that clusters are progressively merged as the threshold decreases \citep{Sugar:2010jf}.
+  \item Misty Mountain takes decreasing cross sections of the two-dimensional density histogram so that clusters are progressively merged as the threshold decreases \citep{Sugar:2010jf}.
 %However when applied to flow cytometry data, this approach cannot distinguish rare cell populations in close proximity from bigger cell populations and is limited to two dimensions.
   \item CurvHDR (negative Curvature and High Density Region) identifies regions of significant curvature in the multivariate density function,
 by using a bandwidth rather than the number of bins, but cannot be applied beyond four dimensions \citep{Naumann:2010fp}.
