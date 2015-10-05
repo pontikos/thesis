@@ -471,6 +471,7 @@ The automatic threshold selection method (\texttt{beads.thresh}) is therefore de
 \mycaption{figure:threshold-manual-agreement}
 { Agreement with manual of percentage of \protein{CD25}\positive naive cell phenotype. }
 {
+  Letters identify recalled individuals (\Cref{table:IL2RA-recalled-individuals}).
   Except for individual d, the agreement of \texttt{beads.thresh} with manual for percentage of CD25\positive naive cells
   is very good.  $r^2$ is the Pearson correlation squared.
 }
@@ -499,7 +500,7 @@ over manual (\Cref{figure:repeatability-cd25pos-naive}).
 Repeatability of the percentage of naive cells which are CD25\positive from day one to day two.
 The overall repeatability of this cell phenotype was better with \texttt{beads.thresh} (red)
 than the manual (black).
-Letters are used to identify indidividuals, see \Cref{table:IL2RA-recalled-individuals}.
+Letters are used to identify individuals, see \Cref{table:IL2RA-recalled-individuals}.
 The Pearson correlation squared is $r^2=0.458$ for manual and $r^2=0.76$ for \texttt{beads.thresh}.
 }
 \end{figure}
@@ -745,7 +746,7 @@ by applying a linear mixed effects model with random intercept to allow for per 
 To that purpose I used the \Rfunction{lme} from the \Rpackage{nlme}.
 Each covariate, genotype, age and sex, was tested separately, with an additive recessive model assumed for the SNP effect.
 
-Overall, the association test with the percent CD25\positive naive cells phenotype yields similar effect sizes to manual (\Cref{table:naive-cd25pos-association}).
+Overall, the association test with the percent CD25\positive naive cells phenotype yields similar effect sizes for \texttt{beads.thresh} to manual gating (\Cref{table:naive-cd25pos-association}).
 A significant age and \snp{rs2104286} effect are reported using both manual and \texttt{beads.thresh} gating.
 However, the significance of the \snp{rs2104286} effect found with \texttt{beads.thresh}, is an order of magnitude less ($10^{-4}$) than with manual ($10^{-5}$).
 On the other hand, \texttt{beads.thresh} adds some evidence to the suggested association by \citet{Dendrou:2009dv} of a sex effect on percentage of CD25\positive naive cells,
