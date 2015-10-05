@@ -560,7 +560,7 @@ First, I let the mean of the ellipse be influenced by the data while the covaria
 I then obtained a classification by defining a threshold on the Mahalanobis distance (\Cref{equation:Mahalanobis}) above which points were excluded.
 This worked reasonably well unless there was too much overlap with another cluster, in which case the gate was pulled towards the wrong cluster.
 
-Implementing this approach relies on extracting gate coordinates from FlowJo workspaces files.
+Implementing this approach relies on extracting gate coordinates from FlowJo workspace files.
 %The unit of work in FlowJo is the workspace configuration from which FCS files are first loaded and then gated.
 %The workspace also saves the cell populations statistics which need to be updated when the gates move.
 Unfortunately, parsing FlowJo workspaces was not straightforward, since the format is poorly documented and not stable between releases.
