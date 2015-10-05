@@ -181,6 +181,13 @@
 \makeglossaries
 \renewcommand*\glspostdescription{\dotfill}
 
+\usepackage{bibentry}
+\newcommand{\ignore}[1]{}
+\newcommand{\nobibentry}[1]{{\let\nocite\ignore\bibentry{#1}}}
+% apsrev entries in the text need definitions of these commands
+\newcommand{\bibfnamefont}[1]{#1}
+\newcommand{\bibnamefont}[1]{#1}
+
 % \usepackage{setspace}
 % \setlength{\parindent}{0in} 
 %\setcounter{secnumdepth}{0}
@@ -226,9 +233,8 @@
 \input{misc/dedication}
 \input{misc/declaration}
 \input{misc/acknowledgement}
-%\input{misc/publications}
+\input{misc/publications}
 \input{misc/abstract}
-
 
 % *********************** Adding TOC and List of Figures ***********************
 
