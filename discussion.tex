@@ -62,8 +62,8 @@ For ungated flow cytometry, data matrices  contain over a million rows, so the c
 I found that for the default R implementation, the maximum allocatable vector size is 1672.4 Gb, hence the distance matrix computation was only feasible in subsets of the order of $10000$, such as the CD4\positive lymphocyte subset, or data downsampled using the SPADE or RPART approaches in \Cref{chapter:il2}.
 The data downsampling performed by SPADE, relies on first estimating the local density at each point and then preferentially thinning the data in regions of high density in order to even out the density across the whole sample.
 The local density estimation step is itself computationally intensive since it needs to consider the distance from a single point to all other points in the sample to find the number of points lying within a certain radius.
-I found this step could be greatly sped up with \acrfull{ANN} which uses the K dimensional trees (KD tree) lookup method.
-KD-trees are a space-partitioning data structure for organising points in a k-dimensional space, making for an efficient way of storing a high-dimensional dataset to lookup proximal datapoints.
+I found this step could be greatly sped up with \acrfull{ANN} which uses the \gls{KD-tree} lookup method.
+\glspl{KD-tree} are a space-partitioning data structure for organising points in a k-dimensional space, making for an efficient way of storing a high-dimensional dataset to lookup proximal datapoints.
 In theory, this approach could also be used to reduce the number of datapoints considered when applying mixture models to large datasets \citep{McLachlan:2004uw}.
 
 \subsection{Consistency}

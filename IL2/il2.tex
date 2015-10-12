@@ -93,7 +93,7 @@ Another a notable omission by \citet{Long:2010ej} was the lack of repeated sampl
 %treat type 1 diabetics with IL-2.
 In order to assess the validity of these results, \contributor{Tony Cutler}, in our lab, set to find if he could replicate some of these findings in an independent cohort, using a more refined gating stategy by including the FOXP3 regulatory T cell marker.
 %T1D leads to decrease sensitivity to IL-2 in similar sample size with 
-He also included the CD3 T cell marker, as well as more NK cell specific markers, CD8 and CD56,
+He also included the CD3 T cell marker, as well as more NK cell specific markers, \protein{CD8} and \protein{CD56},
 %and the naive cell marker CD31,
 to discover other cell subsets which may potentially, also be sensitive to IL-2 (\Cref{table:IL2-panels}).
 %and using repeated samples.
@@ -499,12 +499,10 @@ or equivalently by subtracting the log transformed MFIs.
 \mycaption{figure:pstat5-beads}
 {Variation in pSTAT5 MFI is not captured by variation in bead MFI.}
 {
-  For the purpose of MFI normalisation, the fluorescence intensity of six-peak flow cytometry beads
-  was measured in the Alexa 488 channel, the fluorochrome conjugated to the pSTAT5 marker.
-  However, as illustrated by the loess lines, the MFI of the three dimmest populations of beads (orange)
-  does not capture the pSTAT5 MFI time variation in the four cell subsets.
+  For the purpose of MFI normalisation, the fluorescence intensity of six-peak flow cytometry beads was measured in the Alexa 488 channel, the fluorochrome conjugated to the pSTAT5 marker.
   The pSTAT5 MFIs are obtained from samples stimulated at 1000 units of proleukin.
-  
+  However, as illustrated by the loess lines, the MFI of the three dimmest populations of beads (orange) does not capture the pSTAT5 MFI time variation in the four cell subsets.
+  This suggests that variations in pSTAT5 MFI are unlikely to be linked to changes in the sensitivity of the instrument detectable by beads.
 }
 \end{minipage}
 \end{figure}
@@ -971,7 +969,7 @@ For example, naive Teffs appear in different regions of the tree.
 Furthermore, certain nodes of the tree can contain a mixture of cell types which complicates the interpretation.
 In order to guard against this, the number of clusters in the agglomerative clustering needs to be set to a high number.
 (b)
-Manually identified subset of cells, \texttt{SPADE.1} (purple), which respond to 1000 units but lie far from the other manually gated cell subsets.
+Manually identified subset of cells, \texttt{lymph.SPADE.1} (purple), which respond to 1000 units but lie far from the other manually gated cell subsets.
 The \gls{MST} was generated on the lymphocytes stimulated at 1000 units and coloured by the pSTAT5 MFI fold increase.
 }
 \end{figure}
@@ -983,8 +981,8 @@ The \gls{MST} was generated on the lymphocytes stimulated at 1000 units and colo
 \includegraphics[width=\linewidth]{figures/spade-lymphocytes-clusters}
 \end{minipage}
 \mycaption{figure:spade-lymphocytes-clusters}
-{ Lymphocytes core markers: \texttt{SPADE.1}.  }
-{ The subset of cells, \texttt{SPADE.1} (purple), manually identified in \Cref{figure:spade-lymphocytes-celltypes}, is distinct from the manually gated cell subsets memory Teffs, memory Tregs, naive Teffs and naive Tregs. Its discriminating features are that it is CD4\negative, high for CD8 and CD56, while expressing low levels of CD25.
+{ Lymphocytes core markers: \texttt{lymph.SPADE.1}.  }
+{ The subset of cells, \texttt{lymph.SPADE.1} (purple), manually identified in \Cref{figure:spade-lymphocytes-celltypes}, is distinct from the manually gated cell subsets memory Teffs, memory Tregs, naive Teffs and naive Tregs. Its discriminating features are that it is CD4\negative, high for CD8 and CD56, while expressing low levels of CD25.
 } 
 %
 \begin{minipage}{.5\textwidth}
@@ -992,9 +990,9 @@ The \gls{MST} was generated on the lymphocytes stimulated at 1000 units and colo
 \end{minipage}
 \begin{minipage}{.3\textwidth}
 \mycaption{figure:spade-lymphocytes-dose-response}
-{ Lymphocytes pSTAT5 MFI dose-response: \texttt{SPADE.1} }
+{ Lymphocytes pSTAT5 MFI dose-response: \texttt{lymph.SPADE.1} }
 {
-In purple, the newly identified cell subset \texttt{SPADE.1} in \Cref{figure:spade-lymphocytes-celltypes} only shows response at 1000 units of proleukin. 
+In purple, the newly identified cell subset \texttt{lymph.SPADE.1} in \Cref{figure:spade-lymphocytes-celltypes} only shows response at 1000 units of proleukin. 
 }
 \end{minipage}
 \end{figure}
@@ -1004,12 +1002,12 @@ In purple, the newly identified cell subset \texttt{SPADE.1} in \Cref{figure:spa
 \paragraph{Non-lymphocytes}
 
 In order to see whether I could detect other cell subsets besides lymphocytes, which respond to proleukin, I reran \gls{SPADE} on the same dataset, this time excluding cells lying within the lymphocyte scatter gate, but including forward and side scatter as markers in the clustering.
-While at 0.1 units little response was seen (\Cref{figure:spade-nonlymphocytes-pstat5mfi}b), two small clusters showed response at 10 units, \texttt{SPADE.1b} (purple) and \texttt{SPADE.3b} (blue), and at 1000 units, a much larger cluster highlighted in \texttt{SPADE.2b} (pink) (\Cref{figure:spade-nonlymphocytes-pstat5mfi}c and d).
+While at 0.1 units little response was seen (\Cref{figure:spade-nonlymphocytes-pstat5mfi}b), two small clusters showed response at 10 units, \texttt{nonlymph.SPADE.1b} (purple) and \texttt{nonlymph.SPADE.3b} (blue), and at 1000 units, a much larger cluster highlighted in \texttt{nonlymph.SPADE.2b} (pink) (\Cref{figure:spade-nonlymphocytes-pstat5mfi}c and d).
 
 \myfigure{scale=.65}{spade-nonlymphocytes-pstat5mfi}
 {Non-lymphocytes: pSTAT5 MFI coloured \gls{MST} generated by applying \gls{SPADE} on cells which fall outside of the lymphocyte gate.}
 {
-  Three subsets of cells are manually identified which show response to proleukin at 10 units, \texttt{SPADE.1b} and \texttt{SPADE.3b} (highlighted in purple and blue on d), and 1000 units, \texttt{SPADE.2b} (pink).
+  Three subsets of cells are manually identified which show response to proleukin at 10 units, \texttt{nonlymph.SPADE.1b} and \texttt{nonlymph.SPADE.3b} (highlighted in purple and blue on d), and 1000 units, \texttt{nonlymph.SPADE.2b} (pink).
   %The \gls{MST} was constructed from running \gls{SPADE} on the core surface markers,
   %CD25, CD3, CD4, CD45RA, CD56, CD8 and FOXP3, in cell which do not belong to the lymphocyte gate, of four samples from one individual,
   %stimulated at increasing doses of proleukin.
@@ -1024,16 +1022,16 @@ to the lymphocyte cluster (\Cref{figure:spade-nonlymphocytes-scatter-clusters}).
 %One observation is that these cells do not seem to cluster well on side and forward scatter.
 I found that these three groups (purple, pink and blue) cluster around the lymphocyte scatter gate which suggested that there are no detectable clusters of cells which fall within the other major scatter clusters which constitute physically larger and more granular cells such as monocytes or granulocytes (\Cref{figure:spade-nonlymphocytes-scatter-clusters}).
 The cells responsive to the lower 10 unit dose of proleukin, \texttt{SPADE.1b} and \texttt{SPADE.3b}, cluster closer to the lymphocyte scatter (\Cref{figure:spade-nonlymphocytes-scatter-clusters}a) than the large 1000 unit responsive subset of cells (in pink) (\Cref{figure:spade-nonlymphocytes-scatter-clusters}b), suggesting that the former are more likely to be lymphocytes which were not included in the manual gate.
-While the larger population, \texttt{SPADE.2b} (pink), also tends to aggregate around the lymphocyte scatter, it further appears to aggregate in another potential, less well defined, scatter cluster, \texttt{SPADE.1}, delineated by the purple polygon in \Cref{figure:spade-nonlymphocytes-scatter-clusters}b.
+While the larger population, \texttt{nonlymph.SPADE.2b} (pink), also tends to aggregate around the lymphocyte scatter, it further appears to aggregate in another potential, less well defined, scatter cluster, \texttt{nonlymph.SPADE.1}, delineated by the purple polygon in \Cref{figure:spade-nonlymphocytes-scatter-clusters}b.
 
 \myfigure{scale=.5}{spade-nonlymphocytes-scatter-clusters}
 {
- Non-lymphocytes: \texttt{SPADE.1b} (purple), \texttt{SPADE.2b} (pink) and \texttt{SPADE.3b} (blue) mapped back to forward and side scatter coordinates.
+ Non-lymphocytes: \texttt{nonlymph.SPADE.1b} (purple), \texttt{nonlymph.SPADE.2b} (pink) and \texttt{nonlymph.SPADE.3b} (blue) mapped back to forward and side scatter coordinates.
 }
 {
  The three cell subsets, manually identified in the \gls{MST} of \Cref{figure:spade-nonlymphocytes-pstat5mfi} are mapped back to scatter coordinates.
  The 10 unit responsive groups, blue and purple points in (a), and the 1000 units responsive group, pink points in (b), lie close to the lymphocyte cluster (black ellipse), but a potential secondary scatter cluster of 1000 unit responsive cells, delineated by the purple polygon in (b), are worthy of further investigation.
- This cell subset will be defined as \texttt{SPADE.1}.
+ This cell subset will be defined as \texttt{nonlymph.SPADE.1}.
   %The cell subsets manually identified in \Cref{figure:spade-nonlymphocytes-pstat5mfi} as responding to 10 units of proleukin (blue and purple) in (a)
   %and 1000 units of proleukin (pink) in (b), are mapped back to the forward and side scatter channel.
   %In order to visualise where the points lie in relation to the rest of the sample they are are overlayed on top of a sample in which lymphocytes are present.
@@ -1057,8 +1055,8 @@ Further markers, possibly B cell markers such as CD19, are needed to better defi
 \mycaption{figure:spade-nonlymphocytes-clusters}
 { Non-lymphocytes core markers: \texttt{SPADE.1}.  }
 {
-After filtering of doublets on the side scatter height, the \texttt{SPADE.1} cluster defined on side and forward scatter in \Cref{figure:spade-nonlymphocytes-scatter-clusters} is displayed on the other core markers.
-The cluster appears to be quite heterogeneous is predominantly CD3\positive, CD4\positive and high for CD25.
+    After filtering of doublets on the side scatter height, the \texttt{nonlymph.SPADE.1} cluster defined on side and forward scatter in \Cref{figure:spade-nonlymphocytes-scatter-clusters} is displayed on the other core markers.
+    The cluster appears to be quite heterogeneous is predominantly CD3\positive, CD4\positive and high for CD25.
 } 
 \end{minipage}
 %
@@ -1067,10 +1065,10 @@ The cluster appears to be quite heterogeneous is predominantly CD3\positive, CD4
 \end{minipage}
 \begin{minipage}{.3\textwidth}
 \mycaption{figure:spade-nonlymphocytes-dose-response}
-{ Non-lymphocytes pSTAT5 MFI dose-response: \texttt{SPADE.1}. }
+{ Non-lymphocytes pSTAT5 MFI dose-response: \texttt{nonlymph.SPADE.1}. }
 {
     The gray line represents the whole sample.
-The black line is the lymphocyte population and the purple line is the \texttt{SPADE.1} subset identified in \Cref{figure:spade-nonlymphocytes-scatter-clusters}.
+    The black line is the lymphocyte population and the purple line is the \texttt{nonlymph.SPADE.1} subset identified in \Cref{figure:spade-nonlymphocytes-scatter-clusters}.
 }
 \end{minipage}
 \end{figure}
@@ -1291,8 +1289,8 @@ These CD56 bright cells include CD3\negative cells so could belong to a cell sub
 \mycaption{figure:rpart-lymphocytes-mst-1024bin}
 { Lymphocytes: MST built using the 1024 bins obtained from recursive partitioning on the lymphocytes core markers.}
 {
-A subset of cells delineated in purple, \texttt{RPART.1}, shows pSTAT5 response at 1000 units, and a subset of cells delineated in pink, \texttt{RPART.2}, shows pSTAT5 response at 10 units.
-\texttt{RPART.1} lies in a different part of the \gls{MST} from the remainder of the dose-responsive cells.
+A subset of cells delineated in purple, \texttt{lymph.RPART.1}, shows pSTAT5 response at 1000 units, and a subset of cells delineated in pink, \texttt{lymph.RPART.2}, shows pSTAT5 response at 10 units.
+\texttt{lymph.RPART.1} lies in a different part of the \gls{MST} from the remainder of the dose-responsive cells.
 }
 \end{figure}
 
@@ -1302,11 +1300,11 @@ A subset of cells delineated in purple, \texttt{RPART.1}, shows pSTAT5 response 
 \includegraphics[width=\linewidth]{figures/rpart-lymphocytes-clusters}
 \end{minipage}
 \mycaption{figure:rpart-lymphocytes-clusters}
-{  Lymphoyctes core markers: \texttt{RPART.1} and \texttt{RPART.2}.  }
+{  Lymphoyctes core markers: \texttt{lymph.RPART.1} and \texttt{lymph.RPART.2}.  }
 {
- Two subset of cells, a 10 unit responsive subset, \texttt{RPART.2}, and a 1000 unit responsive subset, \texttt{RPART.1}, manually identified in the MST of \Cref{figure:rpart-lymphocytes-mst-1024bin}, which are distinct from the manually gated cell subsets memory Teffs (black), memory Tregs (red), naive Teffs (green) and naive Tregs (dark blue), are projected back to core marker space.
- \texttt{RPART.2} overlaps with the manually identified cell subsets.
- The discriminating features of \texttt{RPART.1} are that it is CD3\negative, CD4\negative and high in CD56, while expressing low levels of CD25.
+    Two subset of cells, a 10 unit responsive subset, \texttt{lymph.RPART.2}, and a 1000 unit responsive subset, \texttt{lymph.RPART.1}, manually identified in the MST of \Cref{figure:rpart-lymphocytes-mst-1024bin}, which are distinct from the manually gated cell subsets memory Teffs (black), memory Tregs (red), naive Teffs (green) and naive Tregs (dark blue), are projected back to core marker space.
+    \texttt{lymph.RPART.2} overlaps with the manually identified cell subsets.
+    The discriminating features of \texttt{lymph.RPART.1} are that it is CD3\negative, CD4\negative and high in CD56, while expressing low levels of CD25.
  %Linda: I would not say RPART.1 cells have high levels of CD56.
   %clusters in one of the branches which does not overlap with any of the manual gates as seen in \Cref{figure:spade-celltypes}b.
 %Projecting these cells back to intensity space it surfaces that they are CD4\negative which explains why they were not included in the manual gating.
@@ -1322,7 +1320,7 @@ A subset of cells delineated in purple, \texttt{RPART.1}, shows pSTAT5 response 
 \end{minipage}
 \begin{minipage}{.3\textwidth}
 \mycaption{figure:rpart-lymphocytes-dose-response}
-{  Lymphoyctes pSTAT5 MFI dose-response: \texttt{RPART.1} and \texttt{RPART.2}. }
+{  Lymphoyctes pSTAT5 MFI dose-response: \texttt{lymph.RPART.1} and \texttt{lymph.RPART.2}. }
 {
     %\texttt{RPART.1} and \texttt{RPART.2}, within the lymphocytes in relation to the other cell subsets.
 }
@@ -1353,7 +1351,7 @@ They also overlap on side and forward scatter with the cluster identified in \Cr
 \mycaption{figure:rpart-nonlymphocytes-mst-1024bin}
 { Non-lymphocytes: MST built on the 1024 bins obtained from \texttt{RPART} on non-lymphocytes. }
 {
-    A cluster of cells, \texttt{RPART.1} (purple), stands out that shows pSTAT5 response at 1000 units.
+    A cluster of cells, \texttt{nonlymph.RPART.1} (purple), stands out that shows pSTAT5 response at 1000 units.
 } 
 \end{minipage}
 %\end{figure}
@@ -1364,9 +1362,9 @@ They also overlap on side and forward scatter with the cluster identified in \Cr
 \end{minipage}
 \begin{minipage}{.3\textwidth}
 \mycaption{figure:rpart-nonlymphocytes-scatter-clusters}
-{ Non-lymphocytes:  \texttt{RPART.1} (purple) does not belong to the lymphocytes population (black).  }
+{ Non-lymphocytes:  \texttt{nonlymph.RPART.1} (purple) does not belong to the lymphocytes population (black).  }
 {
-In order to visualise where the subset \texttt{RPART.1}, manually identified in \Cref{figure:rpart-nonlymphocytes-mst-1024bin}, lies in relation to the rest of the sample it is overlaid on top of the whole sample (including lymphocytes).
+In order to visualise where the subset \texttt{nonlymph.RPART.1}, manually identified in \Cref{figure:rpart-nonlymphocytes-mst-1024bin}, lies in relation to the rest of the sample it is overlaid on top of the whole sample (including lymphocytes).
 }
 \end{minipage}
 \end{figure}
@@ -1376,9 +1374,9 @@ In order to visualise where the subset \texttt{RPART.1}, manually identified in 
 \begin{minipage}{.9\textwidth}
 \includegraphics[width=\linewidth]{figures/rpart-nonlymphocytes-clusters}
 \mycaption{figure:rpart-nonlymphocytes-clusters}
-{ Non-lymphocytes core markers: \texttt{RPART.1}. }
+{ Non-lymphocytes core markers: \texttt{nonlymph.RPART.1}. }
 {
-    A 1000 unit responsive cell subset, \texttt{RPART.1}, in purple, is identified which does not belong to the manually defined lymphocyte population, in black. 
+  A 1000 unit responsive cell subset, \texttt{nonlymph.RPART.1}, in purple, is identified which does not belong to the manually defined lymphocyte population, in black. 
   %It is very similar to lymphocytes except on side and forward scatter so could 
   %In order to visualise where the points lie in relation to the rest of the sample they are are overlayed on top of a sample in which lymphocytes are present.
   %The subset of cells, delineated in purple, was manually identified in \Cref{figure:rpart-nonlymphocytes-mst-1024bin}.
@@ -1390,9 +1388,9 @@ In order to visualise where the subset \texttt{RPART.1}, manually identified in 
 \end{minipage}
 \begin{minipage}{.3\textwidth}
 \mycaption{figure:rpart-nonlymphocytes-dose-response}
-{ Non-lymphocytes dose-response: \texttt{RPART.1}. }
+{ Non-lymphocytes dose-response: \texttt{nonlymph.RPART.1}. }
 {
-    A 1000 unit responsive cell subset, \texttt{RPART.1} (purple), is identified which does not belong to the manually defined lymphocytes population (black).
+  A 1000 unit responsive cell subset, \texttt{nonlymph.RPART.1} (purple), is identified which does not belong to the manually defined lymphocytes population (black).
   %In order to visualise where the points lie in relation to the rest of the sample they are are overlayed on top of a sample in which lymphocytes are present.
   %The subset of cells, delineated in purple, was manually identified in \Cref{figure:rpart-nonlymphocytes-mst-1024bin}.
 }
@@ -1441,7 +1439,7 @@ using the \Rfunction{plsr} implementation in the \Rpackage{pls}, to both the lym
 \mycaption{figure:plsr-lymphocytes}
 { Lymphocytes: First two components of \gls{PLS} projection using pSTAT5 as response.}
 {
-Three new clusters, \texttt{PLSR.1}, \texttt{PLSR.2} and \texttt{PLSR.3}, newly identified using \gls{PLS}, in relation to known manually gated subsets within lymphocytes. 
+Three new clusters, \texttt{lymph.PLSR.1}, \texttt{lymph.PLSR.2} and \texttt{lymph.PLSR.3}, newly identified using \gls{PLS}, in relation to known manually gated subsets within lymphocytes. 
 The known manually gated cell populations are naive Teffs (dark green), naive Tregs (dark blue), memory Teffs (black) and memory Tregs (red).
 Three other clusters have been identified manually in light blue, pink and purple.
 } 
@@ -1457,14 +1455,14 @@ Based on the \gls{PLS} projections at 1000 units, three additional clusters, del
 \centering
 \includegraphics[scale=.7]{figures/plsr-lymphocytes-clusters}
 \mycaption{figure:plsr-lymphocytes-clusters}
-{ Lymphocytes core markers: \texttt{PLSR.1}. }
+{ Lymphocytes core markers: \texttt{lymph.PLSR.1}. }
 {
-    The density of the \texttt{PLSR.1} cluster (purple), identified using \gls{PLS} projection in \Cref{figure:plsr-lymphocytes},
+    The density of the \texttt{lymph.PLSR.1} cluster (purple), identified using \gls{PLS} projection in \Cref{figure:plsr-lymphocytes},
     plotted  on all core markers, in relation to known manually gated ones within the lymphocytes.
-    I only included the \texttt{PLSR.1} cluster since \texttt{PLSR.2} and \texttt{PLSR.3} do not show response to proleukin, as per \Cref{figure:plsr-lymphocytes-dose-response}.
+    I only included the \texttt{lymph.PLSR.1} cluster since \texttt{lymph.PLSR.2} and \texttt{lymph.PLSR.3} do not show response to proleukin, as per \Cref{figure:plsr-lymphocytes-dose-response}.
     %Many of these newly identified clusters are not homogeneous for all markers.
     %The pSTAT5 response of the clusters is shown.
-    A distinctive property of \texttt{PLSR.1} is that it is high for CD8 and low for CD4.
+    A distinctive property of \texttt{lymph.PLSR.1} is that it is high for CD8 and low for CD4.
     It constitutes approximately 16 percent of the lymphocyte cells in this sample.
 }
 \end{figure}
@@ -1503,12 +1501,12 @@ Clusters newly identified using \gls{PLS} in relation to lymphocytes.
 \end{figure}
 
 I repeated the same analysis on the non-lymphocytes, this time including side and forward scatter as predictors in \gls{PLS}.
-From the first two components of the \gls{PLS} projections, I visually identified three distinct subsets, \texttt{PLSR.1}, \texttt{PLSR.2}  and \texttt{PLSR.3}, in addition to the known lymphocyte cluster (black), which were discernible in at least one the three different stimulation doses.
-I further identified two less discernible cell populations, a subset of the lymphocytes, \texttt{PLSR.4} (orange), and a low-density cluster most visible at 10 units, \texttt{PLSR.5} (yellow).
-As can be seen in \Cref{figure:plsr-nonlymphocytes-dose-response}, of the newly identified cell subsets, only \texttt{PLSR.4} and \texttt{PLSR.5} show response from 10 units.
+From the first two components of the \gls{PLS} projections, I visually identified three distinct subsets, \texttt{nonlymph.PLSR.1}, \texttt{nonlymph.PLSR.2}  and \texttt{nonlymph.PLSR.3}, in addition to the known lymphocyte cluster (black), which were discernible in at least one the three different stimulation doses.
+I further identified two less discernible cell populations, a subset of the lymphocytes, \texttt{nonlymph.PLSR.4} (orange), and a low-density cluster most visible at 10 units, \texttt{nonlymph.PLSR.5} (yellow).
+As can be seen in \Cref{figure:plsr-nonlymphocytes-dose-response}, of the newly identified cell subsets, only \texttt{nonlymph.PLSR.4} and \texttt{nonlymph.PLSR.5} show response from 10 units.
 
-While this is to be expected of \texttt{PLSR.4} as it constitutes a subset of the lymphocytes, \texttt{PLSR.5} when plotted along with the lymphocytes in \Cref{figure:plsr-nonlymphocytes-clusters}, has higher side and forward scatter which suggests it constitutes an artefact or possibly another type of dose-responsive T cell, since it is CD3\positive.
-The \texttt{PLSR.5} cell subset however makes up a very small proportion of the whole sample at less than 1 percent, compared to the lymphocytes at 16 percent.  
+While this is to be expected of \texttt{nonlymph.PLSR.4} as it constitutes a subset of the lymphocytes, \texttt{nonlymph.PLSR.5} when plotted along with the lymphocytes in \Cref{figure:plsr-nonlymphocytes-clusters}, has higher side and forward scatter which suggests it constitutes an artefact or possibly another type of dose-responsive T cell, since it is CD3\positive.
+The \texttt{nonlymph.PLSR.5} cell subset however makes up a very small proportion of the whole sample at less than 1 percent, compared to the lymphocytes at 16 percent.  
 
 %\begin{figure}[!h]
 %\centering
@@ -1528,9 +1526,9 @@ The \texttt{PLSR.5} cell subset however makes up a very small proportion of the 
 %\end{minipage}
 %\begin{minipage}{.3\textwidth}
 \mycaption{figure:plsr-nonlymphocytes-clusters}
-{ Non-lymphocytes core markers: \texttt{PLSR.1} and \texttt{PLSR.2}. }
+{ Non-lymphocytes core markers: \texttt{nonlymph.PLSR.1} and \texttt{nonlymph.PLSR.2}. }
 {
-Clusters newly identified using \gls{PLS} within non-lymphocytes, \texttt{PLSR.1} and \texttt{PLSR.2}, in relation to lymphocytes.
+Clusters newly identified using \gls{PLS} within non-lymphocytes, \texttt{nonlymph.PLSR.1} and \texttt{nonlymph.PLSR.2}, in relation to lymphocytes.
 } 
 \end{minipage}
 \begin{minipage}{.5\textwidth}
@@ -1538,15 +1536,15 @@ Clusters newly identified using \gls{PLS} within non-lymphocytes, \texttt{PLSR.1
 \end{minipage}
 \begin{minipage}{.3\textwidth}
 \mycaption{figure:plsr-nonlymphocytes-dose-response}
-{ Non-lymphocytes dose-response: \texttt{PLSR.1}, \texttt{PLSR.2}, \texttt{PLSR.3}, \texttt{PLSR.4}, \texttt{PLSR.4} and \texttt{PLSR.5}. }
+{ Non-lymphocytes dose-response: \texttt{nonlymph.PLSR.1}, \texttt{nonlymph.PLSR.2}, \texttt{nonlymph.PLSR.3}, \texttt{nonlymph.PLSR.4}, \texttt{nonlymph.PLSR.4} and \texttt{nonlymph.PLSR.5}. }
 {
     Subsets identified with \gls{PLS} in relation to lymphocytes.
-    Of the five newly identified cells and lymphocytes (black), only the lymphocytes, \texttt{PLSR.1} and \texttt{PLSR.2} show response at 10 units.
+    Of the five newly identified cells and lymphocytes (black), only the lymphocytes, \texttt{nonlymph.PLSR.1} and \texttt{nonlymph.PLSR.2} show response at 10 units.
 } 
 \end{minipage}
 \end{figure}
 
-\subsection{CART: binary recursive partitioning using regression tree on pSTAT5}
+\subsection{CART: binary recursive partitioning}
 
 The \gls{SPADE} and recursive partitioning methods described in the previous sections have proceeded by first reducing the number of events through clustering or binning
 on the core markers across stimulation doses, then visually identifying clusters or bins which show pSTAT5 response using a two-dimensional \gls{MST} projection
@@ -1564,13 +1562,11 @@ Such a dataset can be constructed by using the \gls{ANN} algorithm to join sampl
 as was explained in \Cref{paragraph:ANN}.
 %This can be achieved by joining the  on their nearest neighbour in terms of core markers.
 %Since joining every event in one dataset to its closest neighbour is not computationally practical,
-In fact, the \gls{ANN} algorithm uses the recursive partitioning technique covered in the previous section, on the core markers
-to build a K dimensional tree (KD-tree) data structure.
+In fact, the \gls{ANN} algorithm uses the recursive partitioning technique covered in the previous section, on the core markers to build a \gls{KD-tree} data structure.
 %Another implementation of recursive partitioning is \gls{ANN} algorithm which relies on a K dimensional tree structure of the dataset.
-A KD-tree
+A \gls{KD-tree}
 %is a balanced binary tree which
-serves as an indexing data structure,
-allowing faster retrieval of data points based on their coordinates
+serves as an indexing data structure, allowing faster retrieval of data points based on their coordinates
 %by reducing the number of comparison necessary,
 by refining the search to the bin within which the point is likely to lie.
 This indexing is exploited to efficiently find the approximate nearest neighbour between datasets.
@@ -1610,7 +1606,7 @@ of proleukin and so the reduction in the total variance is not sufficient to jus
 \mycaption{figure:pstat5-response-decision-tree}
 { CART of 1000 unit response against side and forward scatter identifies three subsets. }
 {
-    The \gls{CART} obtained from recursive partitioning of side (SSCA) and forward (FSCA) scatter against the pSTAT5 response at 1000 units,
+The \gls{CART} obtained from recursive partitioning of side (SSCA) and forward (FSCA) scatter against the pSTAT5 response at 1000 units,
 after pruning on the best three subsets (a).
 The values at the terminal nodes are the expected pSTAT5 response within each subset.
 According to this regression tree, most of the pSTAT5 response comes from the lymphocyte cluster (red) whereas
@@ -1755,14 +1751,15 @@ As subsets are recursively split into low and high at decreasing doses of proleu
 
 \paragraph{Lymphocytes}
 
-I applied this algorithm within the lymphocyte subset, keeping the manually gated cell subsets so as to improve the two-component GMM fit and only removed them at the end once the new subsets, \texttt{MMPART.1}, \texttt{MMPART.2} and \texttt{MMPART.3}, were identified (\Cref{figure:mmpart-lymphocytes-tree}).
+I applied this algorithm within the lymphocyte subset, keeping the manually gated cell subsets so as to improve the two-component GMM fit and only removed them at the end once the new subsets,
+\texttt{lymph.MMPART.1}, \texttt{lymph.MMPART.2} and \texttt{lymph.MMPART.3}, were identified (\Cref{figure:mmpart-lymphocytes-tree}).
 These three new subsets constituted respectively, 0.21, 2.26 and 0.96 percent of the total cells in the sample.
-The three subsets have different response profiles with \texttt{MMPART.1} responding to 0.1 units of proleukin, \texttt{MMPART.2} responding at 10 units and \texttt{MMPART.3} responding at 1000 units (\Cref{figure:mmpart-lymphocytes-dose-response}).
+The three subsets have different response profiles with \texttt{lymph.MMPART.1} responding to 0.1 units of proleukin, \texttt{MMPART.2} responding at 10 units and \texttt{lymph.MMPART.3} responding at 1000 units (\Cref{figure:mmpart-lymphocytes-dose-response}).
 This difference in response can be partially explained by their ranking of CD25 expression (\Cref{figure:mmpart-lymphocytes-clusters}).
-However, the subtle difference in CD25 MFI in the lower intensity subsets, \texttt{MMPART.1}, \texttt{MMPART.2}, memory Teffs and Tregs, does lead to suprisingly different response profiles (\Cref{figure:mmpart-lymphocytes-dose-response}).
+However, the subtle difference in CD25 MFI in the lower intensity subsets, \texttt{lymph.MMPART.1}, \texttt{lymph.MMPART.2}, memory Teffs and Tregs, does lead to suprisingly different response profiles (\Cref{figure:mmpart-lymphocytes-dose-response}).
 %while the \texttt{MMPART.1} is expected to be sensitive to low dose proleukin, since this subset has high CD25 MFI, similar to that found on memory Tregs, 
-The three newly identified cell subsets are not homogeneous for the other core markers but \texttt{MMPART.2} and \texttt{MMPART.3} appear to be enriched for CD4\negative and CD8\positive cells.
-\texttt{MMPART.2} appears mostly CD45RA\negative wheras \texttt{MMPART.3} appears mostly CD45RA\positive.
+The three newly identified cell subsets are not homogeneous for the other core markers but \texttt{lymph.MMPART.2} and \texttt{lymph.MMPART.3} appear to be enriched for CD4\negative and CD8\positive cells.
+\texttt{lymph.MMPART.2} appears mostly CD45RA\negative wheras \texttt{lymph.MMPART.3} appears mostly CD45RA\positive.
 
 %
 \begin{figure}[!h]
@@ -1777,7 +1774,7 @@ The three newly identified cell subsets are not homogeneous for the other core m
     This process is recursively applied to the low and high subsets obtained from (b) and (c) by fitting a two-component \glspl{GMM} to the 0.1 units pSTAT5 distribution, in order
     to obtain (d) and (e), and (f) and (g).
     The plots with green borders represent the positive subsets (c, e, and g) whereas the plots with red borders represent the negative subsets (b, d and f).
-    Three subsets are identified, \texttt{MMPART.1}, \texttt{MMPART.2} and \texttt{MMPART.3}, which respond at 0.1 units (g), 10 units (c) and 1000 units (a) respectively.
+    Three subsets are identified, \texttt{lymph.MMPART.1}, \texttt{lymph.MMPART.2} and \texttt{lymph.MMPART.3}, which respond at 0.1 units (g), 10 units (c) and 1000 units (a) respectively.
 }
 \end{figure}
 
@@ -1788,15 +1785,15 @@ The three newly identified cell subsets are not homogeneous for the other core m
 \includegraphics[width=\linewidth]{figures/mmpart-lymphocytes-clusters}
 \end{minipage}
 \mycaption{figure:mmpart-lymphocytes-clusters}
-{ Lymphocytes core markers: \texttt{MMPART.1}, \texttt{MMPART.2} and \texttt{MMPART.3}. }
-{ \texttt{MMPART.2} and \texttt{MMPART.3} are enriched for CD4\negative CD8\positive cells.  }
+{ Lymphocytes core markers: \texttt{lymph.MMPART.1}, \texttt{lymph.MMPART.2} and \texttt{lymph.MMPART.3}. }
+{ \texttt{lymph.MMPART.2} and \texttt{lymph.MMPART.3} are enriched for CD4\negative CD8\positive cells.  }
 %
 \begin{minipage}{.5\textwidth}
   \includegraphics[width=\linewidth]{figures/mmpart-lymphocytes-dose-response}
 \end{minipage}
 \begin{minipage}{.3\textwidth}
 \mycaption{figure:mmpart-lymphocytes-dose-response}
-{ Lymphocytes pSTAT5 MFI dose-response: \texttt{MMPART.1}, \texttt{MMPART.2} and \texttt{MMPART.3}. }
+{ Lymphocytes pSTAT5 MFI dose-response: \texttt{lymph.MMPART.1}, \texttt{lymph.MMPART.2} and \texttt{lymph.MMPART.3}. }
 { }
 \end{minipage}
 \end{figure}
@@ -1810,10 +1807,10 @@ I applied the same algorithm to the non-lymphocyte subset (\Cref{figure:mmpart-n
 Again I left the lymphocytes in until the end to improve the model fit.
 At the lowest dose certain subsets could not be further subdivided further into two components (d and f).
 
-I identified two subsets of cells \texttt{MMPART.1} and \texttt{MMPART.2} responsive at 0.1 and 10 units respectfully (\Cref{figure:mmpart-nonlymphocytes-tree}).
+I identified two subsets of cells \texttt{nonlymph.MMPART.1} and \texttt{nonlymph.MMPART.2} responsive at 0.1 and 10 units respectfully (\Cref{figure:mmpart-nonlymphocytes-tree}).
 Looking at the core markers (\Cref{figure:mmpart-nonlymphocytes-clusters}), the forward and side scatter of these subsets appears similar to the lymphocyte population.
-However, \texttt{MMPART.1} also contains a subset of cells at the top of the scatter range which are likely to be debris.
-Both \texttt{MMPART.1} and \texttt{MMPART.2} appear to be CD3\positive, thus T cells.
+However, \texttt{nonlymph.MMPART.1} also contains a subset of cells at the top of the scatter range which are likely to be debris.
+Both \texttt{nonlymph.MMPART.1} and \texttt{nonlymph.MMPART.2} appear to be CD3\positive, thus T cells.
 They also appear primarily CD45RA\negative, so naive.
 %I found that, while many of the cells identified using this approach fall within the CD4 gate,
 %certain highly-sensitive cells cluster in other subsets \Cref{figure:mmpart-nonlymphocytes-clusters}.
@@ -1843,7 +1840,7 @@ spread than the non-responding population.
     This process is recursively applied to the low and high subsets obtained from (b) and (c) by fitting two-component \glspl{GMM} to the 0.1 units pSTAT5 distribution, in order
     to obtain (d) and (e), and (f) and (g).
     The plots with green borders represent the positive subsets (c, e, and g) whereas the plots with red borders represent the negative subsets (b, d and f).
-    Two subsets are identified, \texttt{MMPART.1} and \texttt{MMPART.2}, which respond at 0.1 units (g) and 10 units (c).
+    Two subsets are identified, \texttt{nonlymph.MMPART.1} and \texttt{nonlymph.MMPART.2}, which respond at 0.1 units (g) and 10 units (c).
 }
 \end{figure}
 
@@ -1853,10 +1850,10 @@ spread than the non-responding population.
 \begin{minipage}{.9\textwidth}
 \includegraphics[width=\linewidth]{figures/mmpart-nonlymphocytes-clusters}
 \mycaption{figure:mmpart-nonlymphocytes-clusters}
-{Non-lymphocytes core markers: \texttt{MMPART.1} and \texttt{MMPART.2}. }
+{Non-lymphocytes core markers: \texttt{nonlymph.MMPART.1} and \texttt{nonlymph.MMPART.2}. }
 {
-\texttt{MMPART.1} and \texttt{MMPART.2} both have similar forward and side scatter profiles to the lymphocytes.
-However \texttt{MMPART.1} also includes a peak at the top end of the side and forward scatter which is likely to include debris.
+\texttt{nonlymph.MMPART.1} and \texttt{nonlymph.MMPART.2} both have similar forward and side scatter profiles to the lymphocytes.
+However \texttt{nonlymph.MMPART.1} also includes a peak at the top end of the side and forward scatter which is likely to include debris.
 }
 \end{minipage}
 %
@@ -1865,7 +1862,7 @@ However \texttt{MMPART.1} also includes a peak at the top end of the side and fo
 \end{minipage}
 \begin{minipage}{.3\textwidth}
 \mycaption{figure:mmpart-nonlymphocytes-dose-response}
-{ Non-lymphocytes pSTAT5 MFI dose-response: \texttt{MMPART.1} and \texttt{MMPART.2}. }
+{ Non-lymphocytes pSTAT5 MFI dose-response: \texttt{nonlymph.MMPART.1} and \texttt{nonlymph.MMPART.2}. }
 { }
 \end{minipage}
 \end{figure}
@@ -2114,12 +2111,12 @@ Memory Treg & 2.8  & 1.39 & 2.76 & 2.95 & 2.2  & 1.93 & 0.98 & 1.1  & 2.11 & 0.2
 Naive Eff   & 2.87 & 1.2  & 1.67 & 2.99 & 2.22 & 3.62 & 1.03 & 1.09 & 1.92 & 9.76 \\
 Naive Treg  & 2.71 & 1.13 & 2.38 & 2.98 & 2.14 & 3.48 & 1    & 1.09 & 1.99 & 0.13 \\
 \hline
-SPADE.1     & 3.41 & 1.88 & 1.59 & 2.85 & 1.51 & 3.19 & 1.69 & 1.92 & 1.73 & 1.14 \\
-RPART.1     & 3.35 & 1.95 & 1.16 & 2.33 & 1.1  & 3.94 & 1.82 & 1.29 & 2.31 & 3.36 \\
-RPART.2     & 3.02 & 1.71 & 2.04 & 2.92 & 2.31 & 2.04 & 1.03 & 1.09 & 1.27 & 4.05 \\
-PLSR.1      & 3.19 & 1.61 & 1.62 & 2.96 & 1.53 & 3.86 & 1.08 & 1.82 & 2.27 & 15.08 \\
-MMPART.1    & 3.01 & 1.58 & 1.89 & 2.88 & 2.18 & 2.77 & 1.04 & 1.09 & 1.39 & 0.32 \\
-MMPART.2    & 3.11 & 1.72 & 1.8  & 2.86 & 1.68 & 2.49 & 1.07 & 1.42 & 1.5  & 12.69 \\
+lymph.SPADE.1     & 3.41 & 1.88 & 1.59 & 2.85 & 1.51 & 3.19 & 1.69 & 1.92 & 1.73 & 1.14 \\
+lymph.RPART.1     & 3.35 & 1.95 & 1.16 & 2.33 & 1.1  & 3.94 & 1.82 & 1.29 & 2.31 & 3.36 \\
+lymph.RPART.2     & 3.02 & 1.71 & 2.04 & 2.92 & 2.31 & 2.04 & 1.03 & 1.09 & 1.27 & 4.05 \\
+lymph.PLSR.1      & 3.19 & 1.61 & 1.62 & 2.96 & 1.53 & 3.86 & 1.08 & 1.82 & 2.27 & 15.08 \\
+lymph.MMPART.1    & 3.01 & 1.58 & 1.89 & 2.88 & 2.18 & 2.77 & 1.04 & 1.09 & 1.39 & 0.32 \\
+lymph.MMPART.2    & 3.11 & 1.72 & 1.8  & 2.86 & 1.68 & 2.49 & 1.07 & 1.42 & 1.5  & 12.69 \\
 %consensus   & 3.1  & 1.77 & 1.93 & 2.88 & 2.16 & 2.22 & 1.06 & 1.23 & 1.53 & 4.12 \\
 \end{tabular}
 \mycaption{table:final-lymphocytes}
@@ -2134,7 +2131,7 @@ MMPART.2    & 3.11 & 1.72 & 1.8  & 2.86 & 1.68 & 2.49 & 1.07 & 1.42 & 1.5  & 12.
     \includegraphics[width=\linewidth]{figures/final-lymphocytes-clusters}
 \end{minipage}
 \mycaption{figure:final-lymphocytes-clusters}
-{ Lymphocytes core markers: \texttt{SPADE.1}, \texttt{RPART.1}, \texttt{RPART.2} and \texttt{PLSR.1}. }
+{ Lymphocytes core markers: \texttt{lymph.SPADE.1}, \texttt{lymph.RPART.1}, \texttt{lymph.RPART.2} and \texttt{lymph.PLSR.1}. }
 { 
     None of the cell subsets completely overlap across all markers.
 }
@@ -2143,9 +2140,9 @@ MMPART.2    & 3.11 & 1.72 & 1.8  & 2.86 & 1.68 & 2.49 & 1.07 & 1.42 & 1.5  & 12.
 \end{minipage}
 \begin{minipage}{.3\textwidth}
 \mycaption{figure:final-lymphocytes-dose-response}
-{ Lymphocytes pSTAT5 MFI dose-response: \texttt{SPADE.1}, \texttt{RPART.1}, \texttt{RPART.2} and \texttt{PLSR.1}. }
+{ Lymphocytes pSTAT5 MFI dose-response: \texttt{lymph.SPADE.1}, \texttt{lymph.RPART.1}, \texttt{lymph.RPART.2} and \texttt{lymph.PLSR.1}. }
 {
-    The \texttt{PLSR.1} and \texttt{SPADE.1} subsets have similar dose-response profiles.
+    The \texttt{lymph.PLSR.1} and \texttt{lymph.SPADE.1} subsets have similar dose-response profiles.
 }
 \end{minipage}
 \end{figure}
@@ -2164,10 +2161,10 @@ MMPART.2    & 3.11 & 1.72 & 1.8  & 2.86 & 1.68 & 2.49 & 1.07 & 1.42 & 1.5  & 12.
 
 \paragraph{Non lymphocytes}
 Outside of the lymphocytes, no strong response was visible in any of the clusters based on side and forward scatter.
-However, smaller clusters were identified, \texttt{SPADE.1} (\Cref{figure:spade-nonlymphocytes-scatter-clusters}) and \texttt{PLSR.1} (\Cref{figure:plsr-nonlymphocytes}), with larger side scatter than the lymphocytes.
+However, smaller clusters were identified, \texttt{nonlymph.SPADE.1} (\Cref{figure:spade-nonlymphocytes-scatter-clusters}) and \texttt{nonlymph.PLSR.1} (\Cref{figure:plsr-nonlymphocytes}), with larger side scatter than the lymphocytes.
 %\Cref{figure:scatter-rpart-128bin-var-pstat5}
-The \texttt{SPADE.1} cluster, containing 0.21 percent and the \texttt{PLSR.1} cluster containing 0.14 percent of the total number of events, were found to be heterogeneous clusters on the core markers.
-This \texttt{SPADE.1}/\texttt{PLSR.1} subset contains mostly CD3\positive CD4\positive CD45RA\positive cells (\Cref{figure:final-nonlymphocytes-clusters}), thus could be activated CD4 T cells, but, as suggested by experienced flow cytometrists, \contributor{Marcin Pekalski} and \contributor{Tony Cutler}, could also be an artefact of the permeabilisation and staining protocol.
+The \texttt{nonlymph.SPADE.1} cluster, containing 0.21 percent and the \texttt{nonlymph.PLSR.1} cluster containing 0.14 percent of the total number of events, were found to be heterogeneous clusters on the core markers.
+This \texttt{nonlymph.SPADE.1}/\texttt{nonlymph.PLSR.1} subset contains mostly CD3\positive CD4\positive CD45RA\positive cells (\Cref{figure:final-nonlymphocytes-clusters}), thus could be activated CD4 T cells, but, as suggested by experienced flow cytometrists, \contributor{Marcin Pekalski} and \contributor{Tony Cutler}, could also be an artefact of the permeabilisation and staining protocol.
 %They also contain a mix of the CD8\negative and CD8\positive cells and mostly CD56\negative so unlikely to have a NK-like properties.
 
 
@@ -2177,11 +2174,11 @@ This \texttt{SPADE.1}/\texttt{PLSR.1} subset contains mostly CD3\positive CD4\po
 \rowcolor{Gray} 
             & FSCA & SSCA & CD25 & CD3  & CD4  & CD45RA & CD56 & CD8  & FOXP3 & freq \\
 Lymphocytes & 3.09 & 1.59 & 1.58 & 2.84 & 1.53 & 3.46   & 1.07 & 1.29 & 1.83  & 16.97 \\
-SPADE.1     & 6.1  & 3.25 & 1.9  & 3.1  & 1.97 & 3.79   & 1.15 & 1.53 & 2.23  & 0.21 \\
-RPART.1     & 3.24 & 2.36 & 1.53 & 2.77 & 1.57 & 3.33   & 1.1  & 1.35 & 1.86  & 1.66 \\
-PLSR.1      & 6.33 & 3.29 & 1.97 & 3.16 & 2.01 & 3.91   & 1.17 & 1.75 & 2.35  & 0.14 \\
-MMPART.1    & 4.62 & 6.61 & 2.4  & 3.1  & 2.35 & 2.74   & 1.15 & 1.51 & 2.23  & 0.03 \\
-MMPART.2    & 4.07 & 2.74 & 1.84 & 3    & 2.21 & 2.76   & 1.13 & 1.47 & 1.7   & 0.57 \\
+nonlymph.SPADE.1     & 6.1  & 3.25 & 1.9  & 3.1  & 1.97 & 3.79   & 1.15 & 1.53 & 2.23  & 0.21 \\
+nonlymph.RPART.1     & 3.24 & 2.36 & 1.53 & 2.77 & 1.57 & 3.33   & 1.1  & 1.35 & 1.86  & 1.66 \\
+nonlymph.PLSR.1      & 6.33 & 3.29 & 1.97 & 3.16 & 2.01 & 3.91   & 1.17 & 1.75 & 2.35  & 0.14 \\
+nonlymph.MMPART.1    & 4.62 & 6.61 & 2.4  & 3.1  & 2.35 & 2.74   & 1.15 & 1.51 & 2.23  & 0.03 \\
+nonlymph.MMPART.2    & 4.07 & 2.74 & 1.84 & 3    & 2.21 & 2.76   & 1.13 & 1.47 & 1.7   & 0.57 \\
 %consensus   & 4.13 & 2.47 & 1.87 & 2.97 & 1.93 & 3.08   & 1.12 & 1.43 & 1.86  & 0.5 \\
 \end{tabular}
 \mycaption{table:final-nonlymphocytes}
@@ -2199,9 +2196,9 @@ MMPART.2    & 4.07 & 2.74 & 1.84 & 3    & 2.21 & 2.76   & 1.13 & 1.47 & 1.7   & 
 \includegraphics[width=\linewidth]{figures/final-nonlymphocytes-clusters}
 \end{minipage}
 \mycaption{figure:final-nonlymphocytes-clusters}
-{ Non-lymphocytes core markers: \texttt{SPADE.1}, \texttt{RPART.1}, \texttt{PLSR.1}, \texttt{MMPART.1} and \texttt{MMPART.2}. }
+{ Non-lymphocytes core markers: \texttt{nonlymph.SPADE.1}, \texttt{nonlymph.RPART.1}, \texttt{nonlymph.PLSR.1}, \texttt{nonlymph.MMPART.1} and \texttt{nonlymph.MMPART.2}. }
 {
-    The \texttt{PLSR.1} and \texttt{SPADE.1} subsets show the most overlap.
+    The \texttt{nonlymph.PLSR.1} and \texttt{nonlymph.SPADE.1} subsets show the most overlap.
     The other identified subsets do not appear unimodal both on side and forward scatter.
 }
 \begin{minipage}{.5\textwidth}
@@ -2209,9 +2206,9 @@ MMPART.2    & 4.07 & 2.74 & 1.84 & 3    & 2.21 & 2.76   & 1.13 & 1.47 & 1.7   & 
 \end{minipage}
 \begin{minipage}{.3\textwidth}
 \mycaption{figure:final-nonlymphocytes-dose-response}
-{ Non-lymphocytes pSTAT5 MFI dose-response: \texttt{SPADE.1}, \texttt{RPART.1}, \texttt{PLSR.1}, \texttt{MMPART.1} and \texttt{MMPART.2}. }
+{ Non-lymphocytes pSTAT5 MFI dose-response: \texttt{nonlymph.SPADE.1}, \texttt{nonlymph.RPART.1}, \texttt{nonlymph.PLSR.1}, \texttt{nonlymph.MMPART.1} and \texttt{nonlymph.MMPART.2}. }
 {
-    The \texttt{PLSR.1} and \texttt{SPADE.1} subsets have similar responses.
+    The \texttt{nonlymph.PLSR.1} and \texttt{nonlymph.SPADE.1} subsets have similar responses.
 }
 \end{minipage}
 \end{figure}
@@ -2230,14 +2227,14 @@ In order to assess whether these identified subsets were real and not artefacts 
 
 \paragraph{Lymphocytes}
 
-In the lymphocytes, I tried to identify the CD3\negative CD4\negative CD25\negative CD56\positive  subset, also known as the CD56 bright subset, corresponding to the \texttt{RPART.1} population in \Cref{figure:final-lymphocytes-clusters}.
+In the lymphocytes, I tried to identify the CD3\negative CD4\negative CD25\negative CD56\positive  subset, also known as the CD56 bright subset, corresponding to the \texttt{lymph.RPART.1} population in \Cref{figure:final-lymphocytes-clusters}.
 I again applied the recursive partitioning method discussed in \Cref{RPART} to obtain 1024 bins containing approximately the same number of events which cover the marker space.
 %Since we know that we are looking for CD56 bright cells we can exploit this information by arranging the bins by CD56 brightness.
 However, instead of using the \gls{MST} visualisation, I used the parallel plot representation, where dimensions are represented as parallel axes and each point is represented by a line segment between dimensions (\Cref{figure:lymphocytes-KM00782Z-2012-07-23}).
 This representation is easier to interpret than the \gls{MST} representation to highlight a known subset.
 Each line in the parallel plot represents one of the 1024 bins and is colour coded by pSTAT5 MFI.
 The width of the lines is also increased for cells with a CD56 MFI higher than $1.2$ to better highlight the CD56 bright cells.
-While, as expected, the majority of lymphocytes are CD56 low, the CD56 bright populations clearly stand out and in particular, one line/bin shows particularly high activation.
+While, as expected, the majority of lymphocytes are \protein{CD56}\low, the CD56 bright populations clearly stand out and in particular, one line/bin shows particularly high activation.
 This cell population is consistently identified in four additional samples, stained with the same panel and analysed on different days, suggesting that this is likely to be a real population and not only the consequence of a batch effect (\Cref{figure:lymphocytes-newsamples-cd56bright-10 units}).
 
 %lymphocytes_KA866533H_2012-08-23.pdf
@@ -2273,7 +2270,7 @@ The subset of CD56\high cells appears to exist in these additional samples and s
 
 \paragraph{Non-lymphocytes}
 
-Outside of the lymphocyte cluster, I attempted to identify the subset of cells with slightly larger forward scatter, that I reported as the \texttt{SPADE.1} subset in \Cref{figure:final-nonlymphocytes-clusters}.
+Outside of the lymphocyte cluster, I attempted to identify the subset of cells with slightly larger forward scatter, that I reported as the \texttt{nonlymph.SPADE.1} subset in \Cref{figure:final-nonlymphocytes-clusters}.
 Since I am now interested in visualising the pSTAT5 MFI response in two dimensions, forward and side scatter, instead of using \texttt{RPART} as in \Cref{figure:scatter-rpart-128bin-var-pstat5} or \texttt{SPADE} to reduce the number of events, I resorted to a fixed width two-dimensional grid on forward and side scatter.
 Data points were then assigned to their closest grid coordinate and the pSTAT5 MFI at each grid coordinate was calculated per dose.
 %Howevever instead this time, I used the SPADE cluster to reduce the number of datapoints and homogenise the density.
@@ -2342,11 +2339,11 @@ At 1000 units, the cells which respond are primarily CD3\positive CD4\positive, 
 
 \subsection{Conclusion}
 
-Using the methods described in this chapter on the most complete staining panel at my disposal for these \gls{PBMC} samples, it would appear that, although other cell types carriers of IL-2 receptors are potential responders, the majority of the response comes from within the convential lymphocyte subset, with a smaller secondary response coming from the \texttt{SPADE.1}/\texttt{PLSR.1} cluster at 1000 units of proleukin.
+Using the methods described in this chapter on the most complete staining panel at my disposal for these \gls{PBMC} samples, it would appear that, although other cell types carriers of IL-2 receptors are potential responders, the majority of the response comes from within the convential lymphocyte subset, with a smaller secondary response coming from the \texttt{nonlymph.SPADE.1}/\texttt{nonlymph.PLSR.1} cluster at 1000 units of proleukin.
 %Linda: The SPADE.1/PLSR.1 cluster is CD3+ (figure 3.56) so these cells have to be lymphocytes -- they are falling outside of the lymphocyte light scatter gate either because they are activated or because there is a staining artefact from the intracellular protocol.  (Have doublets been removed from this analysis?)
 %The methods explored in this chapter could be combined to identify dose-responsive cells in stimulation experiments.
 Another observation is that, within the lymphocytes, at the lowest 0.1 units proleukin dose, CD25 explains a significant proportion of the pSTAT5 response, however at higher, 10 and 1000 units doses, the beta receptor, CD122, and common gamma receptor, CD132, are likely to become more influential \citep{Pekalski:2013ga}.
-For example, the CD56\high subset
+For example, the \protein{CD56}\high subset
 %\texttt{RPART.1}
 shows response at 10 units in spite of having relatively low CD25 (\Cref{figure:final-lymphocytes-clusters}).
 %Furthermore, the difference between a response at 0.1 units and a response at 10 unit occurs for small changes in CD25 expression.
