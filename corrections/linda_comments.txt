@@ -1,0 +1,237 @@
+Hi Nikolas,
+
+I've read chapter 3 and the Discussion and here are my comments.  Since I can't do tracker on this document, I have cut and pasted the section from the thesis and then either suggest a wording change or make a comment.
+
+Best wishes,
+Linda
+
+Figure legend 3.1,   The pSTAT5 response is at its strongest when all three markers are highly expressed, intermediate
+when only CD25 and CD122 are expressed, and lower when only CD25 is present.
+Hence there is generally strong correlation between the CD25 MFI and the pSTAT5 MFI.
+
+The intermediate affinity receptor is CD122 and CD132, not CD25 and CD122.  Only the beta and gamma chains have signalling motifs.  The alpha chain supplies an increase in affinity--it does not signal.  This needs to be corrected wherever you discuss the receptor in your thesis   
+
+when only CD25 is present.  
+There is no signalling when CD25 is only present--just some weak binding.
+
+page 64  The remaining three were stimulated ex-vivo for 30 minutes at four 100-fold increasing
+doses of proleukin, a polymer of IL-2, at 0.1, 10 and 1000Uml−1 respectively.
+
+The remaining three were stimulated ex-vivo for 30 minutes at three increasing
+doses of proleukin, a recombinant IL-2 molecule, at 0.1, 10 and 1000Uml−1 respectively.
+
+Proleukin is not a polymer, it is a loose aggregate of molecules formulated this way to increase stability and bioavailability.
+
+In order to control for batch, age or sex, T1D samples were, when possible, ran
+in parallel with an age and sex paired healthy control, although in practice,
+
+ran should be run
+
+Table 3.2 legend
+
+The T/NK cell panel, which contains the most
+markers, was only ran on a subset of 5 samples.
+
+ran should be run
+
+Page 66
+
+He presented his results in six of the ten repeated individuals for the four stimulated cell...
+
+Tony Cutler presented....
+
+Figure legend 3.4   The dashed vertical line represents the 99th percentile
+
+I don't see a dashed vertical line in the figure I have.
+
+Figure 3.13 pSTAT5 intensity across the four proleukin doses
+
+Aren't there three doses of proleukin--0.1, 10 and 1000?
+
+Figure 3.13 Correcting for the per cell pSTAT5 baseline, shows the true
+proportion of cells which responds to proleukin within this sample
+
+I do not believe the approach has any validity since the baseline fluorescence is due to autofluorescence, it is not pSTAT5-specific staining.  It is not a fluorescence measurement that can be subtracted.  At baseline, unless a person has sufficient levels of IL-2 in their body due to dosing in vivo or illness (or another cytokine that can stimulate a pSTAT5 response is increased), there are too few STAT5 molecules phosphorylated per cell to be detected at baseline.  Variations in baseline between experiments represent either insufficient washing (background has a big shift and an isotype control would shift) or changes in autofluorescence due to small changes in how the cell architecture responds to the harsh intracellular staining conditions.  A ratio to a level that is below the level of detection just doesn't make sense to me.
+
+Page 79-81   Biologists know that any cell which carries
+high levels of any of the trimeric components of the IL-2 receptor, alpha (CD25), beta (CD122) or gamma (CD132), should respond to IL-2, but due to low affinity of the CD122 antibody and the limitation on the possible number of fluorochromes per tube,
+these cannot all be included as part of every flow experiment.
+
+High levels of CD25 alone--there is no signalling with IL-2.  High levels of beta alone or gamma alone--I'm not sure if IL-2 could drive signalling with these isolated chains, maybe at very high doses--this sentence needs to be modified.  The functional signalling receptors are the trimeric (high affinity) and dimeric (Intermediate affinity--beta/gamma) forms.  The alpha chain just increases affinity.
+
+The CD122 antibody does not have low affinity.  When methanol is used for a staining procedure, many epitopes antibodies recognize are destroyed (almost all are compromised as evidenced by reduced fluorescence for nearly all markers examined).  Companies are trying to optimize staining of the phosphorylated STAT5 proteins by developing antibodies to epitopes on a variety of key molecules that are retained.  Staining buffers are also being optimized.
+
+page 84 The algorithm was
+ran on the core surface markers
+
+ran should be run
+
+page 85 through the end of the chapter:  need to define markers that identify subsets
+
+I mapped the cells labelled by manual gating as memory
+and naive, both Teffs and Tregs, cells onto their assigned tree nodes
+
+I don't know who your examiners are, but it would be helpful to summarize the distribution of markers used in the thesis on the cell types present in the peripheral blood being analyzed.  Teff can refer to both CD4 and CD8 T cells--be sure to clarify as you go through the chapter.  CD3+ T cells can express CD56--these are the NKT cells.  NKT cells can express CD4, CD8 or be negative for both CD4 and CD8.  In the blood, the NK cells (CD3-negative, CD56+) have ~10% of the cells that are considered CD56^high.  It is unclear if the staining you are assessing discriminates this 10% subset.  When we have measured pSTAT5 responses in non-CD4 T cells, CD56^high NK cells start to respond at 1 u/ml whereas the CD56+ NK cells start to respond at 100 u/ml.  In Figure 3.2 you note that "Its [SPADE.1} discriminating features are that it is CD4−, high for CD8 and CD56, while expressing moderate levels of CD25."  The CD56 profile shown in figure 3.2 doesn't look like the staining we call high for CD56, it looks like a moderate level of CD56.  I'd also say that a discriminating feature of this subset (SPADE.1) is that it is CD3+ (noting what the negative peak looks like in figure 3.16), therefore a T cell, but in the text on page on page 85 you say it is CD3 negative ("They are CD56hi, CD3−, CD4−, CD8+ and express moderate levels of CD25.").  I also disagree that moderate levels of CD25 are seen since SPADE.1 has lower CD25 levels than naive Eff (CD4+).  My guess is that SPADE.1 is a CD8+, CD56+, CD3 NKT cell.  NKT cells start to respond to IL-2 between 100 and 1000 U/ml.
+
+Figure 3.18b, 3.22b, 3.26b, 3.28b, 3.29b  01U should be 0.1U
+
+Figure 3.21 In purple, the newly identified cell subsets SPADE.1 in...
+
+subsets should be subset
+
+page 89 at 10 units,SPADE.1b
+needs a space:  at 10 units, SPADE.1b
+
+page 91 CD3+, CD4+ and CD56− therefore likely to be T cells or NKT cells,
+NKT cells are CD56+ so this statement isn't correct--NKT cells should be removed.
+
+they also contained a small fraction of CD3− cells, hence likely to be a heterogeneous
+subset that may contain some monocytes
+should be:
+they also contained a small fraction of CD3− cells, hence likely to be a heterogeneous
+subset that may contain some monocytes or B cells.
+
+Further markers,
+possibly monoycte markers such as CD19, are needed to better define this cell type and
+ascertain its clinical relevance.
+
+CD19 is not a marker of monocytes, it is a marker of B cells.
+
+Page 97 On the other hand, the cell subset RPART.1 delineated
+in purple appeared to be CD3−, CD4−, CD8− and high for CD56.
+
+Maybe a few are CD56^high but most look to have moderate levels of CD56 (Figure 3.30)
+
+These CD56 bright cells include CD3− cells so could
+belong to a cell subset currently under investigation by Charlie Bell in our lab using
+RNAseq,
+
+RPART.1 responds at 1000 U/ml--the CD56^high cells Charlie is studying respond between 1 and 10 U/ml and there is CD25 expression on a portion of the cells (at least in surface staining).  
+
+Figure 3.30  Its discriminating features are that
+it is CD3−, CD4− and high in CD56, while expressing low levels of CD25.
+
+I would not say RPART.1 cells have high levels of CD56.
+
+page 105 In Figure 3.37, PLSR.1 is plotted in relation to the know subset
+know should be known
+
+page 106 It is also CD45RA+ indicating that it could include naive CD8 T cells.
+
+CD45RA is expressed not only on naive CD4+ and CD8+ T cells, it can be re-expressed on memory cells that have "terminally differentiated".  This is particularly evident in the CD8 compartment with increasing age.  In some people up to 30% of the CD8+ T cells can be CD45RA+ but not be part of the naive subset.
+
+page 110 The CART was ran without pruning
+ran should be run
+
+page 117 They also appear primarily CD45RA−, so not activated.
+
+CD45RA status doesn't have anything to do with activation status--did you mean to write something else?
+
+page 120 Tony Cutler claims that this is because the titration of
+proleukin required is too fine to be performed with high accuracy so that there is a lot
+of uncontrolled variation in the proleukin doses.
+
+Tony Cutler suggests that this is because of technical aspects of performing the IL-2 stimulation experiment.  Since the IL-2 must be stored at a very high concentration to maintain its stability, each experiment requires that the IL-2 stock be extensively diluted on the day of the experiment.  Experiments done in the lab have shown when multiple aliquots of frozen stock are diluted independently on the same day, there is a variation of up to 20% in the measured pSTAT5 response when testing the IL-2 at limiting concentrations for a particular cell type.  Additional variation is caused by the varying efficiency of intracellular staining.
+
+Figure 3.51 The lowess smoothed progression of the marker MFI along the horizontal coordinate of the MST.
+lowess should be lowest
+
+page 125 ...split at each level.  multivariate adaptive regression splines (MARS) for example uses
+multivariate should be Multivariate 
+
+page 126  The result of these steps is a sequence of boxes, with different number of observations per box.
+should be "with a different number of observations per box" or "with different numbers of observations per box"
+
+Table 3.3--I think that it would help if you put a column in this table indicating the IL-2 dose at which the population responds.
+
+Page 127--I think that you should mention the RPART.2 population in this section--I assume it is a combination of the memory CD4+ Treg and Teff populations?
+
+Page 127 These cells are likely to be NK cells although, CD16 would need to be measured to confirm that these cells are CD16+.
+The comma should should be removed or put after "cells"--my memory is that the CD56^high NK cells are negative for CD16.
+
+Page 127  The properties and function of this CD3− CD8− CD45+ CD56+ cell subset will be further investigated in our lab by Charlie Bell using RNAseq.
+CD45+ should be CD45RA+
+
+Table 3.4--in regard to the Freq listed in the table, has the debris been eliminated from the "whole sample" denominator?
+
+Page 133  In the lymphocytes, I tried to identify the CD3− CD4− CD25− CD56+
+subset, also known as the CD56 bright subset, corresponding to the RPART.1 population
+in Figure 3.54.
+
+Since the RPART.1 population is 3.36% of the lymphocytes it can't correspond to the very low frequency CD56 bright (CD56^high) subset.  The RPART.1 population also needs 1000 U/ml of IL-2 to respond well whereas the CD56^high population responds between 1 and 10 U/ml.  A portion of the CD56^high population also expresses CD25.
+
+Page 133  The width of the lines are also increased for cells with a CD56.....
+are should be is
+
+Figure legend to 3.60   At 1000 units, the cell which respond are primarily CD3+ CD4+, hence T cells, and CD45RA+, hence naive.
+cell should be cells
+not all CD45RA+ cells are naive--see comment above
+
+page 137  the majority of the response comes from within the lymphocyte subset, with a smaller secondary response coming from the nonlymphocyte
+SPADE.1/PLSR.1 cluster at 1000 units of proleukin.
+
+The SPADE.1/PLSR.1 cluster is CD3+ (figure 3.56) so these cells have to be lymphocytes--they are falling outside of the lymphocyte light scatter gate either because they are activated or because there is a staining artefact from the intracellular protocol.  (Have doublets been removed from this analysis?)
+
+Discussion
+
+page 174
+
+In my thesis, I have studied cell endophenotypes such
+as, CD25 protein expression on T cell subsets (Chapter 2), pSTAT5 ex vivo response in
+PBMCs (Chapter 3) or the relative cell subset frequency over parent cell population.
+
+I'm not sure what you mean by "or the relative cell subset frequency over parent cell population."  Why aren't you summarizing the findings from your other chapters at this point in the introduction to you Discussion section?
+
+page 176 In Chapter 2, I assessed assessed accuracy...
+repeated word
+
+page 183  Stability of stains is a big challenge and biologists often have an intuition of which
+markers are stable, and objectively, it does appear that certain stains are much more
+stable than others, be it due to the antibody specificity, the staining protocol or the
+thoroughness of the lab technician.
+
+add:  
+
+Stability of stains is a big challenge and biologists often have an intuition of which
+markers are stable, and objectively, it does appear that certain stains are much more
+stable than others, be it due to the antibody specificity, the chemical stability of the fluorochrome, the staining protocol or the
+thoroughness of the lab technician.
+
+page 184
+
+Typically, immunostaining flow cytometry experiments contain much smaller number of
+samples than case-control experiments since, on one hand, samples are a limited resource
+and on the other, sample preparation and running tubes on the flow cytometer are an
+expensive and time-consuming process.
+
+The above doesn't make sense--did you mean something like:
+
+Typically, immunostaining flow cytometry experiments contain much smaller numbers of
+samples than case-control genetic experiments since blood and PBMC samples are a limited resource
+and sample preparation and running tubes on the flow cytometer are an
+expensive and time-consuming process.
+
+Page 184 .....tubes ran to test and optimise panels,
+ran should be run
+
+page 185  However, clusters can be defined in relation to
+one another, for example memory cells are lower for CD45RA than naive cells but lower
+in CD25 (Chapter 2).
+
+did you mean:
+
+However, clusters can be defined in relation to
+one another, for example memory cells are lower for CD45RA than naive cells and naive cells are lower
+in CD25 than memory cells (Chapter 2).
+
+page 187  On
+the other hand, the data analyst also need to have an appreciation of the quality of the
+data and the purpose of the experiment.
+
+need should be needs
+
+page 190  For example, in Chapter 3, unsupervised clustering algorithms
+analysing pSTAT5 response at different doses of proleukin uncovered previously
+ignored responsive subset of cells.
+
+I don't think that these cells have been ignored--I think that they have been among the CD8 T cell subsets, NK cells (CD56^high and CD56+) and NKT cells we have examined in other data sets.
