@@ -1,17 +1,4 @@
-Declaration
 
- - 'fewer' than 60 000 words/150 figures?
- 
- 
-Abstract
-p1
- - Final sentence - technical or within batch variation may undermine - delete comma (separates subject and verb)
-p2
-p3
- - define qPCR before using abbreviation
-Final paragraph
- - I would leave out 'where they remain under-utilised' - it makes the sentence a bit too long and is self-evident.
- 
 
 Contributors 
  - messy - fix formatting re Tony
