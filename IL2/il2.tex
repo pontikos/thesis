@@ -319,7 +319,7 @@ This correlates with the level of \protein{CD25} expressed by these cells.
 { pSTAT5 distribution in the manually gated cell subsets from \Cref{figure:tony-cd4-gating}. }
 {
 The thickness of the lines is representative of the four increasing doses of proleukin (0, 0.1, 10 and 1000 units).
-The dose-response is most striking in the smaller Treg subsets with higher CD25 (b and d).
+The dose-response is most striking in the smaller Treg subsets with higher \protein{CD25} (b and d).
 %The dashed vertical line represents the 99th percentile of the pSTAT5 distribution in the resting sample, which is used to define the pSTAT5\positive threshold.
 }
 
@@ -1277,7 +1277,7 @@ Selecting the tree nodes manually and projecting the corresponding bins back to 
 The cell subset \texttt{RPART.2} (pink) constitutes around $4$ percent of the lymphocytes.
 This cell subset contains moderate levels of CD25 similar to a memory Teffs and is CD3\positive, CD4\positive, CD8\negative, CD45RA\negative and FOXP3\negative.
 It is likely to represent the transitional cell population between memory Teffs and Tregs which was not included in the manual gating.
-On the other hand, the cell subset \texttt{RPART.1} (purple) appeared to be CD3\negative, CD4\negative, CD8\negative and high for CD56.
+On the other hand, the cell subset \texttt{RPART.1} (purple) appeared to be CD3\negative, CD4\negative, CD8\negative and \protein{CD56}\high.
 These cells were also low in CD25, with the same level of expression as naive Teffs, which explains their limited response at lower doses.
 They constitute around $1.66$ percent of the total lymphocyte population within this sample.
 These CD56 bright cells include CD3\negative cells so could belong to a cell subset currently under investigation by \contributor{Charlie Bell} in our lab using RNAseq, which are known to express high levels of CD122, the beta chain of the IL-2 receptor.
@@ -2081,19 +2081,19 @@ The marker intensities and frequencies of the cell subsets identified with these
 %Some cell overlapped with more than one method, I merged these together into a consensus cluster.
 In \Cref{figure:final-lymphocytes-clusters}, the lymphocyte cell populations are presented on all core markers, and their response is presented in \Cref{figure:final-lymphocytes-dose-response}.
 
-The \texttt{SPADE.1} and the \texttt{PLSR.1} population, constituting $1.14$ and $15.08$ percent of the lymphocytes, appear to have similar dose-response profiles.
+The \texttt{lymph.SPADE.1} and the \texttt{lymph.PLSR.1} population, constituting $1.14$ and $15.08$ percent of the lymphocytes, appear to have similar dose-response profiles.
 However, the \texttt{PLSR.1} population is CD56\negative and has slightly higher CD45RA (and so higher FOXP3 because of the spillover).
-The \texttt{SPADE.1} subset is CD3\positive CD4\negative CD8\positive CD45RA\positive CD56\positive whilst the \texttt{PLSR.1} subset is CD3\positive CD4\negative CD8\positive CD45RA\high CD56\negative.
-The \texttt{PRPART.2} subset which constitutes $4.05$ percent of the lymphocytes is CD3\positive CD4\high CD25\high CD8\negative CD45RA\negative CD56\negative, appears to be a combination of the memory CD4\positive Treg and Teff populations.
-Interestingly, the \texttt{RPART.1} population, which constitutes 3.36 percent of the lymphocytes, has the lowest CD25 but is more sensitive than the \texttt{PLSR.1} and \texttt{SPADE.1} populations to proleukin.  
-This \texttt{RPART.1} subset is CD3\negative CD4\negative CD8\negative CD45RA\positive CD56\positive.
+The \texttt{lymph.SPADE.1} subset is CD3\positive CD4\negative CD8\positive CD45RA\positive CD56\positive whilst the \texttt{PLSR.1} subset is CD3\positive CD4\negative CD8\positive CD45RA\high CD56\negative.
+The \texttt{lymph.PRPART.2} subset which constitutes $4.05$ percent of the lymphocytes is CD3\positive CD4\high CD25\high CD8\negative CD45RA\negative CD56\negative, appears to be a combination of the memory CD4\positive Treg and Teff populations.
+Interestingly, the \texttt{lymph.RPART.1} population, which constitutes 3.36 percent of the lymphocytes, has the lowest CD25 but is more sensitive than the \texttt{lymph.PLSR.1} and \texttt{lymph.SPADE.1} populations to proleukin.  
+This \texttt{lymph.RPART.1} subset is CD3\negative CD4\negative CD8\negative CD45RA\positive CD56\positive.
 
 
 These cells are likely to be NK cells, although, \protein{CD16} would need to be measured to confirm that these cells are \protein{CD16}\positive.
-\citet{Ortaldo:1992tr} report that these CD3\negative CD56\positive cells are producers of the pro-inflammatory cytokine, interferon gamma, on stimulation with IL-2.
+\citet{Ortaldo:1992tr} report that these \protein{CD3}\negative \protein{CD56}\positive cells are producers of the pro-inflammatory cytokine, interferon gamma, on stimulation with IL-2.
 Also CD56\positive cells can induce elevated levels of granzyme B which is implicated in \gls{T1D} \citep{Thomas:2010cy}.
 These pro-inflammatory molecules could be problematic for IL-2 treatment, however it would appear that these cells are relatively low responders in comparison with the memory and naive T cell subsets.
-The properties and function of this CD3\negative CD8\negative CD45RA\positive CD56\positive cell subset will be further investigated in our lab by \contributor{Charlie Bell} using RNAseq.
+The properties and function of this \protein{CD3}\negative \protein{CD8}\negative \protein{CD45RA}\positive \protein{CD56}\positive cell subset will be further investigated in our lab by \contributor{Charlie Bell} using RNAseq.
 
 %The consensus cluster (purple) is shown in relation to the known cell subsets (naive, memory, Teffs and TRregs)
 %in \Cref{figure:final-lymphocytes-clusters-consensus}, on all core markers, as well as the dose-repsonse,
@@ -2174,6 +2174,7 @@ This \texttt{nonlymph.SPADE.1}/\texttt{nonlymph.PLSR.1} subset contains mostly C
 \rowcolor{Gray} 
             & FSCA & SSCA & CD25 & CD3  & CD4  & CD45RA & CD56 & CD8  & FOXP3 & freq \\
 Lymphocytes & 3.09 & 1.59 & 1.58 & 2.84 & 1.53 & 3.46   & 1.07 & 1.29 & 1.83  & 16.97 \\
+\hline
 nonlymph.SPADE.1     & 6.1  & 3.25 & 1.9  & 3.1  & 1.97 & 3.79   & 1.15 & 1.53 & 2.23  & 0.21 \\
 nonlymph.RPART.1     & 3.24 & 2.36 & 1.53 & 2.77 & 1.57 & 3.33   & 1.1  & 1.35 & 1.86  & 1.66 \\
 nonlymph.PLSR.1      & 6.33 & 3.29 & 1.97 & 3.16 & 2.01 & 3.91   & 1.17 & 1.75 & 2.35  & 0.14 \\
@@ -2233,8 +2234,8 @@ I again applied the recursive partitioning method discussed in \Cref{RPART} to o
 However, instead of using the \gls{MST} visualisation, I used the parallel plot representation, where dimensions are represented as parallel axes and each point is represented by a line segment between dimensions (\Cref{figure:lymphocytes-KM00782Z-2012-07-23}).
 This representation is easier to interpret than the \gls{MST} representation to highlight a known subset.
 Each line in the parallel plot represents one of the 1024 bins and is colour coded by pSTAT5 MFI.
-The width of the lines is also increased for cells with a CD56 MFI higher than $1.2$ to better highlight the CD56 bright cells.
-While, as expected, the majority of lymphocytes are \protein{CD56}\low, the CD56 bright populations clearly stand out and in particular, one line/bin shows particularly high activation.
+The width of the lines is also increased for cells with a CD56 MFI higher than $1.2$ to better highlight the \protein{CD56}\high cells.
+While, as expected, the majority of lymphocytes are \protein{CD56}\low, the \protein{CD56}\high populations clearly stand out and in particular, one line/bin shows particularly high activation.
 This cell population is consistently identified in four additional samples, stained with the same panel and analysed on different days, suggesting that this is likely to be a real population and not only the consequence of a batch effect (\Cref{figure:lymphocytes-newsamples-cd56bright-10 units}).
 
 %lymphocytes_KA866533H_2012-08-23.pdf
@@ -2250,7 +2251,7 @@ This cell population is consistently identified in four additional samples, stai
 \begin{minipage}{.3\textwidth}
 \mycaption{figure:lymphocytes-KM00782Z-2012-07-23}
 {  Lymphocytes: CD56\high cells within single batch show increased pSTAT5 MFI at 10 units. }
-{ Parallel plot of the 1024 bins obtained by using \texttt{RPART} on CD56, CD3, CD4 and CD25.  At 10 units (c), pSTAT5 MFI is already saturated in the CD25\high bins, but a CD56\high bin already shows moderate levels of pSTAT5 MFI.  At 1000 units (d), most bins have high levels of pSTAT5 MFI and all CD56\positive bins show moderate pSTAT5 MFI.  }
+{ Parallel plot of the 1024 bins obtained by using \texttt{RPART} on CD56, CD3, CD4 and CD25.  At 10 units (c), pSTAT5 MFI is already saturated in the \protein{CD25}\high bins, but a \protein{CD56}\high bin already shows moderate levels of pSTAT5 MFI.  At 1000 units (d), most bins have high levels of pSTAT5 MFI and all \protein{CD56}\positive bins show moderate pSTAT5 MFI.  }
 \end{minipage}
 %
 \begin{minipage}{.65\textwidth}
