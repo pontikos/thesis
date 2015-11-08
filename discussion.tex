@@ -335,7 +335,8 @@ In genetics for example, when genotyping low minor allele frequency variants, la
 %When distinguishing between rare subsets and noise can be hard.
 In order to distinguish such rare subsets from noise, strong supporting evidence is required.
 As illustrated in \Cref{chapter:kir} on qPCR data, prior evidence from \citet{Jiang:2012cf} supports the existence of the rare 3-0 \gene{KIR3DS1}-\gene{KIR3DL1} copy number group at that sample size.
-In hindsight, the expected copy number group frequencies obtained from \citet{Jiang:2012cf} could have been used as prior group frequencies for all copy number groups in the clustering of the qPCR data.
+In hindsight, the expected copy number group frequencies obtained from \citet{Jiang:2012cf} could have been used as prior group frequencies, by defining a Dirichlet distribution in a Bayesian setting, for all copy number groups in the clustering of the qPCR data.
+%Prior probabilities come from a Dirichlet distribution.
 The prior information obtained from the qPCR dataset, was then used as training data in the next step of the analysis, in order to identify clusters predictive of \gene{KIR3DS1}-\gene{KIR3DL1} copy number in the SNP dataset.
 %The \gls{knn} algorithm was used to classify unlabelled points, for which qPCR data was unavailable, from the vote of their K nearest labelled neighbours.
 %The optimal value of K was selected by minimising the \gls{LOOCV}.
@@ -376,19 +377,20 @@ The \Rpackage{mclust}, allows one to define a noise component with an expected f
 %This is in part because they are no markers included in the experiment defined on these cell populations which would allow any further division.
 %Other events are discarded because they are outliers.
 
-Another approach to filtering outliers, as adopted by the \Rpackage{flowClust}, is to downweight the effect of outliers on the parameter estimation of the mixture model by defining an "outlyingness" parameter which is inversely proportional to the Mahalanobis distance from a point to a cluster centre.  
-Since the Mahalanobis distance from a point to a group of points is scaled by the covariance matrix, the distance is smaller to wider clusters than to tighter clusters:
+Another approach to filtering outliers, as adopted by the \Rpackage{flowClust}, is to reduce the influence of outliers in parameter estimation by downweighting points by the inverse of the the Mahalanobis distance to the cluster center.  
+Since the Mahalanobis distance from a point to a cluster of points is scaled by the covariance of the cluster, for a given point $\boldsymbol{x_i}$, the distance is smaller for wider clusters than for tighter clusters:
+
 \begin{equation} \label{equation:Mahalanobis}
 (\boldsymbol{x_i}-\boldsymbol{\mu})^{\top}\boldsymbol{\Sigma}^{-1}(\boldsymbol{x_i}-\boldsymbol{\mu})
 \end{equation}
-where $\boldsymbol{x_i}$ is the datapoint, $\boldsymbol{\mu}$ is the cluster mean and $\boldsymbol{\Sigma}$ is the cluster covariance.
+where $\boldsymbol{\mu}$ is the cluster mean and $\boldsymbol{\Sigma}$ is the cluster covariance.
 %\[
   %u_{ig} = \frac{v+p}{v+(\boldsymbol{x_i}-\boldsymbol{\mu_g})^{\top}\boldsymbol{\Sigma}_{g}^{-1}(\boldsymbol{x_i}-\boldsymbol{\mu_g})}
 %\]
 
-It is worth noting that one issue with the Mahalanobis distance metric in detecting outliers, is that outliers influence and may greatly inflate the covariance matrix which is itself used in calculating the Mahalanobis distance.
-To address this circular dependency, packages such as the \Rpackage{robustbase}, use \gls{LOO} methods to identify outliers which have high leverage on the covariance estimation.
-Another outlier metric, commonly used in linear regression is Cook's distance, which returns the leverage of every data point $i$  on the estimation of $\hat Y$ when the point is left out:
+It is worth noting that one issue with the Mahalanobis distance metric in detecting outliers, is that outliers influence and can greatly inflate the covariance matrix which is itself used in calculating the Mahalanobis distance.
+To address this circular dependency, \gls{LOO} methods, as implemented in the \Rpackage{robustbase}, can be used to identify outliers which have high leverage on the covariance estimation.
+A commonly used outlier metric in linear regression is Cook's distance, which returns the leverage of the $i^{th}$ data point on the estimation of $\hat Y$ when the point is left out:
 \[
 D_i = \frac{ \sum_{j=1}^n (\hat Y_j\ - \hat Y_{j(i)})^2 }{p \ \mathrm{MSE}}
 \]

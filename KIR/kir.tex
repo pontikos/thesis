@@ -460,10 +460,13 @@ For example, this can be seen in plate 10, where noisy cases (\Cref{Figure-S1}.f
   first and second row split the samples on the availability of qPCR data, and
   the third row is the overlay of the samples from the first and second row.
   The first and second column split the samples by case-control status and the
-  third column is the overlay of the samples from the first and second column.}
+  third column is the overlay of the samples from the first and second column.
+  Note that five samples classified 0-2 by qPCR (dark green) appear in the 1-1 cloud (pink).
+  These samples could have potentially been mislabelled.
+  }
 \end{figure}
 
-I extended our sample size by using the subset of samples common between the qPCR and SNP datasets, 747 cases and 727 controls, to train a k-nearest neighbour (KNN) classifier to predict \gene{KIR3DL1}/\gene{KIR3DS1} copy number using the $R$ and $\theta$ signals from ImmunoChip SNPs.
+I extended our sample size by using the subset of samples common between the qPCR and SNP datasets, 747 cases and 727 controls, to train a k-nearest neighbour (KNN) classifier, using \gls{LOOCV}, to impute \gene{KIR3DL1}/\gene{KIR3DS1} copy number using the $R$ and $\theta$ signals from ImmunoChip SNPs.
 
 Each of 30 SNPs lying within the \gene{KIR3DL1} (since \gene{KIR3DS1} is not on the reference genome) region were assessed for association with either \gene{KIR3DL1} or \gene{KIR3DS1} copy number in individual linear regression of copy number against $R$ and $\theta$ (\Cref{Table-S4}).
 %Nineteen SNPs were significantly associated (\Cref{Table-S4}), with rs592645 the most strongly predictive (\Cref{Figure-2}).
@@ -479,8 +482,7 @@ This has two implications: probabilistic clustering of the SNP data alone is lik
 Instead, I used the qPCR copy numbers as training data to perform supervised clustering of the SNP signals.
 
 I first explored the validity of our imputation approach by means of \gls{LOOCV} in the samples with qPCR data.
-I examined using all nineteen predictive SNPs, or various subsets, and found optimal \gls{knn} imputation was achieved with the single most predictive SNP,
-\snp{rs592645} with $k=8$, which minimised the mean \gls{LOOCV} error rate to \pct{2.0} across ten multiply imputed qPCR datasets (\Cref{Figure-3}).  
+I examined using all nineteen predictive SNPs, or various random subsets, and found optimal \gls{knn} imputation was achieved with the single most predictive SNP, \snp{rs592645} with $k=8$, which minimised the mean \gls{LOOCV} error rate to \pct{2.0} across ten multiply imputed qPCR datasets (\Cref{Figure-3}).  
 
 I also explored the effect of varying the size of the training data set by setting KIR gene copy numbers to missing for a randomly chosen subset of samples and imputing them in the remaining samples.
 I suggest that only 295 samples are required to achieve \gls{LOOCV} error rates $<$ \pct{5} and 590 for error rates $<$ \pct{2.5} (\Cref{Figure-4}).
@@ -1145,7 +1147,7 @@ I expect that, eventually, fully sequenced KIR haplotypes will be available in a
 %In the current build (January 2014), build 38, \gene{KIR3DS1} is now part of the reference but only 35 distinct sequences for this region are listed.
 In order to improve our chances of correct assembly, long reads will be required to deal with the great sequence similarity in this region.
 According to a collaborator \contributor{James Traherne}, sequencing would require amplification of the polymorphic exons using locus-specific primers and sequencing of the barcoded products.
-This would necessitate read lengths of at least 300 base pairs to span the exons.
+This would necessitate read lengths of at least 300 base pairs to span the exons and the assembly could be done using the sequenced haplotypes from the Immuno Polymorphism Database \citep{Robinson:2010dy} as a reference.  
 The cost of this using Roche 454 has been estimated to be of approximately \textsterling 30 per sample.
 
 % James Traherne:
