@@ -335,7 +335,7 @@ In genetics for example, when genotyping low minor allele frequency variants, la
 %When distinguishing between rare subsets and noise can be hard.
 In order to distinguish such rare subsets from noise, strong supporting evidence is required.
 As illustrated in \Cref{chapter:kir} on qPCR data, prior evidence from \citet{Jiang:2012cf} supports the existence of the rare 3-0 \gene{KIR3DS1}-\gene{KIR3DL1} copy number group at that sample size.
-In hindsight, the expected copy number group frequencies obtained from \citet{Jiang:2012cf} could have been used as prior group frequencies, by defining a Dirichlet distribution in a Bayesian setting, for all copy number groups in the clustering of the qPCR data.
+In hindsight, the expected copy number group frequencies obtained from \citet{Jiang:2012cf} could have been used as prior group frequencies, by defining a Dirichlet prior, for all copy number groups in the clustering of the qPCR data.
 %Prior probabilities come from a Dirichlet distribution.
 The prior information obtained from the qPCR dataset, was then used as training data in the next step of the analysis, in order to identify clusters predictive of \gene{KIR3DS1}-\gene{KIR3DL1} copy number in the SNP dataset.
 %The \gls{knn} algorithm was used to classify unlabelled points, for which qPCR data was unavailable, from the vote of their K nearest labelled neighbours.
